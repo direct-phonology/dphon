@@ -1,0 +1,15 @@
+python:
+  - "2.6"
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+install:
+  - pip install -r requirements.txt
+  - pip install -r dev-requirements.txt
+script: pytest
+notifications:
+  slack:
+    secure: QY9+2/e7pTvAM9bZxGgIHcSWhh0btXGscDbc9688Nj9oIWvAyxG6Iqg1X2KQ15a/3vGjgyxscJ+/dWEaTkMZfaa86KvpdX4LoElRBzfuXfbur17FX8lettw1jAx+wfMuoro0KNrejwujx6lEDubfEWnnsRFlrNqRM5Xr4PM9F9ZVtU+HN2EF2K5qWg+8nZH8ZYlsI43wZMD7zHgtijAXwv2qWvKKt7y9KQmQlbpsK6hbzMbEE+UN1MZiair69o0ZW+HbQMH/ffjhzWOw/K8ZZtyR7gGOsjDqdEC7LI3pAFybkqLh+1DXW7G+NERrJfITuSdpbwIQHIn7ZVscPqgVtZsk02WXaMtiPgj4nW+KhHJcE8bnB0/CMumqfLaGj7APTu9lZxzkPQCpUahJRsiWMurcyMppfFWBPBt8ZbKFWi7VfMcdxb+Lg60rnolmxHFk8UPC+hLC3m40dMe3UIhvkvPX621Qj2Sq/EFg7JZf5PfjS/sKekJgtTjfKoJbbHU527rfGhk3/Mi+PPDfcWdZaYBUThi73uQzK/FsZJiTJfZvgv/oEe7IeChPbkFrbF3bXjAZiydF2ZCSPjxvIUXwOUZPJjMgX4LwYPrQpxbgVt6Pa+pQEJugmxMCCmeGw2opbxv1kbTwuq/OJR+qviTlj6q74i3dKN/ZKV0Gupp7v6Q=

@@ -1,0 +1,12 @@
+exclude .gitignore
+exclude .coverage
+exclude .travis.yml
+exclude venv
+include setup.cfg
+include data
+prune .cache
+prune .git
+prune build
+prune dist
+recursive-exclude *.egg-info *
+recursive-include tests *

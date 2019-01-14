@@ -8,7 +8,7 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install -r dev-requirements.txt
-script: pytest --cov=dphon
+script: python -m pytest --cov=dphon
 notifications:
   email: false
   slack:

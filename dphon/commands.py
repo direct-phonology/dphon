@@ -20,6 +20,7 @@ def ingest(arguments: dict):
 
 def match(arguments: dict):
     # sanitize the input
+    punct = arguments['--punctuation']
     # tokenize the search string
     orig_search = clean(load_file(arguments['<search>']))
     search = clean(tokenize_file(arguments['<search>']))
@@ -28,7 +29,11 @@ def match(arguments: dict):
     corpus = clean(tokenize_file(arguments['<corpus>']))
     # match the input against the database
     matches = []
-    for ngram in shingle(search, 4):
+    if punct:
+        shingles = shingle(text=search, n=4, punct=True)
+    else:
+        shingles = shingle(text=search, n=4)
+    for ngram in shingles:
         for hit in re.finditer(ngram[1], corpus):
             start = ngram[0]
             end = ngram[0] + len(ngram[1])

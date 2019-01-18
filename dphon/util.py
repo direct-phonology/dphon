@@ -30,6 +30,10 @@ def load_file(path: str):
 def clean(text: str):
     return ''.join(text.split())
 
-def shingle(text: str, n: int=3):
+def shingle(text: str, n: int=3, punct=False):
     """Split a given string into all possible n-grams."""
-    return [(i, text[i:i + n]) for i in range(len(text) - n + 1)]
+    ngrams = [(i, text[i:i + n]) for i in range(len(text) - n + 1)]
+    if not punct:
+        return [ngram for ngram in ngrams if ngram[1].isalpha()]
+    else:
+        return ngrams

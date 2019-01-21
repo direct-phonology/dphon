@@ -3,12 +3,13 @@ dphon
  
 Usage:
   dphon ingest (- | <text>) [--output=<file>]
-  dphon match (- | <search>) <corpus> [--output=<file>]
+  dphon match [-p] (- | <search>) <corpus> [--output=<file>]
   dphon -h | --help
   dphon --version
  
 Options:
   -h --help         Show this screen.
+  -p --punctuation  Include punctuation in matches.
   --version         Show version.
  
 Examples:

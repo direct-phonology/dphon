@@ -1,0 +1,143 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        section {
+            border: 2px solid grey;
+        }
+        .pane {
+            height: 85%;
+            height: 100%;
+            width: 49%;
+            overflow-y: scroll;
+            position: absolute;
+        }
+        .left.pane {
+            width: 100%;
+        }
+        .right.pane {
+            left: 51%;
+            display: none;
+        }
+        .controls {
+            text-align: center;
+            padding-top: 4rem;
+            height: 15%;
+            width: 100%;
+        }
+        .matches {
+            text-align: center;
+            display: none;
+            padding-top: 2rem;
+        }
+        .search-ruby {
+            display: none;
+        }
+        p {
+            font-size: 2rem;
+        }
+        .heat.one {
+            background-color: rgba(255, 0, 0, 0.2);
+        }
+        .heat.two {
+            background-color: rgba(255, 0, 0, 0.4);
+        }
+        .heat.three {
+            background-color: rgba(255, 0, 0, 0.6);
+        }
+        .page-controls {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+        crossorigin="anonymous"></script>
+</head>
+<body>
+    <section class="controls">
+        <label for="search-file">
+            Search text file:
+            <input type="file" id="search-file" name="search-file" accept="text/plain">
+        </label>
+        <label for="corpus-file">
+            Corpus text file:
+            <input type="file" id="corpus-file" name="corpus-file" accept="text/plain">
+        </label>
+        <label>
+            Reconstruction
+            <select name="phonology">
+                <option value="schuessler" selected>schuessler</option>
+                <option value="baxter-sagart">baxter-sagart</option>
+            </select>
+        </label>
+        <label for="ruby">
+            show phonology annotations
+            <input type="checkbox" name="ruby" id="ruby">
+        </label>
+    </section>
+    <div class="panes">
+        <section class="left pane">
+            <div class="page-controls">
+                <button class="prev-match">← previous match</button>
+                <button class="prev-match">next match →</button>
+            </div>
+            <p class="search">
+                其安易持，<a class="match1" href="#"><mark class="heat one">其未兆易謀</mark></a>。其脆易泮，其微易散。為之於未有，治之於未亂。合抱之木，生於毫末；九層之臺，起於累土；千里之行，始於足下。為者敗之，執者失之。是以聖人無為故無敗；無執故無失。民之從事，常於幾成而敗之。慎終如始，則無敗事，是以聖人欲不欲，不貴難得之貨；學不學，復衆人之所過，以輔萬物之自然，而不敢為。
+                古之善為道者，非以明民，將以愚之。民之難治，以其智多。故以智治國，國之賊；不以智治國，國之福。知此兩者亦𥡴式。常知𥡴式，是謂玄德。玄德深矣，遠矣，與物反矣，然後乃至大順。
+                江海所以能為百谷王者，以其善下之，故能為百谷王。<mark class="heat two">是以聖人</mark>欲上民，必以言下之；欲先民，必以身後之。是以聖人處上而民不重，處前而民不害。是以天下樂推而不厭。以其不爭，故天下莫能與之爭。
+                天下皆謂我道大，似不肖。夫唯大，故似不肖。若肖久矣。其細也夫！我有三寶，持而保之。一曰慈，二曰儉，三曰不敢為天下先。慈故能勇；儉故能廣；<mark class="heat three">不敢為天</mark>下先，故能成器長。今舍慈且勇；舍儉且廣；舍後且先；死矣！夫慈以戰則勝，以守則固。天將救之，以慈衛之。
+                善為士者，不武；善戰者，不怒；善勝敵者，不與；善用人者，為之下。是謂不爭之德，是謂用人之力，是謂配天古之極。
+            </p>
+            <p class="search-ruby">
+                <a class="match1" href="#"><mark><ruby><rb>示</rb><rt>gih-</rt></ruby><ruby><ruby><rb>上</rb><rt>daŋʔ</rt></ruby><rt>daŋh-</rt></ruby><ruby><rb>音</rb><rt>ʔəm-</rt></ruby></mark></a><ruby><rb>之</rb><rt>tə-</rt></ruby>，<ruby><rb>彼</rb><rt>paiʔ-</rt></ruby><ruby><rb>獨</rb><rt>dôk-</rt></ruby>
+                <ruby><rb>示</rb><rt>gih-</rt></ruby><ruby><ruby><rb>下</rb><rt>grâʔ</rt></ruby><rt>grâh-</rt></ruby><ruby><rb>屋</rb><rt>ʔôk-</rt></ruby><ruby><rb>憂</rb><rt>ʔu-</rt></ruby>。<br/><br/><ruby><ruby><rb>三</rb><rt>sə̂m</rt></ruby><rt>sə̂ms-</rt></ruby><ruby><rb>反</rb><rt>panʔ-</rt></ruby><ruby><ruby><ruby><rb>屈</rb><rt>khut</rt></ruby><rt>kut</rt></ruby><rt>gut-</rt></ruby><ruby><rb>示</rb><rt>gih-</rt></ruby><ruby><rb>意</rb><rt>ʔəkh-</rt></ruby><ruby><rb>馬</rb><rt>mrâʔ-</rt></ruby><ruby><rb>留</rb><rt>ru-</rt></ruby>，<ruby><rb>冉</rb><rt>namʔ-</rt></ruby><ruby><ruby><rb>子</rb><rt>tsəʔ</rt></ruby><rt>tsəh-</rt></ruby><ruby><rb>可</rb><rt>khâiʔ-</rt></ruby><ruby><rb>示</rb><rt>gih-</rt></ruby><ruby><ruby><rb>出</rb><rt>k-hlut</rt></ruby><rt>k-hluts-</rt></ruby><ruby><rb>阿</rb><rt>ʔâi-</rt></ruby><ruby><rb>憂</rb><rt>ʔu-</rt></ruby>。<br/><br/><ruby><rb>州</rb><rt>tu-</rt></ruby><ruby><rb>八</rb><rt>prêt-</rt></ruby><ruby><rb>刻</rb><rt>khə̂k-</rt></ruby><ruby><rb>示</rb><rt>gih-</rt></ruby><ruby><rb>歷</rb><rt>rêk-</rt></ruby><ruby><ruby><rb>九</rb><rt>kuʔ</rt></ruby><rt>kwəʔ-</rt></ruby><ruby><rb>州</rb><rt>tu-</rt></ruby>，<ruby><ruby><rb>九</rb><rt>kuʔ</rt></ruby><rt>kwəʔ-</rt></ruby><ruby><rb>然</rb><rt>nan-</rt></ruby><ruby><rb>宛</rb><rt>ʔonʔ-</rt></ruby><ruby><rb>示</rb><rt>gih-</rt></ruby><ruby><rb>夕</rb><rt>s-jak-</rt></ruby><ruby><rb>東</rb><rt>tôŋ-</rt></ruby><ruby><rb>謳</rb><rt>ʔô-</rt></ruby>。<br/><br/><ruby><rb>世</rb><rt>lhats-</rt></ruby><ruby><ruby><rb>氣</rb><rt>khəs</rt></ruby><rt>həs-</rt></ruby><ruby><rb>卓</rb><rt>trâuk-</rt></ruby><ruby><rb>示</rb><rt>gih-</rt></ruby><ruby><rb>宛</rb><rt>ʔonʔ-</rt></ruby><ruby>
+            <p>
+        </section>
+        <section class="right pane">
+            <p class="corpus">
+                聖人無常心，以百姓心為心。善者，吾善之；不善者，吾亦善之；德善。信者，吾信之；不信者，<mark>吾亦信之</mark>；德信。聖人在天下，歙歙為天下渾其心，百姓皆注其耳目，聖人皆孩之。
+                出生入死。生之徒，十有三；死之徒，十有三；人之生，動之死地，十有三。夫何故？以其生，生之厚。蓋聞善攝生者，陸行不遇兕虎，入軍不被甲兵；兕無所投其角，虎無所措其爪，兵無所容其刃。夫何故？以其無死地。
+                道生之，德畜之，物形之，勢成之。是以萬物莫不尊道而貴德。道之尊，德之貴，夫莫之命常自然。故道生之，德畜之；長之育之；亭之毒之；養之覆之。生而不有，為而不恃，長而不宰，是謂玄德。
+                天下有始，以為天下母。既知其母，復知其子，既知其子，復守其母，沒其不殆。塞其兌，閉其門，終身不勤。開其兌，濟其事，終身不救。見小曰明，守柔曰強。用其光，復歸其明，無遺身殃；是為習常。
+                使我介然有知，行於大道，唯施是畏。大道甚夷，而民好徑。朝甚除，田甚蕪，倉甚虛；服文綵，帶利劍，厭飲食，財貨有餘；是謂盜夸。非道也哉！
+            </p>
+            <div class="matches">
+                <button class="close">close</button>
+                <h1>Matches for: 其未兆易謀</h1>
+                <ol class="matches">
+                    <li>吾亦信之 :: 1 <button id="view-corpus-match-1">view</button></li>
+                    <li>其德乃餘 :: 4 <button>view</button></li>
+                    <li>其神不人 :: 5 <button>view</button></li>
+                    <li>吾亦信之 :: 5 <button>view</button></li>
+                    <li>其神不人 :: 6 <button>view</button></li>
+                    <li>吾亦信之 :: 9 <button>view</button></li>
+                </ol>
+            </div>
+        </section>
+    </div>
+    <script>
+        $('.match1').click(function(event) {
+            $('.right.pane').show()
+            $('.left.pane').css('width', '50%')
+            if ($('.corpus').is(':visible')) {
+                $('.matches').toggle()
+                $('.corpus').toggle()
+            }
+        })
+        $('.close').click(function(event) {
+            $('.right.pane').hide()
+            $('.left.pane').css('width', '100%')
+        })
+        $('#ruby').change(function(event) {
+            $('.search-ruby').toggle()
+            $('.search').toggle()
+        })
+        $('#view-corpus-match-1').click(function(event) {
+            $('.matches').hide()
+            $('.corpus').show()
+        })
+    </script>
+</body>
+</html>

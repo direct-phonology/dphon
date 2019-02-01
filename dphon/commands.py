@@ -2,58 +2,41 @@ import json
 import re
 import sys
 
-from dphon.util import tokenize_file, lookup, shingle, clean, load_file
+from dphon.util import tokenize_string, lookup, shingle, clean
 
 
-def ingest(arguments: dict):
-    # TODO sanitize the input
-    with open(arguments['<text>']) as file:
-        output_dict = {}
-        file_text = file.read()
-        for position, char in enumerate(file_text): 
-            # tokenize the input
-            if char.isalpha():
-                if lookup(char):
-                    output_dict[position] = lookup(char)
-    # output a optimized database to match against
-    return json.dumps(output_dict, indent=4, ensure_ascii=False).encode('utf-8')
+def analyze(text: str):
+    output = {}
+    for position, char in enumerate(text): 
+        # get the info for each character
+        if char.isalpha():
+            if lookup(char):
+                output[position] = lookup(char)
+    return output
+    # return json.dumps(output_dict, indent=4, ensure_ascii=False).encode('utf-8')
 
-def match(arguments: dict):
-    # sanitize the input
-    punct = arguments['--punctuation']
-    # tokenize the search string
-    orig_search = clean(load_file(arguments['<search>']))
-    search = clean(tokenize_file(arguments['<search>']))
-    # tokenize the matched text
-    orig_corpus = clean(load_file(arguments['<corpus>']))
-    corpus = clean(tokenize_file(arguments['<corpus>']))
-    # match the input against the database
+def search(text: str, search: str, punct: bool=False):
+    # clean & tokenize the text
+    text = clean(text)
+    tokenized_text = tokenize_string(text)
+    # clean & tokenize the search string
+    search = clean(search)
+    tokenized_search = tokenize_string(search)
+    # match 4-grams of tokens
     matches = []
-    if punct:
-        shingles = shingle(text=search, n=4, punct=True)
-    else:
-        shingles = shingle(text=search, n=4)
+    shingles = shingle(tokenized_search, 4, punct)
     for ngram in shingles:
-        for hit in re.finditer(ngram[1], corpus):
+        for hit in re.finditer(ngram[1], tokenized_text):
             start = ngram[0]
             end = ngram[0] + len(ngram[1])
-            search_ngram = orig_search[start:end]
+            search_ngram = tokenized_search[start:end]
             start = hit.start()
             end = hit.end()
-            corpus_ngram = orig_corpus[start:end]
+            corpus_ngram = text[start:end]
             matches.append({
                 'search_ngram': search_ngram,
                 'search_pos': ngram[0],
                 'corpus_ngram': corpus_ngram,
                 'corpus_pos': hit.start()
             })
-    for match in matches:
-        print("{}({}) :: {}({})".format(
-            match['search_ngram'],
-            match['search_pos'],
-            match['corpus_ngram'],
-            match['corpus_pos']
-        ))
-    # use n-gram shingling to compute similarity
-    # output info about results
-    pass
+    return matches

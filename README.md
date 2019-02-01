@@ -76,3 +76,25 @@ unit tests are written with pytest. you can run them with:
 ```sh
 $ pytest
 ```
+
+## releases
+
+**make sure the version number in `dphon/__init__.py` is correct!**
+
+to build a source archive and distribution for a release:
+
+```sh
+$ python setup.py sdist bdist_wheel
+```
+
+to publish the release on [test PyPI](https://test.pypi.org/) (useful for making sure everything worked):
+
+```sh
+$ twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+```
+
+if everything is OK, publish the package to PyPI:
+
+```sh
+$ twine upload dist/*
+```

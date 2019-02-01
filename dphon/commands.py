@@ -2,18 +2,8 @@ import json
 import re
 import sys
 
-from dphon.util import tokenize_string, lookup, shingle, clean
+from dphon.util import clean, lookup, shingle, tokenize_string
 
-
-def analyze(text: str):
-    output = {}
-    for position, char in enumerate(text): 
-        # get the info for each character
-        if char.isalpha():
-            if lookup(char):
-                output[position] = lookup(char)
-    return output
-    # return json.dumps(output_dict, indent=4, ensure_ascii=False).encode('utf-8')
 
 def search(text: str, search: str, punct: bool=False):
     # clean & tokenize the text

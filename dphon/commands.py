@@ -22,11 +22,11 @@ def search(text: str, search: str, punct: bool=False):
             search_ngram = tokenized_search[start:end]
             start = hit.start()
             end = hit.end()
-            corpus_ngram = text[start:end]
+            text_ngram = text[start:end]
             matches.append({
                 'search_ngram': search_ngram,
                 'search_pos': ngram[0],
-                'corpus_ngram': corpus_ngram,
-                'corpus_pos': hit.start()
+                'text_ngram': text_ngram,
+                'text_pos': hit.start()
             })
     return matches

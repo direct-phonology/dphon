@@ -48,8 +48,8 @@ def run():
         output += "{}({}) :: {}({})\n".format(
             match['search_ngram'],
             match['search_pos'],
-            match['corpus_ngram'],
-            match['corpus_pos']
+            match['text_ngram'],
+            match['text_pos']
         )
     if arguments['--output']: # TODO handle stdout
         pass

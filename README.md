@@ -81,6 +81,13 @@ $ pytest
 
 **make sure the version number in `dphon/__init__.py` is correct!**
 
+if there are any built files in `dist/` from older releases, remove them before
+you start this process:
+
+```sh
+$ rm dist/*
+```
+
 to build a source archive and distribution for a release:
 
 ```sh

@@ -57,7 +57,6 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Topic :: Text Processing :: Linguistic',
         'Topic :: Text Processing :: Markup',
-        'Topic :: Text Processing :: Markup :: HTML',
         'Topic :: Utilities',
     ],
     keywords = 'cli old chinese phonology linguistics',

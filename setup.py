@@ -44,7 +44,6 @@ setup(
     author_email = 'jo10@princeton.edu, nbudak@princeton.edu',
     license = 'MIT',
     classifiers = [
-        'Development Status :: 1 - Pre-Alpha',
         'Environment :: Console',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',

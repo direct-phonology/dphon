@@ -69,6 +69,8 @@ $ pip install -e .
 
 now your changes will be automatically picked up when you run `dphon`.
 
+**pull requests should be made against the `develop` branch.**
+
 ## tests
 
 unit tests are written with pytest. you can run them with:

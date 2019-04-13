@@ -22,14 +22,12 @@ class Character(object):
 
     
 class Sequence(object):
-    text: int # which text is this in
-    start: int # what position does it start
-    length: int # how long is the string
+    start: int
+    end: int
 
-    def __init__(self, text: int, start: int, length: int):
-        self.text = text
+    def __init__(self, start: int, end: int):
         self.start = start
-        self.length = length
+        self.end = end
 
 class Match(object):
     source: Sequence
@@ -41,8 +39,8 @@ class Match(object):
         
     def resolve(self, textA, textB):
         return '%s (%d) :: %s (%d)' % (
-            textA[self.source.start:self.source.start + self.source.length],
+            textA[self.source.start:self.source.end],
             self.source.start,
-            textB[self.dest.start:self.dest.start + self.dest.length],
+            textB[self.dest.start:self.dest.end],
             self.dest.start
         )

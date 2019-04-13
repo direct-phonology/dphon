@@ -35,29 +35,29 @@ class TestUtils(unittest.TestCase):
         for ng in ['名，', '名。']:
             assert ng in ngram_texts_p, '`punct` flag should enable punctuation'
 
-    def test_clean(self):
-        text = '名可名， 非常名。 \t可名，名。\r\n非常\f  非常名\v.'
-        whitespace = [' ', '\f', '\n', '\r', '\t', '\v']
-        clean_text = clean(text)
+    # def test_clean(self):
+    #     text = '名可名， 非常名。 \t可名，名。\r\n非常\f  非常名\v.'
+    #     whitespace = [' ', '\f', '\n', '\r', '\t', '\v']
+    #     clean_text = clean(text)
 
-        for char in whitespace:
-            assert char not in clean_text, \
-            'cleaned text should not include whitespace'
+    #     for char in whitespace:
+    #         assert char not in clean_text, \
+    #         'cleaned text should not include whitespace'
 
-    def test_lookup(self):
-        assert type(lookup('冥')) is dict, 'should return a dictionary entry'
-        assert type(lookup('冥')['dummy']) is str, 'entry should contain a dummy'
-        assert lookup('𠀀') is False, 'should return false for missing chars'
+    # def test_lookup(self):
+    #     assert type(lookup('冥')) is dict, 'should return a dictionary entry'
+    #     assert type(lookup('冥')['dummy']) is str, 'entry should contain a dummy'
+    #     assert lookup('𠀀') is False, 'should return false for missing chars'
 
-    def test_tokenize(self):
-        assert tokenize('冥') == '名', 'should return the dummy char, if present'
-        assert tokenize('𠀀') == '𠀀', 'input should be unchanged if no entry'
-        assert tokenize('。') == '。', 'input should be unchanged for punctuation'
-        assert tokenize('\n') == '\n', 'input should be unchanged for whitespace'
+    # def test_tokenize(self):
+    #     assert tokenize('冥') == '名', 'should return the dummy char, if present'
+    #     assert tokenize('𠀀') == '𠀀', 'input should be unchanged if no entry'
+    #     assert tokenize('。') == '。', 'input should be unchanged for punctuation'
+    #     assert tokenize('\n') == '\n', 'input should be unchanged for whitespace'
 
-    def test_tokenize_string(self):
-        string = '名可名，非常名。'
-        string_t = tokenize_string(string)
+    # def test_tokenize_string(self):
+    #     string = '名可名，非常名。'
+    #     string_t = tokenize_string(string)
 
-        for char in string:
-            assert tokenize(char) in string_t, 'should tokenize all chars in string'
+    #     for char in string:
+    #         assert tokenize(char) in string_t, 'should tokenize all chars in string'

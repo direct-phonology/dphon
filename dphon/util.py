@@ -4,6 +4,13 @@ from itertools import count, chain
 
 from dphon.lib import Character, Sequence, Match
 
+def get_char_pos_list(text: str) -> List(int):
+    """Return a list of positions of alphabetic characters in a source text."""
+    return [pos for pos, char in enumerate(text) if char.isalpha()]
+
+
+def clean_text()
+
 def build_character_array(text: str):
     return [Character(position=pos, original=char) for pos, char in enumerate(text)]
 

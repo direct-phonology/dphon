@@ -34,15 +34,19 @@ class Match(object):
 class Comparator(object):
     a: str
     b: str
+    matches: List[Match]
 
     def __init__(self, a: str, b: str):
         self.a = a
         self.b = b
+        self.matches = []
 
     @staticmethod
     def get_text_ngrams(text: str, n: int = 3) -> List[Dict]:
         """Returns all overlapping token ngrams for a text, with start and end
         pointers to locations in the original text."""
+        if n < 1:
+            raise ValueError('Value for `n` must be 1 or greater.')
         ngrams = []
         for pos, char in enumerate(text):
             if char.isalpha():
@@ -89,7 +93,8 @@ class Comparator(object):
                     ))
         return initial_matches
 
-    def reduce_matches(self, matches: List[Match]) -> List[Match]:
+    @staticmethod
+    def reduce_matches(matches: List[Match]) -> List[Match]:
         """Combines a list of overlapping matches to find the longest possible
         contiguous matches."""
         for i, match in enumerate(matches):
@@ -109,7 +114,8 @@ class Comparator(object):
                 break
         return matches
 
-    def group_matches(self, matches: List[Match]) -> Dict[range, List[range]]:
+    @staticmethod
+    def group_matches(matches: List[Match]) -> Dict[range, List[range]]:
         """Groups a list of matches by position in a text, so that a single
         location in a can reference a list of locations in b."""
         grouped_matches = {}
@@ -124,7 +130,7 @@ class Comparator(object):
         for a, bs in matches.items():
             output = '%s (A: %d-%d)\n' % (self.a[a.start:a.stop+1], a.start, a.stop)
             for b in bs:
-                output += '\t%s (B: %d-%d)\n' % (self.b[b.start:b.stop+1], b.start, b.stop)
+                output += '%s (B: %d-%d)\n' % (self.b[b.start:b.stop+1], b.start, b.stop)
             print(output)
 
     def get_matches(self, min_length: int = 3) -> List[Match]:

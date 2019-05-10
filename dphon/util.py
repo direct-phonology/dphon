@@ -1,39 +1,50 @@
-import json
+from re import finditer
+from typing import List
+from itertools import count, chain
 
-with open('data/dummy_dict.json') as file:
-    DUMMY_DICT = json.loads(file.read())
+from dphon.lib import Character, Sequence, Match
 
-def lookup(char: str):
-    """Retrieve information on single a character from a dictionary."""
-    if char.isalpha():
-        if char in DUMMY_DICT:
-            return {
-                'char': char,
-                'init': DUMMY_DICT[char][0],
-                'rhyme': DUMMY_DICT[char][1],
-                'dummy': DUMMY_DICT[char][2]
-            }
-    return False
+def get_char_pos_list(text: str) -> List(int):
+    """Return a list of positions of alphabetic characters in a source text."""
+    return [pos for pos, char in enumerate(text) if char.isalpha()]
 
-def tokenize(char: str):
-    """Convert a single character to a phonological token."""
-    entry = lookup(char)
-    if entry:
-        return entry['dummy']
-    return char
 
-def tokenize_string(string: str):
-    """Convert a string into phonological tokens."""
-    return ''.join([tokenize(char) for char in string])
+def clean_text()
 
-def clean(text: str):
-    """Remove whitespace from a string."""
-    return ''.join(text.split())
+def build_character_array(text: str):
+    return [Character(position=pos, original=char) for pos, char in enumerate(text)]
 
-def shingle(text: str, n: int=3, punct=False):
+def clean(text: List):
+    """Discard whitespace and punctuation characters."""
+    return [c for c in text if c.original.isalpha()]
+
+def shingle(text: List, n: int=3):
     """Split a given string into all possible overlapping n-grams."""
-    ngrams = [(i, text[i:i + n]) for i in range(len(text) - n + 1)]
-    if not punct:
-        return [ngram for ngram in ngrams if ngram[1].isalpha()]
-    else:
-        return ngrams
+    return [text[i:i + n] for i in range(len(text) - n + 1)]
+
+def match(textA: List, textB: List, a, b):
+    all_matches = {}
+    initial_n = 4  # start with 4-grams
+    for n in count(initial_n):
+        n_matches = [] # list of matches for this n
+        a_ngrams = shingle(textA, n) # shingle both texts using this length
+        b_ngrams = shingle(textB, n)
+        for a_ngram in a_ngrams:
+            for b_ngram in b_ngrams:
+                if ''.join([c.dummy for c in a_ngram]) == ''.join([c.dummy for c in b_ngram]):
+                    # we got a match, add it
+                    a_sequence = Sequence(a_ngram[0].position, a_ngram[-1].position)
+                    b_sequence = Sequence(b_ngram[0].position, b_ngram[-1].position)
+                    n_matches.append(Match(source=a_sequence, dest=b_sequence))
+                    # check if it's a longer version of an earlier match
+                    if n > initial_n: # not necessary on first run
+                        old_matches = [m for m in all_matches[str(n-1)] if m.source.start >= a_ngram[0].position and m.source.end <= a_ngram[-1].position and m.dest.start >= b_ngram[0]. position and m.dest.end <= b_ngram[-1].position]
+                        if old_matches:
+                            for match in old_matches:
+                                all_matches[str(n-1)].remove(match)
+        if len(n_matches) > 0: # if we found matches
+            all_matches[str(n)] = n_matches # add them to the big dict
+            continue # keep going
+        else: # no matches found at this length, we're done
+            break
+    return chain.from_iterable(all_matches.values()) # iterable of all matches

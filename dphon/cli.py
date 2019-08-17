@@ -2,56 +2,50 @@
 dphon
  
 Usage:
-  dphon [-p] (- | <text>) <search> [--output=<file>]
+  dphon <text1> [<text2>] [--output=<file>]
+  dphon - [--output=<file>]
   dphon -h | --help
-  dphon --version
+  dphon -v | --version
  
 Options:
   -h --help         Show this screen.
-  -p --punctuation  Include punctuation in matches.
-  --version         Show version.
+  -v --version      Show program version.
  
 Examples:
-
+    dphon 老子甲.txt 老子乙.txt
+    dphon 周南.txt --output=out.txt
+    cat 鹿鳴之什.txt | dphon -
  
 Help:
-  For help using this tool, please open an issue on the Github repository:
+  For more information on using this tool, please visit the Github repository:
   https://github.com/direct-phonology/direct
 """
 
-from inspect import getmembers
 from sys import stderr, stdin, stdout
-
 from docopt import docopt
 
 from . import __version__
-from .commands import search
+from .lib import Comparator
 
 
 def run():
     """CLI entrypoint."""
-    import dphon.commands
     arguments = docopt(__doc__, version=__version__)
-    # TODO handle stdin
     if arguments['-']:
-        pass
+        text1 = stdin.buffer.read()
     else:
-        with open(arguments['<text>']) as file:
-            text_string = file.read()
-    # we always get the search from a file
-    with open(arguments['<search>']) as file:
-        search_string = file.read()
-    # get the matches
-    matches = search(text_string, search_string, arguments['--punctuation'])
-    output = ''
-    for match in matches:
-        output += "{}({}) :: {}({})\n".format(
-            match['search_ngram'],
-            match['search_pos'],
-            match['text_ngram'],
-            match['text_pos']
-        )
-    if arguments['--output']: # TODO handle stdout
-        pass
+        with open(arguments['<text1>']) as file:
+            text1 = file.read()
+    if arguments['<text2>']:
+        with open(arguments['<text2>']) as file:
+            text2 = file.read()
+    c = Comparator(a=text1, b=text2, a_name=arguments['<text1>'],
+                   b_name=arguments['<text2>'])
+    matches = c.get_matches()
+    groups = Comparator.group_matches(matches)
+    output = c.resolve_groups(groups)
+    if arguments['--output']:
+        with open(arguments['--output'], mode='w') as file:
+            file.write(output)
     else:
         stdout.buffer.write(output.encode('utf-8'))

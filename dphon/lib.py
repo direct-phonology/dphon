@@ -1,10 +1,12 @@
 import json
 from collections import defaultdict
 from typing import List, Dict, Tuple
+from os.path import basename, splitext
 
 
 with open('data/dummy_dict.json') as file:
     DUMMY_DICT = json.loads(file.read())
+
 
 class Match(object):
     a_start: int
@@ -21,7 +23,7 @@ class Match(object):
     def __str__(self) -> str:
         """Basic string reprentation of a match, showing its locations."""
         return 'A (%d - %d) :: B (%d - %d)' % (self.a_start, self.a_end,
-                                              self.b_start, self.b_end)
+                                               self.b_start, self.b_end)
 
     def resolve(self, a: str, b: str):
         """Get the actual text of a match by mapping its locations to texts."""
@@ -31,15 +33,46 @@ class Match(object):
             str(self)
         )
 
+
 class Comparator(object):
     a: str
     b: str
+    a_name: str
+    b_name: str
+    a_linemap: List[int]
+    b_linemap: List[int]
     matches: List[Match]
 
-    def __init__(self, a: str, b: str):
+    def __init__(self, a: str, b: str, a_name: str, b_name: str):
         self.a = a
         self.b = b
+        self.a_name = splitext(basename(a_name))[0]
+        self.b_name = splitext(basename(b_name))[0]
+        self.a_linemap = self.get_linemap(self.a)
+        self.b_linemap = self.get_linemap(self.b)
         self.matches = []
+
+    @staticmethod
+    def get_linemap(text: str):
+        m = []
+        l = 1
+        for char in text:
+            m.append(l)
+            if char == '\n':
+                l += 1
+        return m
+
+    @staticmethod
+    def create_numbered_text(text: str):
+        output = ''
+        # iterate through each line, with index
+        for i, line in enumerate(text.splitlines(True)):
+            # add the index + 1  and a tab as the first char of each line
+            output += '%s\t%s' % (i + 1, line)
+
+        return output
+        # save the lines into a new string
+        # write the string to a file
 
     @staticmethod
     def get_text_ngrams(text: str, n: int = 3) -> List[Dict]:
@@ -51,7 +84,7 @@ class Comparator(object):
         for pos, char in enumerate(text):
             if char.isalpha():
                 # create a new ngram
-                ngram = { 'text': '', 'start': None, 'end': None }
+                ngram = {'text': '', 'start': None, 'end': None}
                 # add either the original character or a token if we have one
                 if char in DUMMY_DICT:
                     char_to_append = DUMMY_DICT[char][2]
@@ -122,18 +155,22 @@ class Comparator(object):
         for match in matches:
             if range(match.a_start, match.a_end) not in grouped_matches:
                 grouped_matches[range(match.a_start, match.a_end)] = []
-            grouped_matches[range(match.a_start, match.a_end)].append(range(match.b_start, match.b_end))
+            grouped_matches[range(match.a_start, match.a_end)].append(
+                range(match.b_start, match.b_end))
         return grouped_matches
 
-    def resolve_groups(self, matches: Dict[range, List[range]]):
+    def resolve_groups(self, matches: Dict[range, List[range]]) -> str:
         """Print grouped matches by mapping their locations to texts."""
+        output = ''
         for a, bs in matches.items():
-            output = '%s (A: %d-%d)\n' % (self.a[a.start:a.stop+1], a.start, a.stop)
+            output += '%s (%s: %d)\n' % (
+                self.a[a.start:a.stop+1], self.a_name, self.a_linemap[a.start])
             for b in bs:
-                output += '%s (B: %d-%d)\n' % (self.b[b.start:b.stop+1], b.start, b.stop)
-            print(output)
+                output += '%s (%s: %d)\n' % (
+                    self.b[b.start:b.stop+1], self.b_name, self.b_linemap[b.start])
+            output += '\n'
+        return output
 
     def get_matches(self, min_length: int = 3) -> List[Match]:
         """Matches the two texts stored in the comparator."""
         return self.reduce_matches(self.get_initial_matches(min_length))
-        

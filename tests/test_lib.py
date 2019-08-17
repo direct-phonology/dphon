@@ -3,6 +3,7 @@ from dphon.lib import Comparator, Match
 from unittest import TestCase
 from pytest import raises
 
+
 class TestNgrams(TestCase):
 
     def test_number_of_ngrams(self):
@@ -50,12 +51,13 @@ class TestNgrams(TestCase):
         # as 驫 not in dictionary, it should remain unchanged
         assert '驫' in ngrams[0]['text']
 
+
 class TestInitialMatches(TestCase):
 
     def test_matches_trigrams(self):
         a = '孔於鄉黨孔孔孔孔孔孔孔孔孔孔孔孔孔孔'
         b = '其其其其其其其其其其鴉羕上其其其其其'
-        comp = Comparator(a, b)
+        comp = Comparator(a, b, 'a', 'b')
         matches = comp.get_initial_matches()
         # in these fake texts there is exactly one match
         assert len(matches) == 1
@@ -67,7 +69,7 @@ class TestInitialMatches(TestCase):
     def test_matches_quadgrams(self):
         a = '孔於鄉黨於孔孔孔孔孔孔孔孔孔'
         b = '其其鴉羕上鴉其其其其其'
-        comp = Comparator(a, b)
+        comp = Comparator(a, b, 'a', 'b')
         matches = comp.get_initial_matches(n=4)
         # exactly one quad-gram match
         assert len(matches) == 1
@@ -79,7 +81,7 @@ class TestInitialMatches(TestCase):
     def test_overlapping_matches(self):
         a = '孔於鄉黨於孔孔孔孔孔孔孔孔孔'
         b = '其其鴉羕上鴉其其其其其'
-        comp = Comparator(a, b)
+        comp = Comparator(a, b, 'a', 'b')
         matches = comp.get_initial_matches()
         # two overlapping trigram matches
         assert len(matches) == 2
@@ -95,7 +97,7 @@ class TestInitialMatches(TestCase):
     def test_partial_overlap(self):
         a = '孔於鄉黨於孔孔孔孔孔孔孔'
         b = '其鴉羕上其其其羕上鴉其其'
-        comp = Comparator(a, b)
+        comp = Comparator(a, b, 'a', 'b')
         matches = comp.get_initial_matches()
         # a sequence in A partially matches two different places in B
         assert len(matches) == 2
@@ -111,9 +113,10 @@ class TestInitialMatches(TestCase):
     def test_no_matches(self):
         a = '孔孔孔孔孔孔孔孔孔孔'
         b = '其其鴉羕上鴉其其其其其'
-        comp = Comparator(a, b)
+        comp = Comparator(a, b, 'a', 'b')
         matches = comp.get_initial_matches()
         assert len(matches) == 0
+
 
 class TestReduceMatches(TestCase):
 
@@ -159,6 +162,7 @@ class TestReduceMatches(TestCase):
         assert reduced[0].b_start == 10
         assert reduced[0].b_end == 16
 
+
 class TestGroupMatches(TestCase):
 
     def test_no_groups(self):
@@ -171,7 +175,7 @@ class TestGroupMatches(TestCase):
         grouped = Comparator.group_matches(matches)
         assert len(grouped) == 4
         for k, v in grouped.items():
-            assert len(v) == 1 # every "group" is just one match in b
+            assert len(v) == 1  # every "group" is just one match in b
 
     def test_small_group(self):
         matches = [
@@ -183,7 +187,8 @@ class TestGroupMatches(TestCase):
         # a single line in a matches two places in b
         grouped = Comparator.group_matches(matches)
         assert len(grouped) == 3
-        assert len(grouped[range(1, 5)]) == 2 # two matches in b for the first entry in a
+        # two matches in b for the first entry in a
+        assert len(grouped[range(1, 5)]) == 2
         assert grouped[range(1, 5)] == [range(4, 9), range(12, 14)]
 
     def test_multiple_groups(self):
@@ -198,7 +203,7 @@ class TestGroupMatches(TestCase):
         # two groupings
         grouped = Comparator.group_matches(matches)
         assert len(grouped) == 4
-        assert len(grouped[range(1, 5)]) == 2 # two matches in b
-        assert len(grouped[range(1, 2)]) == 2 # also two matches
+        assert len(grouped[range(1, 5)]) == 2  # two matches in b
+        assert len(grouped[range(1, 2)]) == 2  # also two matches
         assert grouped[range(1, 5)] == [range(4, 9), range(12, 14)]
         assert grouped[range(1, 2)] == [range(342, 2342), range(25, 26)]

@@ -22,19 +22,33 @@ the basic function of DIRECT is to phonologically compare two early chinese text
 $ dphon text_a.txt text_b.txt # search text b against text a
 ```
 
-the output will be a list of matching n-grams between the two texts, including the line numbers from which the matches are drawn:
+the output will be a list of character sequences in text_a that have rhyming counterparts in text_b, including the texts and line numbers from which the sequences are drawn:
 
 ```sh
-揣而兌之(1277) :: 揣而銳之(531) # line 1277b matches line 531a
-不可上保(1282) :: 不可長保(536) # line 1282b matches line 536a
-工遂申墜(1307) :: 功遂身退(561) # line 1307b matches line 561a
+滋章盜賊多有 (a: 16)    # this sequence of characters from a line 16 matches
+滋彰，盜賊多有 (b: 57)  # this sequence of characters from b line 57
 ...
+不可得 (a: 15)         # this sequence from a on line 15 matches two separate 
+不可識 (b: 15)         # locations in b, and both of them are on line 15 in b
+不可識 (b: 15)
+...
+解其忿 (a: 15)         # in this sequence, we see three separate graphic
+解其紛 (b: 4)          # variations for the third character - one on a line 15
+解其分 (b: 56)         # and two from b on lines 4 and 56
 ```
+
+note that the sequences ignore non-word characters, including punctuation and numbers. this means that rhymes could span across lines, which will be reflected in the output.
 
 you can view the full list of command options with:
 ```sh
 $ dphon --help
 ```
+
+## methodology
+
+matching sequences are determined by a dictionary file that represents a particular reconstruction of old chinese phonology (you can see some examples in the `data/` folder). these data structures map an input character to an arbitrary sound token ("dummy") that can be matched against other such tokens.
+
+the core process of DIRECT is to accept plaintext input, tokenize it according to a particular phonological reconstruction, and search for matches amongst the tokenized text. these matches thus represent resonance: sequences that could have rhymed when they were originally read aloud, despite dissimilarity in their written forms.
 
 ## development setup
 

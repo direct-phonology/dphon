@@ -52,7 +52,7 @@ the core process of DIRECT is to accept plaintext input, tokenize it according t
 
 ## development setup
 
-**python 3 is required**. 
+**python >=3.6 is required**. 
 
 first, clone the repository:
 

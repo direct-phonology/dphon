@@ -1,7 +1,7 @@
-from dphon.lib import Comparator, Match
-
 from unittest import TestCase
 from pytest import raises
+
+from dphon.lib import Comparator, Match
 
 
 class TestNgrams(TestCase):

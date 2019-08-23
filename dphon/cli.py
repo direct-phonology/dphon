@@ -2,8 +2,7 @@
 dphon
  
 Usage:
-  dphon <text1> [<text2>] [--output=<file>]
-  dphon - [--output=<file>]
+  dphon <text1> <text2> [--output=<file>]
   dphon -h | --help
   dphon -v | --version
  
@@ -13,8 +12,7 @@ Options:
  
 Examples:
     dphon 老子甲.txt 老子乙.txt
-    dphon 周南.txt --output=out.txt
-    cat 鹿鳴之什.txt | dphon -
+    dphon 老子丙.txt 老子乙.txt --output=out.txt
  
 Help:
   For more information on using this tool, please visit the Github repository:
@@ -31,15 +29,13 @@ from .lib import Comparator
 def run():
     """CLI entrypoint."""
     arguments = docopt(__doc__, version=__version__)
-    if arguments['-']:
-        text1 = stdin.buffer.read()
-    else:
-        with open(arguments['<text1>']) as file:
-            text1 = file.read()
-    if arguments['<text2>']:
-        with open(arguments['<text2>']) as file:
-            text2 = file.read()
-    c = Comparator(a=text1, b=text2, a_name=arguments['<text1>'],
+    with open(arguments['<text1>']) as file:
+        text1 = file.read()
+    with open(arguments['<text2>']) as file:
+        text2 = file.read()
+    c = Comparator(a=text1,
+                   b=text2,
+                   a_name=arguments['<text1>'],
                    b_name=arguments['<text2>'])
     matches = c.get_matches()
     groups = Comparator.group_matches(matches)

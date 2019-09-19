@@ -1,5 +1,5 @@
 pytest>=3.6
-pytest-cov
+pytest-cov==2.7.1
 setuptools
 wheel
 twine

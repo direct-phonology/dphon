@@ -2,6 +2,7 @@
 _Digital Intertextual Resonances in Early Chinese Texts_
 
 [![Build Status](https://travis-ci.org/direct-phonology/direct.svg?branch=master)](https://travis-ci.org/direct-phonology/direct)
+![Dependency Status](https://pyup.io/repos/github/direct-phonology/direct/shield.svg?t=1568910750251)
 ![PyPi Version](https://img.shields.io/pypi/v/dphon.svg?style=flat)
 ![Python Versions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
 ![License](https://img.shields.io/pypi/l/dphon.svg?style=flat)

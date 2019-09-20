@@ -3,7 +3,7 @@ _Digital Intertextual Resonances in Early Chinese Texts_
 
 ![CI Status](https://github.com/direct-phonology/direct/workflows/test/badge.svg)
 ![Dependency Status](https://pyup.io/repos/github/direct-phonology/direct/shield.svg?t=1568910750251)
-![PyPi Version](https://img.shields.io/pypi/v/dphon.svg?style=flat)
+[![PyPi Version](https://img.shields.io/pypi/v/dphon.svg?style=flat)](https://pypi.org/project/dphon/)
 ![Python Versions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
 
 ## installation

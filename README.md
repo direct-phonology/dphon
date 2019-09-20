@@ -8,11 +8,13 @@ _Digital Intertextual Resonances in Early Chinese Texts_
 
 ## installation
 
-install with pip:
+this software is tested on the latest versions of macOS, windows, and ubuntu. you will need a supported version of python (above), along with `pip`.
 
 ```sh
 $ pip install dphon
 ```
+
+if you're on windows and are seeing incorrectly formatted output in your terminal, have a look at this [stackoverflow answer](https://stackoverflow.com/questions/49476326/displaying-unicode-in-powershell/49481797#49481797).
 
 ## usage
 

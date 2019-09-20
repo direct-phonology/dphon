@@ -1,19 +1,20 @@
 # DIRECT
 _Digital Intertextual Resonances in Early Chinese Texts_
 
-[![Build Status](https://travis-ci.org/direct-phonology/direct.svg?branch=master)](https://travis-ci.org/direct-phonology/direct)
+![CI Status](https://github.com/direct-phonology/direct/workflows/test/badge.svg)
 ![Dependency Status](https://pyup.io/repos/github/direct-phonology/direct/shield.svg?t=1568910750251)
 ![PyPi Version](https://img.shields.io/pypi/v/dphon.svg?style=flat)
 ![Python Versions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
-![License](https://img.shields.io/pypi/l/dphon.svg?style=flat)
 
 ## installation
 
-install with pip:
+this software is tested on the latest versions of macOS, windows, and ubuntu. you will need a supported version of python (above), along with `pip`.
 
 ```sh
 $ pip install dphon
 ```
+
+if you're on windows and are seeing incorrectly formatted output in your terminal, have a look at this [stackoverflow answer](https://stackoverflow.com/questions/49476326/displaying-unicode-in-powershell/49481797#49481797).
 
 ## usage
 

@@ -13,8 +13,10 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Pull code
+      uses: actions/checkout@v1
+
+    - name: Set up python
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
@@ -25,8 +27,8 @@ jobs:
         pip install -r requirements.txt
         pip install -r dev-requirements.txt
         
-    - name: Install dphon
+    - name: Install app
       run: python setup.py develop
       
-    - name: Test with pytest
+    - name: Run tests
       run: pytest

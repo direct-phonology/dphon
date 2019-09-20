@@ -29,9 +29,9 @@ from .lib import Comparator
 def run():
     """CLI entrypoint."""
     arguments = docopt(__doc__, version=__version__)
-    with open(arguments['<text1>']) as file:
+    with open(arguments['<text1>'], encoding='utf-8') as file:
         text1 = file.read()
-    with open(arguments['<text2>']) as file:
+    with open(arguments['<text2>'], encoding='utf-8') as file:
         text2 = file.read()
     c = Comparator(a=text1,
                    b=text2,
@@ -41,7 +41,7 @@ def run():
     groups = Comparator.group_matches(matches)
     output = c.resolve_groups(groups)
     if arguments['--output']:
-        with open(arguments['--output'], mode='w') as file:
+        with open(arguments['--output'], mode='w', encoding='utf8') as file:
             file.write(output)
     else:
         stdout.buffer.write(output.encode('utf-8'))

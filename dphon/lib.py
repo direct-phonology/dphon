@@ -4,7 +4,7 @@ from typing import List, Dict, Tuple
 from os.path import basename, splitext
 
 
-with open('data/dummy_dict.json') as file:
+with open('data/dummy_dict.json', encoding='utf-8') as file:
     DUMMY_DICT = json.loads(file.read())
 
 

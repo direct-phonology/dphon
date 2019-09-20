@@ -50,7 +50,7 @@ class TestDualText(TestCase):
                         'tests/fixtures/郭店/老子甲.txt',
                         '--output=%s' % outfile]
             run()
-            with open(outfile) as file:
+            with open(outfile, encoding='utf-8') as file:
                 results = file.read().splitlines()
             assert results[0] == '猷乎，其 (老子丙: 1)'
             assert results[1] == '猶乎其 (老子甲: 5)'

@@ -145,6 +145,9 @@ class Comparator(object):
                     # ignore matches pointing to somewhere else in B
                     if candidate.b_start >= match.b_end or candidate.b_start <= match.b_start:
                         continue
+                    # ignore matches in B that are completely inside ours
+                    if candidate.b_start > match.b_start and candidate.b_end < match.b_end:
+                        continue
                     # if we overlap in both A and B, merge into our match
                     if candidate.b_start < match.b_end and candidate.b_start > match.b_start:
                         match.a_end = candidate.a_end
@@ -153,6 +156,14 @@ class Comparator(object):
                         continue
                 # if we didn't find any overlapping, we're done
                 break
+        # some matches may still be completely subsumed by others
+        for i, match in enumerate(matches):
+            # lookahead to see if any matches fit inside this one
+            for candidate in matches[i+1:]:
+                # if so, remove
+                if candidate.a_start >= match.a_start and candidate.a_end <= match.a_end and candidate.b_start >= match.b_start and candidate.b_end <= match.b_end:
+                    matches.remove(candidate)
+        # return final list
         return matches
 
     @staticmethod

@@ -168,7 +168,7 @@ class TestReduceMatches(TestCase):
             Match(9, 11, 14, 16),
             Match(10, 12, 1, 3),  # subset of this sequence matches elsewhere
             Match(10, 12, 15, 17),
-            Match(11, 13, 16, 18),  # larger match continues
+            Match(11, 13, 16, 18),
         ]
         # should reduce to two separate matches; one larger and one smaller
         reduced = Comparator.reduce_matches(matches)
@@ -181,6 +181,33 @@ class TestReduceMatches(TestCase):
         assert reduced[1].a_end == 12
         assert reduced[1].b_start == 1
         assert reduced[1].b_end == 3
+
+    def test_mirror_submatches(self):
+        # in matching sequences with repeated subsequences, we should get a
+        # large match covering the entirety of both sequences. we don't care
+        # about the internal matches between subsequences since they are
+        # subsumed in the larger sequence.
+        matches = [
+            Match(1, 3, 1, 3),
+            Match(2, 4, 2, 4),    # subset at start of A matches at start of B
+            Match(2, 4, 12, 14),  # subset at start of A matches at end of B
+            Match(3, 6, 3, 6),
+            Match(4, 7, 4, 7),
+            Match(6, 8, 6, 8),
+            Match(7, 9, 7, 9),
+            Match(8, 11, 8, 11),
+            Match(9, 12, 9, 12),
+            Match(11, 13, 11, 13),
+            Match(12, 14, 2, 4),    # subset at end of A matches at start of B
+            Match(12, 14, 12, 14),  # subset at end of A matches at end of B
+        ]
+        # should reduce to three matches; one larger and two smaller
+        reduced = Comparator.reduce_matches(matches)
+        assert len(reduced) == 1
+        assert reduced[0].a_start == 1
+        assert reduced[0].a_end == 14
+        assert reduced[0].b_start == 1
+        assert reduced[0].b_end == 14
 
 class TestGroupMatches(TestCase):
 

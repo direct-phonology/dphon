@@ -46,6 +46,12 @@ you can view the full list of command options with:
 $ dphon --help
 ```
 
+by default, all matches are shown, including those where the text is identical. to limit to instances
+where actual graphic variation has occurred, you can use the `--variants-only` flag:
+```sh
+$ dphon text_a.txt text_b.txt --variants-only # or just -g
+```
+
 ## methodology
 
 matching sequences are determined by a dictionary file that represents a particular reconstruction of old chinese phonology (you can see some examples in the `data/` folder). these data structures map an input character to an arbitrary sound token ("dummy") that can be matched against other such tokens.

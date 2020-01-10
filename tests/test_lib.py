@@ -253,3 +253,36 @@ class TestGroupMatches(TestCase):
         assert len(grouped[range(1, 2)]) == 2  # also two matches
         assert grouped[range(1, 5)] == [range(4, 9), range(12, 14)]
         assert grouped[range(1, 2)] == [range(342, 2342), range(25, 26)]
+
+
+class TestMatch(TestCase):
+
+    def test_identical(self):
+        a = '中士聞道，若存若'
+        b = '中士聞道，若存若'
+        match = Match(0, 8, 0, 8)
+        self.assertFalse(match.has_graphic_variation(a, b))
+
+    def test_non_char_variation(self):
+        a = '中士聞道。若存若'
+        b = '中士聞道，若存若'
+        match = Match(0, 8, 0, 8)
+        self.assertFalse(match.has_graphic_variation(a, b))
+
+    def test_missing_punct(self):
+        a = '中士聞道。若存若'
+        b = '中士聞道若存若'
+        match = Match(0, 8, 0, 8)
+        self.assertFalse(match.has_graphic_variation(a, b))
+
+    def test_graphic_variation(self):
+        a = '其用不弊。大盈若'
+        b = '其用不敝。大盈若'
+        match = Match(0, 8, 0, 8)
+        self.assertTrue(match.has_graphic_variation(a, b))
+
+    def test_graphic_and_punct_variation(self):
+        a = '靜勝熱。清靜為天下正'
+        b = '清勝熱清靜為天下正'
+        match = Match(0, 10, 0, 9)
+        self.assertTrue(match.has_graphic_variation(a, b))

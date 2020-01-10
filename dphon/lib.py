@@ -29,6 +29,21 @@ class Match(object):
         return 'A (%d - %d) :: B (%d - %d)' % (self.a_start, self.a_end,
                                                self.b_start, self.b_end)
 
+    def has_graphic_variation(self, a:str, b:str) -> bool:
+        """Whether a match contains an actual graphic variant of a character,
+        ignoring punctuation and other differences."""
+        # strip punctuation initially
+        a_seq = ''.join([c for c in a[self.a_start:self.a_end + 1] if c.isalpha()])
+        b_seq = ''.join([c for c in b[self.b_start:self.b_end + 1] if c.isalpha()])
+
+        # if we find a character in b that we have an entry for but it's in a
+        # different form, that's graphic variation
+        for (i, char) in enumerate(a_seq):
+            if char in DUMMY_DICT and char != b_seq[i]:
+                return True
+
+        return False
+
     def resolve(self, a: str, b: str):
         """Get the actual text of a match by mapping its locations to texts."""
         return '%s :: %s\t%s' % (

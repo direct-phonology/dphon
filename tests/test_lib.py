@@ -220,7 +220,7 @@ class TestGroupMatches(TestCase):
         ]
         grouped = Comparator.group_matches(matches)
         assert len(grouped) == 4
-        for k, v in grouped.items():
+        for _, v in grouped.items():
             assert len(v) == 1  # every "group" is just one match in b
 
     def test_small_group(self):

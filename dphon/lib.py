@@ -8,6 +8,10 @@ with open('data/dummy_dict.json', encoding='utf-8') as file:
     DUMMY_DICT = json.loads(file.read())
 
 
+def phonetic_tokens(string: str) -> str:
+    return (DUMMY_DICT[char][2] for char in string if char in DUMMY_DICT)
+
+
 class Match(object):
     a_start: int
     a_end: int
@@ -136,13 +140,17 @@ class Comparator(object):
                 # ignore matches that are fully congruent
                 if candidate.a_start == match.a_start and candidate.a_end == match.a_end:
                     continue
-                # next we should find matches that are overlapping, if any
-                if candidate.a_start < match.a_end and candidate.a_start > match.a_start and candidate.b_start < match.b_end and candidate.b_start > match.b_start:
-                    # move the candidate inside the current match
-                    match.a_end = candidate.a_end
-                    match.b_end = candidate.b_end
-                    matches.remove(candidate)
-                    continue
+                # next we should find matches that are overlapping in A, if any
+                if candidate.a_start < match.a_end and candidate.a_start > match.a_start:
+                    # ignore matches pointing to somewhere else in B
+                    if candidate.b_start >= match.b_end or candidate.b_start <= match.b_start:
+                        continue
+                    # if we overlap in both A and B, merge into our match
+                    if candidate.b_start < match.b_end and candidate.b_start > match.b_start:
+                        match.a_end = candidate.a_end
+                        match.b_end = candidate.b_end
+                        matches.remove(candidate)
+                        continue
                 # if we didn't find any overlapping, we're done
                 break
         return matches

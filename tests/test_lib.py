@@ -162,6 +162,25 @@ class TestReduceMatches(TestCase):
         assert reduced[0].b_start == 10
         assert reduced[0].b_end == 16
 
+    def test_overlapping_sub_matches(self):
+        matches = [
+            Match(8, 10, 13, 15),
+            Match(9, 11, 14, 16),
+            Match(10, 12, 1, 3),  # subset of this sequence matches elsewhere
+            Match(10, 12, 15, 17),
+            Match(11, 13, 16, 18),  # larger match continues
+        ]
+        # should reduce to two separate matches; one larger and one smaller
+        reduced = Comparator.reduce_matches(matches)
+        assert len(reduced) == 2
+        assert reduced[0].a_start == 8
+        assert reduced[0].a_end == 13
+        assert reduced[0].b_start == 13
+        assert reduced[0].b_end == 18
+        assert reduced[1].a_start == 10
+        assert reduced[1].a_end == 12
+        assert reduced[1].b_start == 1
+        assert reduced[1].b_end == 3
 
 class TestGroupMatches(TestCase):
 

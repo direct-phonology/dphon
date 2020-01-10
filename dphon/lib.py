@@ -136,7 +136,7 @@ class Comparator(object):
         contiguous matches."""
         for i, match in enumerate(matches):
             # lookahead
-            for candidate in matches[i:]:
+            for candidate in matches[i+1:]:
                 # ignore matches that are fully congruent
                 if candidate.a_start == match.a_start and candidate.a_end == match.a_end:
                     continue

@@ -181,6 +181,10 @@ class Comparator(object):
         # return final list
         return matches
 
+    def matches_with_graphic_variation(self, matches: List[Match]) -> List[Match]:
+        """Filter the set of matches to only those with graphic variation."""
+        return [match for match in matches if match.has_graphic_variation(self.a, self.b)]
+
     @staticmethod
     def group_matches(matches: List[Match]) -> Dict[range, List[range]]:
         """Groups a list of matches by position in a text, so that a single

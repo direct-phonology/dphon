@@ -44,7 +44,7 @@ class Match(object):
 
         return False
 
-    def resolve(self, a: str, b: str):
+    def resolve(self, a: str, b: str) -> str:
         """Get the actual text of a match by mapping its locations to texts."""
         return '%s :: %s\t%s' % (
             a[self.a_start:self.a_end + 1],
@@ -201,11 +201,15 @@ class Comparator(object):
         """Print grouped matches by mapping their locations to texts."""
         output = ''
         for a, bs in matches.items():
-            output += '%s (%s: %d)\n' % (
-                self.a[a.start:a.stop+1], self.a_name, self.a_linemap[a.start])
+            text = self.a[a.start:a.stop+1]
+            display = '%s (%s: %d)\n' % (text.replace('\n',' ⏎ '),
+                                         self.a_name, self.a_linemap[a.start])
+            output += display
             for b in bs:
-                output += '%s (%s: %d)\n' % (
-                    self.b[b.start:b.stop+1], self.b_name, self.b_linemap[b.start])
+                text = self.b[b.start:b.stop+1]
+                display = '%s (%s: %d)\n' % (text.replace('\n', ' ⏎ '),
+                                             self.b_name, self.b_linemap[b.start])
+                output += display
             output += '\n'
         return output
 

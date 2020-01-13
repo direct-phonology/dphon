@@ -39,7 +39,8 @@ the output will be a list of character sequences in text_a that have rhyming cou
 解其分 (b: 56)         # and two from b on lines 4 and 56
 ```
 
-note that the sequences ignore non-word characters, including punctuation and numbers. this means that rhymes could span across lines, which will be reflected in the output.
+note that the matches ignore non-word characters, including punctuation and numbers.
+this means that matches could span multiple lines, which will be reflected in the output (line breaks will be represented by the ⏎ character).
 
 you can view the full list of command options with:
 ```sh
@@ -49,7 +50,12 @@ $ dphon --help
 by default, all matches are shown, including those where the text is identical. to limit to instances
 where actual graphic variation has occurred, you can use the `--variants-only` flag:
 ```sh
-$ dphon text_a.txt text_b.txt --variants-only # or just -g
+$ dphon text_a.txt text_b.txt --variants-only
+```
+
+this tool is under active development, and results may vary. to find the version you are running:
+```sh
+$ dphon --version
 ```
 
 ## methodology

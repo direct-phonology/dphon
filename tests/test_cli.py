@@ -27,8 +27,39 @@ class TestOptions(TestCase):
                 run()
             assert output.getvalue().strip() == version.strip()
 
+    def test_variants_only(self):
+        # --variants-only flag should limit to graphic variant matches only
+        sys.argv = ['dphon',
+                    'tests/fixtures/郭店/老子丙.txt',
+                    'tests/fixtures/郭店/老子甲.txt',
+                    '--variants-only']
+        with patch('sys.stdout.buffer.write') as output:
+            run()
+            results = output.call_args[0][0].decode().splitlines()
+        # only these two matches should be in output
+        assert results[0] == '猷乎，其 (老子丙: 1)'
+        assert results[1] == '猶乎其 (老子甲: 5)'
+        assert results[3] == '右。是以 (老子丙: 3)'
+        assert results[4] == '有。是以 (老子甲: 16)'
+        assert len(results) == 6
 
-class TestDualText(TestCase):
+    def test_n(self):
+        # --n option should return matches of at least length n
+        sys.argv = ['dphon',
+                    'tests/fixtures/郭店/老子丙.txt',
+                    'tests/fixtures/郭店/老子甲.txt',
+                    '--n=5']
+        with patch('sys.stdout.buffer.write') as output:
+            run()
+            results = output.call_args[0][0].decode()
+        # longer matches are in output, shorter are not
+        assert '為之者敗之，執之者失之' in results
+        assert '人欲不欲，不貴難得之貨' in results
+        assert '於天下' not in results
+        assert '猷乎，其' not in results
+
+
+class TestIO(TestCase):
 
     def test_read_files(self):
         # read two files and compare them

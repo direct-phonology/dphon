@@ -2,18 +2,19 @@
 dphon
  
 Usage:
-    dphon <text1> <text2> [-g | --variants-only] [--output=<file>]
+    dphon <text1> <text2> [--n=<n>] [--output=<file>] [--variants-only]
     dphon -h | --help
     dphon -v | --version
  
 Options:
     -h --help           Show this screen.
-    -v --version        Show program version.
-    -g --variants-only  Show only matches with graphic variation.
+    --version           Show program version.
+    --variants-only     Limit to matches with graphic variation.
+    --n=<n>             Limit to matches with length >= n [default: 3].
  
 Examples:
     dphon 老子丙.txt 老子乙.txt --output=matches.txt
-    dphon 周南.txt 鹿鳴之什.txt -g
+    dphon 周南.txt 鹿鳴之什.txt --variants-only
  
 Help:
     For more information on using this tool, please visit the Github repository:
@@ -41,7 +42,7 @@ def run():
                    a_name=arguments['<text1>'],
                    b_name=arguments['<text2>'])
     # get and reduce initial matches
-    matches = c.get_matches()
+    matches = c.get_matches(min_length=int(arguments['--n']))
     # if requested, remove matches without graphic variation
     if arguments['--variants-only']:
         matches = c.matches_with_graphic_variation(matches)

@@ -4,7 +4,7 @@ dphon
 Usage:
     dphon <text1> <text2> [--n=<n>] [--output=<file>] [--variants-only]
     dphon -h | --help
-    dphon -v | --version
+    dphon --version
  
 Options:
     -h --help           Show this screen.

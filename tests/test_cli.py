@@ -13,7 +13,7 @@ class TestOptions(TestCase):
 
     def test_help(self):
         # help command should print module docstring
-        sys.argv = ['dphon', '-h']
+        sys.argv = ['dphon', '--help']
         with patch('sys.stdout', new=StringIO()) as output:
             with raises(SystemExit):
                 run()
@@ -21,7 +21,7 @@ class TestOptions(TestCase):
 
     def test_version(self):
         # version command should print module version
-        sys.argv = ['dphon', '-v']
+        sys.argv = ['dphon', '--version']
         with patch('sys.stdout', new=StringIO()) as output:
             with raises(SystemExit):
                 run()

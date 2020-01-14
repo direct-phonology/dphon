@@ -3,14 +3,20 @@ from collections import defaultdict
 from typing import List, Dict, Tuple
 from os.path import basename, splitext
 
+'''Non-alphabetic symbols used in place of a character.'''
+CHAR_MARKERS = ['□']
 
 with open('data/dummy_dict.json', encoding='utf-8') as file:
     DUMMY_DICT = json.loads(file.read())
 
-
 def phonetic_tokens(string: str) -> str:
-    return (DUMMY_DICT[char][2] for char in string if char in DUMMY_DICT)
+    """Returns iterator of phonetic tokens for input string. Characters not in
+    the dictionary are left unchanged."""
+    return (DUMMY_DICT[char][2] if char in DUMMY_DICT else char for char in string)
 
+def has_char_markers(string: str) -> bool:
+    """Returns True if input string contains any character in CHAR_MARKERS."""
+    return any([c in string for c in CHAR_MARKERS])
 
 class Match(object):
     a_start: int
@@ -101,7 +107,7 @@ class Comparator(object):
             raise ValueError('Value for `n` must be 1 or greater.')
         ngrams = []
         for pos, char in enumerate(text):
-            if char.isalpha():
+            if char.isalpha() or char in CHAR_MARKERS:
                 # create a new ngram
                 ngram = {'text': '', 'start': None, 'end': None}
                 # add either the original character or a token if we have one
@@ -123,8 +129,10 @@ class Comparator(object):
                     except IndexError:
                         continue
                 ngrams.append(ngram)
-        # return all but the last n - 1 ngrams, as they are redundant
-        return ngrams[:len(ngrams) - n + 1]
+        # last n - 1 ngrams are redundant
+        ngrams = ngrams[:len(ngrams) - n + 1]
+        # step through the final list to discard any ngrams with CHAR_MARKERS
+        return [n for n in ngrams if not has_char_markers(n['text'])]
 
     def get_initial_matches(self, n: int = 3) -> List[Match]:
         """Gets a set of initial, overlapping matches between two texts that can

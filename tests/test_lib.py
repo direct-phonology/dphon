@@ -51,6 +51,29 @@ class TestNgrams(TestCase):
         # as 驫 not in dictionary, it should remain unchanged
         assert '驫' in ngrams[0]['text']
 
+    def test_sequential_char_markers(self):
+        a = '是謂□□□□□□□□□□□不克則莫知其極。'
+        ngrams = Comparator.get_text_ngrams(a, n=3)
+        # no valid trigrams until we get to after the CHAR_MARKERS
+        assert ngrams[0]['text'] == '不刻則'
+        # no ngrams should contain a CHAR_MARKER
+        for text in (n['text'] for n in ngrams):
+            assert '□' not in text
+
+    def test_sparse_char_markers(self):
+        a = '建德如□□真如□渝。不克□則莫知其□極。'
+        ngrams = Comparator.get_text_ngrams(a, n=3)
+        # first ngram is a full trigram
+        assert ngrams[0]['text'] == '干得女'
+        # second ngram will be next set of three valid chars, no punctuation
+        assert ngrams[1]['text'] == '俞不刻'
+        # two more valid ngrams left
+        assert ngrams[2]['text'] == '則莫知'
+        assert ngrams[3]['text'] == '莫知其'
+        # no ngrams should contain a CHAR_MARKER
+        for text in (n['text'] for n in ngrams):
+            assert '□' not in text
+
 
 class TestInitialMatches(TestCase):
 

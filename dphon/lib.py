@@ -96,8 +96,6 @@ class Comparator(object):
             output += '%s\t%s' % (i + 1, line)
 
         return output
-        # save the lines into a new string
-        # write the string to a file
 
     @staticmethod
     def get_text_ngrams(text: str, n: int = 3) -> List[Dict]:

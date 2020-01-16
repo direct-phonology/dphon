@@ -1,4 +1,5 @@
 venv
+env
 .vscode
 .pytest_cache
 .python-version

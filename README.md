@@ -3,7 +3,7 @@ _Digital Intertextual Resonances in Early Chinese Texts_
 
 ![CI Status](https://github.com/direct-phonology/direct/workflows/test/badge.svg)
 ![Dependency Status](https://pyup.io/repos/github/direct-phonology/direct/shield.svg?t=1568910750251)
-![PyPi Version](https://img.shields.io/pypi/v/dphon.svg?style=flat)
+[![PyPi Version](https://img.shields.io/pypi/v/dphon.svg?style=flat)](https://pypi.org/project/dphon/)
 ![Python Versions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
 
 ## installation
@@ -39,16 +39,28 @@ the output will be a list of character sequences in text_a that have rhyming cou
 解其分 (b: 56)         # and two from b on lines 4 and 56
 ```
 
-note that the sequences ignore non-word characters, including punctuation and numbers. this means that rhymes could span across lines, which will be reflected in the output.
+note that the matches ignore non-word characters, including punctuation and numbers.
+this means that matches could span multiple lines, which will be reflected in the output (line breaks will be represented by the ⏎ character).
 
 you can view the full list of command options with:
 ```sh
 $ dphon --help
 ```
 
+by default, all matches are shown, including those where the text is identical. to limit to instances
+where actual graphic variation has occurred, you can use the `--variants-only` flag:
+```sh
+$ dphon text_a.txt text_b.txt --variants-only
+```
+
+this tool is under active development, and results may vary. to find the version you are running:
+```sh
+$ dphon --version
+```
+
 ## methodology
 
-matching sequences are determined by a dictionary file that represents a particular reconstruction of old chinese phonology (you can see some examples in the `data/` folder). these data structures map an input character to an arbitrary sound token ("dummy") that can be matched against other such tokens.
+matching sequences are determined by a dictionary file that represents a particular reconstruction of old chinese phonology (you can see some examples in the `dphon/data/` folder). these data structures map an input character to an arbitrary sound token ("dummy") that can be matched against other such tokens.
 
 the core process of DIRECT is to accept plaintext input, tokenize it according to a particular phonological reconstruction, and search for matches amongst the tokenized text. these matches thus represent resonance: sequences that could have rhymed when they were originally read aloud, despite dissimilarity in their written forms.
 

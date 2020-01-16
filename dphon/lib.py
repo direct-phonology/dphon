@@ -1,12 +1,26 @@
 import json
 from collections import defaultdict
-from typing import List, Dict, Tuple
 from os.path import basename, splitext
+from typing import Dict, List, Tuple
 
+import pkg_resources
 
-with open('data/dummy_dict.json', encoding='utf-8') as file:
+'''Non-alphabetic symbols used in place of a character.'''
+CHAR_MARKERS = ['□']
+
+'''Dictionary based on Schuessler's reconstruction of Old Chinese.'''
+schuessler_path = pkg_resources.resource_filename(__package__, 'data/dummy_dict.json')
+with open(schuessler_path, encoding='utf-8') as file:
     DUMMY_DICT = json.loads(file.read())
 
+def phonetic_tokens(string: str) -> str:
+    """Returns iterator of phonetic tokens for input string. Characters not in
+    the dictionary are left unchanged."""
+    return (DUMMY_DICT[char][2] if char in DUMMY_DICT else char for char in string)
+
+def has_char_markers(string: str) -> bool:
+    """Returns True if input string contains any character in CHAR_MARKERS."""
+    return any([c in string for c in CHAR_MARKERS])
 
 class Match(object):
     a_start: int
@@ -25,7 +39,22 @@ class Match(object):
         return 'A (%d - %d) :: B (%d - %d)' % (self.a_start, self.a_end,
                                                self.b_start, self.b_end)
 
-    def resolve(self, a: str, b: str):
+    def has_graphic_variation(self, a:str, b:str) -> bool:
+        """Whether a match contains an actual graphic variant of a character,
+        ignoring punctuation and other differences."""
+        # strip punctuation initially
+        a_seq = ''.join([c for c in a[self.a_start:self.a_end + 1] if c.isalpha()])
+        b_seq = ''.join([c for c in b[self.b_start:self.b_end + 1] if c.isalpha()])
+
+        # if we find a character in b that we have an entry for but it's in a
+        # different form, that's graphic variation
+        for (i, char) in enumerate(a_seq):
+            if char in DUMMY_DICT and char != b_seq[i]:
+                return True
+
+        return False
+
+    def resolve(self, a: str, b: str) -> str:
         """Get the actual text of a match by mapping its locations to texts."""
         return '%s :: %s\t%s' % (
             a[self.a_start:self.a_end + 1],
@@ -71,8 +100,6 @@ class Comparator(object):
             output += '%s\t%s' % (i + 1, line)
 
         return output
-        # save the lines into a new string
-        # write the string to a file
 
     @staticmethod
     def get_text_ngrams(text: str, n: int = 3) -> List[Dict]:
@@ -82,7 +109,7 @@ class Comparator(object):
             raise ValueError('Value for `n` must be 1 or greater.')
         ngrams = []
         for pos, char in enumerate(text):
-            if char.isalpha():
+            if char.isalpha() or char in CHAR_MARKERS:
                 # create a new ngram
                 ngram = {'text': '', 'start': None, 'end': None}
                 # add either the original character or a token if we have one
@@ -104,8 +131,10 @@ class Comparator(object):
                     except IndexError:
                         continue
                 ngrams.append(ngram)
-        # return all but the last n - 1 ngrams, as they are redundant
-        return ngrams[:len(ngrams) - n + 1]
+        # last n - 1 ngrams are redundant
+        ngrams = ngrams[:len(ngrams) - n + 1]
+        # step through the final list to discard any ngrams with CHAR_MARKERS
+        return [n for n in ngrams if not has_char_markers(n['text'])]
 
     def get_initial_matches(self, n: int = 3) -> List[Match]:
         """Gets a set of initial, overlapping matches between two texts that can
@@ -132,20 +161,39 @@ class Comparator(object):
         contiguous matches."""
         for i, match in enumerate(matches):
             # lookahead
-            for candidate in matches[i:]:
+            for candidate in matches[i+1:]:
                 # ignore matches that are fully congruent
                 if candidate.a_start == match.a_start and candidate.a_end == match.a_end:
                     continue
-                # next we should find matches that are overlapping, if any
-                if candidate.a_start < match.a_end and candidate.a_start > match.a_start and candidate.b_start < match.b_end and candidate.b_start > match.b_start:
-                    # move the candidate inside the current match
-                    match.a_end = candidate.a_end
-                    match.b_end = candidate.b_end
-                    matches.remove(candidate)
-                    continue
+                # next we should find matches that are overlapping in A, if any
+                if candidate.a_start < match.a_end and candidate.a_start > match.a_start:
+                    # ignore matches pointing to somewhere else in B
+                    if candidate.b_start >= match.b_end or candidate.b_start <= match.b_start:
+                        continue
+                    # ignore matches in B that are completely inside ours
+                    if candidate.b_start > match.b_start and candidate.b_end < match.b_end:
+                        continue
+                    # if we overlap in both A and B, merge into our match
+                    if candidate.b_start < match.b_end and candidate.b_start > match.b_start:
+                        match.a_end = candidate.a_end
+                        match.b_end = candidate.b_end
+                        matches.remove(candidate)
+                        continue
                 # if we didn't find any overlapping, we're done
                 break
+        # some matches may still be completely subsumed by others
+        for i, match in enumerate(matches):
+            # lookahead to see if any matches fit inside this one
+            for candidate in matches[i+1:]:
+                # if so, remove
+                if candidate.a_start >= match.a_start and candidate.a_end <= match.a_end and candidate.b_start >= match.b_start and candidate.b_end <= match.b_end:
+                    matches.remove(candidate)
+        # return final list
         return matches
+
+    def matches_with_graphic_variation(self, matches: List[Match]) -> List[Match]:
+        """Filter the set of matches to only those with graphic variation."""
+        return [match for match in matches if match.has_graphic_variation(self.a, self.b)]
 
     @staticmethod
     def group_matches(matches: List[Match]) -> Dict[range, List[range]]:
@@ -163,11 +211,15 @@ class Comparator(object):
         """Print grouped matches by mapping their locations to texts."""
         output = ''
         for a, bs in matches.items():
-            output += '%s (%s: %d)\n' % (
-                self.a[a.start:a.stop+1], self.a_name, self.a_linemap[a.start])
+            text = self.a[a.start:a.stop+1]
+            display = '%s (%s: %d)\n' % (text.replace('\n',' ⏎ '),
+                                         self.a_name, self.a_linemap[a.start])
+            output += display
             for b in bs:
-                output += '%s (%s: %d)\n' % (
-                    self.b[b.start:b.stop+1], self.b_name, self.b_linemap[b.start])
+                text = self.b[b.start:b.stop+1]
+                display = '%s (%s: %d)\n' % (text.replace('\n', ' ⏎ '),
+                                             self.b_name, self.b_linemap[b.start])
+                output += display
             output += '\n'
         return output
 

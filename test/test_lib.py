@@ -51,6 +51,29 @@ class TestNgrams(TestCase):
         # as 驫 not in dictionary, it should remain unchanged
         assert '驫' in ngrams[0]['text']
 
+    def test_sequential_char_markers(self):
+        a = '是謂□□□□□□□□□□□不克則莫知其極。'
+        ngrams = Comparator.get_text_ngrams(a, n=3)
+        # no valid trigrams until we get to after the CHAR_MARKERS
+        assert ngrams[0]['text'] == '不刻則'
+        # no ngrams should contain a CHAR_MARKER
+        for text in (n['text'] for n in ngrams):
+            assert '□' not in text
+
+    def test_sparse_char_markers(self):
+        a = '建德如□□真如□渝。不克□則莫知其□極。'
+        ngrams = Comparator.get_text_ngrams(a, n=3)
+        # first ngram is a full trigram
+        assert ngrams[0]['text'] == '干得女'
+        # second ngram will be next set of three valid chars, no punctuation
+        assert ngrams[1]['text'] == '俞不刻'
+        # two more valid ngrams left
+        assert ngrams[2]['text'] == '則莫知'
+        assert ngrams[3]['text'] == '莫知其'
+        # no ngrams should contain a CHAR_MARKER
+        for text in (n['text'] for n in ngrams):
+            assert '□' not in text
+
 
 class TestInitialMatches(TestCase):
 
@@ -162,6 +185,52 @@ class TestReduceMatches(TestCase):
         assert reduced[0].b_start == 10
         assert reduced[0].b_end == 16
 
+    def test_overlapping_sub_matches(self):
+        matches = [
+            Match(8, 10, 13, 15),
+            Match(9, 11, 14, 16),
+            Match(10, 12, 1, 3),  # subset of this sequence matches elsewhere
+            Match(10, 12, 15, 17),
+            Match(11, 13, 16, 18),
+        ]
+        # should reduce to two separate matches; one larger and one smaller
+        reduced = Comparator.reduce_matches(matches)
+        assert len(reduced) == 2
+        assert reduced[0].a_start == 8
+        assert reduced[0].a_end == 13
+        assert reduced[0].b_start == 13
+        assert reduced[0].b_end == 18
+        assert reduced[1].a_start == 10
+        assert reduced[1].a_end == 12
+        assert reduced[1].b_start == 1
+        assert reduced[1].b_end == 3
+
+    def test_mirror_submatches(self):
+        # in matching sequences with repeated subsequences, we should get a
+        # large match covering the entirety of both sequences. we don't care
+        # about the internal matches between subsequences since they are
+        # subsumed in the larger sequence.
+        matches = [
+            Match(1, 3, 1, 3),
+            Match(2, 4, 2, 4),    # subset at start of A matches at start of B
+            Match(2, 4, 12, 14),  # subset at start of A matches at end of B
+            Match(3, 6, 3, 6),
+            Match(4, 7, 4, 7),
+            Match(6, 8, 6, 8),
+            Match(7, 9, 7, 9),
+            Match(8, 11, 8, 11),
+            Match(9, 12, 9, 12),
+            Match(11, 13, 11, 13),
+            Match(12, 14, 2, 4),    # subset at end of A matches at start of B
+            Match(12, 14, 12, 14),  # subset at end of A matches at end of B
+        ]
+        # should reduce to three matches; one larger and two smaller
+        reduced = Comparator.reduce_matches(matches)
+        assert len(reduced) == 1
+        assert reduced[0].a_start == 1
+        assert reduced[0].a_end == 14
+        assert reduced[0].b_start == 1
+        assert reduced[0].b_end == 14
 
 class TestGroupMatches(TestCase):
 
@@ -174,7 +243,7 @@ class TestGroupMatches(TestCase):
         ]
         grouped = Comparator.group_matches(matches)
         assert len(grouped) == 4
-        for k, v in grouped.items():
+        for _, v in grouped.items():
             assert len(v) == 1  # every "group" is just one match in b
 
     def test_small_group(self):
@@ -207,3 +276,36 @@ class TestGroupMatches(TestCase):
         assert len(grouped[range(1, 2)]) == 2  # also two matches
         assert grouped[range(1, 5)] == [range(4, 9), range(12, 14)]
         assert grouped[range(1, 2)] == [range(342, 2342), range(25, 26)]
+
+
+class TestMatch(TestCase):
+
+    def test_identical(self):
+        a = '中士聞道，若存若'
+        b = '中士聞道，若存若'
+        match = Match(0, 8, 0, 8)
+        self.assertFalse(match.has_graphic_variation(a, b))
+
+    def test_non_char_variation(self):
+        a = '中士聞道。若存若'
+        b = '中士聞道，若存若'
+        match = Match(0, 8, 0, 8)
+        self.assertFalse(match.has_graphic_variation(a, b))
+
+    def test_missing_punct(self):
+        a = '中士聞道。若存若'
+        b = '中士聞道若存若'
+        match = Match(0, 8, 0, 8)
+        self.assertFalse(match.has_graphic_variation(a, b))
+
+    def test_graphic_variation(self):
+        a = '其用不弊。大盈若'
+        b = '其用不敝。大盈若'
+        match = Match(0, 8, 0, 8)
+        self.assertTrue(match.has_graphic_variation(a, b))
+
+    def test_graphic_and_punct_variation(self):
+        a = '靜勝熱。清靜為天下正'
+        b = '清勝熱清靜為天下正'
+        match = Match(0, 10, 0, 9)
+        self.assertTrue(match.has_graphic_variation(a, b))

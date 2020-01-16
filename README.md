@@ -60,7 +60,7 @@ $ dphon --version
 
 ## methodology
 
-matching sequences are determined by a dictionary file that represents a particular reconstruction of old chinese phonology (you can see some examples in the `data/` folder). these data structures map an input character to an arbitrary sound token ("dummy") that can be matched against other such tokens.
+matching sequences are determined by a dictionary file that represents a particular reconstruction of old chinese phonology (you can see some examples in the `dphon/data/` folder). these data structures map an input character to an arbitrary sound token ("dummy") that can be matched against other such tokens.
 
 the core process of DIRECT is to accept plaintext input, tokenize it according to a particular phonological reconstruction, and search for matches amongst the tokenized text. these matches thus represent resonance: sequences that could have rhymed when they were originally read aloud, despite dissimilarity in their written forms.
 

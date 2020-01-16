@@ -1,12 +1,16 @@
 import json
 from collections import defaultdict
-from typing import List, Dict, Tuple
 from os.path import basename, splitext
+from typing import Dict, List, Tuple
+
+import pkg_resources
 
 '''Non-alphabetic symbols used in place of a character.'''
 CHAR_MARKERS = ['□']
 
-with open('data/dummy_dict.json', encoding='utf-8') as file:
+'''Dictionary based on Schuessler's reconstruction of Old Chinese.'''
+schuessler_path = pkg_resources.resource_filename(__package__, 'data/dummy_dict.json')
+with open(schuessler_path, encoding='utf-8') as file:
     DUMMY_DICT = json.loads(file.read())
 
 def phonetic_tokens(string: str) -> str:

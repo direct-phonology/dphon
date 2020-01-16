@@ -39,7 +39,8 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/direct-phonology/direct',
-    include_package_data=True,  # include extra data files, e.g. dictionaries
+    include_package_data=True,
+    package_data={'dphon': ['data/*.json']},
     author='John O\'Leary, Nick Budak, Gian Rominger',
     author_email='jo10@princeton.edu, nbudak@princeton.edu, gianr@princeton.edu',
     license='MIT',

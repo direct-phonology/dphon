@@ -51,6 +51,8 @@ setup(
         'Natural Language :: Chinese (Traditional)',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Text Processing :: Linguistic',
         'Topic :: Utilities',
     ],

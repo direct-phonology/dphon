@@ -30,8 +30,8 @@ class TestOptions(TestCase):
     def test_variants_only(self):
         # --variants-only flag should limit to graphic variant matches only
         sys.argv = ['dphon',
-                    'tests/fixtures/郭店/老子丙.txt',
-                    'tests/fixtures/郭店/老子甲.txt',
+                    'test/fixtures/郭店/老子丙.txt',
+                    'test/fixtures/郭店/老子甲.txt',
                     '--variants-only']
         with patch('sys.stdout.buffer.write') as output:
             run()
@@ -46,8 +46,8 @@ class TestOptions(TestCase):
     def test_n(self):
         # --n option should return matches of at least length n
         sys.argv = ['dphon',
-                    'tests/fixtures/郭店/老子丙.txt',
-                    'tests/fixtures/郭店/老子甲.txt',
+                    'test/fixtures/郭店/老子丙.txt',
+                    'test/fixtures/郭店/老子甲.txt',
                     '--n=5']
         with patch('sys.stdout.buffer.write') as output:
             run()
@@ -64,8 +64,8 @@ class TestIO(TestCase):
     def test_read_files(self):
         # read two files and compare them
         sys.argv = ['dphon',
-                    'tests/fixtures/郭店/老子丙.txt',
-                    'tests/fixtures/郭店/老子甲.txt']
+                    'test/fixtures/郭店/老子丙.txt',
+                    'test/fixtures/郭店/老子甲.txt']
         with patch('sys.stdout.buffer.write') as output:
             run()
             results = output.call_args[0][0].decode().splitlines()
@@ -77,8 +77,8 @@ class TestIO(TestCase):
         with tempfile.TemporaryDirectory() as tmpdirname:
             outfile = '%s/out.txt' % tmpdirname
             sys.argv = ['dphon',
-                        'tests/fixtures/郭店/老子丙.txt',
-                        'tests/fixtures/郭店/老子甲.txt',
+                        'test/fixtures/郭店/老子丙.txt',
+                        'test/fixtures/郭店/老子甲.txt',
                         '--output=%s' % outfile]
             run()
             with open(outfile, encoding='utf-8') as file:

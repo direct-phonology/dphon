@@ -1,12 +1,12 @@
 import sys
 import tempfile
 from io import StringIO
-from os.path import exists
-from unittest import TestCase
+from unittest import TestCase, main
 from unittest.mock import patch
-from pytest import raises
 
-from dphon.cli import run, __doc__ as doc, __version__ as version
+from dphon.cli import __doc__ as doc
+from dphon.cli import __version__ as version
+from dphon.cli import run
 
 
 class TestOptions(TestCase):
@@ -15,48 +15,47 @@ class TestOptions(TestCase):
         # help command should print module docstring
         sys.argv = ['dphon', '--help']
         with patch('sys.stdout', new=StringIO()) as output:
-            with raises(SystemExit):
-                run()
-            assert output.getvalue().strip() == doc.strip()
+            with self.assertRaises(SystemExit):
+                 run()
+            self.assertEqual(output.getvalue().strip(), doc.strip())
 
     def test_version(self):
         # version command should print module version
         sys.argv = ['dphon', '--version']
         with patch('sys.stdout', new=StringIO()) as output:
-            with raises(SystemExit):
+            with self.assertRaises(SystemExit):
                 run()
-            assert output.getvalue().strip() == version.strip()
+            self.assertEqual(output.getvalue().strip(), version.strip())
 
     def test_variants_only(self):
         # --variants-only flag should limit to graphic variant matches only
         sys.argv = ['dphon',
-                    'test/fixtures/郭店/老子丙.txt',
-                    'test/fixtures/郭店/老子甲.txt',
+                    'test/fixtures/laozi.txt',
+                    'test/fixtures/xiaojing.txt',
                     '--variants-only']
         with patch('sys.stdout.buffer.write') as output:
             run()
             results = output.call_args[0][0].decode().splitlines()
         # only these two matches should be in output
-        assert results[0] == '猷乎，其 (老子丙: 1)'
-        assert results[1] == '猶乎其 (老子甲: 5)'
-        assert results[3] == '右。是以 (老子丙: 3)'
-        assert results[4] == '有。是以 (老子甲: 16)'
-        assert len(results) == 6
+        self.assertEqual(results[0], '以智治 (laozi: 65)')
+        self.assertEqual(results[1], '以知之 (xiaojing: 1)')
+        self.assertEqual(results[3], '以智治 (laozi: 65)')
+        self.assertEqual(results[4], '以知之 (xiaojing: 1)')
+        self.assertEqual(len(results), 6)
 
     def test_n(self):
         # --n option should return matches of at least length n
         sys.argv = ['dphon',
-                    'test/fixtures/郭店/老子丙.txt',
-                    'test/fixtures/郭店/老子甲.txt',
-                    '--n=5']
+                    'test/fixtures/shijing1.txt',
+                    'test/fixtures/shijing2.txt',
+                    '--n=4']
         with patch('sys.stdout.buffer.write') as output:
             run()
             results = output.call_args[0][0].decode()
         # longer matches are in output, shorter are not
-        assert '為之者敗之，執之者失之' in results
-        assert '人欲不欲，不貴難得之貨' in results
-        assert '於天下' not in results
-        assert '猷乎，其' not in results
+        self.assertIn('未見君子 (shijing1: 58)', results)
+        self.assertIn('既見君子 (shijing1: 59)', results)
+        self.assertNotIn('葉萋萋 (shijing1: 9)' , results)
 
 
 class TestIO(TestCase):
@@ -64,24 +63,24 @@ class TestIO(TestCase):
     def test_read_files(self):
         # read two files and compare them
         sys.argv = ['dphon',
-                    'test/fixtures/郭店/老子丙.txt',
-                    'test/fixtures/郭店/老子甲.txt']
+                    'test/fixtures/shijing1.txt',
+                    'test/fixtures/shijing2.txt',]
         with patch('sys.stdout.buffer.write') as output:
             run()
             results = output.call_args[0][0].decode().splitlines()
-        assert results[0] == '猷乎，其 (老子丙: 1)'
-        assert results[1] == '猶乎其 (老子甲: 5)'
+        self.assertEqual(results[0], '君子好 (shijing1: 3)')
+        self.assertEqual(results[1], '君子、憂 (shijing2: 64)')
 
     def test_write_file(self):
         # --output flag should write to a file
         with tempfile.TemporaryDirectory() as tmpdirname:
             outfile = '%s/out.txt' % tmpdirname
             sys.argv = ['dphon',
-                        'test/fixtures/郭店/老子丙.txt',
-                        'test/fixtures/郭店/老子甲.txt',
+                        'test/fixtures/shijing1.txt',
+                        'test/fixtures/shijing2.txt',
                         '--output=%s' % outfile]
             run()
             with open(outfile, encoding='utf-8') as file:
                 results = file.read().splitlines()
-            assert results[0] == '猷乎，其 (老子丙: 1)'
-            assert results[1] == '猶乎其 (老子甲: 5)'
+        self.assertEqual(results[0], '君子好 (shijing1: 3)')
+        self.assertEqual(results[1], '君子、憂 (shijing2: 64)')

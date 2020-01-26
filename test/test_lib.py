@@ -1,5 +1,4 @@
 from unittest import TestCase
-from pytest import raises
 
 from dphon.lib import Comparator, Match
 
@@ -10,69 +9,69 @@ class TestNgrams(TestCase):
         a = '天下皆知美之為美，斯惡已。'
         # ignore punctuation, we should get 8 4-grams here
         ngrams = Comparator.get_text_ngrams(a, n=4)
-        assert len(ngrams) == 8
+        self.assertEqual(len(ngrams), 8)
         # if we push n up to 11, there is only one "gram"
         ngrams = Comparator.get_text_ngrams(a, n=11)
-        assert len(ngrams) == 1
+        self.assertEqual(len(ngrams), 1)
         # if n is longer than the number of possible ngrams, output is empty
         ngrams = Comparator.get_text_ngrams(a, n=100)
-        assert len(ngrams) == 0
+        self.assertEqual(len(ngrams), 0)
         # if n is negative, we should get a ValueError
-        with raises(ValueError):
+        with self.assertRaises(ValueError):
             ngrams = Comparator.get_text_ngrams(a, n=-4)
 
     def test_ngram_start_end(self):
         a = '天下皆知美之為美，斯惡已。'
         ngrams = Comparator.get_text_ngrams(a, n=4)
         # check an ngram with no punctuation
-        assert ngrams[0]['start'] == 0
-        assert ngrams[0]['end'] == 3
+        self.assertEqual(ngrams[0]['start'], 0)
+        self.assertEqual(ngrams[0]['end'], 3)
         # check one that has punctuation inside it
-        assert ngrams[-1]['start'] == 7
-        assert ngrams[-1]['end'] == 11
+        self.assertEqual(ngrams[-1]['start'], 7)
+        self.assertEqual(ngrams[-1]['end'], 11)
 
     def test_ngram_text_punctuation(self):
         a = '天下皆知美之為美，斯惡已。'
         ngrams = Comparator.get_text_ngrams(a, n=4)
         # check an ngram text to make sure no punctuation
-        assert '。' not in ngrams[-1]['text']
-        assert '，' not in ngrams[-1]['text']
+        self.assertNotIn('。', ngrams[-1]['text'])
+        self.assertNotIn('，', ngrams[-1]['text'])
 
     def test_ngram_tokenizes_known_char(self):
         a = '天下皆知美之為美，斯惡已。'
         ngrams = Comparator.get_text_ngrams(a, n=4)
         # in our dictionary, 皆 becomes 示
-        assert '皆' not in ngrams[0]['text']
-        assert '示' in ngrams[0]['text']
+        self.assertNotIn('皆', ngrams[0]['text'])
+        self.assertIn('示', ngrams[0]['text'])
 
     def test_ngram_text_unknown_char(self):
         a = '驫'
         ngrams = Comparator.get_text_ngrams(a, n=1)
         # as 驫 not in dictionary, it should remain unchanged
-        assert '驫' in ngrams[0]['text']
+        self.assertIn('驫', ngrams[0]['text'])
 
     def test_sequential_char_markers(self):
         a = '是謂□□□□□□□□□□□不克則莫知其極。'
         ngrams = Comparator.get_text_ngrams(a, n=3)
         # no valid trigrams until we get to after the CHAR_MARKERS
-        assert ngrams[0]['text'] == '不刻則'
+        self.assertEqual(ngrams[0]['text'], '不刻則')
         # no ngrams should contain a CHAR_MARKER
         for text in (n['text'] for n in ngrams):
-            assert '□' not in text
+            self.assertNotIn('□', text)
 
     def test_sparse_char_markers(self):
         a = '建德如□□真如□渝。不克□則莫知其□極。'
         ngrams = Comparator.get_text_ngrams(a, n=3)
         # first ngram is a full trigram
-        assert ngrams[0]['text'] == '干得女'
+        self.assertEqual(ngrams[0]['text'], '干得女')
         # second ngram will be next set of three valid chars, no punctuation
-        assert ngrams[1]['text'] == '俞不刻'
+        self.assertEqual(ngrams[1]['text'], '俞不刻')
         # two more valid ngrams left
-        assert ngrams[2]['text'] == '則莫知'
-        assert ngrams[3]['text'] == '莫知其'
+        self.assertEqual(ngrams[2]['text'], '則莫知')
+        self.assertEqual(ngrams[3]['text'], '莫知其')
         # no ngrams should contain a CHAR_MARKER
         for text in (n['text'] for n in ngrams):
-            assert '□' not in text
+            self.assertNotIn('□', text)
 
 
 class TestInitialMatches(TestCase):
@@ -83,11 +82,11 @@ class TestInitialMatches(TestCase):
         comp = Comparator(a, b, 'a', 'b')
         matches = comp.get_initial_matches()
         # in these fake texts there is exactly one match
-        assert len(matches) == 1
-        assert matches[0].a_start == 1
-        assert matches[0].a_end == 3
-        assert matches[0].b_start == 10
-        assert matches[0].b_end == 12
+        self.assertEqual(len(matches), 1)
+        self.assertEqual(matches[0].a_start, 1)
+        self.assertEqual(matches[0].a_end, 3)
+        self.assertEqual(matches[0].b_start, 10)
+        self.assertEqual(matches[0].b_end, 12)
 
     def test_matches_quadgrams(self):
         a = '孔於鄉黨於孔孔孔孔孔孔孔孔孔'
@@ -95,11 +94,11 @@ class TestInitialMatches(TestCase):
         comp = Comparator(a, b, 'a', 'b')
         matches = comp.get_initial_matches(n=4)
         # exactly one quad-gram match
-        assert len(matches) == 1
-        assert matches[0].a_start == 1
-        assert matches[0].a_end == 4
-        assert matches[0].b_start == 2
-        assert matches[0].b_end == 5
+        self.assertEqual(len(matches), 1)
+        self.assertEqual(matches[0].a_start, 1)
+        self.assertEqual(matches[0].a_end, 4)
+        self.assertEqual(matches[0].b_start, 2)
+        self.assertEqual(matches[0].b_end, 5)
 
     def test_overlapping_matches(self):
         a = '孔於鄉黨於孔孔孔孔孔孔孔孔孔'
@@ -107,15 +106,15 @@ class TestInitialMatches(TestCase):
         comp = Comparator(a, b, 'a', 'b')
         matches = comp.get_initial_matches()
         # two overlapping trigram matches
-        assert len(matches) == 2
-        assert matches[0].a_start == 1
-        assert matches[0].a_end == 3
-        assert matches[0].b_start == 2
-        assert matches[0].b_end == 4
-        assert matches[1].a_start == 2
-        assert matches[1].a_end == 4
-        assert matches[1].b_start == 3
-        assert matches[1].b_end == 5
+        self.assertEqual(len(matches), 2)
+        self.assertEqual(matches[0].a_start, 1)
+        self.assertEqual(matches[0].a_end, 3)
+        self.assertEqual(matches[0].b_start, 2)
+        self.assertEqual(matches[0].b_end, 4)
+        self.assertEqual(matches[1].a_start, 2)
+        self.assertEqual(matches[1].a_end, 4)
+        self.assertEqual(matches[1].b_start, 3)
+        self.assertEqual(matches[1].b_end, 5)
 
     def test_partial_overlap(self):
         a = '孔於鄉黨於孔孔孔孔孔孔孔'
@@ -123,22 +122,22 @@ class TestInitialMatches(TestCase):
         comp = Comparator(a, b, 'a', 'b')
         matches = comp.get_initial_matches()
         # a sequence in A partially matches two different places in B
-        assert len(matches) == 2
-        assert matches[0].a_start == 1
-        assert matches[0].a_end == 3
-        assert matches[0].b_start == 1
-        assert matches[0].b_end == 3
-        assert matches[1].a_start == 2
-        assert matches[1].a_end == 4
-        assert matches[1].b_start == 7
-        assert matches[1].b_end == 9
+        self.assertEqual(len(matches), 2)
+        self.assertEqual(matches[0].a_start, 1)
+        self.assertEqual(matches[0].a_end, 3)
+        self.assertEqual(matches[0].b_start, 1)
+        self.assertEqual(matches[0].b_end, 3)
+        self.assertEqual(matches[1].a_start, 2)
+        self.assertEqual(matches[1].a_end, 4)
+        self.assertEqual(matches[1].b_start, 7)
+        self.assertEqual(matches[1].b_end, 9)
 
     def test_no_matches(self):
         a = '孔孔孔孔孔孔孔孔孔孔'
         b = '其其鴉羕上鴉其其其其其'
         comp = Comparator(a, b, 'a', 'b')
         matches = comp.get_initial_matches()
-        assert len(matches) == 0
+        self.assertEqual(len(matches), 0)
 
 
 class TestReduceMatches(TestCase):
@@ -150,11 +149,11 @@ class TestReduceMatches(TestCase):
         ]
         # combines two trigrams into a single quad-gram match
         reduced = Comparator.reduce_matches(matches)
-        assert len(reduced) == 1
-        assert reduced[0].a_start == 0
-        assert reduced[0].a_end == 3
-        assert reduced[0].b_start == 1
-        assert reduced[0].b_end == 4
+        self.assertEqual(len(reduced), 1)
+        self.assertEqual(reduced[0].a_start, 0)
+        self.assertEqual(reduced[0].a_end, 3)
+        self.assertEqual(reduced[0].b_start, 1)
+        self.assertEqual(reduced[0].b_end, 4)
 
     def test_different_match_lengths(self):
         matches = [
@@ -163,11 +162,11 @@ class TestReduceMatches(TestCase):
         ]
         # matches of different lengths, e.g. with punctuation
         reduced = Comparator.reduce_matches(matches)
-        assert len(reduced) == 1
-        assert reduced[0].a_start == 3
-        assert reduced[0].a_end == 8
-        assert reduced[0].b_start == 1
-        assert reduced[0].b_end == 5
+        self.assertEqual(len(reduced), 1)
+        self.assertEqual(reduced[0].a_start, 3)
+        self.assertEqual(reduced[0].a_end, 8)
+        self.assertEqual(reduced[0].b_start, 1)
+        self.assertEqual(reduced[0].b_end, 5)
 
     def test_many_overlapping_matches(self):
         matches = [
@@ -179,11 +178,11 @@ class TestReduceMatches(TestCase):
         ]
         # many trigrams combined into a single match
         reduced = Comparator.reduce_matches(matches)
-        assert len(reduced) == 1
-        assert reduced[0].a_start == 0
-        assert reduced[0].a_end == 6
-        assert reduced[0].b_start == 10
-        assert reduced[0].b_end == 16
+        self.assertEqual(len(reduced), 1)
+        self.assertEqual(reduced[0].a_start, 0)
+        self.assertEqual(reduced[0].a_end, 6)
+        self.assertEqual(reduced[0].b_start, 10)
+        self.assertEqual(reduced[0].b_end, 16)
 
     def test_overlapping_sub_matches(self):
         matches = [
@@ -195,15 +194,15 @@ class TestReduceMatches(TestCase):
         ]
         # should reduce to two separate matches; one larger and one smaller
         reduced = Comparator.reduce_matches(matches)
-        assert len(reduced) == 2
-        assert reduced[0].a_start == 8
-        assert reduced[0].a_end == 13
-        assert reduced[0].b_start == 13
-        assert reduced[0].b_end == 18
-        assert reduced[1].a_start == 10
-        assert reduced[1].a_end == 12
-        assert reduced[1].b_start == 1
-        assert reduced[1].b_end == 3
+        self.assertEqual(len(reduced), 2)
+        self.assertEqual(reduced[0].a_start, 8)
+        self.assertEqual(reduced[0].a_end, 13)
+        self.assertEqual(reduced[0].b_start, 13)
+        self.assertEqual(reduced[0].b_end, 18)
+        self.assertEqual(reduced[1].a_start, 10)
+        self.assertEqual(reduced[1].a_end, 12)
+        self.assertEqual(reduced[1].b_start, 1)
+        self.assertEqual(reduced[1].b_end, 3)
 
     def test_mirror_submatches(self):
         # in matching sequences with repeated subsequences, we should get a
@@ -226,11 +225,11 @@ class TestReduceMatches(TestCase):
         ]
         # should reduce to three matches; one larger and two smaller
         reduced = Comparator.reduce_matches(matches)
-        assert len(reduced) == 1
-        assert reduced[0].a_start == 1
-        assert reduced[0].a_end == 14
-        assert reduced[0].b_start == 1
-        assert reduced[0].b_end == 14
+        self.assertEqual(len(reduced), 1)
+        self.assertEqual(reduced[0].a_start, 1)
+        self.assertEqual(reduced[0].a_end, 14)
+        self.assertEqual(reduced[0].b_start, 1)
+        self.assertEqual(reduced[0].b_end, 14)
 
 class TestGroupMatches(TestCase):
 
@@ -242,9 +241,9 @@ class TestGroupMatches(TestCase):
             Match(1, 2, 342, 2342)
         ]
         grouped = Comparator.group_matches(matches)
-        assert len(grouped) == 4
+        self.assertEqual(len(grouped), 4)
         for _, v in grouped.items():
-            assert len(v) == 1  # every "group" is just one match in b
+            self.assertEqual(len(v), 1)  # every "group" is just one match in b
 
     def test_small_group(self):
         matches = [
@@ -255,10 +254,10 @@ class TestGroupMatches(TestCase):
         ]
         # a single line in a matches two places in b
         grouped = Comparator.group_matches(matches)
-        assert len(grouped) == 3
+        self.assertEqual(len(grouped), 3)
         # two matches in b for the first entry in a
-        assert len(grouped[range(1, 5)]) == 2
-        assert grouped[range(1, 5)] == [range(4, 9), range(12, 14)]
+        self.assertEqual(len(grouped[range(1, 5)]), 2)
+        self.assertEqual(grouped[range(1, 5)], [range(4, 9), range(12, 14)])
 
     def test_multiple_groups(self):
         matches = [
@@ -271,11 +270,11 @@ class TestGroupMatches(TestCase):
         ]
         # two groupings
         grouped = Comparator.group_matches(matches)
-        assert len(grouped) == 4
-        assert len(grouped[range(1, 5)]) == 2  # two matches in b
-        assert len(grouped[range(1, 2)]) == 2  # also two matches
-        assert grouped[range(1, 5)] == [range(4, 9), range(12, 14)]
-        assert grouped[range(1, 2)] == [range(342, 2342), range(25, 26)]
+        self.assertEqual(len(grouped), 4)
+        self.assertEqual(len(grouped[range(1, 5)]), 2)  # two matches in b
+        self.assertEqual(len(grouped[range(1, 2)]), 2)  # also two matches
+        self.assertEqual(grouped[range(1, 5)], [range(4, 9), range(12, 14)])
+        self.assertEqual(grouped[range(1, 2)], [range(342, 2342), range(25, 26)])
 
 
 class TestMatch(TestCase):

@@ -1,4 +1,4 @@
-from dphon.lib import Comparator, phonetic_tokens
+from dphon.lib import Comparator, get_tokens
 
 """This is a small script for visualizing problems when debugging functions that
 operate on matches. You can paste in text that is known to reproduce a bug for
@@ -27,9 +27,9 @@ print(text2.strip())
 print('\n-----------------------------\n')
 print('PHONETIC TOKENS\n')
 
-print(''.join((str(i + 1) + ' ') if i < 9 else (str(i + 1)) for (i, _) in enumerate(phonetic_tokens(text2))))
-print(''.join([t for t in phonetic_tokens(text1)]))
-print(''.join([t for t in phonetic_tokens(text2)]))
+print(''.join((str(i + 1) + ' ') if i < 9 else (str(i + 1)) for (i, _) in enumerate(get_tokens(text2))))
+print(''.join([t for t in get_tokens(text1)]))
+print(''.join([t for t in get_tokens(text2)]))
 
 print('\n-----------------------------\n')
 print('INITIAL MATCHES\n')

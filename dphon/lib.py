@@ -1,26 +1,32 @@
 import json
+import re
 from collections import defaultdict
 from os.path import basename, splitext
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Iterable
 
 import pkg_resources
 
 '''Non-alphabetic symbols used in place of a character.'''
 CHAR_MARKERS = ['□']
 
+CHARS = re.compile(r'[\w□]')
+NON_CHARS = re.compile(r'[^\w□]')
+
 '''Dictionary based on Schuessler's reconstruction of Old Chinese.'''
 schuessler_path = pkg_resources.resource_filename(__package__, 'data/dummy_dict.json')
 with open(schuessler_path, encoding='utf-8') as file:
     DUMMY_DICT = json.loads(file.read())
 
-def phonetic_tokens(string: str) -> str:
-    """Returns iterator of phonetic tokens for input string. Characters not in
-    the dictionary are left unchanged."""
-    return (DUMMY_DICT[char][2] if char in DUMMY_DICT else char for char in string)
+def get_tokens(text: str) -> str:
+    """Returns phonetic tokens for input text. Characters not in the dictionary
+    are left unchanged."""
+    return ''.join(DUMMY_DICT[char][2] if char in DUMMY_DICT else char for char in text)
+
 
 def has_char_markers(string: str) -> bool:
     """Returns True if input string contains any character in CHAR_MARKERS."""
     return any([c in string for c in CHAR_MARKERS])
+
 
 class Match(object):
     a_start: int

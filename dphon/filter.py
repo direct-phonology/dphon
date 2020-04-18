@@ -24,9 +24,23 @@ class WhitespaceFilter(Filter):
 
     WS_RE = re.compile(r"^\s+$")
 
-    def process(self, tokens: TokenStream) -> TokenStream:
+    @classmethod
+    def process(cls, tokens: TokenStream) -> TokenStream:
         """Discard any token consisting entirely of whitespace, via regex."""
-        return (token for token in tokens if not self.WS_RE.match(token.text))
+        return (token for token in tokens if not cls.WS_RE.match(token.text))
+
+
+class NonAlphaFilter(Filter):
+    """A simple filter that removes tokens without any alphabetic content."""
+
+    NON_ALPHA_RE = re.compile(r"^\W+$")
+
+    @classmethod
+    def process(cls, tokens: TokenStream) -> TokenStream:
+        """Discard any token consisting entirely of non-alphabetic characters,
+        via regex.
+        """
+        return (token for token in tokens if not cls.NON_ALPHA_RE.match(token.text))
 
 
 class PhoneticFilter(Filter):
@@ -54,7 +68,13 @@ class PhoneticFilter(Filter):
         filter's phonetic dictionary."""
 
         token.meta["orig_text"] = token.text
-        phonemes = [self.phon_dict.get(char, char) for char in token.text]
+        phonemes = []
+
+        for char in token.text:
+            if char in self.phon_dict:
+                phonemes.append(self.phon_dict[char][2])
+            else:
+                phonemes.append(char)
 
         token.text = "".join(phonemes)
         return token

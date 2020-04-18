@@ -3,6 +3,7 @@ Tokens that can be used for analysis."""
 
 from abc import ABC, abstractmethod
 from typing import Sequence, Dict, Any, NewType
+from collections import defaultdict
 
 from dphon.document import Document
 
@@ -23,6 +24,7 @@ class Token():
         self._id = _id
         self.doc = doc
         self.text = text
+        self.meta = defaultdict()
 
     def __repr__(self) -> str:
         return f"<Token id: {self.doc.id}-{self._id}>"

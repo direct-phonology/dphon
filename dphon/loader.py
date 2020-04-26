@@ -3,12 +3,11 @@ Documents for analysis."""
 
 import re
 from pathlib import Path
-from typing import Generator
-from collections.abc import Iterable
+from typing import Generator, Dict
 
 from dphon.document import Document
 
-class KanripoLoader(Iterable):
+class KanripoLoader():
     """Loads a set of Kanripo format (i.e. org-mode) text files from a provided
     directory. Finds all .txt files in the target directory and all nested
     subdirectories."""
@@ -18,13 +17,28 @@ class KanripoLoader(Iterable):
     PROP_RE = re.compile(r"^#\+PROPERTY: (\w+)\s+(.+)")
 
     _id: int
+    _docs: Dict[int, Document]
 
     def __init__(self, directory: str):
-        self.paths = Path(directory).glob('**/*.txt')
+        """Find all .txt files in the provided path and eagerly parse them as
+        Documents, storing for later access."""
 
-    def __iter__(self) -> Generator[Document, None, None]:
         self._id = 0
-        return (self.file_to_doc(path) for path in self.paths)
+        self._docs = {}
+
+        paths = Path(directory).glob('**/*.txt')
+        for path in paths:
+            doc = self.file_to_doc(path)
+            self._docs[doc.id] = doc
+
+    def docs(self) -> Generator[Document, None, None]:
+        """Return a generator of documents in this corpus."""
+
+        return (doc for (doc_id, doc) in self._docs.items())
+
+    def get(self, doc_id: int) -> Document:
+        """Fetch a single Document in the corpus via its ID."""
+        return self._docs[doc_id]
 
     def file_to_doc(self, path: Path) -> Document:
         """Parse a single Kanripo format text file into a Document. Uses the

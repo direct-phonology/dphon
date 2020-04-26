@@ -2,7 +2,7 @@
 querying by the user."""
 
 from abc import ABC, abstractmethod
-from typing import List, Dict, Callable
+from typing import List, Dict, Callable, Generator, Tuple
 from collections import defaultdict
 
 from dphon.tokenizer import Token, TokenStream
@@ -19,7 +19,7 @@ class Index(ABC):
     @abstractmethod
     def drop(self, fn: Callable):
         """Call the provided callable on each stored Token, removing those that
-        return True.
+        do not return True.
         """
         raise NotImplementedError
 
@@ -46,8 +46,11 @@ class InMemoryIndex(Index):
 
     def drop(self, fn: Callable):
         self._tokens = {
-            text: tokens for (text, tokens) in self._tokens.items() if fn(tokens)
+            text: tokens for (text, tokens) in self._tokens.items() if not fn(tokens)
         }
+
+    def tokens(self) -> Generator[Tuple[str, List[Token]], None, None]:
+        return ((text, tokens) for (text, tokens) in self._tokens.items())
 
     def empty(self):
         self._tokens.clear()

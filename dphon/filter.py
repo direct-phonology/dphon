@@ -31,16 +31,14 @@ class WhitespaceFilter(Filter):
 
 
 class NonAlphaFilter(Filter):
-    """A simple filter that removes tokens without any alphabetic content."""
+    """A simple filter that removes tokens that contain non-alphabetic content."""
 
-    NON_ALPHA_RE = re.compile(r"^\W+$")
+    ALPHA_RE = re.compile(r"^\w+$")
 
     @classmethod
     def process(cls, tokens: TokenStream) -> TokenStream:
-        """Discard any token consisting entirely of non-alphabetic characters,
-        via regex.
-        """
-        return (token for token in tokens if not cls.NON_ALPHA_RE.match(token.text))
+        """Discard any token with non-alphabetic characters via regex."""
+        return (token for token in tokens if cls.ALPHA_RE.match(token.text))
 
 
 class PhoneticFilter(Filter):

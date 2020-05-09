@@ -5,6 +5,8 @@ class Document:
 
     _id: int
     text: str
+    title: str
+    series: str
 
     def __init__(self, _id: int, text: str):
         self._id = _id
@@ -15,6 +17,9 @@ class Document:
 
     def __str__(self) -> str:
         return self.text
+
+    def __len__(self) -> int:
+        return len(self.text)
 
     @property
     def id(self) -> int:

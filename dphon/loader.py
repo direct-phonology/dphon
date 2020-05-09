@@ -49,8 +49,9 @@ class KanripoLoader():
 
         with path.open(encoding="utf-8") as file:
             for line in file:
-                if line.startswith("#"):
-                    continue
+                title = self.TITLE_RE.match(line)
+                if title:
+                    doc.title = title.group(1)
                 elif line.startswith("<"):
                     continue
                 else:

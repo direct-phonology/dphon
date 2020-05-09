@@ -20,9 +20,11 @@ class Token():
     doc: Document
     meta: Dict[str, Any]
 
-    def __init__(self, _id: int, doc: Document, text: str):
+    def __init__(self, _id: int, doc: Document, start: int, stop: int, text: str):
         self._id = _id
         self.doc = doc
+        self.start = start
+        self.stop = stop
         self.text = text
         self.meta = defaultdict()
 
@@ -65,5 +67,6 @@ class NgramTokenizer(Tokenizer):
 
         for i in range(len(doc.text) - self._n):
             seed = doc.text[i:i + self._n]
-            yield Token(doc=doc, _id=self._id, text=seed)
+            yield Token(doc=doc, _id=self._id, start=i, stop=i + self._n,
+                        text=seed)
             self._id += 1

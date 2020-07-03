@@ -98,8 +98,11 @@ class KanripoLoader():
         with path.open(encoding="utf-8") as file:
             for line in file:
                 title = self.TITLE_RE.match(line)
+                prop = self.PROP_RE.match(line)
                 if title:
                     doc.title = title.group(1)
+                elif prop:
+                    doc.meta[prop.group(1)] = prop.group(2)
                 elif line.startswith("<"):
                     continue
                 else:

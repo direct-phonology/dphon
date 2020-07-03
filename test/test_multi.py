@@ -44,6 +44,6 @@ for (seed, tokens) in index.tokens():
     if tokens[0].meta["orig_text"] != tokens[1].meta["orig_text"]:
         match = direct.extend(tokens[0], tokens[1])
         (q1, q2) = nw_phon.align(match)
-        print(f"{q1} ({match.source.doc.title})\n{q2} ({match.target.doc.title})\n")
+        print(f"{q1} ({match.source.doc.title}:{match.source.doc.meta['JUAN']})\n{q2} ({match.target.doc.title}:{match.target.doc.meta['JUAN']})\n")
     # print("%.02f" % match.meta["score"])
     # print(match)

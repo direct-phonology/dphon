@@ -4,8 +4,50 @@ Documents for analysis."""
 import re
 from pathlib import Path
 from typing import Generator, Dict
+from abc import ABC
 
 from dphon.document import Document
+
+class Loader(ABC):
+
+    _id: int
+    _docs: Dict[int, Document]
+
+    def __init__(self):
+        self._id = 0
+        self._docs = {}
+
+    def docs(self) -> Generator[Document, None, None]:
+        """Return a generator of documents in this corpus."""
+        return (doc for (doc_id, doc) in self._docs.items())
+
+    def get(self, doc_id: int) -> Document:
+        """Fetch a single Document in the corpus via its ID."""
+        return self._docs[doc_id]
+
+class SimpleLoader(Loader):
+    """Loads all plaintext files in the current directory. Does not examine
+    subdirectories."""
+
+    def __init__(self, directory: str):
+        super().__init__()
+
+        paths = Path(directory).glob('*.txt')
+        for path in paths:
+            doc = self.file_to_doc(path)
+            self._docs[doc.id] = doc
+
+    def file_to_doc(self, path: Path) -> Document:
+        doc = Document(self._id, "")
+        self._id += 1
+
+        doc.title = path.stem
+
+        with path.open(encoding="utf-8") as file:
+            for line in file:
+                doc.text += line
+
+        return doc
 
 class KanripoLoader():
     """Loads a set of Kanripo format (i.e. org-mode) text files from a provided

@@ -34,6 +34,12 @@ class Token():
     def __str__(self) -> str:
         return self.text
 
+    def __len__(self) -> int:
+        return len(self.text)
+
+    def __getitem__(self, val: int) -> str:
+        return self.text[val]
+
     @property
     def id(self) -> int:
         return self._id

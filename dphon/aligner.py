@@ -35,6 +35,21 @@ class NeedlemanWunsch(Aligner):
         else:
             return self.mismatch_score
 
+    def trim(self, source: str, target: str) -> Tuple[str, str]:
+        """
+        Due to the matching algorithm used, we may be aligning two strings
+        that don't match at the ends. In these cases, we want to shave off the
+        endings.
+        """
+
+        # by default, trim non-matching end characters
+        while source[-1] != target[-1]:
+            source = source[:-1]
+            target = target[:-1]
+
+        return (source, target)
+
+
     def align(self, match: Match) -> Tuple[str, str]:
         source = match.source_text()
         target = match.target_text()
@@ -85,15 +100,12 @@ class NeedlemanWunsch(Aligner):
                 aligned_source = source[row] + aligned_source
                 aligned_target = "　" + aligned_target
 
-        # trim ends
-        while aligned_source[-1] == "　" or aligned_target == "　":
-            aligned_source = aligned_source[:-1]
-            aligned_target = aligned_target[:-1]
-        while aligned_source[-1] != aligned_target[-1]:
+        # normalize to same length
+        while aligned_source[-1] == "　" or aligned_target[-1] == "　":
             aligned_source = aligned_source[:-1]
             aligned_target = aligned_target[:-1]
 
-        return (aligned_source, aligned_target)
+        return self.trim(aligned_source, aligned_target)
 
 class NeedlemanWunschPhonetic(NeedlemanWunsch):
 
@@ -113,3 +125,19 @@ class NeedlemanWunschPhonetic(NeedlemanWunsch):
             if self.phon_dict[char1][2] == self.phon_dict[char2][2]:
                 return self.homonym_score
         return super().score(char1, char2)
+
+    def trim(self, source: str, target: str) -> Tuple[str, str]:
+        """
+        Trim back to the first matching character, taking into account
+        phonetic matches.
+        """
+
+        c1 = self.phon_dict.get(source[-1], [None, None, source[-1]])[2]
+        c2 = self.phon_dict.get(target[-1], [None, None, target[-1]])[2]
+        while c1 != c2:
+            source = source[:-1]
+            target = target[:-1]
+            c1 = self.phon_dict.get(source[-1], [None, None, source[-1]])[2]
+            c2 = self.phon_dict.get(target[-1], [None, None, target[-1]])[2]
+
+        return (source, target)

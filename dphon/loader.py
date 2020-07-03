@@ -60,13 +60,15 @@ class KanripoLoader():
 
     _id: int
     _docs: Dict[int, Document]
+    _clean: bool
 
-    def __init__(self, directory: str):
+    def __init__(self, directory: str, **kwargs):
         """Find all .txt files in the provided path and eagerly parse them as
         Documents, storing for later access."""
 
         self._id = 0
         self._docs = {}
+        self._clean = kwargs.get('clean', False)
 
         paths = Path(directory).glob('**/*.txt')
         for path in paths:
@@ -75,12 +77,16 @@ class KanripoLoader():
 
     def docs(self) -> Generator[Document, None, None]:
         """Return a generator of documents in this corpus."""
-
         return (doc for (doc_id, doc) in self._docs.items())
 
     def get(self, doc_id: int) -> Document:
         """Fetch a single Document in the corpus via its ID."""
         return self._docs[doc_id]
+
+    @staticmethod
+    def clean(string: str) -> str:
+        """Remove punctuation and whitespace from text."""
+        return "".join(c for c in string if c.isalpha() and not c.isascii())
 
     def file_to_doc(self, path: Path) -> Document:
         """Parse a single Kanripo format text file into a Document. Uses the
@@ -97,6 +103,8 @@ class KanripoLoader():
                 elif line.startswith("<"):
                     continue
                 else:
+                    if self._clean:
+                        line = self.clean(line)
                     doc.text += line
 
         return doc

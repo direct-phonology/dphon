@@ -1,11 +1,12 @@
 import time
 
-from dphon.loader import KanripoLoader, SimpleLoader
+from dphon.loader import KanripoLoader
 from dphon.tokenizer import NgramTokenizer
-from dphon.filter import NonAlphaFilter, PhoneticFilter
+from dphon.filter import PhoneticFilter
 from dphon.index import InMemoryIndex
 from dphon.matcher import LevenshteinPhoneticMatcher
 from dphon.aligner import NeedlemanWunschPhonetic
+from dphon.util import has_graphic_variation
 
 # analysis stack
 index = InMemoryIndex()
@@ -19,7 +20,6 @@ start_time = time.time()
 
 # load corpus
 corpus = KanripoLoader("./test/fixtures/krp/", clean=True)
-# corpus = SimpleLoader("./test/fixtures/")
 load_time = time.time() - start_time
 print(f"Loaded corpus in {load_time:.2f} seconds")
 
@@ -42,7 +42,7 @@ print(f"Pruned index in {prune_time:.2f} seconds")
 matches = []
 for (seed, tokens) in index.tokens():
     # only work on matches with graphic variation
-    if tokens[0].meta["orig_text"] != tokens[1].meta["orig_text"]:
+    if has_graphic_variation(tokens):
         matches.append(direct.extend(tokens[0], tokens[1]))
 match_time = time.time() - start_time - load_time - index_time - prune_time
 print(f"Extended seeds in {match_time:.2f} seconds")
@@ -51,7 +51,7 @@ aligned_matches = [nw_phon.align(match) for match in matches]
 align_time = time.time() - start_time - load_time - index_time - prune_time - match_time
 print(f"Aligned matches in {align_time:.2f} seconds")
 
-# for i in range(len(matches)):
-#     match = matches[i]
-#     (q1, q2) = aligned_matches[i]
-#     print(f"{q1} ({match.source.doc.title}:{match.source.doc.meta['JUAN']})\n{q2} ({match.target.doc.title}:{match.target.doc.meta['JUAN']})\n")
+for i in range(len(matches)):
+    match = matches[i]
+    (q1, q2) = aligned_matches[i]
+    print(f"{q1} ({match.source.doc.title}:{match.source.doc.meta['JUAN']})\n{q2} ({match.target.doc.title}:{match.target.doc.meta['JUAN']})\n")

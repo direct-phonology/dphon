@@ -127,7 +127,7 @@ class LevenshteinPhoneticMatcher(Matcher):
         return match
 
 
-class VierthalerMatcher(Matcher):
+class LevenshteinMatcher(Matcher):
 
     _id:int
     threshold: float

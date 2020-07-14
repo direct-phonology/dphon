@@ -1,11 +1,11 @@
 import time
 
-from dphon.loader import KanripoLoader
-from dphon.tokenizer import NgramTokenizer
+from dphon.aligner import NeedlemanWunschPhonetic
 from dphon.filter import PhoneticFilter
 from dphon.index import InMemoryIndex
+from dphon.loader import KanripoLoader
 from dphon.matcher import LevenshteinPhoneticMatcher
-from dphon.aligner import NeedlemanWunschPhonetic
+from dphon.tokenizer import NgramTokenizer
 from dphon.util import has_graphic_variation
 
 # analysis stack
@@ -30,7 +30,7 @@ index_time = time.time() - start_time - load_time
 print(f"Indexed documents in {index_time:.2f} seconds")
 
 # keep only tokens that occur in at least two places
-index.drop(lambda tokens: len(tokens) < 1)
+index.drop(lambda tokens: len(tokens) < 2)
 
 # FIXME testing: keep only groups where exactly two different docs match 
 index.drop(lambda tokens: len(tokens) != 2)

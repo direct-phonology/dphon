@@ -4,6 +4,7 @@ querying by the user."""
 from abc import ABC, abstractmethod
 from typing import List, Dict, Callable, Generator, Tuple
 from collections import defaultdict
+from itertools import chain
 
 from dphon.tokenizer import Token, TokenStream
 
@@ -54,3 +55,9 @@ class InMemoryIndex(Index):
 
     def empty(self):
         self._tokens.clear()
+
+    def token_count(self) -> int:
+        return len(self._tokens.keys())
+
+    def location_count(self) -> int:
+        return len([token for tokens in self._tokens for token in tokens])

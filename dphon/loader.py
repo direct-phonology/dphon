@@ -75,6 +75,10 @@ class KanripoLoader():
             doc = self.file_to_doc(path)
             self._docs[doc.id] = doc
 
+    def __len__(self) -> int:
+        """Number of documents in this corpus."""
+        return len(self._docs)
+
     def docs(self) -> Generator[Document, None, None]:
         """Return a generator of documents in this corpus."""
         return (doc for (doc_id, doc) in self._docs.items())

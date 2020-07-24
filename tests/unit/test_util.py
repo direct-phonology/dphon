@@ -1,7 +1,4 @@
-"""
-Utility function tests
-"""
-
+"""Utility function unit tests."""
 
 from unittest import TestCase
 
@@ -48,8 +45,8 @@ class TestCondenseMatches(TestCase):
 
     def test_reduce_trigram_to_quad(self) -> None:
         """
-        Two overlapping trigram Matches should be condensed into a single
-        quad-gram Match.
+        Two overlapping trigram matches should be condensed into a single
+        quad-gram match.
         """
         matches = [
             Match(0, 1, slice(0, 2), slice(1, 3)),
@@ -62,7 +59,7 @@ class TestCondenseMatches(TestCase):
     def test_different_match_lengths(self) -> None:
         """
         A long match that overlaps with a short match should be combined into
-        a single Match comprising the content of both Matches.
+        a single match comprising the content of both matches.
         """
         matches = [
             Match(0, 1, slice(3, 17), slice(1, 15)),
@@ -74,8 +71,8 @@ class TestCondenseMatches(TestCase):
 
     def test_multiple_overlap(self) -> None:
         """
-        Sequences of consecutive overlapping Matches should all be condensed
-        into a single Match.
+        Sequences of consecutive overlapping matches should all be condensed
+        into a single match.
         """
         matches = [
             Match(0, 1, slice(0, 2), slice(10, 12)),
@@ -83,27 +80,56 @@ class TestCondenseMatches(TestCase):
             Match(0, 1, slice(2, 4), slice(12, 14)),
             Match(0, 1, slice(3, 5), slice(13, 15)),
             Match(0, 1, slice(4, 6), slice(14, 16)),
-            Match(0, 1, slice(23, 27), slice(33, 37)) # unrelated
+            Match(0, 1, slice(23, 27), slice(33, 37))  # unrelated
         ]
         self.assertEqual(condense_matches(matches), [
             Match(0, 1, slice(0, 6), slice(10, 16)),
-            Match(0, 1, slice(23, 27), slice(33, 37)) # unchanged
+            Match(0, 1, slice(23, 27), slice(33, 37))  # unchanged
         ])
 
     def test_sub_overlap(self) -> None:
         """
-        Sequences of consecutive overlapping Matches with subsequences that
+        Sequences of consecutive overlapping matches with subsequences that
         also match elsewhere should be independently extended.
         """
         matches = [
             Match(0, 1, slice(8, 10), slice(13, 15)),
             Match(0, 1, slice(9, 11), slice(14, 16)),
-            Match(0, 1, slice(10, 12), slice(1, 3)),  # subset of this sequence matches elsewhere
+            # subset matches elsewhere
+            Match(0, 1, slice(10, 12), slice(1, 3)),
             Match(0, 1, slice(10, 12), slice(15, 17)),
-            Match(0, 1, slice(11, 13), slice(2, 4)), # subset also needs to be extended
+            # subset needs to be extended
+            Match(0, 1, slice(11, 13), slice(2, 4)),
             Match(0, 1, slice(11, 13), slice(16, 18)),
         ]
         self.assertEqual(condense_matches(matches), [
             Match(0, 1, slice(8, 13), slice(13, 18)),
             Match(0, 1, slice(10, 13), slice(1, 4))
+        ])
+
+    def test_mirror_submatches(self) -> None:
+        """
+        In matching sequences with repeated subsequences, we should get a
+        large match covering the entirety of both sequences. We don't care
+        about the internal matches between subsequences since they are
+        subsumed in the larger sequence.
+        """
+        matches = [
+            Match(0, 1, slice(1, 3), slice(1, 3)),
+            Match(0, 1, slice(2, 4), slice(2, 4)),
+            # subset matches later subset
+            Match(0, 1, slice(2, 4), slice(12, 14)),
+            Match(0, 1, slice(3, 6), slice(3, 6)),
+            Match(0, 1, slice(4, 7), slice(4, 7)),
+            Match(0, 1, slice(6, 8), slice(6, 8)),
+            Match(0, 1, slice(7, 9), slice(7, 9)),
+            Match(0, 1, slice(8, 11), slice(8, 11)),
+            Match(0, 1, slice(9, 12), slice(9, 12)),
+            Match(0, 1, slice(11, 13), slice(11, 13)),
+            # mirror of earlier subset
+            Match(0, 1, slice(12, 14), slice(2, 4)),
+            Match(0, 1, slice(12, 14), slice(12, 14)),
+        ]
+        self.assertEqual(condense_matches(matches), [
+            Match(0, 1, slice(1, 14), slice(1, 14))
         ])

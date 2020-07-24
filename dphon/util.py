@@ -2,7 +2,8 @@
 Utility functions
 """
 
-from typing import List
+from typing import List, Dict
+from collections import defaultdict
 
 from dphon.tokenizer import Token
 from dphon.graph import Match
@@ -21,46 +22,53 @@ def condense_matches(matches: List[Match]) -> List[Match]:
     Combine matches for a single document that are overlapping, so that only
     maximal matches remain.
     """
-    # sort and reverse match list to use it as a stack
+    # if no matches, nothing to do
     if len(matches) == 0:
         return []
-    matches = list(reversed(sorted(matches)))
 
-    # store finished matches and actively worked-on ones in stacks
+    # order matches by location in document 1; keep active matches in a queue
+    matches = list(reversed(sorted(matches)))
     new_matches: List[Match] = []
-    stack: List[Match] = []
-    stack.append(matches.pop())
+    queue: List[Match] = []
 
     # drain the old match list to fill up the new one
+    queue.append(matches.pop())
     while len(matches) > 0:
-        compare = matches.pop()  # FIXME check that this is a ref
-        current = stack[-1]  # FIXME check that this is a ref
+        current = matches.pop()
 
-        # moving to new source/target doc; transfer all of stack and reset
-        if current.doc1 != compare.doc1 or current.doc2 != compare.doc2:
-            while len(stack) > 0:
-                new_matches.append(stack.pop())
+        # if match is outside current range, dump queue and start over
+        if current.pos1.start > queue[0].pos1.stop:
+            new_matches += queue
+            new_matches.append(current)
+            queue = []
 
-        # match is congruent but matches somewhere else; push new current
-        elif compare.pos1.start == current.pos1.start:
-            stack.append(compare)
+        # if match overlaps in doc1, check the queue
+        elif current.pos1.start > queue[0].pos1.start:
+            updated = False
 
-        # match overlaps; update current match bounds to include it
-        elif compare.pos1.start > current.pos1.start and \
-                compare.pos1.start < current.pos1.stop and \
-                compare.pos2.start > current.pos2.start and \
-                compare.pos2.start < current.pos2.stop and \
-                compare.pos2.stop > current.pos2.stop and \
-                compare.pos1.stop > current.pos1.stop:
-            current.pos1 = slice(current.pos1.start, compare.pos1.stop)
-            current.pos2 = slice(current.pos2.start, compare.pos2.stop)
+            for match in queue:
+                # if match needs to be condensed, extend bounds
+                if current.pos2.start > match.pos2.start and \
+                    current.pos2.start < match.pos2.stop and \
+                    current.pos2.stop > match.pos2.stop:
+                    match.pos1 = slice(match.pos1.start, current.pos1.stop)
+                    match.pos2 = slice(match.pos2.start, current.pos2.stop)
+                    updated = True
+                    break
+                # if match is subsumed by another, remove from queue
+                elif current.pos2.start > match.pos2.start and \
+                    current.pos2.stop < match.pos2.stop:
+                    updated = True
+                    break
 
-        # match doesn't overlap; pop from stack and push new current
-        else:
-            new_matches.append(stack.pop())
-            stack.append(compare)
+            # if match hits new location in doc2, add to queue
+            if not updated:
+                queue.append(current)
 
-    # add any remaining matches from stack and return finished list
-    while len(stack) > 0:
-        new_matches.append(stack.pop())
+    # add any remaining matches from queue and return finished list
+    new_matches += queue
     return new_matches
+
+
+def extend_matches(matches: List[Match]) -> List[Match]:
+    return matches

@@ -61,20 +61,26 @@ class LevenshteinPhoneticExtender(Extender):
         self.len_limit = len_limit
 
     def extend(self, match: Match) -> Match:
-        """Compare the two sequences via their Levenshtein ratio, and extend both
+        """Extend a match using phonetic-equivalent edit distance comparison.
+
+        Compare the two sequences via their Levenshtein ratio, and extend both
         sequences until that ratio falls below the stored threshold. Treat the
         characters as their phonetic equivalents for the purpose of scoring.
+        Compare only the final len_limit characters when scoring.
         """
         # get the two documents the match connects
         doc1 = self.corpus.get(match.doc1)
         doc2 = self.corpus.get(match.doc2)
+
         # get the text of the two sequences and convert to phonetic tokens
         text1 = "".join(
             [self.phon_dict[c][2] if c in self.phon_dict else c for c in doc1[match.pos1]])
         text2 = "".join(
             [self.phon_dict[c][2] if c in self.phon_dict else c for c in doc2[match.pos2]])
+
         # get the initial ratio (score)
-        score = Levenshtein.ratio(text1, text2)
+        score = Levenshtein.ratio(
+            text1[:self.len_limit], text2[:self.len_limit])
 
         # extend until we drop below the threshold
         extended = 0

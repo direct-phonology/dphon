@@ -223,7 +223,7 @@ class TestReduceMatches(TestCase):
             Match(12, 14, 2, 4),    # subset at end of A matches at start of B
             Match(12, 14, 12, 14),  # subset at end of A matches at end of B
         ]
-        # should reduce to three matches; one larger and two smaller
+        # should reduce to single match
         reduced = Comparator.reduce_matches(matches)
         self.assertEqual(len(reduced), 1)
         self.assertEqual(reduced[0].a_start, 1)

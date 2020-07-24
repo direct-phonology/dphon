@@ -3,7 +3,7 @@ Documents for analysis."""
 
 import re
 from pathlib import Path
-from typing import Generator, Dict
+from typing import Generator, List
 from abc import ABC
 
 from dphon.document import Document
@@ -11,15 +11,19 @@ from dphon.document import Document
 class Loader(ABC):
 
     _id: int
-    _docs: Dict[int, Document]
+    _docs: List[Document]
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._id = 0
-        self._docs = {}
+        self._docs = []
+
+    def __len__(self) -> int:
+        """Number of documents in this corpus."""
+        return len(self._docs)
 
     def docs(self) -> Generator[Document, None, None]:
         """Return a generator of documents in this corpus."""
-        return (doc for (doc_id, doc) in self._docs.items())
+        return (doc for doc in self._docs)
 
     def get(self, doc_id: int) -> Document:
         """Fetch a single Document in the corpus via its ID."""
@@ -49,7 +53,7 @@ class SimpleLoader(Loader):
 
         return doc
 
-class KanripoLoader():
+class KanripoLoader(Loader):
     """Loads a set of Kanripo format (i.e. org-mode) text files from a provided
     directory. Finds all .txt files in the target directory and all nested
     subdirectories."""
@@ -58,34 +62,19 @@ class KanripoLoader():
     DATE_RE = re.compile(r"^#\+DATE: (.+)")
     PROP_RE = re.compile(r"^#\+PROPERTY: (\w+)\s+(.+)")
 
-    _id: int
-    _docs: Dict[int, Document]
     _clean: bool
 
-    def __init__(self, directory: str, **kwargs):
+    def __init__(self, directory: str, clean: bool) -> None:
         """Find all .txt files in the provided path and eagerly parse them as
         Documents, storing for later access."""
-
-        self._id = 0
-        self._docs = {}
-        self._clean = kwargs.get('clean', False)
+        
+        super().__init__()
+        self._clean = clean
 
         paths = Path(directory).glob('**/*.txt')
         for path in paths:
             doc = self.file_to_doc(path)
             self._docs[doc.id] = doc
-
-    def __len__(self) -> int:
-        """Number of documents in this corpus."""
-        return len(self._docs)
-
-    def docs(self) -> Generator[Document, None, None]:
-        """Return a generator of documents in this corpus."""
-        return (doc for (doc_id, doc) in self._docs.items())
-
-    def get(self, doc_id: int) -> Document:
-        """Fetch a single Document in the corpus via its ID."""
-        return self._docs[doc_id]
 
     @staticmethod
     def clean(string: str) -> str:
@@ -93,8 +82,7 @@ class KanripoLoader():
         return "".join(c for c in string if c.isalpha() and not c.isascii())
 
     def file_to_doc(self, path: Path) -> Document:
-        """Parse a single Kanripo format text file into a Document. Uses the
-        org-mode metadata at the top of the file."""
+        """Parse a single Kanripo format text file into a Document."""
 
         doc = Document(self._id, "")
         self._id += 1

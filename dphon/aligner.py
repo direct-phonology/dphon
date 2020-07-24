@@ -17,7 +17,7 @@ class Aligner(ABC):
         return them in a tuple."""
         raise NotImplementedError
 
-class NeedlemanWunsch(Aligner):
+class NeedlemanWunschAligner(Aligner):
 
     match_score: float
     misalign_score: float
@@ -50,9 +50,7 @@ class NeedlemanWunsch(Aligner):
         return (source, target)
 
 
-    def align(self, match: Match) -> Tuple[str, str]:
-        source = match.source_text()
-        target = match.target_text()
+    def align(self, source: str, target: str) -> Tuple[str, str]:
         aligned_source = ""
         aligned_target = ""
 
@@ -107,7 +105,7 @@ class NeedlemanWunsch(Aligner):
 
         return self.trim(aligned_source, aligned_target)
 
-class NeedlemanWunschPhonetic(NeedlemanWunsch):
+class NeedlemanWunschPhoneticAligner(NeedlemanWunschAligner):
 
     homonym_score: float
     phon_dict: dict

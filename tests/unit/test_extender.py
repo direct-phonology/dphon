@@ -13,11 +13,15 @@ class TestLevenshteinPhoneticExtender(TestCase):
     """Test the LevenshteinPhoneticExtender."""
 
     def test_no_extension(self) -> None:
-        """Matches that can't be extended any further should be unchanged."""
+        """Matches that can't be extended any further should be unchanged.
+
+        Text sources:
+        - https://ctext.org/analects/gong-ye-chang?filter=503848
+        - https://ctext.org/shiji/zhong-ni-di-zi-lie-zhuan?filter=503848"""
         # create mock documents
         docs = [
-            Document(0, '中士聞道若存若'),
-            Document(1, '中士聞道天下正')
+            Document(0, '千室之邑百乘之家'),
+            Document(1, '千室之邑百乘之家')
         ]
         corpus = Mock(SimpleLoader)
         corpus.get.side_effect = docs
@@ -30,7 +34,7 @@ class TestLevenshteinPhoneticExtender(TestCase):
 
     def test_perfect_match(self) -> None:
         """Matches should be extended as far as possible.
-        
+
         Text sources:
         - https://ctext.org/text.pl?node=416724&if=en&filter=463451
         - https://ctext.org/text.pl?node=542654&if=en&filter=463451"""
@@ -104,9 +108,9 @@ class TestLevenshteinPhoneticExtender(TestCase):
         # create mock documents
         docs = [
             Document(0, '''由也千乘之國可使治其賦也不知其仁也求也何如子曰求也千室之邑百乘'''
-                '''之家可使為之宰也不知其仁也赤也何如子曰赤也束帶立於朝可使與賓客言也'''),
+                     '''之家可使為之宰也不知其仁也赤也何如子曰赤也束帶立於朝可使與賓客言也'''),
             Document(1, '''由也千乘之國可使治其賦也求也千室之邑百乘之家可使為之宰赤也束帶'''
-                '''立於朝可使與賓客言也又曰子謂子產有君子之道四焉其行己也恭其事上也敬''')
+                     '''立於朝可使與賓客言也又曰子謂子產有君子之道四焉其行己也恭其事上也敬''')
         ]
         corpus = Mock(SimpleLoader)
         corpus.get.side_effect = docs

@@ -79,7 +79,7 @@ class LevenshteinPhoneticExtender(Extender):
         # extend until we drop below the threshold
         extended = 0
         trail = 0
-        while(score >= self.threshold):
+        while score >= self.threshold:
             match.pos1 = slice(match.pos1.start, match.pos1.stop + 1)
             match.pos2 = slice(match.pos2.start, match.pos2.stop + 1)
             extended += 1
@@ -97,7 +97,7 @@ class LevenshteinPhoneticExtender(Extender):
             # calculate a new score using the last len_limit characters
             new_score = Levenshtein.ratio(
                 text1[:self.len_limit], text2[:self.len_limit])
-            
+
             # keep track of consecutive decreases so we can discard the "tail"
             if new_score < score:
                 trail += 1

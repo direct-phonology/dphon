@@ -26,6 +26,9 @@ class Document:
     def __len__(self) -> int:
         return len(self.text)
 
+    def __getitem__(self, val: Any) -> str:
+        return self.text[val]
+
     @property
     def id(self) -> int:
         return self._id

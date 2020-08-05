@@ -26,7 +26,7 @@ class NeedlemanWunschAligner(Aligner):
     def __init__(self, **kwargs):
         super().__init__()
         self.match_score = kwargs.get('match_score', 1.0)
-        self.misalign_score = kwargs.get('misalign_score', -0.5)
+        self.misalign_score = kwargs.get('misalign_score', -1.0)
         self.mismatch_score = kwargs.get('mismatch_score', -1.0)
 
     def score(self, char1: str, char2: str) -> float:
@@ -77,8 +77,8 @@ class NeedlemanWunschAligner(Aligner):
         row = rows - 1
         col = cols - 1
         while row > 0 or col > 0:
-            top_score = matrix[row - 1][col]
-            left_score = matrix[row][col - 1]
+            top_score = matrix[row][col - 1]
+            left_score = matrix[row - 1][col]
             diag_score = matrix[row - 1][col - 1]
             best_score = max([top_score, left_score, diag_score])
 
@@ -89,16 +89,16 @@ class NeedlemanWunschAligner(Aligner):
                 aligned_target = target[col] + aligned_target
 
             elif best_score == left_score:
-                col -= 1
-                aligned_source = "　" + aligned_source
-                aligned_target = target[col] + aligned_target
-
-            elif best_score == top_score:
                 row -= 1
                 aligned_source = source[row] + aligned_source
                 aligned_target = "　" + aligned_target
 
-        # normalize to same length
+            elif best_score == top_score:
+                col -= 1
+                aligned_source = "　" + aligned_source
+                aligned_target = target[col] + aligned_target
+
+        # normalize to same length and trim end spacing
         while aligned_source[-1] == "　" or aligned_target[-1] == "　":
             aligned_source = aligned_source[:-1]
             aligned_target = aligned_target[:-1]

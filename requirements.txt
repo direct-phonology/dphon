@@ -1,3 +1,4 @@
 docopt
 numpy
 python-levenshtein
+progressbar2

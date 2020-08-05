@@ -39,7 +39,7 @@ class SimpleLoader(Loader):
         paths = Path(directory).glob('*.txt')
         for path in paths:
             doc = self.file_to_doc(path)
-            self._docs[doc.id] = doc
+            self._docs.append(doc)
 
     def file_to_doc(self, path: Path) -> Document:
         doc = Document(self._id, "")
@@ -74,7 +74,7 @@ class KanripoLoader(Loader):
         paths = Path(directory).glob('**/*.txt')
         for path in paths:
             doc = self.file_to_doc(path)
-            self._docs[doc.id] = doc
+            self._docs.append(doc)
 
     @staticmethod
     def clean(string: str) -> str:

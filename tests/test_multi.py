@@ -1,57 +1,88 @@
+"""Test an analysis stack that extends and aligns all matches."""
+import sys
 import time
+from itertools import combinations
+from progressbar import progressbar
 
-from dphon.aligner import NeedlemanWunschPhonetic
+from dphon.aligner import NeedlemanWunschPhoneticAligner
+from dphon.extender import LevenshteinPhoneticExtender
 from dphon.filter import PhoneticFilter
+from dphon.graph import Match
 from dphon.index import InMemoryIndex
 from dphon.loader import KanripoLoader
-from dphon.matcher import LevenshteinPhoneticMatcher
 from dphon.tokenizer import NgramTokenizer
 from dphon.util import has_graphic_variation
 
-# analysis stack
-index = InMemoryIndex()
-quadgrams = NgramTokenizer(n=4)
-schuessler = PhoneticFilter("data/dummy_dict.json")
-direct = LevenshteinPhoneticMatcher("data/dummy_dict.json", threshold=0.75, limit=50)
-nw_phon = NeedlemanWunschPhonetic("data/dummy_dict.json")
 
-# global timer
-start_time = time.time()
+def run() -> None:
+    """Test text reuse identification with some Kanripo documents."""
+    # setup analysis stack
+    index = InMemoryIndex()
+    ngrams = NgramTokenizer(n=4)
+    token_filter = PhoneticFilter("data/dummy_dict.json")
+    aligner = NeedlemanWunschPhoneticAligner("data/dummy_dict.json")
 
-# load corpus
-corpus = KanripoLoader("./test/fixtures/krp/", clean=True)
-load_time = time.time() - start_time
-print(f"Loaded corpus in {load_time:.2f} seconds")
+    # load corpus
+    start = time.time()
+    corpus = KanripoLoader("tests/fixtures/krp/", clean=True)
+    finish = time.time() - start
+    sys.stderr.write(
+        f"Loaded {len(corpus)} documents in {finish:.2f} seconds\n")
 
-# index phonetic content of all documents
-for doc in corpus.docs():
-    index.add(schuessler.process(quadgrams.tokenize(doc)))
-index_time = time.time() - start_time - load_time
-print(f"Indexed documents in {index_time:.2f} seconds")
+    # index docs
+    start = time.time()
+    for doc in corpus.docs():
+        index.add(token_filter.process(ngrams.tokenize(doc)))
+    index.drop(lambda tokens: len(tokens) < 2)
+    finish = time.time() - start
+    sys.stderr.write(f"N-gram index built in {finish:.2f} seconds\n")
+    sys.stderr.write(f"Indexed {index.token_count():,} unique tokens at "
+                     f"{index.location_count():,} document locations\n")
 
-# keep only tokens that occur in at least two places
-index.drop(lambda tokens: len(tokens) < 2)
+    # create matches from seeds and extend them
+    start = time.time()
+    matches = []
+    count = 0
+    extender = LevenshteinPhoneticExtender(
+        corpus, "data/dummy_dict.json", threshold=0.75, len_limit=100)
+    for _seed, tokens in progressbar(index.tokens()):
+        for token1, token2 in combinations(tokens, 2):
+            if token1.doc.id != token2.doc.id:  # don't match with same doc
+                match = Match(
+                    doc1=token1.doc.id,
+                    doc2=token2.doc.id,
+                    pos1=slice(token1.start, token1.stop, 1),
+                    pos2=slice(token2.start, token2.stop, 1)
+                )
+                matches.append(extender.extend(match))
+                count += 1
+    finish = time.time() - start
+    sys.stderr.write(f"Extended {count:,} seeds in {finish:.2f} seconds\n")
 
-# FIXME testing: keep only groups where exactly two different docs match 
-index.drop(lambda tokens: len(tokens) != 2)
-index.drop(lambda tokens: tokens[0].doc.title == tokens[1].doc.title)
-prune_time = time.time() - start_time - load_time - index_time
-print(f"Pruned index in {prune_time:.2f} seconds")
+    # TODO drop matches without graphic variation
 
-# extend and align seeds
-matches = []
-for (seed, tokens) in index.tokens():
-    # only work on matches with graphic variation
-    if has_graphic_variation(tokens):
-        matches.append(direct.extend(tokens[0], tokens[1]))
-match_time = time.time() - start_time - load_time - index_time - prune_time
-print(f"Extended seeds in {match_time:.2f} seconds")
 
-aligned_matches = [nw_phon.align(match) for match in matches]
-align_time = time.time() - start_time - load_time - index_time - prune_time - match_time
-print(f"Aligned matches in {align_time:.2f} seconds")
+    # align matches
+    start = time.time()
+    aligned_matches = []
+    matches = matches[:100]
+    for match in progressbar(matches):
+        source = corpus.get(match.doc1)[match.pos1]
+        target = corpus.get(match.doc2)[match.pos2]
+        aligned_matches.append(aligner.align(source, target))
+    finish = time.time() - start
+    sys.stderr.write(f"Aligned matches in {finish:.2f} seconds\n")
 
-for i in range(len(matches)):
-    match = matches[i]
-    (q1, q2) = aligned_matches[i]
-    print(f"{q1} ({match.source.doc.title}:{match.source.doc.meta['JUAN']})\n{q2} ({match.target.doc.title}:{match.target.doc.meta['JUAN']})\n")
+    # write results to file
+    for i, match in enumerate(matches):
+        source, target = aligned_matches[i]
+        doc1 = corpus.get(match.doc1)
+        doc2 = corpus.get(match.doc2)
+        sys.stdout.write(
+            f"{source}\t({doc1.title}:{doc1.meta['JUAN']})\n"
+            f"{target}\t({doc2.title}:{doc2.meta['JUAN']})\n\n"
+        )
+
+
+if __name__ == '__main__':
+    run()

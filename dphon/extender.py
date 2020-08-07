@@ -16,6 +16,9 @@ class Extender(ABC):
     Each Extender is initialized to operate on a particular corpus. It accepts a
     single match at a time to extend() and uses its Documents to determine
     if the match can be extended, returning a longer match if so.
+
+    Extenders should mutate their arguments (matches) rather than returning new
+    copies so that matches can be tracked using the id() function.
     """
 
     corpus: Loader

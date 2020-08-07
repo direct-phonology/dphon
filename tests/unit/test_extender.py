@@ -5,12 +5,12 @@ from unittest.mock import Mock
 
 from dphon.graph import Match
 from dphon.loader import SimpleLoader
-from dphon.extender import LevenshteinPhoneticExtender
+from dphon.extender import LevenshteinExtender
 from dphon.document import Document
 
 
-class TestLevenshteinPhoneticExtender(TestCase):
-    """Test the LevenshteinPhoneticExtender."""
+class TestLevenshteinExtender(TestCase):
+    """Test the LevenshteinExtender."""
 
     def test_no_extension(self) -> None:
         """Matches that can't be extended any further should be unchanged.
@@ -27,8 +27,7 @@ class TestLevenshteinPhoneticExtender(TestCase):
         corpus.get.side_effect = docs
         # create a match and extend it
         match = Match(0, 1, slice(0, 4), slice(0, 4))
-        extender = LevenshteinPhoneticExtender(
-            corpus, 'data/dummy_dict.json', 0.75, 100)
+        extender = LevenshteinExtender(corpus, 0.75, 100)
         # shouldn't be extended
         self.assertEqual(extender.extend(match), match)
 
@@ -47,8 +46,7 @@ class TestLevenshteinPhoneticExtender(TestCase):
         corpus.get.side_effect = docs
         # create a match and extend it
         match = Match(0, 1, slice(0, 4), slice(0, 4))
-        extender = LevenshteinPhoneticExtender(
-            corpus, 'data/dummy_dict.json', 0.75, 100)
+        extender = LevenshteinExtender(corpus, 0.75, 100)
         # should be fully extended
         self.assertEqual(extender.extend(match), Match(
             0, 1, slice(0, 18), slice(0, 18)))
@@ -68,8 +66,7 @@ class TestLevenshteinPhoneticExtender(TestCase):
         corpus.get.side_effect = docs
         # create a match and extend it
         match = Match(0, 1, slice(0, 2), slice(0, 2))
-        extender = LevenshteinPhoneticExtender(
-            corpus, 'data/dummy_dict.json', 0.75, 100)
+        extender = LevenshteinExtender(corpus, 0.75, 100)
         # should extend to match boundary, but not further into text
         self.assertEqual(extender.extend(match), Match(
             0, 1, slice(0, 4), slice(0, 4)))
@@ -89,8 +86,7 @@ class TestLevenshteinPhoneticExtender(TestCase):
         corpus.get.side_effect = docs
         # create a match and extend it
         match = Match(0, 1, slice(0, 4), slice(0, 4))
-        extender = LevenshteinPhoneticExtender(
-            corpus, 'data/dummy_dict.json', 0.75, 100)
+        extender = LevenshteinExtender(corpus, 0.75, 100)
         # should cover entire document, including mismatches
         self.assertEqual(extender.extend(match), Match(
             0, 1, slice(0, 27), slice(0, 27)))
@@ -116,8 +112,7 @@ class TestLevenshteinPhoneticExtender(TestCase):
         corpus.get.side_effect = docs
         # create a match and extend it - set a low threshold and len_limit
         match = Match(0, 1, slice(0, 4), slice(0, 4))
-        extender = LevenshteinPhoneticExtender(
-            corpus, 'data/dummy_dict.json', 0.5, 50)
+        extender = LevenshteinExtender(corpus, 0.5, 50)
         # should cover entire document, including middle section
         self.assertEqual(extender.extend(match), Match(
             0, 1, slice(0, 64), slice(0, 64)))

@@ -29,7 +29,77 @@ class Extender(ABC):
         raise NotImplementedError
 
 
-class LevenshteinPhoneticExtender(Extender):
+class LevenshteinExtender(Extender):
+    """Extends a match by adding characters to both sequences until their
+    Levenshtein ratio drops below a given threshold.
+
+    This strategy is borrowed and adapted from Paul Vierthaler's chinesetextreuse
+    project, specifically:
+    https://github.com/vierth/chinesetextreuse/blob/master/detect_intertexuality.py#L189-L249
+    """
+
+    threshold: float    # if the Levenshtein ratio falls below this, match ends
+    len_limit: int      # length at which edit distance measurement will reset
+
+    def __init__(self, corpus: Loader, threshold: float, len_limit: int) -> None:
+        super().__init__(corpus)
+        self.threshold = threshold
+        self.len_limit = len_limit
+
+    def extend(self, match: Match) -> Match:
+        """Extend a match using edit distance comparison.
+
+        Compare the two sequences via their Levenshtein ratio, and extend both
+        sequences until that ratio falls below the stored threshold. Compare
+        only the final len_limit characters when scoring.
+        """
+        # get the two documents the match connects
+        doc1 = self.corpus.get(match.doc1)
+        doc2 = self.corpus.get(match.doc2)
+
+        # get the text of the two sequences
+        text1 = doc1[match.pos1]
+        text2 = doc2[match.pos2]
+
+        # get the initial ratio (score)
+        score = Levenshtein.ratio(
+            text1[:self.len_limit], text2[:self.len_limit])
+
+        # extend until we drop below the threshold
+        extended = 0
+        trail = 0
+        while score >= self.threshold:
+            match.pos1 = slice(match.pos1.start, match.pos1.stop + 1)
+            match.pos2 = slice(match.pos2.start, match.pos2.stop + 1)
+            extended += 1
+
+            # don't go past end of texts
+            if match.pos1.stop >= len(doc1) or match.pos2.stop >= len(doc2):
+                break
+
+            # add the characters we extended to
+            text1 += doc1[match.pos1.stop]
+            text2 += doc2[match.pos2.stop]
+
+            # calculate a new score using the last len_limit characters
+            new_score = Levenshtein.ratio(
+                text1[:self.len_limit], text2[:self.len_limit])
+
+            # keep track of consecutive decreases so we can discard the "trail"
+            if new_score < score:
+                trail += 1
+            else:
+                trail = 0
+            score = new_score
+
+        # when finished, remove the "trail" and return the match
+        if trail > 0:
+            match.pos1 = slice(match.pos1.start, match.pos1.stop - trail + 1)
+            match.pos2 = slice(match.pos2.start, match.pos2.stop - trail + 1)
+        return match
+
+
+class LevenshteinPhoneticExtender(LevenshteinExtender):
     """The Levenshtein Phonetic extender uses the python-levenshtein module to
     make fast edit distance comparisons as it extends a match, taking into
     account phonetic correspondence between characters.
@@ -45,20 +115,12 @@ class LevenshteinPhoneticExtender(Extender):
     """
 
     phon_dict: dict     # contains phonetic information for character lookup
-    threshold: float    # if the Levenshtein ratio falls below this, match ends
-    len_limit: int      # length at which edit distance measurement will reset
 
-    def __init__(self, corpus: Loader, dict_fname: str, threshold: float, len_limit: int) -> None:
-        super().__init__(corpus)
-
-        # load the phonetic dictionary and store it for reference
+    def __init__(self, corpus: Loader, threshold: float, len_limit: int, dict_fname: str) -> None:
+        super().__init__(corpus, threshold, len_limit)
         path = pkg_resources.resource_filename(__package__, dict_fname)
         with open(path, encoding="utf-8") as dict_file:
             self.phon_dict = json.loads(dict_file.read())
-
-        # save the provided edit distance threshold and length limit values
-        self.threshold = threshold
-        self.len_limit = len_limit
 
     def extend(self, match: Match) -> Match:
         """Extend a match using phonetic-equivalent edit distance comparison.

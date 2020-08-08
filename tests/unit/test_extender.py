@@ -24,7 +24,7 @@ class TestLevenshteinExtender(TestCase):
             Document(1, '千室之邑百乘之家')
         ]
         corpus = Mock(SimpleLoader)
-        corpus.get.side_effect = docs
+        corpus.get = lambda _id: docs[_id]
         # create a match and extend it
         match = Match(0, 1, slice(0, 4), slice(0, 4))
         extender = LevenshteinExtender(corpus, 0.75, 100)
@@ -43,7 +43,7 @@ class TestLevenshteinExtender(TestCase):
             Document(1, '與朋友交言而有信雖曰未學吾必謂之學矣')
         ]
         corpus = Mock(SimpleLoader)
-        corpus.get.side_effect = docs
+        corpus.get = lambda _id: docs[_id]
         # create a match and extend it
         match = Match(0, 1, slice(0, 4), slice(0, 4))
         extender = LevenshteinExtender(corpus, 0.75, 100)
@@ -63,7 +63,27 @@ class TestLevenshteinExtender(TestCase):
             Document(1, '行有餘力博學覽古')
         ]
         corpus = Mock(SimpleLoader)
-        corpus.get.side_effect = docs
+        corpus.get = lambda _id: docs[_id]
+        # create a match and extend it
+        match = Match(0, 1, slice(0, 2), slice(0, 2))
+        extender = LevenshteinExtender(corpus, 0.75, 100)
+        # should extend to match boundary, but not further into text
+        self.assertEqual(extender.extend(match), Match(
+            0, 1, slice(0, 4), slice(0, 4)))
+
+    def test_short_trail(self) -> None:
+        """A 'trail' of a single character should be removed.
+
+        Text sources:
+        - https://ctext.org/analects/xue-er?filter=538878
+        - https://ctext.org/lunheng/cheng-cai?filter=538878"""
+        # create mock documents
+        docs = [
+            Document(0, '行有餘力則'),
+            Document(1, '行有餘力博')
+        ]
+        corpus = Mock(SimpleLoader)
+        corpus.get = lambda _id: docs[_id]
         # create a match and extend it
         match = Match(0, 1, slice(0, 2), slice(0, 2))
         extender = LevenshteinExtender(corpus, 0.75, 100)
@@ -83,7 +103,7 @@ class TestLevenshteinExtender(TestCase):
             Document(1, '子曰弟子入則孝出則悌謹而信泛愛衆而親仁行有餘力則以學文')
         ]
         corpus = Mock(SimpleLoader)
-        corpus.get.side_effect = docs
+        corpus.get = lambda _id: docs[_id]
         # create a match and extend it
         match = Match(0, 1, slice(0, 4), slice(0, 4))
         extender = LevenshteinExtender(corpus, 0.75, 100)
@@ -109,7 +129,7 @@ class TestLevenshteinExtender(TestCase):
                      '''立於朝可使與賓客言也又曰子謂子產有君子之道四焉其行己也恭其事上也敬''')
         ]
         corpus = Mock(SimpleLoader)
-        corpus.get.side_effect = docs
+        corpus.get = lambda _id: docs[_id]
         # create a match and extend it - set a low threshold and len_limit
         match = Match(0, 1, slice(0, 4), slice(0, 4))
         extender = LevenshteinExtender(corpus, 0.5, 50)

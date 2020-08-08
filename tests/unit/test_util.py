@@ -1,11 +1,14 @@
 """Utility function unit tests."""
 
 from unittest import TestCase
+from unittest.mock import Mock
 
 from dphon.tokenizer import Token
-from dphon.util import has_graphic_variation, condense_matches
+from dphon.util import has_graphic_variation, condense_matches, extend_matches
 from dphon.document import Document
 from dphon.graph import Match
+from dphon.loader import SimpleLoader
+from dphon.extender import LevenshteinExtender
 
 
 class TestHasGraphicVariation(TestCase):
@@ -133,3 +136,103 @@ class TestCondenseMatches(TestCase):
         self.assertEqual(condense_matches(matches), [
             Match(0, 1, slice(1, 14), slice(1, 14))
         ])
+
+
+class TestExtendMatches(TestCase):
+
+    def test_no_extension(self) -> None:
+        # create mock documents
+        docs = [
+            Document(0, '千室之邑'),
+            Document(1, '千室之邑')
+        ]
+        corpus = Mock(SimpleLoader)
+        corpus.get = lambda _id: docs[_id]
+        # create a match and extend it
+        matches = [Match(0, 1, slice(0, 4), slice(0, 4))]
+        extender = LevenshteinExtender(corpus, 0.75, 100)
+        results = extend_matches(matches, extender)
+        self.assertEqual(results, matches)
+
+    def test_perfect_match(self) -> None:
+        """Matches should be extended as far as possible.
+
+        Text sources:
+        - https://ctext.org/text.pl?node=416724&if=en&filter=463451
+        - https://ctext.org/text.pl?node=542654&if=en&filter=463451"""
+        # create mock documents
+        docs = [
+            Document(0, '與朋友交言而有信雖曰未學吾必謂之學矣'),
+            Document(1, '與朋友交言而有信雖曰未學吾必謂之學矣')
+        ]
+        corpus = Mock(SimpleLoader)
+        corpus.get = lambda _id: docs[_id]
+        # create matches and extend them
+        matches = [
+            Match(0, 1, slice(0, 4), slice(0, 4)),
+            Match(0, 1, slice(1, 5), slice(1, 5))
+        ]
+        extender = LevenshteinExtender(corpus, 0.75, 100)
+        results = extend_matches(matches, extender)
+        # first match is kept and extended fully; second is discarded
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0], Match(0, 1, slice(0, 18), slice(0, 18)))
+        self.assertEqual(matches[0], results[0])
+
+    def test_sub_overlap(self) -> None:
+        """Consecutive overlapping matches should be independently extended."""
+        # create mock documents
+        docs = [
+            Document(0, '水善利萬物而不爭自見者不明弊則新無關'),
+            Document(1, '可者不明下母得已以百姓為芻自見者不明')
+        ]
+        corpus = Mock(SimpleLoader)
+        corpus.get = lambda _id: docs[_id]
+        # create matches and extend them
+        matches = [
+            Match(0, 1, slice(8, 10), slice(13, 15)),
+            Match(0, 1, slice(9, 11), slice(14, 16)),
+            # subset matches elsewhere
+            Match(0, 1, slice(10, 12), slice(1, 3)),
+            Match(0, 1, slice(10, 12), slice(15, 17)),
+            # subset needs to be extended
+            Match(0, 1, slice(11, 13), slice(2, 4)),
+            Match(0, 1, slice(11, 13), slice(16, 18)),
+        ]
+        extender = LevenshteinExtender(corpus, 0.75, 100)
+        results = extend_matches(matches, extender)
+        # two different extended matches
+        self.assertEqual(len(results), 2)
+        self.assertEqual(results[0], Match(0, 1, slice(8, 13), slice(13, 18)))
+        self.assertEqual(results[1], Match(0, 1, slice(10, 13), slice(1, 4)))
+
+    def test_mirror_submatches(self) -> None:
+        # create mock documents
+        docs = [
+            Document(0, '邑與學吾交言而有信雖曰未學吾矣'),
+            Document(1, '室與學吾交言而有信雖曰未學吾恐')
+        ]
+        corpus = Mock(SimpleLoader)
+        corpus.get = lambda _id: docs[_id]
+        # create matches and extend them
+        matches = [
+            Match(0, 1, slice(1, 3), slice(1, 3)),
+            Match(0, 1, slice(2, 4), slice(2, 4)),
+            # subset matches later subset
+            Match(0, 1, slice(2, 4), slice(12, 14)),
+            Match(0, 1, slice(3, 6), slice(3, 6)),
+            Match(0, 1, slice(4, 7), slice(4, 7)),
+            Match(0, 1, slice(6, 8), slice(6, 8)),
+            Match(0, 1, slice(7, 9), slice(7, 9)),
+            Match(0, 1, slice(8, 11), slice(8, 11)),
+            Match(0, 1, slice(9, 12), slice(9, 12)),
+            Match(0, 1, slice(11, 13), slice(11, 13)),
+            # mirror of earlier subset
+            Match(0, 1, slice(12, 14), slice(2, 4)),
+            Match(0, 1, slice(12, 14), slice(12, 14)),
+        ]
+        extender = LevenshteinExtender(corpus, 0.75, 100)
+        results = extend_matches(matches, extender)
+        # single match from chars 1-13, no internal matching
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0], Match(0, 1, slice(1, 14), slice(1, 14)))

@@ -68,21 +68,18 @@ class LevenshteinExtender(Extender):
         score = Levenshtein.ratio(
             text1[:self.len_limit], text2[:self.len_limit])
 
-        # extend until we drop below the threshold
+        # extend until we drop below the threshold or reach end of texts
         extended = 0
         trail = 0
-        while score >= self.threshold:
+        while score >= self.threshold and match.pos1.stop < len(doc1) and match.pos2.stop < len(doc2):
+            # extend by one character
             match.pos1 = slice(match.pos1.start, match.pos1.stop + 1)
             match.pos2 = slice(match.pos2.start, match.pos2.stop + 1)
             extended += 1
 
-            # don't go past end of texts
-            if match.pos1.stop >= len(doc1) or match.pos2.stop >= len(doc2):
-                break
-
-            # add the characters we extended to
-            text1 += doc1[match.pos1.stop]
-            text2 += doc2[match.pos2.stop]
+            # recalculate texts
+            text1 = doc1[match.pos1]
+            text2 = doc2[match.pos2]
 
             # calculate a new score using the last len_limit characters
             new_score = Levenshtein.ratio(
@@ -96,9 +93,8 @@ class LevenshteinExtender(Extender):
             score = new_score
 
         # when finished, remove the "trail" and return the match
-        if trail > 0:
-            match.pos1 = slice(match.pos1.start, match.pos1.stop - trail + 1)
-            match.pos2 = slice(match.pos2.start, match.pos2.stop - trail + 1)
+        match.pos1 = slice(match.pos1.start, match.pos1.stop - trail)
+        match.pos2 = slice(match.pos2.start, match.pos2.stop - trail)
         return match
 
 

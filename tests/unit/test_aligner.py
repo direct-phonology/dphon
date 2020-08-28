@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 """Aligner unit tests."""
 
 from unittest import TestCase

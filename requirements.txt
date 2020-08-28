@@ -1,4 +1,3 @@
 docopt
-numpy
+spacy
 python-levenshtein
-progressbar2

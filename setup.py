@@ -1,49 +1,24 @@
-"""Packaging settings."""
+"""Packaging settings for DIRECT."""
 
+import pathlib
 
-from codecs import open
-from os.path import abspath, dirname, join
-from subprocess import call
-
-from setuptools import Command, find_packages, setup
+from setuptools import find_packages, setup
 
 from dphon import __version__
 
-
-this_dir = abspath(dirname(__file__))
-with open(join(this_dir, 'README.md'), encoding='utf-8') as file:
-    long_description = file.read()
-
-
-class RunTests(Command):
-    """Run all tests."""
-    description = 'run tests'
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        """Run all tests!"""
-        errno = call(['py.test', '--cov=direct', '--cov-report=term-missing'])
-        raise SystemExit(errno)
-
+here = pathlib.Path(__file__).parent.resolve()
+long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name='dphon',
-    description='Tools for Old Chinese phonological analysis.',
     version=__version__,
+    description='Tools and algorithms for phonology-aware Early Chinese NLP.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/direct-phonology/direct',
-    include_package_data=True,
+    url='https://github.com/direct-phonology/dphon',
     package_data={'dphon': ['data/*.json']},
-    author='John O\'Leary, Nick Budak, Gian Rominger',
-    author_email='jo10@princeton.edu, nbudak@princeton.edu, gianr@princeton.edu',
-    license='MIT',
+    author='Nick Budak',
+    author_email='nbudak@princeton.edu',
     classifiers=[
         'Environment :: Console',
         'Intended Audience :: Science/Research',
@@ -53,24 +28,25 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3 :: Only',
         'Topic :: Text Processing :: Linguistic',
         'Topic :: Utilities',
     ],
-    python_requires='>=3.6',
-    keywords='cli old chinese phonology linguistics',
-    project_urls={
-        'Source': 'https://github.com/direct-phonology/direct',
-        'Tracker': 'https://github.com/direct-phonology/direct/issues',
-    },
+    keywords='old chinese, phonology, linguistics, nlp',
     packages=find_packages(),
-    install_requires=['docopt'],
+    python_requires='>=3.6',
+    install_requires=['docopt', 'spacy'],
     extras_require={
-        'test': ['coverage', 'pytest', 'pytest-cov'],
+        'dev': ['check-manifest', 'mypy', 'pylint'],
+        'test': ['coverage'],
     },
     entry_points={
         'console_scripts': [
             'dphon=dphon.cli:run',
         ],
     },
-    cmdclass={'test': RunTests},
+    project_urls={
+        'Source': 'https://github.com/direct-phonology/direct',
+        'Tracker': 'https://github.com/direct-phonology/direct/issues',
+    },
 )

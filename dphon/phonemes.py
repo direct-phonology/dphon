@@ -1,7 +1,7 @@
 """SpaCy pipeline component for converting Tokens to phonetic equivalents."""
 
 import logging
-from typing import Iterator
+from typing import Iterator, Tuple, Dict, Optional
 
 from spacy.language import Language
 from spacy.lookups import Table
@@ -14,55 +14,67 @@ Language.factories["phonemes"] = lambda nlp, **cfg: Phonemes(nlp, **cfg)
 # private use unicode char that represents phonemes for OOV tokens
 OOV_PHONEMES = "\ue000"
 
+# types for sound tables: map a string to a tuple of syllable phonemes
+Phonemes_T = Tuple[Optional[str], ...]
+SoundTable_T = Dict[str, Phonemes_T]
 
 class Phonemes():
     """A spaCy pipeline component that enables converting Tokens to phonemes."""
 
-    name = "phonemes"  # component name, will show up in the pipeline
-    table: Table       # sound lookup table, stored in lookups
-
-    def __init__(self, nlp: Language, sound_table: dict, attr: str = "phonemes"):
+    def __init__(self, nlp: Language, name: str, sound_table: SoundTable_T, syllable_parts: int, attr: str = "phonemes"):
         """Initialize the phonemes component."""
-        logging.info("initializing phonemes pipeline component")
-
         # register attribute getters with customizable names; see:
         # https://spacy.io/usage/processing-pipelines#custom-components-best-practices
         Doc.set_extension(attr, getter=self.get_doc_phonemes)
         Span.set_extension(attr, getter=self.get_span_phonemes)
         Token.set_extension(attr, getter=self.get_token_phonemes)
+        Token.set_extension("is_oov", getter=self.is_token_oov)
+
+        # store the name that will appear in the pipeline
+        self.name = name if name else "phonemes"
+        self.syllable_parts = syllable_parts
+        self.empty_phonemes = tuple(None for part in range(self.syllable_parts))
 
         # store the sound table in the vocab's Lookups using the attr name
         self.table = nlp.vocab.lookups.add_table(attr, sound_table)
-        logging.info(f"sound table added to vocab as lookups.{attr}")
+        logging.info(f"created {self.__class__} as {self.name}")
 
     def __call__(self, doc: Doc) -> Doc:
         """Return the Doc unmodified."""
         return doc
 
+    def is_token_oov(self, token: Token) -> bool:
+        """Check if a token has a phonetic entry in the sound table."""
+        return token.is_alpha and token.text not in self.table
+
     def get_doc_phonemes(self, doc: Doc) -> Iterator[str]:
-        """Return an iterator over the phonemes of each Token in a Doc."""
+        """Return a flattened iterator over all phonemes in a Doc."""
         for token in doc:
-            phonemes = self.get_token_phonemes(token)
-            if phonemes != "":
-                yield phonemes
+            for phoneme in self.get_token_phonemes(token):
+                if phoneme:
+                    yield phoneme
 
     def get_span_phonemes(self, span: Span) -> Iterator[str]:
-        """Return an iterator over the phonemes of each Token in a Span."""
+        """Return a flattened iterator over all phonemes in a Span."""
         for token in span:
-            phonemes = self.get_token_phonemes(token)
-            if phonemes != "":
-                yield phonemes
+            for phoneme in self.get_token_phonemes(token):
+                if phoneme:
+                    yield phoneme
 
-    def get_token_phonemes(self, token: Token) -> str:
-        """Look up a Token in the sound table and return its phonemes.
+    def get_token_phonemes(self, token: Token) -> Phonemes_T:
+        """Return a Token's phonemes as an n-tuple.
 
-        If the Token is non-alphabetic, return an empty string. If the Token has 
-        no corresponding entry in the sound table, return a special marker that
-        indicates an out-of-vocabulary entry."""
+        - If a Token is non-alphabetic, all elements of the tuple will be None.
+        - If a Token is not in the sound table, all elements of the tuple will
+        use a special marker token (OOV_PHONEMES).
+        - If some parts of the syllable are not present, their corresponding
+        elements in the tuple will be None.
+        """
 
         if not token.is_alpha:
-            return ""
-        if token.text not in self.table:
+            return self.empty_phonemes
+        elif token.text not in self.table:
             # logging.warn(f"no entry for token in sound table: {token.text}")
-            return OOV_PHONEMES
-        return self.table[token.text]
+            return (OOV_PHONEMES,)
+        else:
+            return self.table[token.text]

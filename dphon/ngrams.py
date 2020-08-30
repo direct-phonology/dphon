@@ -1,4 +1,4 @@
-"""SpaCy pipeline component generating n-grams from Docs."""
+"""SpaCy pipeline component for generating Token n-grams from Docs."""
 
 import logging
 from typing import Iterator
@@ -12,20 +12,20 @@ Language.factories["ngrams"] = lambda nlp, **cfg: Ngrams(nlp, **cfg)
 
 
 class Ngrams():
-    """A spaCy pipeline component that enables generating n-grams from Docs."""
+    """A spaCy pipeline component for generating Token n-grams from Docs."""
 
-    name = "ngrams"  # component name, will show up in the pipeline
-
-    def __init__(self, nlp: Language, n: int, attr: str = "ngrams"):
+    def __init__(self, nlp: Language, name: str, n: int, attr: str = "ngrams"):
         """Initialize the n-gram component."""
-        logging.info(f"initializing n-grams pipeline component with n={n}")
-
         # register attribute getter on Doc with customizable name; see:
         # https://spacy.io/usage/processing-pipelines#custom-components-best-practices
         Doc.set_extension(attr, getter=self.get_doc_ngrams)
 
+        # store the name that will appear in the pipeline
+        self.name = name if name else "ngrams"
+
         # store value for "n", i.e. size of n-grams
         self.n = n
+        logging.info(f"created {self.__class__} as {self.name} with n={n}")
 
     def __call__(self, doc: Doc) -> Doc:
         """Return the Doc unmodified."""
@@ -33,4 +33,4 @@ class Ngrams():
 
     def get_doc_ngrams(self, doc: Doc) -> Iterator[Span]:
         """Return an iterator over n-grams in a Doc as Spans."""
-        return (doc[i:i + self.n] for i in range(len(doc) - self.n))
+        return (doc[i:i + self.n] for i in range(max(len(doc) - self.n + 1, 1)))

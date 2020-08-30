@@ -3,7 +3,8 @@ import json
 import logging
 import time
 from pathlib import Path
-from typing import Any, Dict, Iterator, List, Tuple
+from typing import Any, Dict, Iterator, List, Tuple, Optional
+from collections import defaultdict
 
 import spacy
 from rich.console import Console
@@ -17,7 +18,7 @@ from spacy.tokens import Doc, Span, Token
 
 from dphon.index import Index
 from dphon.ngrams import Ngrams
-from dphon.phonemes import OOV_PHONEMES, Phonemes
+from dphon.phonemes import OOV_PHONEMES, Phonemes, SoundTable_T
 
 ChineseDefaults.use_jieba = False
 
@@ -37,27 +38,48 @@ def get_texts(directory: Path) -> List[Tuple[str, Dict[str, Any]]]:
     return sorted(texts, key=lambda t: t[1]["len"], reverse=True)
 
 
+def get_sound_table_csv(path: Path) -> SoundTable_T:
+    sound_table: SoundTable_T = defaultdict(tuple)
+    parts = ["Preinitial1", "Preinitial 2", "Initial", "Medial",
+             "Nucleus", "Final", "Postcoda *-ʔ", "Postcoda *-s"]
+    with open(path) as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            if row["\ufeffzi"] == "":
+                continue
+            sound_table[row["\ufeffzi"]] = tuple(
+                [row[part].strip() if row[part].strip() !=
+                 "" else None for part in parts]
+            )
+    logging.info(f"sound table {path.stem} loaded")
+    return sound_table
+
+
 if __name__ == "__main__":
     # load texts and sound table
-    texts = get_texts(Path("/Users/nbudak/src/ect-krp/txt"))
-    with open("./dphon/data/sound_table_zhuyin.json") as file:
-        sound_table: dict = json.loads(file.read())
-    logging.info("sound table loaded")
+    texts = get_texts(Path("/Users/nbudak/src/ect-krp/tmp"))
+    sound_table = get_sound_table_csv(
+        Path("./dphon/data/BaxterSagartOC_parsed.csv"))
 
     # setup pipeline
     nlp = spacy.blank("zh")
     logging.info("spaCy pipeline created")
 
-    ngrams = Ngrams(nlp, n=4)
-    phonemes = Phonemes(nlp, sound_table=sound_table)
-    index = Index(nlp, "phonemes", lambda token: token._.phonemes)
-    oov = Index(nlp, "oov", lambda token: token.text if token._.phonemes == OOV_PHONEMES else None)
+    ngrams = Ngrams(nlp, "quad_grams", n=4)
+    phonemes = Phonemes(nlp, "bs_phonemes", syllable_parts=8,
+                        sound_table=sound_table)
+    index = Index(nlp, "tok_index", val_fn=lambda doc: [token for token in doc if token.is_alpha],
+                  key_fn=lambda token: token.text if not token._.is_oov else None)
+    # index = Index(nlp, "ngram_index", val_fn=lambda doc: doc._.ngrams,
+    #               key_fn=lambda ngram: "".join(ngram._.phonemes))
+    oov = Index(nlp, "oov_index", val_fn=lambda doc: [token for token in doc if token.is_alpha],
+                key_fn=lambda token: token.text if token._.is_oov else None)
 
     nlp.add_pipe(phonemes, first=True)
-    nlp.add_pipe(ngrams, after="phonemes")
+    nlp.add_pipe(ngrams, after="bs_phonemes")
     nlp.add_pipe(index)
     nlp.add_pipe(oov)
-    
+
     logging.info("spaCy pipeline setup complete")
 
     # store output statistics & visualize progress
@@ -80,16 +102,23 @@ if __name__ == "__main__":
             logging.debug(f"processed doc {context['title']} in {finish:.3f}s")
             start = time.time()
         all_finish = time.time() - all_start
-        logging.info(f"pipeline completed in {all_finish:.3f}s")
+        logging.info(f"spaCy pipeline completed in {all_finish:.3f}s")
 
-    logging.info(f"{len(index)} unique tokens were encountered {index.token_count} times")
-    logging.info(f"{len(oov)} unique out-of-vocab tokens were encountered {oov.token_count} times")
+    # logging.info(
+    #     f"{len(index)} unique phonetic {ngrams.n}-grams were encountered {index.size} times")
+    logging.info(
+        f"{len(index)} unique tokens were encountered {index.size} times"
+    )
+    logging.info(
+        f"{len(oov)} unique out-of-vocab tokens were encountered {oov.size} times")
 
-    top10 = list(sorted(oov, reverse=True, key=lambda entry: len(entry[1])))[:10]
+    top10 = list(sorted(oov, reverse=True,
+                        key=lambda entry: len(entry[1])))[:10]
     total_top10 = sum([len(v) for (k, v) in top10])
-    percentage = total_top10 / oov.token_count * 100
+    percentage = total_top10 / oov.size * 100
 
-    logging.info(f"top 10 out-of-vocab tokens comprise {total_top10}; {percentage:>3.1f}% of total")
+    logging.info(
+        f"top 10 out-of-vocab tokens encountered {total_top10} times or {percentage:>3.1f}% of total")
 
     console = Console()
     table = RichTable(title="top 10 out-of-vocab tokens")
@@ -97,7 +126,7 @@ if __name__ == "__main__":
     table.add_column("count", justify="right")
     for k, v in top10:
         table.add_row(nlp.vocab[k].text, f"{len(v)}")
-    console.print(table)
+    console.print(table, justify="center")
 
     # query match groups from the index and extend them, keeping track of the
     # extent of existing matches so as not to duplicate work

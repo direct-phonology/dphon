@@ -1,7 +1,11 @@
 """SpaCy pipeline component for converting Tokens to phonetic equivalents."""
 
+import csv
+import json
 import logging
-from typing import Iterator, Tuple, Dict, Optional
+from collections import defaultdict
+from pathlib import Path
+from typing import Dict, Iterable, Iterator, Optional, Tuple
 
 from spacy.language import Language
 from spacy.lookups import Table
@@ -25,8 +29,8 @@ class Phonemes():
         """Initialize the phonemes component."""
         # register attribute getters with customizable names; see:
         # https://spacy.io/usage/processing-pipelines#custom-components-best-practices
-        Doc.set_extension(attr, getter=self.get_doc_phonemes)
-        Span.set_extension(attr, getter=self.get_span_phonemes)
+        Doc.set_extension(attr, getter=self.get_all_phonemes)
+        Span.set_extension(attr, getter=self.get_all_phonemes)
         Token.set_extension(attr, getter=self.get_token_phonemes)
         Token.set_extension("is_oov", getter=self.is_token_oov)
 
@@ -37,7 +41,7 @@ class Phonemes():
 
         # store the sound table in the vocab's Lookups using the attr name
         self.table = nlp.vocab.lookups.add_table(attr, sound_table)
-        logging.info(f"created {self.__class__} as {self.name}")
+        logging.info(f"created component \"{self.name}\"")
 
     def __call__(self, doc: Doc) -> Doc:
         """Return the Doc unmodified."""
@@ -47,16 +51,16 @@ class Phonemes():
         """Check if a token has a phonetic entry in the sound table."""
         return token.is_alpha and token.text not in self.table
 
-    def get_doc_phonemes(self, doc: Doc) -> Iterator[str]:
-        """Return a flattened iterator over all phonemes in a Doc."""
-        for token in doc:
-            for phoneme in self.get_token_phonemes(token):
-                if phoneme:
-                    yield phoneme
+    def graphic_variants(self, tokens: Iterable[Token]) -> bool:
+        """Check if a set of tokens are graphic variants of the same word."""
+        # TODO implement
+        raise NotImplementedError
 
-    def get_span_phonemes(self, span: Span) -> Iterator[str]:
-        """Return a flattened iterator over all phonemes in a Span."""
-        for token in span:
+    def get_all_phonemes(self, tokens: Iterable[Token]) -> Iterator[str]:
+        """Return a flattened iterator over all phonemes in a Span or Doc.
+        
+        Skips parts of the syllable that are not used (stored as None)."""
+        for token in tokens:
             for phoneme in self.get_token_phonemes(token):
                 if phoneme:
                     yield phoneme
@@ -78,3 +82,28 @@ class Phonemes():
             return (OOV_PHONEMES,)
         else:
             return self.table[token.text]
+
+def get_sound_table_csv(path: Path) -> SoundTable_T:
+    sound_table: SoundTable_T = defaultdict(tuple)
+    parts = ["Preinitial1", "Preinitial 2", "Initial", "Medial",
+             "Nucleus", "Final", "Postcoda *-ʔ", "Postcoda *-s"]
+    with open(path) as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            if row["\ufeffzi"] == "":
+                continue
+            sound_table[row["\ufeffzi"]] = tuple(
+                [row[part].strip() if row[part].strip() !=
+                 "" else None for part in parts]
+            )
+    logging.info(f"loaded sound table \"{path.stem}\"")
+    return sound_table
+
+def get_sound_table_json(path: Path) -> SoundTable_T:
+    sound_table: SoundTable_T = defaultdict(tuple)
+    with open(path) as file:
+        entries = json.loads(file.read())
+        for char, entry in entries.items():
+            sound_table[char] = (entry[2],)
+    logging.info(f"sound table {path.stem} loaded")
+    return sound_table

@@ -14,22 +14,22 @@ Language.factories["ngrams"] = lambda nlp, **cfg: Ngrams(nlp, **cfg)
 class Ngrams():
     """A spaCy pipeline component for generating Token n-grams from Docs."""
 
+    n: int           # number of tokens per n-gram
     name = "ngrams"  # will appear in spaCy pipeline
     attr = "ngrams"  # name for getter for ngrams, e.g. doc._.ngrams
-    n = 4            # number of tokens per n-gram
 
-    def __init__(self, nlp: Language, n: int = None, name: str = None, attr: str = None):
+    def __init__(self, nlp: Language, n: int, name: str = None, attr: str = None):
         """Initialize the n-gram component."""
         # register attribute getter on Doc with customizable name; see:
         # https://spacy.io/usage/processing-pipelines#custom-components-best-practices
         self.attr = attr if attr else self.attr
         Doc.set_extension(self.attr, getter=self.get_doc_ngrams)
 
-        # store other properties if provided
+        # store other properties
+        self.n = n
         self.name = name if name else self.name
-        self.n = n if n else self.n
         logging.info(
-            f"created {self.__class__} as \"{self.name}\" with n={n}, attr=Doc._.{self.attr}")
+            f"created component \"{self.name}\" with n={self.n}")
 
     def __del__(self) -> None:
         """Unregister the n-gram custom extension."""

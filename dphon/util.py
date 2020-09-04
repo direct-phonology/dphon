@@ -2,12 +2,15 @@
 Utility functions
 """
 
-from typing import List, Dict
+import logging
 from collections import defaultdict
+from typing import Any, Dict, List, Tuple
+from pathlib import Path
 
-from dphon.tokenizer import Token
+# from dphon.extender import Extender
 from dphon.graph import Match
-from dphon.extender import Extender
+
+'''
 
 
 def has_graphic_variation(tokens: List[Token]) -> bool:
@@ -71,7 +74,6 @@ def condense_matches(matches: List[Match]) -> List[Match]:
     new_matches += queue
     return new_matches
 
-
 def extend_matches(matches: List[Match], extender: Extender) -> List[Match]:
     """Extend matches using a provided extension strategy, returning maximal
     matches."""
@@ -117,3 +119,17 @@ def extend_matches(matches: List[Match], extender: Extender) -> List[Match]:
     # add any remaining matches from queue and return finished list
     new_matches += queue
     return new_matches
+
+'''
+
+def get_texts(directory: Path) -> List[Tuple[str, Dict[str, Any]]]:
+    # load all texts and format with context
+    texts = []
+    for file in directory.glob("**/*.txt"):
+        with file.open() as contents:
+            text = contents.read()
+            texts.append((text, {"title": file.stem, "len": len(text)}))
+    logging.info(f"loaded {len(texts)} texts from {directory}")
+    # return in order with largest texts first, to speed up processing
+    # confirmed this is slightly faster on my machine 2020-09-04
+    return sorted(texts, key=lambda t: t[1]["len"], reverse=True)

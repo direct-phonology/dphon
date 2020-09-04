@@ -3,28 +3,18 @@
 import json
 from abc import ABC, abstractmethod
 
-import Levenshtein
+import Levenshtein as Lev
 import pkg_resources
 
-from dphon.graph import Match
-from dphon.loader import Loader
+from dphon.match import Match
 
 
 class Extender(ABC):
-    """Extenders lengthen a match as far as possible and return the match.
+    """Extenders lengthen a match as far as possible and return a new match.
 
-    Each Extender is initialized to operate on a particular corpus. It accepts a
-    single match at a time to extend() and uses its Documents to determine
-    if the match can be extended, returning a longer match if so.
-
-    Extenders should mutate their arguments (matches) rather than returning new
-    copies so that matches can be tracked using the id() function.
+    Each Extender accepts a single match at a time to extend() and uses its
+    Docs to determine if the match can be extended, returning a longer match.
     """
-
-    corpus: Loader
-
-    def __init__(self, corpus: Loader):
-        self.corpus = corpus
 
     @abstractmethod
     def extend(self, match: Match) -> Match:
@@ -44,46 +34,42 @@ class LevenshteinExtender(Extender):
     threshold: float    # if the Levenshtein ratio falls below this, match ends
     len_limit: int      # length at which edit distance measurement will reset
 
-    def __init__(self, corpus: Loader, threshold: float, len_limit: int) -> None:
-        super().__init__(corpus)
+    def __init__(self, threshold: float, len_limit: int) -> None:
+        """Create a new LevenshteinExtender."""
         self.threshold = threshold
         self.len_limit = len_limit
+
+    def score(self, match: Match) -> float:
+        """Compare the two Spans of a Match to generate a similarity score."""
+        text1 = match.left.text
+        text2 = match.right.text
+        return Lev.ratio(text1[:self.len_limit], text2[:self.len_limit])
 
     def extend(self, match: Match) -> Match:
         """Extend a match using edit distance comparison.
 
-        Compare the two sequences via their Levenshtein ratio, and extend both
-        sequences until that ratio falls below the stored threshold. Compare
-        only the final len_limit characters when scoring.
+        Compare the two Spans via their Levenshtein ratio, and extend both
+        Spans until that ratio falls below the stored threshold. Compare only 
+        the final len_limit characters when scoring.
         """
-        # get the two documents the match connects
-        doc1 = self.corpus.get(match.doc1)
-        doc2 = self.corpus.get(match.doc2)
-
-        # get the text of the two sequences
-        text1 = doc1[match.pos1]
-        text2 = doc2[match.pos2]
-
-        # get the initial ratio (score)
-        score = Levenshtein.ratio(
-            text1[:self.len_limit], text2[:self.len_limit])
+        # get the docs and their bounds
+        doc1 = match.left.doc
+        doc2 = match.right.doc
+        doc1_len = len(match.left.doc)
+        doc2_len = len(match.right.doc)
 
         # extend until we drop below the threshold or reach end of texts
+        score = self.score(match)
         extended = 0
         trail = 0
-        while score >= self.threshold and match.pos1.stop < len(doc1) and match.pos2.stop < len(doc2):
-            # extend by one character
-            match.pos1 = slice(match.pos1.start, match.pos1.stop + 1)
-            match.pos2 = slice(match.pos2.start, match.pos2.stop + 1)
+        while score >= self.threshold and match.left.end < doc1_len and match.right.end < doc2_len:
+            # extend by one character and rescore
+            match = Match(
+                doc1[match.left.start:match.left.end+1],
+                doc2[match.right.start:match.right.end+1]
+            )
             extended += 1
-
-            # recalculate texts
-            text1 = doc1[match.pos1]
-            text2 = doc2[match.pos2]
-
-            # calculate a new score using the last len_limit characters
-            new_score = Levenshtein.ratio(
-                text1[:self.len_limit], text2[:self.len_limit])
+            new_score = self.score(match)
 
             # keep track of consecutive decreases so we can discard the "trail"
             if new_score < score:
@@ -92,12 +78,16 @@ class LevenshteinExtender(Extender):
                 trail = 0
             score = new_score
 
-        # when finished, remove the "trail" and return the match
-        match.pos1 = slice(match.pos1.start, match.pos1.stop - trail)
-        match.pos2 = slice(match.pos2.start, match.pos2.stop - trail)
-        return match
+        # when finished, return match with the "trail" removed, if any
+        if trail > 0:
+            return Match(
+                doc1[match.left.start:match.left.end - trail + 1],
+                doc2[match.right.start:match.right.end - trail + 1]
+            )
+        else:
+            return match
 
-
+'''
 class LevenshteinPhoneticExtender(LevenshteinExtender):
     """The Levenshtein Phonetic extender uses the python-levenshtein module to
     make fast edit distance comparisons as it extends a match, taking into
@@ -177,3 +167,5 @@ class LevenshteinPhoneticExtender(LevenshteinExtender):
             match.pos1 = slice(match.pos1.start, match.pos1.stop - trail + 1)
             match.pos2 = slice(match.pos2.start, match.pos2.stop - trail + 1)
         return match
+
+'''

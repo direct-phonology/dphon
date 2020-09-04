@@ -2,9 +2,10 @@ import csv
 import json
 import logging
 import time
-from pathlib import Path
-from typing import Any, Dict, Iterator, List, Tuple, Optional
 from collections import defaultdict
+from itertools import combinations
+from pathlib import Path
+from typing import Any, Dict, Iterator, List, Optional, Tuple
 
 import spacy
 from rich.console import Console
@@ -18,42 +19,16 @@ from spacy.tokens import Doc, Span, Token
 
 from dphon.index import Index
 from dphon.ngrams import Ngrams
-from dphon.phonemes import OOV_PHONEMES, Phonemes, SoundTable_T
+from dphon.phonemes import (OOV_PHONEMES, Phonemes, SoundTable_T,
+                            get_sound_table_csv)
+from dphon.util import get_texts
+from dphon.extender import LevenshteinExtender
+from dphon.match import Match
 
 ChineseDefaults.use_jieba = False
 
 logging.basicConfig(level="INFO", format="%(message)s",
                     datefmt="[%X]", handlers=[RichHandler()])
-
-
-def get_texts(directory: Path) -> List[Tuple[str, Dict[str, Any]]]:
-    # load all texts and format with context
-    texts = []
-    for file in directory.glob("**/*.txt"):
-        with file.open() as contents:
-            text = contents.read()
-            texts.append((text, {"title": file.stem, "len": len(text)}))
-    logging.info(f"loaded {len(texts)} texts")
-    # return in order with largest texts first, to speed up processing
-    return sorted(texts, key=lambda t: t[1]["len"], reverse=True)
-
-
-def get_sound_table_csv(path: Path) -> SoundTable_T:
-    sound_table: SoundTable_T = defaultdict(tuple)
-    parts = ["Preinitial1", "Preinitial 2", "Initial", "Medial",
-             "Nucleus", "Final", "Postcoda *-ʔ", "Postcoda *-s"]
-    with open(path) as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            if row["\ufeffzi"] == "":
-                continue
-            sound_table[row["\ufeffzi"]] = tuple(
-                [row[part].strip() if row[part].strip() !=
-                 "" else None for part in parts]
-            )
-    logging.info(f"sound table {path.stem} loaded")
-    return sound_table
-
 
 if __name__ == "__main__":
     # load texts and sound table
@@ -63,24 +38,24 @@ if __name__ == "__main__":
 
     # setup pipeline
     nlp = spacy.blank("zh")
-    logging.info("spaCy pipeline created")
 
-    ngrams = Ngrams(nlp, "quad_grams", n=4)
+    ngrams = Ngrams(nlp, n=4)
     phonemes = Phonemes(nlp, "bs_phonemes", syllable_parts=8,
                         sound_table=sound_table)
-    index = Index(nlp, "tok_index", val_fn=lambda doc: [token for token in doc if token.is_alpha],
-                  key_fn=lambda token: token.text if not token._.is_oov else None)
-    # index = Index(nlp, "ngram_index", val_fn=lambda doc: doc._.ngrams,
-    #               key_fn=lambda ngram: "".join(ngram._.phonemes))
-    oov = Index(nlp, "oov_index", val_fn=lambda doc: [token for token in doc if token.is_alpha],
-                key_fn=lambda token: token.text if token._.is_oov else None)
+    index = Index(nlp, "ngram_index",
+                  val_fn=lambda doc: doc._.ngrams,
+                  filter_fn=lambda ngram: ngram.text.isalpha(),
+                  key_fn=lambda ngram: "".join(ngram._.phonemes))
+    # index = Index(nlp, "tok_index", val_fn=lambda doc: [token for token in doc if token.is_alpha],
+    #               key_fn=lambda token: token.text if not token._.is_oov else None)
+    # oov = Index(nlp, "oov_index", val_fn=lambda doc: [token for token in doc if token.is_alpha],
+    #             key_fn=lambda token: token.text if token._.is_oov else None)
 
     nlp.add_pipe(phonemes, first=True)
     nlp.add_pipe(ngrams, after="bs_phonemes")
     nlp.add_pipe(index)
-    nlp.add_pipe(oov)
 
-    logging.info("spaCy pipeline setup complete")
+    logging.info(f"loaded spaCy model \"{nlp.meta['name']}\"")
 
     # store output statistics & visualize progress
     stats: Dict[str, str] = {}
@@ -102,10 +77,32 @@ if __name__ == "__main__":
             logging.debug(f"processed doc {context['title']} in {finish:.3f}s")
             start = time.time()
         all_finish = time.time() - all_start
-        logging.info(f"spaCy pipeline completed in {all_finish:.3f}s")
+        logging.info(f"completed spaCy pipeline in {all_finish:.3f}s")
 
-    # logging.info(
-    #     f"{len(index)} unique phonetic {ngrams.n}-grams were encountered {index.size} times")
+    logging.info(
+        f"{len(index)} unique phonetic {ngrams.n}-grams were encountered {index.size} times")
+
+    # drop all ngrams that only occur once
+    groups = index.filter(lambda entry: len(entry[1]) > 1)
+
+    # create initial pairwise matches from seed groups
+    start = time.time()
+    matches: List[Match] = []
+    for _seed, locations in groups:
+        for left, right in combinations(locations, 2):
+            if left.doc != right.doc: # skip same-doc matches
+                matches.append(Match(left, right)) # FIXME ignore those without graphic var?
+    finish = time.time() - start
+    logging.info(f"created {len(matches)} initial matches in {finish:.3f}s")
+
+    # query match groups from the index and extend them, keeping track of the
+    # extent of existing matches so as not to duplicate work
+    start = time.time()
+    extender = LevenshteinExtender(threshold=0.8, len_limit=50)
+    finish = time.time() - start
+    logging.info(f"extended {len(matches)} matches in {finish:.3f}s")
+
+    '''
     logging.info(
         f"{len(index)} unique tokens were encountered {index.size} times"
     )
@@ -127,8 +124,7 @@ if __name__ == "__main__":
     for k, v in top10:
         table.add_row(nlp.vocab[k].text, f"{len(v)}")
     console.print(table, justify="center")
+    '''
 
-    # query match groups from the index and extend them, keeping track of the
-    # extent of existing matches so as not to duplicate work
 
     # build a reuse graph using the extended matches

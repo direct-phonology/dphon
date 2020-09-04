@@ -1,8 +1,8 @@
 """SpaCy pipeline components for building indexes of arbitrary Token data."""
 
 import logging
-from itertools import dropwhile
-from typing import Any, Callable, Iterator, Iterable, List, Tuple, TypeVar
+from itertools import filterfalse
+from typing import Any, Callable, Iterator, Iterable, List, Tuple, TypeVar, Optional
 
 from spacy.language import Language
 from spacy.lookups import Table
@@ -16,29 +16,50 @@ KT = TypeVar("KT")              # type for keys stored in the index
 VT = TypeVar("VT")              # type for values stored in the index
 Entry = Tuple[KT, List[VT]]     # type for an index entry (all values at key)
 
+# called on a Doc; returns the list of values from the doc we want to index
+ValFn = Callable[[Doc], Iterable[VT]]
+
+# called on a value; if False the value will not be indexed
+FilterFn = Callable[[VT], bool]
+
+# called on a value to index; returns the key to index at (i.e. hash)
+KeyFn = Callable[[VT], KT]
+
 
 class Index():
     """A spaCy pipeline component that indexes arbitrary items via callables."""
 
-    def __init__(self, nlp: Language, name: str, key_fn: Callable[[KT], VT],
-                 val_fn: Callable[[Doc], Iterable[KT]]):
-        """Initialize the index component."""
+    def __init__(self, nlp: Language, name: str, key_fn: Optional[KeyFn], val_fn: Optional[ValFn], filter_fn: Optional[FilterFn]):
+        """Initialize the index component.
+        
+        - By default, an index will store lists of Tokens keyed on their text.
+        - Pass val_fn to control what values are extracted from a Doc.
+        - Pass key_fn to control what key values are indexed at.
+        - Pass filter_fn to control which values are indexed."""
         # store name, callables used to index values, and total values (size)
         self.name = name
-        self.key_fn = key_fn
-        self.val_fn = val_fn
         self._size = 0
+
+        # by default, extracts tokens from docs and indexes them via their text
+        self.key_fn: KeyFn = key_fn if key_fn else lambda doc: doc
+        self.val_fn: ValFn = val_fn if val_fn else lambda token: token.text
+        self.filter_fn: FilterFn = filter_fn if filter_fn else lambda token: True
 
         # initialize the index
         self.table = nlp.vocab.lookups.add_table(self.name)
-        logging.info(f"created {self.__class__} as {self.name}")
+        logging.info(f"created component \"{self.name}\"")
 
     def __call__(self, doc: Doc) -> Doc:
-        """Extract useful values from the Doc and add them to the index."""
+        """Extract values from a doc and index those that pass the filter.
+
+        - Values are extracted from the doc using val_fn(doc).
+        - Values that pass the predicate filter_fn(value) are indexed.
+        - Values will be indexed using the output of key_fn(value).
+        - The Doc is returned unmodified."""
+
         for val in self.val_fn(doc):
-            key = self.key_fn(val)
-            # if key_fn returns None, skip indexing this value
-            if key is not None:
+            if self.filter_fn(val):
+                key = self.key_fn(val)
                 try:
                     self.table[key].append(val)
                 except KeyError:
@@ -56,11 +77,11 @@ class Index():
 
     def __iter__(self) -> Iterator[Entry]:
         """Return a (k, v) iterator over all entries in the index."""
-        return ((key, values) for key, values in self.table.items())
+        return self.table.items()
 
     def filter(self, fn: Callable[[Entry], bool]) -> Iterator[Entry]:
         """Return a (k, v) iterator over all entries which match a predicate."""
-        return ((key, values) for key, values in dropwhile(fn, self.table.items()))
+        return (entry for entry in self.table.items() if fn(entry))
 
     @property
     def size(self) -> int:

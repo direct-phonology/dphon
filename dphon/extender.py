@@ -81,8 +81,8 @@ class LevenshteinExtender(Extender):
         # when finished, return match with the "trail" removed, if any
         if trail > 0:
             return Match(
-                doc1[match.left.start:match.left.end - trail + 1],
-                doc2[match.right.start:match.right.end - trail + 1]
+                doc1[match.left.start:match.left.end - trail],
+                doc2[match.right.start:match.right.end - trail]
             )
         else:
             return match

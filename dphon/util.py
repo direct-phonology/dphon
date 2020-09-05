@@ -7,8 +7,10 @@ from collections import defaultdict
 from typing import Any, Dict, List, Tuple
 from pathlib import Path
 
-# from dphon.extender import Extender
-from dphon.graph import Match
+from rich.progress import TaskID, Progress
+
+from dphon.extender import Extender
+from dphon.match import Match
 
 '''
 
@@ -42,27 +44,27 @@ def condense_matches(matches: List[Match]) -> List[Match]:
         current = matches.pop()
 
         # if match is outside current range, dump queue and start over
-        if current.pos1.start > queue[0].pos1.stop:
+        if current.left.start > queue[0].left.end:
             new_matches += queue
             new_matches.append(current)
             queue = []
 
         # if match overlaps in doc1, check the queue
-        elif current.pos1.start > queue[0].pos1.start:
+        elif current.left.start > queue[0].left.start:
             updated = False
 
             for match in queue:
                 # if match needs to be condensed, extend bounds
-                if current.pos2.start > match.pos2.start and \
-                    current.pos2.start < match.pos2.stop and \
-                    current.pos2.stop > match.pos2.stop:
-                    match.pos1 = slice(match.pos1.start, current.pos1.stop)
-                    match.pos2 = slice(match.pos2.start, current.pos2.stop)
+                if current.right.start > match.right.start and \
+                    current.right.start < match.right.end and \
+                    current.right.end > match.right.end:
+                    match.left = slice(match.left.start, current.left.end)
+                    match.right = slice(match.right.start, current.right.end)
                     updated = True
                     break
                 # if match is subsumed by another, remove from queue
-                elif current.pos2.start > match.pos2.start and \
-                    current.pos2.stop < match.pos2.stop:
+                elif current.right.start > match.right.start and \
+                    current.right.end < match.right.end:
                     updated = True
                     break
 
@@ -74,14 +76,16 @@ def condense_matches(matches: List[Match]) -> List[Match]:
     new_matches += queue
     return new_matches
 
-def extend_matches(matches: List[Match], extender: Extender) -> List[Match]:
+'''
+
+def extend_matches(matches: List[Match], extender: Extender, progress: Progress, task: TaskID) -> List[Match]:
     """Extend matches using a provided extension strategy, returning maximal
     matches."""
     # if no matches, nothing to do
     if len(matches) == 0:
         return []
 
-    # order matches by location in document 1; keep active matches in a queue
+    # order matches by location in left doc; keep active matches in a queue
     matches = list(reversed(sorted(matches)))
     new_matches: List[Match] = []
     queue: List[Match] = []
@@ -96,31 +100,32 @@ def extend_matches(matches: List[Match], extender: Extender) -> List[Match]:
             continue
 
         # if match is outside current range, dump queue and start over
-        if current.pos1.start >= queue[0].pos1.stop:
+        if current.left.start >= queue[0].left.end:
             new_matches += queue
             queue = [extender.extend(current)]
 
-        # if match overlaps in doc1, check the queue
-        elif current.pos1.start >= queue[0].pos1.start:
+        # if match overlaps in left doc, check the queue
+        elif current.left.start >= queue[0].left.start:
             skip = False
 
             for match in queue:
                 # if match is internal to one in queue, skip it
-                if current.pos2.start >= match.pos2.start and \
-                    current.pos2.start <= match.pos2.stop and \
-                    current.pos2.stop <= match.pos2.stop:
+                if current.right.start >= match.right.start and \
+                    current.right.start <= match.right.end and \
+                    current.right.end <= match.right.end:
                     skip = True
                     break
 
-            # if match hits new location in doc2, add to queue
+            # if match hits new location in right doc, add to queue
             if not skip:
                 queue.append(extender.extend(current))
+
+        # update progress
+        progress.update(task, advance=1)
 
     # add any remaining matches from queue and return finished list
     new_matches += queue
     return new_matches
-
-'''
 
 def get_texts(directory: Path) -> List[Tuple[str, Dict[str, Any]]]:
     # load all texts and format with context

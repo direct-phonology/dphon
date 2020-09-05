@@ -12,6 +12,7 @@ from rich.console import Console
 from rich.logging import RichHandler
 from rich.progress import BarColumn, Progress, TextColumn
 from rich.table import Table as RichTable
+from rich.traceback import install
 from spacy.lang.zh import ChineseDefaults
 from spacy.language import Language
 from spacy.lookups import Table
@@ -21,18 +22,21 @@ from dphon.index import Index
 from dphon.ngrams import Ngrams
 from dphon.phonemes import (OOV_PHONEMES, Phonemes, SoundTable_T,
                             get_sound_table_csv)
-from dphon.util import get_texts
+from dphon.util import get_texts, extend_matches
 from dphon.extender import LevenshteinExtender
 from dphon.match import Match
 
+# turn off default settings for spacy's chinese model
 ChineseDefaults.use_jieba = False
 
+# install logging and exception handlers
 logging.basicConfig(level="INFO", format="%(message)s",
                     datefmt="[%X]", handlers=[RichHandler()])
+install()
 
 if __name__ == "__main__":
     # load texts and sound table
-    texts = get_texts(Path("/Users/nbudak/src/ect-krp/tmp"))
+    texts = get_texts(Path("/Users/nbudak/src/ect-krp/tmp/春秋左傳"))
     sound_table = get_sound_table_csv(
         Path("./dphon/data/BaxterSagartOC_parsed.csv"))
 
@@ -58,51 +62,69 @@ if __name__ == "__main__":
     logging.info(f"loaded spaCy model \"{nlp.meta['name']}\"")
 
     # store output statistics & visualize progress
-    stats: Dict[str, str] = {}
-    total_len = sum([context["len"] for text, context in texts])
     progress = Progress(
         "{task.elapsed:.0f}s",
+        "{task.description}",
         BarColumn(bar_width=None),
-        "{task.percentage:>3.1f}%"
+        "{task.completed:,}/{task.total:,}",
+        "{task.percentage:.1f}%",
+        transient=True
     )
 
     # process all texts
     with progress:
-        docs_task = progress.add_task("docs", total=total_len)
+        docs_task = progress.add_task("indexing documents", total=len(texts))
         all_start = time.time()
         start = time.time()
         for doc, context in nlp.pipe(texts, as_tuples=True):
-            progress.update(docs_task, advance=context["len"])
+            progress.update(docs_task, advance=1)
             finish = time.time() - start
             logging.debug(f"processed doc {context['title']} in {finish:.3f}s")
             start = time.time()
-        all_finish = time.time() - all_start
-        logging.info(f"completed spaCy pipeline in {all_finish:.3f}s")
-
-    logging.info(
-        f"{len(index)} unique phonetic {ngrams.n}-grams were encountered {index.size} times")
+        progress.remove_task(docs_task)
+    all_finish = time.time() - all_start
+    logging.info(f"completed spaCy pipeline in {all_finish:.3f}s")
 
     # drop all ngrams that only occur once
-    groups = index.filter(lambda entry: len(entry[1]) > 1)
+    groups = list(index.filter(lambda entry: len(entry[1]) > 1))
 
     # create initial pairwise matches from seed groups
-    start = time.time()
     matches: List[Match] = []
-    for _seed, locations in groups:
-        for left, right in combinations(locations, 2):
-            if left.doc != right.doc: # skip same-doc matches
-                matches.append(Match(left, right)) # FIXME ignore those without graphic var?
+    with progress:
+        matches_task = progress.add_task("generating matches", total=len(groups))
+        start = time.time()
+        for seed, locations in groups:
+            matches_in_group = 0
+            for left, right in combinations(locations, 2):
+                if left.doc != right.doc: # skip same-doc matches
+                    matches.append(Match(left, right)) # FIXME ignore those without graphic var?
+                    matches_in_group += 1
+            progress.update(matches_task, advance=1)
+            logging.debug(f"generated {matches_in_group:,} match seeds from group: {seed}")
+        progress.remove_task(matches_task)
     finish = time.time() - start
-    logging.info(f"created {len(matches)} initial matches in {finish:.3f}s")
+    logging.info(f"created {len(matches):,} initial matches in {finish:.3f}s")
 
     # query match groups from the index and extend them, keeping track of the
     # extent of existing matches so as not to duplicate work
-    start = time.time()
     extender = LevenshteinExtender(threshold=0.8, len_limit=50)
+    with progress:
+        extend_task = progress.add_task("extending matches", total=len(matches))
+        start = time.time()
+        new_matches = extend_matches(matches, extender, progress, extend_task)
+        progress.remove_task(extend_task)
     finish = time.time() - start
-    logging.info(f"extended {len(matches)} matches in {finish:.3f}s")
+    logging.info(f"extended {len(new_matches):,} matches in {finish:.3f}s")
+
+    # write out results
+    outfile = Path("./results.txt")
+    with outfile.open(mode="w") as file:
+        for match in new_matches:
+            file.write(f"{match.__repr__()}\t{match}\n")
 
     '''
+    logging.info(
+    f"{len(index)} unique phonetic {ngrams.n}-grams were encountered {index.size} times")
     logging.info(
         f"{len(index)} unique tokens were encountered {index.size} times"
     )

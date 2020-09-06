@@ -24,14 +24,16 @@ class Match():
         right_text = self._right.text.replace("\n", "")
         return f"{left_text} :: {right_text}"
 
-    def __lt__(self, other: Span) -> bool:
+    def __lt__(self, other: object) -> bool:
         """Order matches by left location, then right. Group by doc."""
+        if not isinstance(other, Match):
+            return False
         if id(self._left.doc) < id(other.left.doc):
             return True
-        elif id(self._left.doc) == id(other.left.doc):
+        if id(self._left.doc) == id(other.left.doc):
             if id(self._right.doc) < id(other.right.doc):
                 return True
-            elif id(self._right.doc) == id(other.right.doc):
+            if id(self._right.doc) == id(other.right.doc):
                 if self._left < other.left:
                     return True
                 if self._left == other.left:
@@ -39,6 +41,14 @@ class Match():
                 return False
             return False
         return False
+
+    def __eq__(self, other: object) -> bool:
+        """Two matches are equal if their docs and locations are identical."""
+        if not isinstance(other, Match):
+            return False
+        if self._left != other.left or self._right != other.right:
+            return False
+        return True
 
     @property
     def left(self) -> Span:

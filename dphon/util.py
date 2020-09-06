@@ -4,7 +4,7 @@ Utility functions
 
 import logging
 from collections import defaultdict
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Iterable
 from pathlib import Path
 
 from rich.progress import TaskID, Progress
@@ -78,29 +78,28 @@ def condense_matches(matches: List[Match]) -> List[Match]:
 
 '''
 
-def extend_matches(matches: List[Match], extender: Extender, progress: Progress, task: TaskID) -> List[Match]:
+def extend_matches(matches: Iterable[Match], extender: Extender, progress: Progress, task: TaskID) -> List[Match]:
     """Extend matches using a provided extension strategy, returning maximal
     matches."""
-    # if no matches, nothing to do
-    if len(matches) == 0:
-        return []
-
+    
     # order matches by location in left doc; keep active matches in a queue
     matches = list(reversed(sorted(matches)))
     new_matches: List[Match] = []
     queue: List[Match] = []
+    last_left = None
+    last_right = None
 
     # drain the old match list to fill up the new one
     while len(matches) > 0:
         current = matches.pop()
 
-        # if queue is empty, extend and add the match to it
-        if len(queue) == 0:
-            queue.append(extender.extend(current))
-            continue
+        # if new left doc or new right doc, dump queue and start over
+        if current.left.doc != last_left or current.right.doc != last_right:
+            new_matches += queue
+            queue = [extender.extend(current)]
 
         # if match is outside current range, dump queue and start over
-        if current.left.start >= queue[0].left.end:
+        elif current.left.start >= queue[0].left.end:
             new_matches += queue
             queue = [extender.extend(current)]
 
@@ -119,6 +118,10 @@ def extend_matches(matches: List[Match], extender: Extender, progress: Progress,
             # if match hits new location in right doc, add to queue
             if not skip:
                 queue.append(extender.extend(current))
+
+        # track doc changes
+        last_left = current.left.doc
+        last_right = current.right.doc
 
         # update progress
         progress.update(task, advance=1)

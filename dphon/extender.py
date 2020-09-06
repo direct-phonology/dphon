@@ -63,7 +63,7 @@ class LevenshteinExtender(Extender):
         score = self.score(match)
         extended = 0
         trail = 0
-        while score >= self.threshold and match.left.end <= doc1_len and match.right.end <= doc2_len:
+        while score >= self.threshold and match.left.end < doc1_len and match.right.end < doc2_len:
             # extend by one character and rescore
             match = Match(
                 doc1[match.left.start:match.left.end+1],

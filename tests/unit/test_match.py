@@ -57,3 +57,15 @@ class TestMatch(TestCase):
         m_unsorted = [m1, m2, m3, m4, m5, m6, m7]
         m_sorted = list(sorted(m_unsorted))
         self.assertListEqual(m_sorted, [m5, m6, m3, m2, m4, m1, m7])
+
+    def test_eq(self) -> None:
+        """should test equality via both doc and position"""
+        left = self.doc1[4:6]
+        right = self.doc2[2:4]
+        # shallow copies of spans should be equal
+        m1 = Match(left, right)
+        m2 = Match(left, right)
+        self.assertEqual(m1, m2)
+        # pre-copied spans should also be equal
+        m3 = Match(self.doc1[4:6], self.doc2[2:4])
+        self.assertEqual(m1, m3)

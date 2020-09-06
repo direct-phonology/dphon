@@ -2,6 +2,7 @@
 
 import json
 from abc import ABC, abstractmethod
+import logging
 
 import Levenshtein as Lev
 import pkg_resources
@@ -43,7 +44,7 @@ class LevenshteinExtender(Extender):
         """Compare the two Spans of a Match to generate a similarity score."""
         text1 = match.left.text
         text2 = match.right.text
-        return Lev.ratio(text1[:self.len_limit], text2[:self.len_limit])
+        return Lev.ratio(text1[-self.len_limit:], text2[-self.len_limit:])
 
     def extend(self, match: Match) -> Match:
         """Extend a match using edit distance comparison.
@@ -62,7 +63,7 @@ class LevenshteinExtender(Extender):
         score = self.score(match)
         extended = 0
         trail = 0
-        while score >= self.threshold and match.left.end < doc1_len and match.right.end < doc2_len:
+        while score >= self.threshold and match.left.end <= doc1_len and match.right.end <= doc2_len:
             # extend by one character and rescore
             match = Match(
                 doc1[match.left.start:match.left.end+1],

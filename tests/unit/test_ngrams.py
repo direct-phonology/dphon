@@ -22,8 +22,8 @@ class TestNgrams(TestCase):
             del self.ng
 
     def test_default(self) -> None:
-        """should populate name, attr, and n by default"""
-        self.ng = Ngrams(self.nlp)
+        """should populate name and attr by default and store n"""
+        self.ng = Ngrams(self.nlp, n=4)
         self.nlp.add_pipe(self.ng)
         self.assertEqual(self.ng.n, 4)
         self.assertTrue(Doc.has_extension("ngrams"))
@@ -31,13 +31,13 @@ class TestNgrams(TestCase):
 
     def test_custom_name(self) -> None:
         """should accept a custom name for pipeline component"""
-        self.ng = Ngrams(self.nlp, name="my_ngrams")
+        self.ng = Ngrams(self.nlp, name="my_ngrams", n=4)
         self.nlp.add_pipe(self.ng)
         self.assertTrue(self.nlp.has_pipe("my_ngrams"))
 
     def test_custom_attr(self) -> None:
         """should accept a custom attribute name for accessing ngrams"""
-        self.ng = Ngrams(self.nlp, attr="my_ngrams")
+        self.ng = Ngrams(self.nlp, attr="my_ngrams", n=4)
         self.nlp.add_pipe(self.ng)
         self.assertTrue(Doc.has_extension("my_ngrams"))
 
@@ -75,7 +75,7 @@ class TestNgrams(TestCase):
 
     def test_empty_doc(self) -> None:
         """should handle an empty doc"""
-        self.ng = Ngrams(self.nlp)
+        self.ng = Ngrams(self.nlp, n=3)
         self.nlp.add_pipe(self.ng)
         doc = self.nlp.make_doc("")
         results = [str(ngram) for ngram in doc._.ngrams]
@@ -83,7 +83,7 @@ class TestNgrams(TestCase):
 
     def test_one_token_doc(self) -> None:
         """should handle a doc with one token"""
-        self.ng = Ngrams(self.nlp)
+        self.ng = Ngrams(self.nlp, n=3)
         self.nlp.add_pipe(self.ng)
         doc = self.nlp.make_doc("Nope")
         results = [str(ngram) for ngram in doc._.ngrams]

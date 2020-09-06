@@ -3,7 +3,7 @@ import json
 import logging
 import time
 from collections import defaultdict
-from itertools import combinations
+from itertools import combinations, groupby
 from pathlib import Path
 from typing import Any, Dict, Iterator, List, Optional, Tuple
 
@@ -30,13 +30,13 @@ from dphon.match import Match
 ChineseDefaults.use_jieba = False
 
 # install logging and exception handlers
-logging.basicConfig(level="INFO", format="%(message)s",
+logging.basicConfig(level="DEBUG", format="%(message)s",
                     datefmt="[%X]", handlers=[RichHandler()])
 install()
 
 if __name__ == "__main__":
     # load texts and sound table
-    texts = get_texts(Path("/Users/nbudak/src/ect-krp/tmp/春秋左傳"))
+    texts = get_texts(Path("/Users/nbudak/src/ect-krp/tmp/史記"))
     sound_table = get_sound_table_csv(
         Path("./dphon/data/BaxterSagartOC_parsed.csv"))
 
@@ -94,13 +94,10 @@ if __name__ == "__main__":
         matches_task = progress.add_task("generating matches", total=len(groups))
         start = time.time()
         for seed, locations in groups:
-            matches_in_group = 0
             for left, right in combinations(locations, 2):
                 if left.doc != right.doc: # skip same-doc matches
                     matches.append(Match(left, right)) # FIXME ignore those without graphic var?
-                    matches_in_group += 1
             progress.update(matches_task, advance=1)
-            logging.debug(f"generated {matches_in_group:,} match seeds from group: {seed}")
         progress.remove_task(matches_task)
     finish = time.time() - start
     logging.info(f"created {len(matches):,} initial matches in {finish:.3f}s")

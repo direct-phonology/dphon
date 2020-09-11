@@ -28,8 +28,7 @@ class Ngrams():
         # store other properties
         self.n = n
         self.name = name if name else self.name
-        logging.info(
-            f"created component \"{self.name}\" with n={self.n}")
+        logging.info(f"created component \"{self.name}\" with n={self.n}")
 
     def __del__(self) -> None:
         """Unregister the n-gram custom extension."""

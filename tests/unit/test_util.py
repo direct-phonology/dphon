@@ -1,49 +1,19 @@
 """Utility function unit tests."""
 
 from unittest import TestCase
-from unittest.mock import Mock
 
-from dphon.tokenizer import Token
-from dphon.util import has_graphic_variation, condense_matches, extend_matches
-from dphon.document import Document
-from dphon.graph import Match
-from dphon.loader import SimpleLoader
+import spacy
+from spacy.lang.zh import ChineseDefaults
+from spacy.tokens import Doc, Span, Token
+
 from dphon.extender import LevenshteinExtender
+from dphon.match import Match
+from dphon.util import extend_matches
 
+# turn off default settings for spacy's chinese model
+ChineseDefaults.use_jieba = False
 
-class TestHasGraphicVariation(TestCase):
-
-    def setUp(self) -> None:
-        # create some basic docs to compare
-        self.doc1 = Document(0, '恐出奔齊有二心矣')
-        self.doc2 = Document(1, '公出奔齊有二心矣')
-        self.doc3 = Document(2, '恐出奔齊有二心矣')
-
-    def test_with_variation(self) -> None:
-        tokens = [
-            Token(0, self.doc1, 0, 3, '恐出奔齊'),
-            Token(1, self.doc2, 0, 3, '公出奔齊'),
-            Token(2, self.doc3, 0, 3, '恐出奔齊')
-        ]
-        # set the "original text" to current text (no transformation)
-        for token in tokens:
-            token.meta['orig_text'] = token.text
-        # should show as having variation
-        self.assertTrue(has_graphic_variation(tokens))
-
-    def test_no_variation(self) -> None:
-        tokens = [
-            Token(0, self.doc1, 0, 3, '有二心矣'),
-            Token(1, self.doc2, 0, 3, '有二心矣'),
-            Token(2, self.doc3, 0, 3, '有二心矣')
-        ]
-        # set the "original text" to current text (no transformation)
-        for token in tokens:
-            token.meta['orig_text'] = token.text
-        # no variation in this match
-        self.assertFalse(has_graphic_variation(tokens))
-
-
+'''
 class TestCondenseMatches(TestCase):
 
     def test_reduce_trigram_to_quad(self) -> None:
@@ -136,103 +106,90 @@ class TestCondenseMatches(TestCase):
         self.assertEqual(condense_matches(matches), [
             Match(0, 1, slice(1, 14), slice(1, 14))
         ])
-
+'''
 
 class TestExtendMatches(TestCase):
+    """Test extending match lists."""
+
+    def setUp(self) -> None:
+        """Create a blank spaCy model and extender to test with."""
+        self.nlp = spacy.blank("zh")
+        self.extender = LevenshteinExtender(threshold=0.75, len_limit=100)
 
     def test_no_extension(self) -> None:
+        """matches that can't be extended any further should be unchanged
+
+        Text sources:
+        - https://ctext.org/analects/gong-ye-chang?filter=503848
+        - https://ctext.org/shiji/zhong-ni-di-zi-lie-zhuan?filter=503848"""
+
         # create mock documents
-        docs = [
-            Document(0, '千室之邑'),
-            Document(1, '千室之邑')
-        ]
-        corpus = Mock(SimpleLoader)
-        corpus.get = lambda _id: docs[_id]
-        # create a match and extend it
-        matches = [Match(0, 1, slice(0, 4), slice(0, 4))]
-        extender = LevenshteinExtender(corpus, 0.75, 100)
-        results = extend_matches(matches, extender)
+        left = self.nlp.make_doc("千室之邑百乘之家")
+        right = self.nlp.make_doc("千室之邑百乘之家")
+        # create matches and extend them
+        matches = [Match(left[0:8], right[0:8])]
+        # output should be identical to input
+        results = extend_matches(matches, self.extender)
         self.assertEqual(results, matches)
 
     def test_perfect_match(self) -> None:
-        """Matches should be extended as far as possible.
+        """matches should be extended as far as possible
 
         Text sources:
         - https://ctext.org/text.pl?node=416724&if=en&filter=463451
         - https://ctext.org/text.pl?node=542654&if=en&filter=463451"""
-        # create mock documents
-        docs = [
-            Document(0, '與朋友交言而有信雖曰未學吾必謂之學矣'),
-            Document(1, '與朋友交言而有信雖曰未學吾必謂之學矣')
-        ]
-        corpus = Mock(SimpleLoader)
-        corpus.get = lambda _id: docs[_id]
-        # create matches and extend them
+
+        left = self.nlp.make_doc("與朋友交言而有信雖曰未學吾必謂之學矣")
+        right = self.nlp.make_doc("與朋友交言而有信雖曰未學吾必謂之學矣")
         matches = [
-            Match(0, 1, slice(0, 4), slice(0, 4)),
-            Match(0, 1, slice(1, 5), slice(1, 5))
+            Match(left[0:4], right[0:4]),
+            Match(left[1:5], right[1:5])
         ]
-        extender = LevenshteinExtender(corpus, 0.75, 100)
-        results = extend_matches(matches, extender)
-        # first match is kept and extended fully; second is discarded
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0], Match(0, 1, slice(0, 18), slice(0, 18)))
-        self.assertEqual(matches[0], results[0])
+        results = extend_matches(matches, self.extender)
+        # first match is kept and extended; second is discarded as internal
+        self.assertEqual(results, [Match(left[0:18], right[0:18])])
 
     def test_sub_overlap(self) -> None:
-        """Consecutive overlapping matches should be independently extended."""
-        # create mock documents
-        docs = [
-            Document(0, '水善利萬物而不爭自見者不明弊則新無關'),
-            Document(1, '可者不明下母得已以百姓為芻自見者不明')
-        ]
-        corpus = Mock(SimpleLoader)
-        corpus.get = lambda _id: docs[_id]
-        # create matches and extend them
+        """consecutive overlapping matches should be independently extended"""
+        left = self.nlp.make_doc("水善利萬物而不爭自見者不明弊則新無關")
+        right = self.nlp.make_doc("可者不明下母得已以百姓為芻自見者不明")
         matches = [
-            Match(0, 1, slice(8, 10), slice(13, 15)),
-            Match(0, 1, slice(9, 11), slice(14, 16)),
+            Match(left[8:10], right[13:15]),
+            Match(left[9:11], right[14:16]),
             # subset matches elsewhere
-            Match(0, 1, slice(10, 12), slice(1, 3)),
-            Match(0, 1, slice(10, 12), slice(15, 17)),
+            Match(left[10:12], right[1:3]),
+            Match(left[10:12], right[15:17]),
             # subset needs to be extended
-            Match(0, 1, slice(11, 13), slice(2, 4)),
-            Match(0, 1, slice(11, 13), slice(16, 18)),
+            Match(left[11:13], right[2:4]),
+            Match(left[11:13], right[16:18]),
         ]
-        extender = LevenshteinExtender(corpus, 0.75, 100)
-        results = extend_matches(matches, extender)
+        results = extend_matches(matches, self.extender)
         # two different extended matches
-        self.assertEqual(len(results), 2)
-        self.assertEqual(results[0], Match(0, 1, slice(8, 13), slice(13, 18)))
-        self.assertEqual(results[1], Match(0, 1, slice(10, 13), slice(1, 4)))
+        self.assertEqual(results, [
+            Match(left[8:13], right[13:18]),
+            Match(left[10:13], right[1:4])
+        ])
 
     def test_mirror_submatches(self) -> None:
-        # create mock documents
-        docs = [
-            Document(0, '邑與學吾交言而有信雖曰未學吾矣'),
-            Document(1, '室與學吾交言而有信雖曰未學吾恐')
-        ]
-        corpus = Mock(SimpleLoader)
-        corpus.get = lambda _id: docs[_id]
-        # create matches and extend them
+        """longer matches shouldn't generate internal mirrored submatches"""
+        left = self.nlp.make_doc("邑與學吾交言而有信雖曰未學吾矣")
+        right = self.nlp.make_doc("室與學吾交言而有信雖曰未學吾恐")
         matches = [
-            Match(0, 1, slice(1, 3), slice(1, 3)),
-            Match(0, 1, slice(2, 4), slice(2, 4)),
+            Match(left[1:3], right[1:3]),
+            Match(left[2:4], right[2:4]),
             # subset matches later subset
-            Match(0, 1, slice(2, 4), slice(12, 14)),
-            Match(0, 1, slice(3, 6), slice(3, 6)),
-            Match(0, 1, slice(4, 7), slice(4, 7)),
-            Match(0, 1, slice(6, 8), slice(6, 8)),
-            Match(0, 1, slice(7, 9), slice(7, 9)),
-            Match(0, 1, slice(8, 11), slice(8, 11)),
-            Match(0, 1, slice(9, 12), slice(9, 12)),
-            Match(0, 1, slice(11, 13), slice(11, 13)),
+            Match(left[2:4], right[12:14]),
+            Match(left[3:6], right[3:6]),
+            Match(left[4:7], right[4:7]),
+            Match(left[6:8], right[6:8]),
+            Match(left[7:9], right[7:9]),
+            Match(left[8:11], right[8:11]),
+            Match(left[9:12], right[9:12]),
+            Match(left[11:13], right[11:13]),
             # mirror of earlier subset
-            Match(0, 1, slice(12, 14), slice(2, 4)),
-            Match(0, 1, slice(12, 14), slice(12, 14)),
+            Match(left[12:14], right[2:4]),
+            Match(left[12:14], right[12:14]),
         ]
-        extender = LevenshteinExtender(corpus, 0.75, 100)
-        results = extend_matches(matches, extender)
+        results = extend_matches(matches, self.extender)
         # single match from chars 1-13, no internal matching
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0], Match(0, 1, slice(1, 14), slice(1, 14)))
+        self.assertEqual(results, [Match(left[1:14], right[1:14])])

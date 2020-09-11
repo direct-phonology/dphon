@@ -47,7 +47,7 @@ class TestNgrams(TestCase):
         self.nlp.add_pipe(self.ng)
         doc = self.nlp.make_doc("It was a dark and stormy night")
         results = [str(ngram) for ngram in doc._.ngrams]
-        self.assertListEqual(results, [
+        self.assertEqual(results, [
             "It", "was", "a", "dark", "and", "stormy", "night"
         ])
 
@@ -57,7 +57,7 @@ class TestNgrams(TestCase):
         self.nlp.add_pipe(self.ng)
         doc = self.nlp.make_doc("It was a dark and stormy night")
         results = [str(ngram) for ngram in doc._.ngrams]
-        self.assertListEqual(results, [
+        self.assertEqual(results, [
             "It was", "was a", "a dark", "dark and", "and stormy",
             "stormy night"
         ])
@@ -68,7 +68,7 @@ class TestNgrams(TestCase):
         self.nlp.add_pipe(self.ng)
         doc = self.nlp.make_doc("It was a dark and stormy night")
         results = [str(ngram) for ngram in doc._.ngrams]
-        self.assertListEqual(results, [
+        self.assertEqual(results, [
             "It was a", "was a dark", "a dark and", "dark and stormy",
             "and stormy night"
         ])
@@ -79,7 +79,7 @@ class TestNgrams(TestCase):
         self.nlp.add_pipe(self.ng)
         doc = self.nlp.make_doc("")
         results = [str(ngram) for ngram in doc._.ngrams]
-        self.assertListEqual(results, [])
+        self.assertEqual(results, [])
 
     def test_one_token_doc(self) -> None:
         """should handle a doc with one token"""
@@ -87,7 +87,7 @@ class TestNgrams(TestCase):
         self.nlp.add_pipe(self.ng)
         doc = self.nlp.make_doc("Nope")
         results = [str(ngram) for ngram in doc._.ngrams]
-        self.assertListEqual(results, ["Nope"])
+        self.assertEqual(results, ["Nope"])
 
     def test_n_larger_than_doc(self) -> None:
         """should handle a value for n larger than the doc itself"""
@@ -95,4 +95,4 @@ class TestNgrams(TestCase):
         self.nlp.add_pipe(self.ng)
         doc = self.nlp.make_doc("No way")
         results = [str(ngram) for ngram in doc._.ngrams]
-        self.assertListEqual(results, ["No way"])
+        self.assertEqual(results, ["No way"])

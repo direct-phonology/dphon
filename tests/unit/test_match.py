@@ -56,7 +56,7 @@ class TestMatch(TestCase):
         m7 = Match(doc2[6:8], doc3[6:8]) # 2:CD :: 3:CD
         m_unsorted = [m1, m2, m3, m4, m5, m6, m7]
         m_sorted = list(sorted(m_unsorted))
-        self.assertListEqual(m_sorted, [m5, m6, m3, m2, m4, m1, m7])
+        self.assertEqual(m_sorted, [m5, m6, m3, m2, m4, m1, m7])
 
     def test_eq(self) -> None:
         """should test equality via both doc and position"""

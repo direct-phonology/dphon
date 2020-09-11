@@ -1,13 +1,12 @@
 """Extender unit tests."""
 
 from unittest import TestCase
-from unittest.mock import Mock
 
 import spacy
 from spacy.lang.zh import ChineseDefaults
 
-from dphon.match import Match
 from dphon.extender import LevenshteinExtender
+from dphon.match import Match
 
 # turn off default settings for spacy's chinese model
 ChineseDefaults.use_jieba = False

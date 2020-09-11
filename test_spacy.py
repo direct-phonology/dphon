@@ -3,7 +3,7 @@ import json
 import logging
 import time
 from collections import defaultdict
-from itertools import combinations, groupby
+from itertools import combinations, filterfalse
 from pathlib import Path
 from typing import Any, Dict, Iterator, List, Optional, Tuple
 
@@ -23,7 +23,7 @@ from dphon.ngrams import Ngrams
 from dphon.phonemes import (OOV_PHONEMES, Phonemes, SoundTable_T,
                             get_sound_table_csv)
 from dphon.util import get_texts, extend_matches
-from dphon.extender import LevenshteinExtender
+from dphon.extender import LevenshteinPhoneticExtender
 from dphon.match import Match
 
 # turn off default settings for spacy's chinese model
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
     # query match groups from the index and extend them, keeping track of the
     # extent of existing matches so as not to duplicate work
-    extender = LevenshteinExtender(threshold=0.8, len_limit=50)
+    extender = LevenshteinPhoneticExtender(threshold=0.8, len_limit=50)
     with progress:
         extend_task = progress.add_task("extending matches", total=len(matches))
         start = time.time()
@@ -113,10 +113,19 @@ if __name__ == "__main__":
     finish = time.time() - start
     logging.info(f"extended {len(new_matches):,} matches in {finish:.3f}s")
 
+    # drop matches with no variation
+    variants = list(filterfalse(lambda m: m.left.text == m.right.text, new_matches))
+    logging.info(f"found {len(variants):,} matches with variation")
+
+    # drop matches with length < some constant
+    min_len = 8
+    keep = list(filterfalse(lambda m: len(m) < min_len, variants))
+    logging.info(f"found {len(keep):,} matches of length >={min_len}")
+
     # write out results
     outfile = Path("./results.txt")
     with outfile.open(mode="w") as file:
-        for match in new_matches:
+        for match in keep:
             file.write(f"{match.__repr__()}\t{match}\n")
 
     '''

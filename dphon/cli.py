@@ -41,7 +41,7 @@ from dphon import __version__
 from dphon.index import Index
 from dphon.match import Match
 from dphon.ngrams import Ngrams
-from dphon.phonemes import Phonemes, get_sound_table_csv
+from dphon.phonemes import Phonemes, get_sound_table_json
 from dphon.extender import LevenshteinPhoneticExtender
 from dphon.util import extend_matches
 
@@ -59,8 +59,7 @@ def run() -> None:
     args = docopt(__doc__, version=__version__)
 
     # get sound table
-    sound_table = get_sound_table_csv(
-        Path("./dphon/data/BaxterSagartOC_parsed.csv"))
+    sound_table = get_sound_table_json(Path("./dphon/data/sound_table.json"))
 
     # add Doc metadata
     Doc.set_extension("title", default="")
@@ -68,7 +67,7 @@ def run() -> None:
     # setup spaCy model
     nlp = spacy.blank("zh")
     nlp.add_pipe(Phonemes(nlp, sound_table=sound_table), first=True)
-    nlp.add_pipe(Ngrams(nlp, n=3), after="phonemes")
+    nlp.add_pipe(Ngrams(nlp, n=4), after="phonemes")
     nlp.add_pipe(Index(nlp, val_fn=lambda doc: doc._.ngrams,
                        filter_fn=lambda ngram: ngram.text.isalpha(),
                        key_fn=lambda ngram: "".join(ngram._.phonemes)))

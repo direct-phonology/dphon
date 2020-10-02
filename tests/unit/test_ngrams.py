@@ -1,4 +1,4 @@
-"""Test the n-grams spaCy pipeline component."""
+"""Tests for the n-grams module."""
 
 from typing import Any
 from unittest import TestCase
@@ -11,9 +11,10 @@ from dphon.ngrams import Ngrams
 
 
 class TestNgrams(TestCase):
+    """Test the n-grams spaCy pipeline component."""
 
     def setUp(self) -> None:
-        """Create a blank pipeline to use in tests."""
+        """Create a blank spaCy pipeline to use in tests."""
         self.nlp = spacy.blank("en")
 
     def tearDown(self) -> None:
@@ -21,7 +22,7 @@ class TestNgrams(TestCase):
         if hasattr(self, "ng"):
             del self.ng
 
-    def test_default(self) -> None:
+    def test_defaults(self) -> None:
         """should populate name and attr by default and store n"""
         self.ng = Ngrams(self.nlp, n=4)
         self.nlp.add_pipe(self.ng)

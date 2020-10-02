@@ -1,3 +1,4 @@
 docopt
 spacy
 python-levenshtein
+sinopy

@@ -78,7 +78,7 @@ def condense_matches(matches: List[Match]) -> List[Match]:
 
 '''
 
-def extend_matches(matches: Iterable[Match], extender: Extender, progress: Progress, task: TaskID) -> List[Match]:
+def extend_matches(matches: Iterable[Match], extender: Extender) -> List[Match]:
     """Extend matches using a provided extension strategy, returning maximal
     matches."""
     
@@ -122,9 +122,6 @@ def extend_matches(matches: Iterable[Match], extender: Extender, progress: Progr
         # track doc changes
         last_left = current.left.doc
         last_right = current.right.doc
-
-        # update progress
-        progress.update(task, advance=1)
 
     # add any remaining matches from queue and return finished list
     new_matches += queue

@@ -29,20 +29,24 @@ KeyFn = Callable[[VT], KT]
 class Index():
     """A spaCy pipeline component that indexes arbitrary items via callables."""
 
-    def __init__(self, nlp: Language, name: str, key_fn: Optional[KeyFn], val_fn: Optional[ValFn], filter_fn: Optional[FilterFn]):
+    name = "index"  # will appear in spaCy pipeline
+
+    def __init__(self, nlp: Language, key_fn: Optional[KeyFn] = None,
+                 val_fn: Optional[ValFn] = None, filter_fn: Optional[FilterFn] = None,
+                 name: str = None):
         """Initialize the index component.
-        
+
         - By default, an index will store lists of Tokens keyed on their text.
         - Pass val_fn to control what values are extracted from a Doc.
         - Pass key_fn to control what key values are indexed at.
         - Pass filter_fn to control which values are indexed."""
         # store name, callables used to index values, and total values (size)
-        self.name = name
+        self.name = name if name else self.name
         self._size = 0
 
         # by default, extracts tokens from docs and indexes them via their text
-        self.key_fn: KeyFn = key_fn if key_fn else lambda doc: doc
-        self.val_fn: ValFn = val_fn if val_fn else lambda token: token.text
+        self.val_fn: ValFn = val_fn if val_fn else lambda doc: doc
+        self.key_fn: KeyFn = key_fn if key_fn else lambda token: token.text
         self.filter_fn: FilterFn = filter_fn if filter_fn else lambda token: True
 
         # initialize the index
@@ -61,9 +65,9 @@ class Index():
             if self.filter_fn(val):
                 key = self.key_fn(val)
                 try:
-                    self.table[key].append(val)
-                except KeyError:
-                    self.table[key] = [val]
+                    self.table.get(key).append(val)
+                except AttributeError:
+                    self.table.set(key, [val])
                 self._size += 1
         return doc
 
@@ -73,11 +77,11 @@ class Index():
 
     def __getitem__(self, key: KT) -> List[VT]:
         """Return a list of all values indexed at a given key."""
-        return self.table[key]
+        return self.table.get(key)
 
     def __iter__(self) -> Iterator[Entry]:
         """Return a (k, v) iterator over all entries in the index."""
-        return self.table.items()
+        return self.filter(lambda entry: True)
 
     def filter(self, fn: Callable[[Entry], bool]) -> Iterator[Entry]:
         """Return a (k, v) iterator over all entries which match a predicate."""

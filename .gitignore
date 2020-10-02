@@ -10,3 +10,4 @@ build
 dist
 .DS_Store
 .mypy_cache
+tmp

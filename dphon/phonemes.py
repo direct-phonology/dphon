@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Dict, Iterable, Iterator, Optional, Tuple
 
 from spacy.language import Language
-from spacy.lookups import Table
+from spacy.lookups import Lookups, Table
 from spacy.tokens import Doc, Span, Token
 
 # register the pipeline component factory; see:
@@ -25,23 +25,34 @@ SoundTable_T = Dict[str, Phonemes_T]
 class Phonemes():
     """A spaCy pipeline component that enables converting Tokens to phonemes."""
 
-    def __init__(self, nlp: Language, name: str, sound_table: SoundTable_T, syllable_parts: int, attr: str = "phonemes"):
-        """Initialize the phonemes component."""
-        # register attribute getters with customizable names; see:
-        # https://spacy.io/usage/processing-pipelines#custom-components-best-practices
-        Doc.set_extension(attr, getter=self.get_all_phonemes)
-        Span.set_extension(attr, getter=self.get_all_phonemes)
-        Token.set_extension(attr, getter=self.get_token_phonemes)
-        Token.set_extension("is_oov", getter=self.is_token_oov)
+    name = "phonemes"   # will appear in spaCy pipeline
+    attr = "phonemes"   # name for getter for phonemes, e.g. doc._.phonemes
+    table: Table        # reference to sound table in spaCy lookups
+    lookups: Lookups    # reference to all LUTs for language model
 
+    def __init__(self, nlp: Language, sound_table: SoundTable_T, name: str = None, attr: str = None):
+        """Initialize the phonemes component."""
         # store the name that will appear in the pipeline
-        self.name = name if name else "phonemes"
-        self.syllable_parts = syllable_parts
+        self.name = name if name else self.name
+        self.attr = attr if attr else self.attr
+        self.syllable_parts = len(next(iter(sound_table.values())))
         self.empty_phonemes = tuple(None for part in range(self.syllable_parts))
 
+        # register attribute getters with customizable names; see:
+        # https://spacy.io/usage/processing-pipelines#custom-components-best-practices
+        Doc.set_extension(self.attr, getter=self.get_all_phonemes)
+        Span.set_extension(self.attr, getter=self.get_all_phonemes)
+        Token.set_extension(self.attr, getter=self.get_token_phonemes)
+        Token.set_extension("is_oov", getter=self.is_token_oov)
+
         # store the sound table in the vocab's Lookups using the attr name
-        self.table = nlp.vocab.lookups.add_table(attr, sound_table)
+        self.lookups = nlp.vocab.lookups
+        self.table = self.lookups.add_table(self.attr, sound_table)
         logging.info(f"created component \"{self.name}\"")
+
+    def __del__(self) -> None:
+        """Unregister the sound table."""
+        self.lookups.remove_table(self.attr)
 
     def __call__(self, doc: Doc) -> Doc:
         """Return the Doc unmodified."""
@@ -49,7 +60,7 @@ class Phonemes():
 
     def is_token_oov(self, token: Token) -> bool:
         """Check if a token has a phonetic entry in the sound table."""
-        return token.is_alpha and token.text not in self.table
+        return token.text not in self.table
 
     def graphic_variants(self, tokens: Iterable[Token]) -> bool:
         """Check if a set of tokens are graphic variants of the same word."""
@@ -104,6 +115,6 @@ def get_sound_table_json(path: Path) -> SoundTable_T:
     with open(path) as file:
         entries = json.loads(file.read())
         for char, entry in entries.items():
-            sound_table[char] = (entry[2],)
+            sound_table[char] = tuple(entry)
     logging.info(f"sound table {path.stem} loaded")
-    return sound_table
+    return dict(sound_table)

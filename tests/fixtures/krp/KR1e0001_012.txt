@@ -1,0 +1,5721 @@
+# -*- mode: mandoku-view -*-
+#+TITLE: 春秋左傳
+#+DATE: 2016-08-10 10:06:43
+#+PROPERTY: ID KR1e0001
+#+PROPERTY: BASEEDITION tls
+#+PROPERTY: JUAN 11
+#+PROPERTY: CAT 1pre-han,經學典籍,春秋類
+
+# src: ZUO Ai 1.1.1 (494 B.C.) Ya2ng Bo2ju4n 1604; Wa2ng Sho3uqia1n et al.14i3; tr. Legge:794
+# dating: 8120
+<pb:KR1e0001_tls_012-1a>¶
+** 12 哀公
+
+A12.1《哀公元年經》
+<pb:KR1e0001_tls_012-2a>¶
+
+A12.1.1元年春王正月，¶
+公即位。
+<pb:KR1e0001_tls_012-3a>¶
+
+A12.1.2楚子、¶
+陳侯、¶
+隨侯、¶
+許男圍蔡。
+<pb:KR1e0001_tls_012-4a>¶
+
+A12.1.3鼷鼠食郊牛，¶
+改卜牛。¶
+夏四月辛巳，¶
+郊。
+<pb:KR1e0001_tls_012-5a>¶
+
+A12.1.4秋，¶
+齊侯、¶
+衛侯伐晉。
+<pb:KR1e0001_tls_012-6a>¶
+
+A12.1.5冬，¶
+仲孫何忌帥師伐邾。
+<pb:KR1e0001_tls_012-7a>¶
+
+B12.1《哀公元年傳》
+<pb:KR1e0001_tls_012-8a>¶
+
+B12.1.1元年春，¶
+楚子圍蔡，¶
+報柏舉也。¶
+里而栽，¶
+廣丈，¶高倍。¶
+夫屯晝夜九日，¶
+如子西之素。¶
+蔡人男女以辨。¶
+使疆于江、¶
+汝之間而還。¶
+蔡於是乎請遷于吳。<pb:KR1e0001_tls_012-9a>¶
+
+# src: Zuo Ai 1.2.1 (494 B.C.) Ya2ng Bo2ju4n 1605; Wa2ng Sho3uqia1n et al.14i3; tr. Legge:794
+# dating: 8120
+B12.1.2吳王夫差敗越于夫椒，¶
+報檇李也。¶
+遂入越。¶
+越子以甲楯五千保于會稽，¶
+使大夫種因吳大宰嚭以行成。¶
+吳子將許之。¶
+伍員曰：¶
+
+# src: Zuo Ai 1.2.2 (494 B.C.) Ya2ng Bo2ju4n 1605; Wa2ng Sho3uqia1n et al.14i3; tr. Legge:794
+# dating: 8120
+「不可。¶
+臣聞之：¶
+『樹德莫如滋，¶
+去疾莫如盡。』¶
+昔有過澆殺斟灌以伐斟鄩，¶
+滅夏后相，¶
+后緡方娠，¶
+逃出自竇，¶
+歸于有仍，¶
+生少康焉。¶
+
+# src: Zuo Ai 1.2.3 (494 B.C.) Ya2ng Bo2ju4n 1605; Wa2ng Sho3uqia1n et al.14i3; tr. Legge:794
+# dating: 8120
+為仍牧正，¶
+惎澆能戒之。¶
+澆使椒求之，¶
+逃奔有虞，¶
+為之庖正，¶
+以除其害。¶
+虞思於是妻之以二姚，¶
+而邑諸綸，¶
+有田一成，¶
+有眾一旅。¶
+
+# src: Zuo Ai 1.2.4 (494 B.C.) Ya2ng Bo2ju4n 1606; Wa2ng Sho3uqia1n et al.14i3; tr. Legge:794
+# dating: 8120
+能布其德，¶
+而兆其謀，¶
+以收夏眾，¶
+撫其官職；¶
+使女艾諜澆，¶
+使季杼誘豷。¶
+遂滅過、¶戈，
+復禹之績，¶
+祀夏配天，¶
+不失舊物。¶
+
+# src: Zuo Ai 1.2.5 (494 B.C.) Ya2ng Bo2ju4n 1606; Wa2ng Sho3uqia1n et al.14i3; tr. Legge:794
+# dating: 8120
+今吳不如過，¶
+而越大於少康，¶
+或將豐之，¶
+不亦難乎！¶
+句踐能親而務施，¶
+施不失人，¶
+親不棄勞。¶
+與我同壤，¶
+而世為仇讎。¶
+
+# src: Zuo Ai 1.2.6 (494 B.C.) Ya2ng Bo2ju4n 1606; Wa2ng Sho3uqia1n et al.14i4; tr. Legge:794
+# dating: 8120
+於是乎克而弗取，¶
+將又存之，¶
+違天而長寇讎，¶
+後雖悔之，¶
+不可食已。¶
+姬之衰也，¶
+日可俟也。¶
+介在蠻夷，¶
+而長寇讎，¶
+以是求伯，¶
+必不行矣。」¶
+
+# src: Zuo Ai 1.2.7 (494 B.C.) Ya2ng Bo2ju4n 1606; Wa2ng Sho3uqia1n et al.14i4; tr. Legge:794
+# dating: 8120
+弗聽。¶
+退而告人曰：¶
+「越十年生聚，¶
+而十年教訓，¶
+二十年之外，¶
+吳其為沼乎！」¶
+
+# src: Zuo Ai 1.28 (494 B.C.) Ya2ng Bo2ju4n 1607; Wa2ng Sho3uqia1n et al.14i4; tr. Legge:794
+# dating: 8120
+三月，¶
+越及吳平。¶
+吳入越，¶
+不書，¶
+吳不告慶、¶越不告敗也。<pb:KR1e0001_tls_012-10a>¶
+
+# src: Zuo Ai 1.3.1 (494 B.C.) Ya2ng Bo2ju4n 1607; Wa2ng Sho3uqia1n et al.1487; tr. Legge:794
+# dating: 8120
+B12.1.3夏四月，¶
+齊侯、¶衛侯救邯鄲，¶
+圍五鹿。<pb:KR1e0001_tls_012-11a>¶
+
+# src: Zuo Ai 1.4.1 (494 B.C.) Ya2ng Bo2ju4n 1607; Wa2ng Sho3uqia1n et al.1487; tr. Legge:794
+# dating: 8120
+B12.1.4吳之入楚也，¶
+使召陳懷公。¶
+懷公朝國人而問焉，¶
+曰：¶
+「欲與楚者右，¶
+欲與吳者左。¶
+陳人從田，¶
+無田從黨。」¶
+
+# src: Zuo Ai 1.4.2 (494 B.C.) Ya2ng Bo2ju4n 1607; Wa2ng Sho3uqia1n et al.1487; tr. Legge:794
+# dating: 8120
+逢滑當公而進，¶
+曰：¶
+「臣聞，¶
+國之興也以福，¶
+其亡也以禍。¶
+今吳未有福，¶
+楚未有禍，¶
+楚未可棄，¶
+吳未可從。¶
+
+# src: Zuo Ai 1.4.3 (494 B.C.) Ya2ng Bo2ju4n 1607; Wa2ng Sho3uqia1n et al.1487; tr. Legge:794
+# dating: 8120
+而晉、¶
+盟主也；¶
+若以晉辭吳，¶
+若何？」¶
+公曰：¶
+「國勝君亡，¶
+非禍而何？」¶
+
+# src: Zuo Ai 1.4.4 (494 B.C.) Ya2ng Bo2ju4n 1607; Wa2ng Sho3uqia1n et al.1487; tr. Legge:794
+# dating: 8120
+對曰：¶
+「國之有是多矣，¶
+何必不復？¶
+小國猶復，¶
+況大國乎？¶
+臣聞，¶
+國之興也，¶
+視民如傷，¶
+是其福也；¶
+其亡也，¶
+以民為土芥，¶
+是其禍也。¶
+
+# src: Zuo Ai 1.4.5 (494 B.C.) Ya2ng Bo2ju4n 1607; Wa2ng Sho3uqia1n et al.1487; tr. Legge:794
+# dating: 8120
+楚雖無德，¶
+亦不艾殺其民。¶
+吳日敝於兵，¶
+暴骨如莽，¶
+而未見德焉。¶
+天其或者正訓楚也，¶
+禍之適吳，¶
+其何日之有？」¶
+
+# src: Zuo Ai 1.4.6 (494 B.C.) Ya2ng Bo2ju4n 1608; Wa2ng Sho3uqia1n et al.1487; tr. Legge:794
+# dating: 8120
+陳侯從之。¶
+及夫差克越，¶
+乃脩先君之怨。¶
+秋八月，¶
+吳侵陳，¶
+脩舊怨也。<pb:KR1e0001_tls_012-12a>¶
+
+# src: Zuo Ai 1.5.1 (494 B.C.) Ya2ng Bo2ju4n 1608; Wa2ng Sho3uqia1n et al.1487; tr. Legge:794
+# dating: 8120
+B12.1.5齊侯、¶衛侯會于乾侯，¶
+救范氏也。¶
+師及齊師、¶衛孔圉、¶鮮虞人伐晉，¶
+取棘蒲。<pb:KR1e0001_tls_012-13a>¶
+
+# src: Zuo Ai 1.6.1 (494 B.C.) Ya2ng Bo2ju4n 1608; Wa2ng Sho3uqia1n et al.1489; tr.Watson:1989 190
+# dating: 8120
+B12.1.6吳師在陳，¶
+楚大夫皆懼，¶
+曰：¶
+「闔廬惟能用其民，¶
+以敗我於柏舉。¶
+今聞其嗣又甚焉，¶
+將若之何？」¶
+子西曰：¶
+
+# src: Zuo Ai 1.6.2 (494 B.C.) Ya2ng Bo2ju4n 1608; Wa2ng Sho3uqia1n et al.1489; tr.Watson:1989 190
+# dating: 8120
+「二三子恤不相睦，¶
+無患吳矣。¶
+昔闔廬食不二味，¶
+居不重席，¶
+室不崇壇，¶
+器不彤鏤，¶
+宮室不觀，¶
+舟車不飾；¶
+衣服財用，¶
+擇不取費。¶
+
+# src: Zuo Ai 1.6.3 (494 B.C.) Ya2ng Bo2ju4n 1608; Wa2ng Sho3uqia1n et al.1489; tr.Watson:1989 190
+# dating: 8120
+在國，¶
+天有菑癘，¶
+親巡孤寡而共其乏困。¶
+在軍，¶
+熟食者分而後敢食，¶
+其所嘗者，¶
+卒乘與焉。¶
+
+# src: Zuo Ai 1.6.4 (494 B.C.) Ya2ng Bo2ju4n 1609; Wa2ng Sho3uqia1n et al.1489; tr.Watson:1989 190
+# dating: 8120
+勤恤其民，¶
+而與之勞逸，¶
+是以民不罷勞，¶
+死知不曠。¶
+吾先大夫子常易之，¶
+所以敗我也。¶
+
+# src: Zuo Ai 1.6.5 (494 B.C.) Ya2ng Bo2ju4n 1609; Wa2ng Sho3uqia1n et al.1489; tr.Watson:1989 190
+# dating: 8120
+今聞夫差，¶
+次有臺榭陂池焉，¶
+宿有妃嬙、¶嬪御焉；¶
+一日之行，¶
+所欲必成，¶
+玩好必從；¶
+珍異是聚，¶
+觀樂是務；¶
+視民如讎，¶
+而用之日新。¶
+夫先自敗也已，¶
+安能敗我？」<pb:KR1e0001_tls_012-14a>¶
+
+# src: Zuo Ai 1.7.1 (494 B.C.) Ya2ng Bo2ju4n 1609; Wa2ng Sho3uqia1n et al.1489; tr. Legge:795
+# dating: 8120
+B12.1.7冬十月，
+晉趙鞅伐朝歌。<pb:KR1e0001_tls_012-15a>¶
+
+# src: Zuo Ai 2.1.1 (493 B.C.) Ya2ng Bo2ju4n 1611; Wa2ng Sho3uqia1n et al.1491; tr. Legge:798
+# dating: 8120
+A12.2《哀公二年經》
+<pb:KR1e0001_tls_012-16a>¶
+
+A12.2.1二年春，¶
+王二月，¶
+季孫斯、¶
+叔孫州仇、¶
+仲孫何忌帥師伐邾，¶
+取漷東田及沂西田。¶
+癸巳，¶
+叔孫州仇、¶
+仲孫何忌及邾子盟于句繹。
+<pb:KR1e0001_tls_012-17a>¶
+
+A12.2.2夏四月丙子，¶
+衛侯元卒。
+<pb:KR1e0001_tls_012-18a>¶
+
+A12.2.3滕子來朝。
+<pb:KR1e0001_tls_012-19a>¶
+
+A12.2.4晉趙鞅帥師納衛世子蒯聵于戚。
+<pb:KR1e0001_tls_012-20a>¶
+
+A12.2.5秋八月甲戌，¶
+晉趙鞅帥師及鄭罕達帥師戰于鐵。¶
+鄭師敗績。
+<pb:KR1e0001_tls_012-21a>¶
+
+A12.2.6冬十月，¶
+葬衛靈公。
+<pb:KR1e0001_tls_012-22a>¶
+
+A12.2.7十有一月，¶
+蔡遷于州來。¶
+蔡殺其大夫公子駟。
+<pb:KR1e0001_tls_012-23a>¶
+
+B12.2《哀公二年傳》
+<pb:KR1e0001_tls_012-24a>¶
+
+B12.2.1二年春，¶
+伐邾，¶
+將伐絞。¶
+邾人愛其土，¶
+故賂以漷、¶沂之田而受盟。<pb:KR1e0001_tls_012-25a>¶
+
+# src: Zuo Ai 2.2.1 (493 B.C.) Ya2ng Bo2ju4n 1611; Wa2ng Sho3uqia1n et al.1491; tr.Watson:1989 196
+# dating: 8120
+B12.2.2初，¶
+衛侯遊于郊，¶
+子南僕。¶
+公曰：¶
+「余無子，¶
+將立女。」¶
+不對。¶
+他日又謂之，¶
+對曰：¶
+
+# src: Zuo Ai 2.2.2 (493 B.C.) Ya2ng Bo2ju4n 1612; Wa2ng Sho3uqia1n et al.1491; tr.Watson:1989 197
+# dating: 8120
+「郢不足以辱社稷，¶
+君其改圖。¶
+君夫人在堂，¶
+三揖在下，¶
+君命衹辱。」<pb:KR1e0001_tls_012-26a>¶
+夏，¶
+衛靈公卒。¶
+夫人曰：¶
+
+# src: Zuo Ai 2.2.3 (493 B.C.) Ya2ng Bo2ju4n 1612; Wa2ng Sho3uqia1n et al.1491; tr.Watson:1989 197
+# dating: 8120
+「命公子郢為大子，¶
+君命也。」¶
+對曰：¶
+「郢異於他子，¶
+且君沒於吾手，¶
+若有之，¶
+郢必聞之。¶
+且亡人之子輒在。」¶
+乃立輒。<pb:KR1e0001_tls_012-27a>¶
+
+# src: Zuo Ai 2.2.4 (493 B.C.) Ya2ng Bo2ju4n 1612; Wa2ng Sho3uqia1n et al.1491; tr. Legge:799
+# dating: 8120
+六月乙酉，¶
+晉趙鞅納衛大子于戚。¶
+宵迷，¶
+陽虎曰：¶
+「右河而南，¶
+必至焉。」¶
+使大子絻，¶
+八人衰絰，¶
+偽自衛逆者。¶
+告於門，¶
+哭而入，¶
+遂居之。<pb:KR1e0001_tls_012-28a>¶
+
+# src: Zuo Ai 2.3.1 (493 B.C.) Ya2ng Bo2ju4n 1613; Wa2ng Sho3uqia1n et al.1492; tr. Legge:799
+# dating: 8120
+B12.2.3秋八月，¶
+齊人輸范氏粟，¶
+鄭子姚、¶子般送之。¶
+士吉射逆之，¶
+趙鞅禦之，¶
+遇於戚。¶
+陽虎曰：¶
+
+# src: Zuo Ai 2.3.2 (493 B.C.) Ya2ng Bo2ju4n 1613; Wa2ng Sho3uqia1n et al.1492; tr. Legge:799
+# dating: 8120
+「吾車少，¶
+以兵車之旆與罕、¶駟兵車先陳。¶
+罕、駟自後隨而從之，¶
+彼見吾貌，¶
+必有懼心，¶
+於是乎會之，¶
+必大敗之。」¶
+
+# src: Zuo Ai 2.3.3 (493 B.C.) Ya2ng Bo2ju4n 1613; Wa2ng Sho3uqia1n et al.1492; tr. Legge:799
+# dating: 8120
+從之。¶
+卜戰，¶
+龜焦。¶
+樂丁曰：¶
+「《詩》曰：¶
+『爰始爰謀，¶
+爰契我龜。』¶
+謀協，¶
+以故兆詢可也。」¶
+簡子誓曰：¶
+
+# src: Zuo Ai 2.3.4 (493 B.C.) Ya2ng Bo2ju4n 1613; Wa2ng Sho3uqia1n et al.1492; tr. Legge:799
+# dating: 8120
+「范氏、¶中行氏反易天明，¶
+斬艾百姓，¶
+欲擅晉國而滅其君。¶
+寡君恃鄭而保焉。¶
+今鄭為不道，¶
+棄君助臣，¶
+
+# src: Zuo Ai 2.3.5 (493 B.C.) Ya2ng Bo2ju4n 1614; Wa2ng Sho3uqia1n et al.1492; tr. Legge:799
+# dating: 8120
+二三子順天明，¶
+從君命，¶
+經德義，¶
+除詬恥，¶
+在此行也。¶
+克敵者，¶上大夫受縣，¶
+下大夫受郡，¶
+士田十萬，¶
+庶人、¶工、商遂，¶
+人臣隸圉免。¶
+
+# src: Zuo Ai 2.3.6 (493 B.C.) Ya2ng Bo2ju4n 1614; Wa2ng Sho3uqia1n et al.1492; tr. Legge:799
+# dating: 8120
+志父無罪，¶
+君實圖之！¶
+若其有罪，¶
+絞縊以戮，¶
+桐棺三寸，¶
+不設屬辟，¶素車、¶樸馬，¶
+無入于兆，¶
+下卿之罰也。」<pb:KR1e0001_tls_012-29a>¶
+
+# src: Zuo Ai 2.3.7 (493 B.C.) Ya2ng Bo2ju4n 1615; Wa2ng Sho3uqia1n et al.1494; tr. Legge:799
+# dating: 8120
+甲戌，¶
+將戰，¶
+郵無恤御簡子，¶
+衛太子為右。¶
+登鐵上，¶
+望見鄭師眾，¶
+大子懼，¶
+自投于車下。¶
+
+# src: Zuo Ai 2.3.8 (493 B.C.) Ya2ng Bo2ju4n 1615; Wa2ng Sho3uqia1n et al.1494; tr. Legge:799
+# dating: 8120
+子良授大子綏，¶
+而乘之，¶
+曰：¶
+「婦人也。」¶
+簡子巡列，¶
+曰：¶
+「畢萬、¶
+匹夫也，¶
+
+# src: Zuo Ai 2.3.9 (493 B.C.) Ya2ng Bo2ju4n 1616; Wa2ng Sho3uqia1n et al.1494; tr. Legge:799
+# dating: 8120
+七戰皆獲，¶
+有馬百乘，¶
+死於牖下。¶
+群子勉之！¶
+死不在寇。」¶
+繁羽御趙羅，¶
+宋勇為右。¶
+
+# src: Zuo Ai 2.3.10 (493 B.C.) Ya2ng Bo2ju4n 1616; Wa2ng Sho3uqia1n et al.1494; tr. Legge:799
+# dating: 8120
+羅無勇，¶
+麇之。¶
+吏詰之，¶
+御對曰：¶
+「痁作而伏。」¶
+衛大子禱曰：¶
+「曾孫蒯聵敢昭告皇祖文王、¶
+烈祖康叔、¶
+文祖襄公：¶
+
+# src: Zuo Ai 2.3.11 (493 B.C.) Ya2ng Bo2ju4n 1616; Wa2ng Sho3uqia1n et al.1494; tr. Legge:799
+# dating: 8120
+鄭勝亂從，¶
+晉午在難，¶
+不能治亂，¶
+使鞅討之。¶
+蒯聵不敢自佚，¶
+備持矛焉。¶
+
+# src: Zuo Ai 2.3.12 (493 B.C.) Ya2ng Bo2ju4n 1616; Wa2ng Sho3uqia1n et al.1495; tr. Legge:799
+# dating: 8120
+敢告無絕筋，¶
+無折骨，¶
+無面傷，¶
+以集大事，¶
+無作三祖羞。¶
+大命不敢請，¶
+佩玉不敢愛。」<pb:KR1e0001_tls_012-30a>¶
+
+# src: Zuo Ai 2.3.13 (493 B.C.) Ya2ng Bo2ju4n 1617; Wa2ng Sho3uqia1n et al.1495; tr. Legge:799
+# dating: 8120
+鄭人擊簡子中肩，¶
+斃于車中，¶
+獲其蠭旗。¶
+大子救之以戈。¶
+鄭師北，¶
+獲溫大夫趙羅。¶
+大子復伐之，¶
+鄭師大敗，¶
+獲齊粟千車。¶
+趙孟喜曰：¶
+
+# src: Zuo Ai 2.3.14 (493 B.C.) Ya2ng Bo2ju4n 1617; Wa2ng Sho3uqia1n et al.1495; tr. Legge:799
+# dating: 8120
+「可矣。」¶
+傅叟曰：¶
+「雖克鄭，¶
+猶有知在，¶
+憂未艾也。」<pb:KR1e0001_tls_012-31a>¶
+初，¶
+周人與范氏田，¶
+公孫尨稅焉，¶
+趙氏得而獻之。¶
+吏請殺之。¶
+趙孟曰：¶
+「為其主也，¶
+何罪？」¶
+
+# src: Zuo Ai 2.3.15 (493 B.C.) Ya2ng Bo2ju4n 1617; Wa2ng Sho3uqia1n et al.1495; tr. Legge:800
+# dating: 8120
+止而與之田。¶
+及鐵之戰，¶
+以徒五百人宵攻鄭師，¶
+取蠭旗於子姚之幕下，¶
+獻，
+曰：¶
+「請報主德。」¶
+追鄭師，¶
+
+# src: Zuo Ai 2.3.16 (493 B.C.) Ya2ng Bo2ju4n 1617; Wa2ng Sho3uqia1n et al.1495; tr. Legge:800
+# dating: 8120
+姚、般、¶公孫林殿而射，¶
+前列多死。¶
+趙孟曰：¶
+「國無小。」¶
+既戰，¶
+簡子曰：¶
+「吾伏弢嘔血，¶
+鼓音不衰，¶
+今日我上也。」¶
+
+# src: Zuo Ai 2.3.17 (493 B.C.) Ya2ng Bo2ju4n 1618; Wa2ng Sho3uqia1n et al.1495; tr. Legge:800
+# dating: 8120
+大子曰：¶
+「吾救主於車，¶
+退敵於下，¶
+我、
+右之上也。」¶
+郵良曰：¶
+「我兩靷將絕，¶
+吾能止之，¶
+我、
+御之上也。」¶
+駕而乘材，¶
+兩靷皆絕。<pb:KR1e0001_tls_012-32a>¶
+
+# src: Zuo Ai 2.4.1 (493 B.C.) Ya2ng Bo2ju4n 1618; Wa2ng Sho3uqia1n et al.1495; tr. Legge:800
+# dating: 8120
+B12.2.4吳洩庸如蔡納聘，¶
+而稍納師。¶
+師畢入，¶
+眾知之。¶
+蔡侯告大夫，¶
+殺公子駟以說。¶
+哭而遷墓。¶
+冬，
+蔡遷于州來。<pb:KR1e0001_tls_012-33a>¶
+
+# src: Zuo Ai 3.1.1 (492 B.C.) Ya2ng Bo2ju4n 1619; Wa2ng Sho3uqia1n et al.1497; tr. Legge:802
+# dating: 8120
+A12.3《哀公三年經》
+<pb:KR1e0001_tls_012-34a>¶
+
+A12.3.1三年春，¶
+齊國夏、¶
+衛石曼姑帥師圍戚。
+<pb:KR1e0001_tls_012-35a>¶
+
+A12.3.2夏四月甲午，¶
+地震。
+<pb:KR1e0001_tls_012-36a>¶
+
+A12.3.3五月辛卯，¶
+桓宮、¶
+僖宮災。
+<pb:KR1e0001_tls_012-37a>¶
+
+A12.3.4季孫斯、¶
+叔孫州仇帥師城啟陽。
+<pb:KR1e0001_tls_012-38a>¶
+
+A12.3.5宋樂髡帥師伐曹。
+<pb:KR1e0001_tls_012-39a>¶
+
+A12.3.6秋七月丙子，¶
+季孫斯卒。
+<pb:KR1e0001_tls_012-40a>¶
+
+A12.3.7蔡人放其大夫公孫獵于吳。
+<pb:KR1e0001_tls_012-41a>¶
+
+A12.3.8冬十月癸卯，¶
+秦伯卒。
+<pb:KR1e0001_tls_012-42a>¶
+
+A12.3.9叔孫州仇、¶
+仲孫何忌帥師圍邾。
+<pb:KR1e0001_tls_012-43a>¶
+
+B12.3《哀公三年傳》
+<pb:KR1e0001_tls_012-44a>¶
+
+B12.3.1三年春，¶
+齊、衛圍戚，¶
+求援于中山。<pb:KR1e0001_tls_012-45a>¶
+
+# src: Zuo Ai 3.2.1 (492 B.C.) Ya2ng Bo2ju4n 1620; Wa2ng Sho3uqia1n et al.1497; tr. Legge:802
+# dating: 8120
+B12.3.2夏五月辛卯，¶
+司鐸火。¶
+火踰公宮，¶
+桓、僖災。¶
+救火者皆曰顧府。¶
+南宮敬叔至，¶
+命周人出御書，¶
+俟於宮，¶
+
+# src: Zuo Ai 3.2.2 (492 B.C.) Ya2ng Bo2ju4n 1620; Wa2ng Sho3uqia1n et al.1498; tr. Legge:802
+# dating: 8120
+曰：¶
+「庀女，¶
+而不在，¶
+死。」¶
+子服景伯至，¶
+命宰人出禮書，¶
+以待命。¶
+命不共
+有常刑。¶
+
+# src: Zuo Ai 3.2.3 (492 B.C.) Ya2ng Bo2ju4n 1621; Wa2ng Sho3uqia1n et al.1498; tr. Legge:802
+# dating: 8120
+校人乘馬，¶
+巾車脂轄，¶
+百官官備，¶
+府庫慎守，¶
+官人肅給。¶
+濟濡帷幕，¶
+鬱攸從之。¶
+蒙葺公屋，¶
+
+# src: Zuo Ai 3.2.4 (492 B.C.) Ya2ng Bo2ju4n 1621; Wa2ng Sho3uqia1n et al.1498; tr. Legge:802
+# dating: 8120
+自大廟始，¶
+外內以悛。¶
+助所不給。¶
+有不用命，¶
+則有常刑，¶
+無赦。¶
+
+# src: Zuo Ai 3.2.5 (492 B.C.) Ya2ng Bo2ju4n 1621; Wa2ng Sho3uqia1n et al.1498; tr. Legge:802
+# dating: 8120
+公父文伯至，¶
+命校人駕乘車。¶
+季桓子至，¶
+御公立于象魏之外，¶
+命救火者傷人則止，¶
+財可為也。¶
+命藏《象魏》，¶
+曰：¶
+
+# src: Zuo Ai 3.2.6 (492 B.C.) Ya2ng Bo2ju4n 1622; Wa2ng Sho3uqia1n et al.1498; tr. Legge:802
+# dating: 8120
+「舊章不可亡也。」¶
+富父槐至，¶
+曰：¶
+「無備而官辦者，¶
+猶拾瀋也。」¶
+於是乎去表之槀，¶
+道還公宮。<pb:KR1e0001_tls_012-46a>¶
+孔子在陳，¶
+聞火，¶
+曰：¶
+「其桓、¶僖乎！」<pb:KR1e0001_tls_012-47a>¶
+
+# src: Zuo Ai 3.3.1 (492 B.C.) Ya2ng Bo2ju4n 1622; Wa2ng Sho3uqia1n et al.1500; tr. Legge:802
+# dating: 8120
+B12.3.3劉氏、¶范氏世為婚姻，¶
+萇弘事劉文公，¶
+故周與范氏。¶
+趙鞅以為討。¶
+六月癸卯，¶
+周人殺萇弘。<pb:KR1e0001_tls_012-48a>¶
+
+# src: Zuo Ai 3.4.1 (492 B.C.) Ya2ng Bo2ju4n 1623; Wa2ng Sho3uqia1n et al.1500; tr. Legge:802
+# dating: 8120
+B12.3.4秋，¶
+季孫有疾，¶
+命正常曰：¶
+「無死！¶
+南孺子之子，¶
+男也，¶
+則以告而立之；¶
+女也，¶
+則肥也可。」¶
+
+# src: Zuo Ai 3.4.2 (492 B.C.) Ya2ng Bo2ju4n 1623; Wa2ng Sho3uqia1n et al.1500; tr. Legge:802
+# dating: 8120
+季孫卒，¶
+康子即位。¶
+既葬，¶
+康子在朝。¶
+南氏生男，¶
+正常載以如朝，¶
+告曰：¶
+「夫子有遺言，¶
+命其圉臣曰：¶
+
+# src: Zuo Ai 3.4.3 (492 B.C.) Ya2ng Bo2ju4n 1623; Wa2ng Sho3uqia1n et al.1500; tr. Legge:802
+# dating: 8120
+『南氏生男，¶
+則以告於君與大夫而立之。』¶
+今生矣，¶
+男也，¶
+敢告。」¶
+遂奔衛。¶
+康子請退。¶
+公使共劉視之，¶
+則或殺之矣。¶
+乃討之。¶
+召正常，¶
+正常不反。<pb:KR1e0001_tls_012-49a>¶
+
+# src: Zuo Ai 3.5.1 (492 B.C.) Ya2ng Bo2ju4n 1623; Wa2ng Sho3uqia1n et al.1500; tr. Legge:803
+# dating: 8120
+B12.3.5冬十月，¶
+晉趙鞅圍朝歌，¶
+師于其南，¶
+荀寅伐其郛，¶
+使其徒自北門入，¶
+己犯師而出。¶
+癸丑，¶
+奔邯鄲。<pb:KR1e0001_tls_012-50a>¶
+
+# src: Zuo Ai 3.5.2 (492 B.C.) Ya2ng Bo2ju4n 1624; Wa2ng Sho3uqia1n et al.1500; tr. Legge:803
+# dating: 8120
+十一月，¶
+趙鞅殺士皋夷，¶
+惡范氏也。<pb:KR1e0001_tls_012-51a>¶
+
+# src: Zuo Ai 4.1.1 (491 B.C.) Ya2ng Bo2ju4n 1625; Wa2ng Sho3uqia1n et al.1501; tr. Legge:804
+# dating: 8120
+A12.4《哀公四年經》
+<pb:KR1e0001_tls_012-52a>¶
+
+A12.4.1四年春，¶
+王二月庚戌，¶
+盜殺蔡侯申。
+<pb:KR1e0001_tls_012-53a>¶
+
+A12.4.2蔡公孫辰出奔吳。
+<pb:KR1e0001_tls_012-54a>¶
+
+A12.4.3葬秦惠公。
+<pb:KR1e0001_tls_012-55a>¶
+
+A12.4.4宋人執小邾子。
+<pb:KR1e0001_tls_012-56a>¶
+
+A12.4.5夏，¶
+蔡殺其大夫公孫姓、¶
+公孫霍。
+<pb:KR1e0001_tls_012-57a>¶
+
+A12.4.6晉人執戎蠻子赤歸于楚。
+<pb:KR1e0001_tls_012-58a>¶
+
+A12.4.7城西郛。
+<pb:KR1e0001_tls_012-59a>¶
+
+A12.4.8六月辛丑，¶
+亳社災。
+<pb:KR1e0001_tls_012-60a>¶
+
+A12.4.9秋八月甲寅，¶
+滕子結卒。
+<pb:KR1e0001_tls_012-61a>¶
+
+A12.4.10冬十有二月，¶
+葬蔡昭公。
+<pb:KR1e0001_tls_012-62a>¶
+
+A12.4.11葬滕頃公。
+<pb:KR1e0001_tls_012-63a>¶
+
+B12.4《哀公四年傳》
+<pb:KR1e0001_tls_012-64a>¶
+
+B12.4.1四年春，¶
+蔡昭侯將如吳。¶
+諸大夫恐其又遷也，¶
+承公孫翩逐而射之，¶
+入於家人而卒。¶
+以兩矢門之，¶
+眾莫敢進。¶
+文之鍇後至，¶
+曰：¶
+
+# src: Zuo Ai 4.1.2 (491 B.C.) Ya2ng Bo2ju4n 1626; Wa2ng Sho3uqia1n et al.1501; tr. Legge:804
+# dating: 8120
+「如牆而進，¶
+多而殺二人。」¶
+鍇執弓而先，¶
+翩射之，¶
+中肘；¶
+鍇遂殺之。¶
+故逐公孫辰而殺公孫姓、¶公孫盱。<pb:KR1e0001_tls_012-65a>¶
+
+# src: Zuo Ai 4.2.1 (491 B.C.) Ya2ng Bo2ju4n 1626; Wa2ng Sho3uqia1n et al.1501; tr. Legge:805
+# dating: 8120
+B12.4.2夏，¶
+楚人既克夷虎，¶
+乃謀北方。¶
+左司馬眅、¶申公壽餘、¶
+葉公諸梁致蔡於負函，¶
+致方城之外於繒關，¶
+曰：¶
+
+# src: Zuo Ai 4.2.2 (491 B.C.) Ya2ng Bo2ju4n 1626; Wa2ng Sho3uqia1n et al.1501; tr. Legge:805
+# dating: 8120
+「吳將泝江入郢，¶
+將奔命焉。」¶
+為一昔之期，¶
+襲梁及霍。¶
+單浮餘圍蠻氏，¶
+蠻氏潰。¶
+蠻子赤奔晉陰地。¶
+司馬起豐、¶析與狄戎，¶
+以臨上雒。¶
+
+# src: Zuo Ai 4.2.3 (491 B.C.) Ya2ng Bo2ju4n 1627; Wa2ng Sho3uqia1n et al.1501; tr. Legge:805
+# dating: 8120
+左師軍于菟和，¶
+右師軍于倉野，¶
+使謂陰地之命大夫士蔑曰：¶
+「晉、¶楚有盟，¶
+好惡同之。¶
+若將不廢，¶
+寡君之願也。¶
+不然，¶
+將通於少習以聽命。」¶
+
+# src: Zuo Ai 4.2.4 (491 B.C.) Ya2ng Bo2ju4n 1627; Wa2ng Sho3uqia1n et al.1502; tr. Legge:805
+# dating: 8120
+士蔑請諸趙孟。¶
+趙孟曰：¶
+「晉國未寧，¶
+安能惡於楚？¶
+必速與之！」¶
+士蔑乃致九州之戎，¶
+將裂田以與蠻子而城之，¶
+
+# src: Zuo Ai 4.2.5 (491 B.C.) Ya2ng Bo2ju4n 1627; Wa2ng Sho3uqia1n et al.1502; tr. Legge:805
+# dating: 8120
+且將為之卜。¶
+蠻子聽卜，¶
+遂執之與其五大夫，¶
+以畀楚師于三戶。¶
+司馬致邑立宗焉，¶
+以誘其遺民，¶
+而盡俘以歸。<pb:KR1e0001_tls_012-66a>¶
+
+# src: Zuo Ai 4.3.1 (491 B.C.) Ya2ng Bo2ju4n 1628; Wa2ng Sho3uqia1n et al.1502; tr. Legge:805
+# dating: 8120
+B12.4.3秋七月，¶
+齊陳乞、¶弦施、¶衛甯跪救范氏。¶
+庚午，¶
+圍五鹿。¶
+九月，¶
+趙鞅圍邯鄲。¶
+冬十一月，¶
+邯鄲降。¶
+荀寅奔鮮虞，¶
+趙稷奔臨。¶
+
+# src: Zuo Ai 4.3.2 (491 B.C.) Ya2ng Bo2ju4n 1628; Wa2ng Sho3uqia1n et al.1502; tr. Legge:805
+# dating: 8120
+十二月，¶
+弦施逆之，¶
+遂墮臨。¶
+國夏伐晉，¶
+取邢、¶任、欒、¶鄗、
+逆畤、¶陰人、¶盂、壺口，¶
+會鮮虞，¶
+納荀寅于柏人。<pb:KR1e0001_tls_012-67a>¶
+
+# src: Zuo Ai 5.1.1 (490 B.C.) Ya2ng Bo2ju4n 1629; Wa2ng Sho3uqia1n et al.1504; tr. Legge:806
+# dating: 8120
+A12.5《哀公五年經》
+<pb:KR1e0001_tls_012-68a>¶
+
+A12.5.1五年春，¶
+城毗。
+<pb:KR1e0001_tls_012-69a>¶
+
+A12.5.2夏，¶
+齊侯伐宋。
+<pb:KR1e0001_tls_012-70a>¶
+
+A12.5.3晉趙鞅帥師伐衛。
+<pb:KR1e0001_tls_012-71a>¶
+
+A12.5.4秋九月癸酉，¶
+齊侯杵臼卒。
+<pb:KR1e0001_tls_012-72a>¶
+
+A12.5.5冬，¶
+叔還如齊。
+<pb:KR1e0001_tls_012-73a>¶
+
+A12.5.6閏月，¶
+葬齊景公。
+<pb:KR1e0001_tls_012-74a>¶
+
+B12.5《哀公五年傳》
+<pb:KR1e0001_tls_012-75a>¶
+
+B12.5.1五年春，¶
+晉圍柏人，¶
+荀寅、¶士吉射奔齊。<pb:KR1e0001_tls_012-76a>¶
+初，¶
+范氏之臣王生惡張柳朔，¶
+言諸昭子，¶
+使為柏人。¶
+
+# src: Zuo Ai 5.1.2 (490 B.C.) Ya2ng Bo2ju4n 1630; Wa2ng Sho3uqia1n et al.1504; tr. Legge:806
+# dating: 8120
+昭子曰：¶
+「夫非而讎乎？」¶
+對曰：¶
+「私讎不及公，¶
+好不廢過，¶
+惡不去善，¶
+義之經也，¶
+臣敢違之？」¶
+
+# src: Zuo Ai 5.1.3 (490 B.C.) Ya2ng Bo2ju4n 1630; Wa2ng Sho3uqia1n et al.1504; tr. Legge:806
+# dating: 8120
+及范氏出，¶
+張柳朔謂其子：¶
+「爾從主，¶
+勉之！¶
+我將止死，¶
+王生授我矣，¶
+吾不可以僭之。」¶
+遂死於柏人。<pb:KR1e0001_tls_012-77a>¶
+
+# src: Zuo Ai 5.2.1 (490 B.C.) Ya2ng Bo2ju4n 1630; Wa2ng Sho3uqia1n et al.1505; tr. Legge:806
+# dating: 8120
+B12.5.2夏，¶
+趙鞅伐衛，¶
+范氏之故也，¶
+遂圍中牟。<pb:KR1e0001_tls_012-78a>¶
+
+# src: Zuo Ai 5.3.1 (490 B.C.) Ya2ng Bo2ju4n 1630; Wa2ng Sho3uqia1n et al.1505; tr. Legge:806
+# dating: 8120
+B12.5.3齊燕姬生子，¶
+不成而死。¶
+諸子鬻姒之子荼嬖，¶
+諸大夫恐其為大子也，¶
+言於公曰：¶
+「君之齒長矣，¶
+未有大子，¶
+若之何？」¶
+
+# src: Zuo Ai 5.3.2 (490 B.C.) Ya2ng Bo2ju4n 1630; Wa2ng Sho3uqia1n et al.1505; tr. Legge:807
+# dating: 8120
+公曰：¶
+「二三子間於憂虞，¶
+則有疾疢，¶
+亦姑謀樂，¶
+何憂於無君？」¶
+公疾，¶
+使國惠子、¶高昭子立荼，¶
+寘群公子於萊。¶
+
+# src: Zuo Ai 5.3.3 (490 B.C.) Ya2ng Bo2ju4n 1631; Wa2ng Sho3uqia1n et al.1505; tr. Legge:807
+# dating: 8120
+秋，
+齊景公卒。¶
+冬十月，¶
+公子嘉、¶公子駒、¶公子黔奔衛，¶
+公子鉏、¶公子陽生來奔。¶
+萊人歌之曰：¶
+「景公死乎不與埋，¶
+三軍事乎不與謀，¶
+師乎、¶師乎
+何黨之（乎）？」<pb:KR1e0001_tls_012-79a>¶
+
+# src: Zuo Ai 5.4.1 (490 B.C.) Ya2ng Bo2ju4n 1631; Wa2ng Sho3uqia1n et al.1505; tr. Legge:807
+# dating: 8120
+B12.5.4鄭駟秦富而侈，¶
+嬖大夫也，¶
+而常陳卿之車服於其庭。¶
+鄭人惡而殺之。¶
+子思曰：¶
+「《詩》曰：¶
+『不解于位，¶
+民之攸塈。』¶
+不守其位而能久者鮮矣。¶
+
+# src: Zuo Ai 5.4.2 (490 B.C.) Ya2ng Bo2ju4n 1631; Wa2ng Sho3uqia1n et al.1505; tr. Legge:807
+# dating: 8120
+《商頌》曰：¶
+『不僭不濫，¶
+不敢怠皇，¶
+命以多福。』」<pb:KR1e0001_tls_012-80a>¶
+
+# src: Zuo Ai 6.1.1 (489 B.C.) Ya2ng Bo2ju4n 1633; Wa2ng Sho3uqia1n et al.1507; tr. Legge:809
+# dating: 8120
+A12.6《哀公六年經》
+<pb:KR1e0001_tls_012-81a>¶
+
+A12.6.1六年春，¶
+城邾瑕。
+<pb:KR1e0001_tls_012-82a>¶
+
+A12.6.2晉趙鞅帥師伐鮮虞。
+<pb:KR1e0001_tls_012-83a>¶
+
+A12.6.3吳伐陳。
+<pb:KR1e0001_tls_012-84a>¶
+
+A12.6.4夏，¶
+齊國夏及高張來奔。
+<pb:KR1e0001_tls_012-85a>¶
+
+A12.6.5叔還會吳于柤。
+<pb:KR1e0001_tls_012-86a>¶
+
+A12.6.6秋七月庚寅，¶
+楚子軫卒。
+<pb:KR1e0001_tls_012-87a>¶
+
+A12.6.7齊陽生入于齊。
+<pb:KR1e0001_tls_012-88a>¶
+
+A12.6.8齊陳乞弒其君荼。
+<pb:KR1e0001_tls_012-89a>¶
+
+A12.6.9冬，¶
+仲孫何忌帥師伐邾。
+<pb:KR1e0001_tls_012-90a>¶
+
+A12.6.10宋向巢帥師伐曹。
+<pb:KR1e0001_tls_012-91a>¶
+
+B12.6《哀公六年傳》
+<pb:KR1e0001_tls_012-92a>¶
+
+B12.6.1六年春，¶
+晉伐鮮虞，¶
+治范氏之亂也。<pb:KR1e0001_tls_012-93a>¶
+
+# src: Zuo Ai 6.2.1 (489 B.C.) Ya2ng Bo2ju4n 1633; Wa2ng Sho3uqia1n et al.1507; tr. Legge:809
+# dating: 8120
+B12.6.2吳伐陳，¶
+復脩舊怨也。¶
+楚子曰：¶
+「吾先君與陳有盟，¶
+不可以不救。」¶
+乃救陳，¶
+師于城父。<pb:KR1e0001_tls_012-94a>¶
+
+# src: Zuo Ai 6.3.1 (489 B.C.) Ya2ng Bo2ju4n 1633; Wa2ng Sho3uqia1n et al.1507; tr. Legge:809
+# dating: 8120
+B12.6.3齊陳乞偽事高、¶國者，¶
+每朝，¶
+必驂乘焉。¶
+所從，¶
+必言諸大夫曰：¶
+「彼皆偃蹇，¶
+將棄子之命。¶
+皆曰：¶
+
+# src: Zuo Ai 6.3.2 (489 B.C.) Ya2ng Bo2ju4n 1633; Wa2ng Sho3uqia1n et al.1507; tr. Legge:809
+# dating: 8120
+『高、¶國得君，¶
+必偪我，¶
+盍去諸？』¶
+固將謀子，¶
+子早圖之！¶
+圖之，¶
+莫如盡滅之。¶
+需、
+事之下也。」¶
+
+# src: Zuo Ai 6.3.3 (489 B.C.) Ya2ng Bo2ju4n 1634; Wa2ng Sho3uqia1n et al.1507; tr. Legge:i10
+# dating: 8120
+及朝，¶
+則曰：¶
+「彼、¶
+虎狼也。¶
+見我在子之側，¶
+殺我無日矣，¶
+請就之位。」¶
+又謂諸大夫曰：¶
+「二子者禍矣，¶
+恃得君而欲謀二三子，¶
+
+# src: Zuo Ai 6.3.4 (489 B.C.) Ya2ng Bo2ju4n 1634; Wa2ng Sho3uqia1n et al.1507; tr. Legge:i10
+# dating: 8120
+曰：¶
+『國之多難，¶
+貴寵之由，¶
+盡去之而後君定。』¶
+既成謀矣，¶
+盍及其未作也，¶
+先諸？¶
+作而後，¶
+悔亦無及也。」¶
+
+# src: Zuo Ai 6.3.5 (489 B.C.) Ya2ng Bo2ju4n 1634; Wa2ng Sho3uqia1n et al.1507; tr. Legge:i10
+# dating: 8120
+大夫從之。<pb:KR1e0001_tls_012-95a>¶
+夏六月戊辰，¶
+陳乞、¶鮑牧及諸大夫以甲入于公宮。¶
+昭子聞之，¶
+與惠子乘如公。¶
+
+# src: Zuo Ai 6.3.6 (489 B.C.) Ya2ng Bo2ju4n 1634; Wa2ng Sho3uqia1n et al.1507; tr. Legge:i10
+# dating: 8120
+戰于莊，¶
+敗。
+國人追之，¶
+國夏奔莒，¶
+遂及高張、¶晏圉、¶弦施來奔。<pb:KR1e0001_tls_012-96a>¶
+
+# src: Zuo Ai 6.4.1 (489 B.C.) Ya2ng Bo2ju4n 1634; Wa2ng Sho3uqia1n et al.1508; tr. Legge:i10
+# dating: 8120
+B12.6.4秋七月，¶
+楚子在城父，¶
+將救陳。¶
+卜戰，¶
+不吉；¶
+卜退，¶
+不吉。¶
+王曰：¶
+
+# src: Zuo Ai 6.4.2 (489 B.C.) Ya2ng Bo2ju4n 1635; Wa2ng Sho3uqia1n et al.1509; tr. Legge:i10
+# dating: 8120
+「然則死也。¶
+再敗楚師，¶
+不如死；¶
+棄盟、¶逃讎，¶
+亦不如死。¶
+死一也，¶
+其死讎乎！」¶
+
+# src: Zuo Ai 6.4.3 (489 B.C.) Ya2ng Bo2ju4n 1635; Wa2ng Sho3uqia1n et al.1509; tr. Legge:i10
+# dating: 8120
+命公子申為王，¶
+不可；¶
+則命公子結，¶
+亦不可；¶
+則命公子啟，¶
+五辭而後許。¶
+將戰，¶
+王有疾。¶
+庚寅，¶
+昭王攻大冥，¶
+
+# src: Zuo Ai 6.4.4 (489 B.C.) Ya2ng Bo2ju4n 1635; Wa2ng Sho3uqia1n et al.1509; tr. Legge:i10
+# dating: 8120
+卒于城父。¶
+子閭退，¶
+曰：¶
+「君王舍其子而讓，¶
+群臣敢忘君乎？¶
+從君之命，¶
+順也；¶
+立君之子，¶
+亦順也。¶
+二順不可失也。」¶
+
+# src: Zuo Ai 6.4.5 (489 B.C.) Ya2ng Bo2ju4n 1635; Wa2ng Sho3uqia1n et al.1509; tr. Legge:i10
+# dating: 8120
+與子西、¶子期謀，¶
+潛師，¶閉壁，¶
+逆越女之子章，¶立之，¶
+而後還。<pb:KR1e0001_tls_012-97a>¶
+
+# src: Zuo Ai 6.4.6 (489 B.C.) Ya2ng Bo2ju4n 1635; Wa2ng Sho3uqia1n et al.1509; tr.Watson:1989 213
+# dating: 8120
+是歲也，¶
+有雲如眾赤鳥，¶
+夾日以飛三日。¶
+楚子使問諸周大史。¶
+周大史曰：¶
+「其當王身乎！¶
+若禜之，¶
+可移於令尹、¶司馬。」¶
+
+# src: Zuo Ai 6.4.7 (489 B.C.) Ya2ng Bo2ju4n 1636; Wa2ng Sho3uqia1n et al.1509; tr.Watson:1989 213
+# dating: 8120
+王曰：¶
+「除腹心之疾，¶
+而寘諸股肱，¶
+何益？¶
+不穀不有大過，¶
+天其夭諸？¶
+有罪受罰，¶
+又焉移之？」¶
+遂弗禜。<pb:KR1e0001_tls_012-98a>¶
+
+# src: Zuo Ai 6.4.8 (489 B.C.) Ya2ng Bo2ju4n 1636; Wa2ng Sho3uqia1n et al.1509; tr.Watson:1989 213
+# dating: 8120
+初，¶
+昭王有疾，¶
+卜曰：¶
+「河為祟。」¶
+王弗祭。¶
+大夫請祭諸郊。¶
+王曰：¶
+
+# src: Zuo Ai 6.4.9 (489 B.C.) Ya2ng Bo2ju4n 1636; Wa2ng Sho3uqia1n et al.1509; tr.Watson:1989 213
+# dating: 8120
+「三代命祀，¶
+祭不越望。¶
+江、漢、¶雎、漳，¶
+楚之望也。¶
+禍福之至，¶
+不是過也。¶
+不穀雖不德，¶
+河非所獲罪也。」¶
+
+# src: Zuo Ai 6.4.10 (489 B.C.) Ya2ng Bo2ju4n 1636; Wa2ng Sho3uqia1n et al.1509; tr.Watson:1989 213
+# dating: 8120
+遂弗祭。<pb:KR1e0001_tls_012-99a>¶
+孔子曰：¶
+「楚昭王知大道矣。¶
+其不失國也，¶
+宜哉！¶
+
+# src: Zuo Ai 6.4.11 (489 B.C.) Ya2ng Bo2ju4n 1636; Wa2ng Sho3uqia1n et al.1509; tr. Legge:i10
+# dating: 8120
+《夏書》曰：¶
+『惟彼陶唐，¶
+帥彼天常，¶
+有此冀方。¶
+今失其行，¶
+亂其紀綱，¶
+乃滅而亡。』¶
+又曰：¶
+『允出茲在茲。』¶
+由己率常，¶
+可矣。」<pb:KR1e0001_tls_012-100a>¶
+
+# src: Zuo Ai 6.5.1 (489 B.C.) Ya2ng Bo2ju4n 1636; Wa2ng Sho3uqia1n et al.1511; tr. Legge:i10
+# dating: 8120
+B12.6.5八月，¶
+齊邴意茲來奔。<pb:KR1e0001_tls_012-101a>¶
+
+# src: Zuo Ai 6.6.1 (489 B.C.) Ya2ng Bo2ju4n 1637; Wa2ng Sho3uqia1n et al.1511; tr. Legge:i10
+# dating: 8120
+B12.6.6陳僖子使召公子陽生。¶
+陽生駕而見南郭且于，¶
+曰：¶
+「嘗獻馬於季孫，¶
+不入於上乘，¶
+故又獻此，¶
+請與子乘之。」¶
+
+# src: Zuo Ai 6.6.2 (489 B.C.) Ya2ng Bo2ju4n 1637; Wa2ng Sho3uqia1n et al.1511; tr. Legge:i10
+# dating: 8120
+出萊門而告之故。¶
+闞止知之，¶
+先待諸外。¶
+公子曰：¶「事未可知，¶
+反，
+與壬也處。」¶
+
+# src: Zuo Ai 6.6.3 (489 B.C.) Ya2ng Bo2ju4n 1637; Wa2ng Sho3uqia1n et al.1511; tr. Legge:i10
+# dating: 8120
+戒之，¶
+遂行。¶
+逮夜，¶至於齊，¶
+國人知之。¶
+僖子使子士之母養之，¶
+與饋者皆入。<pb:KR1e0001_tls_012-102a>¶
+
+# src: Zuo Ai 6.6.4 (489 B.C.) Ya2ng Bo2ju4n 1637; Wa2ng Sho3uqia1n et al.1511; tr. Legge:i11
+# dating: 8120
+冬十月丁卯，¶
+立之。¶
+將盟，¶
+鮑子醉而往。¶
+其臣差車鮑點曰：¶
+「此誰之命也？」¶
+陳子曰：¶「受命于鮑子。」¶
+遂誣鮑子曰：¶
+「子之命也！」¶
+
+# src: Zuo Ai 6.6.5 (489 B.C.) Ya2ng Bo2ju4n 1638; Wa2ng Sho3uqia1n et al.1511; tr. Legge:i11
+# dating: 8120
+鮑子曰：¶
+「女忘君之為孺子牛而折其齒乎，¶
+而背之也？」¶
+悼公稽首，¶
+曰：¶
+「吾子、¶
+奉義而行者也。¶
+若我可，¶
+不必亡一大夫；¶
+
+# src: Zuo Ai 6.6.6 (489 B.C.) Ya2ng Bo2ju4n 1638; Wa2ng Sho3uqia1n et al.1511; tr. Legge:i11
+# dating: 8120
+若我不可，¶
+不必亡一公子。¶
+義則進，¶
+否則退，¶
+敢不唯子是從？¶
+廢興無以亂，¶
+則所願也。」¶
+
+# src: Zuo Ai 6.6.7 (489 B.C.) Ya2ng Bo2ju4n 1638; Wa2ng Sho3uqia1n et al.1512; tr. Legge:i11
+# dating: 8120
+鮑子曰：¶
+「誰非君之子？」¶
+乃受盟。¶
+使胡姬以安孺子如賴，¶
+去鬻姒，¶
+殺王甲，¶
+拘江說，¶
+囚王豹于句竇之丘。<pb:KR1e0001_tls_012-103a>¶
+
+# src: Zuo Ai 6.6.8 (489 B.C.) Ya2ng Bo2ju4n 1638; Wa2ng Sho3uqia1n et al.1512; tr. Legge:i11
+# dating: 8120
+公使朱毛告於陳子，¶
+曰：¶
+「微子，¶
+則不及此。¶
+然君異於器，¶
+不可以二。¶
+器二不匱，¶
+君二多難，¶
+敢布諸大夫。」¶
+
+# src: Zuo Ai 6.6.9 (489 B.C.) Ya2ng Bo2ju4n 1638; Wa2ng Sho3uqia1n et al.1512; tr. Legge:i11
+# dating: 8120
+僖子不對而泣，¶
+曰：¶
+「君舉不信群臣乎？¶
+以齊國之困，¶
+困又有憂，¶
+少君不可以訪，¶
+是以求長君，¶
+庶亦能容群臣乎！¶
+不然，¶夫孺子何罪？」¶
+毛復命，¶
+公悔之。¶
+
+# src: Zuo Ai 6.6.10 (489 B.C.) Ya2ng Bo2ju4n 1639; Wa2ng Sho3uqia1n et al.1512; tr. Legge:i11
+# dating: 8120
+毛曰：¶
+「君大訪於陳子，¶
+而圖其小可也。」¶
+使毛遷孺子於駘。¶
+不至，¶
+殺諸野幕之下，¶
+葬諸殳冒淳。<pb:KR1e0001_tls_012-104a>¶
+
+# src: Zuo Ai 7.1.1 (488 B.C.) Ya2ng Bo2ju4n 1640; Wa2ng Sho3uqia1n et al.1514; tr. Legge:i13
+# dating: 8120
+A12.7《哀公七年經》
+<pb:KR1e0001_tls_012-105a>¶
+
+A12.7.1七年春，¶
+宋皇瑗帥師侵鄭。
+<pb:KR1e0001_tls_012-106a>¶
+
+A12.7.2晉魏曼多帥師侵衛。
+<pb:KR1e0001_tls_012-107a>¶
+
+A12.7.3夏，¶
+公會吳于鄫。
+<pb:KR1e0001_tls_012-108a>¶
+
+A12.7.4秋，¶
+公伐邾。¶
+八月己酉，¶
+入邾，¶
+以邾子益來。
+<pb:KR1e0001_tls_012-109a>¶
+
+A12.7.5宋人圍曹。¶
+冬，鄭駟弘帥師救曹。
+<pb:KR1e0001_tls_012-110a>¶
+
+B12.7《哀公七年傳》
+<pb:KR1e0001_tls_012-111a>¶
+
+B12.7.1七年春，¶
+宋師侵鄭，¶
+鄭叛晉故也。<pb:KR1e0001_tls_012-112a>¶
+
+# src: Zuo Ai 7.2.1 (488 B.C.) Ya2ng Bo2ju4n 1640; Wa2ng Sho3uqia1n et al.1514; tr. Legge:i13
+# dating: 8120
+B12.7.2晉師侵衛，¶
+衛不服也。<pb:KR1e0001_tls_012-113a>¶
+
+# src: Zuo Ai 7.3.1 (488 B.C.) Ya2ng Bo2ju4n 1640; Wa2ng Sho3uqia1n et al.1514; tr. Legge:i13
+# dating: 8120
+B12.7.3夏，¶
+公會吳于鄫。¶
+吳來徵百牢。¶
+子服景伯對曰：¶
+「先王未之有也。」¶
+吳人曰：¶
+
+# src: Zuo Ai 7.3.2 (488 B.C.) Ya2ng Bo2ju4n 1640; Wa2ng Sho3uqia1n et al.1514; tr. Legge:i13
+# dating: 8120
+「宋百牢我，¶
+魯不可以後宋。¶
+且魯牢晉大夫過十，¶
+吳王百牢，¶
+不亦可乎？」¶
+
+# src: Zuo Ai 7.3.3 (488 B.C.) Ya2ng Bo2ju4n 1640; Wa2ng Sho3uqia1n et al.1514; tr. Legge:i13
+# dating: 8120
+景伯曰：¶
+「晉范鞅貪而棄禮，¶
+以大國懼敝邑，¶
+故敝邑十一牢之。¶
+君若以禮命於諸侯，¶
+則有數矣。¶
+若亦棄禮，¶
+則有淫者矣。¶
+
+# src: Zuo Ai 7.3.4 (488 B.C.) Ya2ng Bo2ju4n 1641; Wa2ng Sho3uqia1n et al.1514; tr. Legge:i13
+# dating: 8120
+周之王也，¶
+制禮，¶
+上物不過十二，¶
+以為天之大數也。¶
+今棄周禮，¶
+而曰必百牢，¶
+亦唯執事。」¶
+
+# src: Zuo Ai 7.3.5 (488 B.C.) Ya2ng Bo2ju4n 1641; Wa2ng Sho3uqia1n et al.1514; tr. Legge:i13
+# dating: 8120
+吳人弗聽。¶
+景伯曰：¶
+「吳將亡矣，¶
+棄天而背本。¶
+不與，¶
+必棄疾於我。」¶
+乃與之。<pb:KR1e0001_tls_012-114a>¶
+
+# src: Zuo Ai 7.3.6 (488 B.C.) Ya2ng Bo2ju4n 1641; Wa2ng Sho3uqia1n et al.1514; tr. Legge:i13
+# dating: 8120
+太宰嚭召季康子，¶
+康子使子貢辭。¶
+大宰嚭曰：¶「國君道長，¶
+而大夫不出門，¶
+此何禮也？」¶
+對曰：¶
+
+# src: Zuo Ai 7.3.7 (488 B.C.) Ya2ng Bo2ju4n 1641; Wa2ng Sho3uqia1n et al.1515; tr. Legge:i13
+# dating: 8120
+「豈以為禮，¶
+畏大國也。¶
+大國不以禮命於諸侯，¶
+苟不以禮，¶
+豈可量也？¶
+寡君既共命焉，¶
+其老豈敢棄其國？¶
+
+# src: Zuo Ai 7.3.8 (488 B.C.) Ya2ng Bo2ju4n 1641; Wa2ng Sho3uqia1n et al.1515; tr. Legge:i13
+# dating: 8120
+大伯端委以治周禮，¶
+仲雍嗣之，¶
+斷髮文身，¶
+臝以為飾，¶
+豈禮也哉？¶
+有由然也。」¶
+反自鄫，¶
+以吳為無能為也。<pb:KR1e0001_tls_012-115a>¶
+
+# src: Zuo Ai 7.4.1 (488 B.C.) Ya2ng Bo2ju4n 1642; Wa2ng Sho3uqia1n et al.1516; tr. Legge:i14
+# dating: 8120
+B12.7.4季康子欲伐邾，¶
+乃饗大夫以謀之。¶
+子服景伯曰：¶
+「小所以事大，¶
+信也；¶
+大所以保小，¶
+仁也。¶
+背大國，¶
+不信；¶
+伐小國，¶
+不仁。¶
+
+# src: Zuo Ai 7.4.2 (488 B.C.) Ya2ng Bo2ju4n 1642; Wa2ng Sho3uqia1n et al.1516; tr. Legge:i14
+# dating: 8120
+民保於城，¶
+城保於德。¶
+失二德者，¶
+危，
+將焉保？」¶
+孟孫曰：¶
+「二三子以為何如？¶
+惡賢而逆之？」¶
+
+# src: Zuo Ai 7.4.3 (488 B.C.) Ya2ng Bo2ju4n 1642; Wa2ng Sho3uqia1n et al.1516; tr. Legge:i14
+# dating: 8120
+對曰：¶
+「禹合諸侯於塗山，¶
+執玉帛者萬國。¶
+今其存者，¶
+無數十焉，¶
+唯大不字小，¶
+小不事大也。¶
+知必危，¶
+何故不言？¶
+魯德如邾
+而以眾加之，¶
+可乎？」¶
+不樂而出。<pb:KR1e0001_tls_012-116a>¶
+
+# src: Zuo Ai 7.4.4 (488 B.C.) Ya2ng Bo2ju4n 1643; Wa2ng Sho3uqia1n et al.1517; tr. Legge:i14
+# dating: 8120
+秋，¶
+伐邾，¶
+及范門，¶
+猶聞鍾聲。¶
+大夫諫，¶
+不聽。¶
+茅成子請告於吳，¶
+不許，¶
+曰：¶
+
+# src: Zuo Ai 7.4.5 (488 B.C.) Ya2ng Bo2ju4n 1643; Wa2ng Sho3uqia1n et al.1517; tr. Legge:i14
+# dating: 8120
+「魯擊柝聞於邾；¶
+吳二千里，¶
+不三月不至，¶
+何及於我？¶
+且國內豈不足？」¶
+成子以茅叛，¶
+師遂入邾，¶
+處其公宮。¶
+
+# src: Zuo Ai 7.4.6 (488 B.C.) Ya2ng Bo2ju4n 1643; Wa2ng Sho3uqia1n et al.1517; tr. Legge:i14
+# dating: 8120
+眾師晝掠，¶
+邾眾保于繹。¶
+師宵掠，¶
+以邾子益來，¶
+獻于亳社，¶
+囚諸負瑕，¶
+負瑕故有繹。<pb:KR1e0001_tls_012-117a>¶
+
+# src: Zuo Ai 7.4.7 (488 B.C.) Ya2ng Bo2ju4n 1643; Wa2ng Sho3uqia1n et al.1517; tr. Legge:i14
+# dating: 8120
+邾茅夷鴻以束帛乘韋自請救於吳，¶
+曰：¶「魯弱晉而遠吳，¶
+馮恃其眾，¶
+而背君之盟，¶
+辟君之執事，¶
+以陵我小國。¶
+邾非敢自愛也，¶
+懼君威之不立。¶
+
+# src: Zuo Ai 7.4.8 (488 B.C.) Ya2ng Bo2ju4n 1644; Wa2ng Sho3uqia1n et al.1517; tr. Legge:i14
+# dating: 8120
+君威之不立，¶
+小國之憂也。¶
+若夏盟於鄫衍，¶
+秋而背之，¶
+成求而不違，¶
+四方諸侯其何以事君？¶
+
+# src: Zuo Ai 7.4.9 (488 B.C.) Ya2ng Bo2ju4n 1644; Wa2ng Sho3uqia1n et al.1517; tr. Legge:i14
+# dating: 8120
+且魯賦八百乘，¶
+君之貳也；¶
+邾賦六百乘，¶
+君之私也。¶
+以私奉貳，¶
+唯君圖之！」¶
+吳子從之。<pb:KR1e0001_tls_012-118a>¶
+
+# src: Zuo Ai 7.5.1 (488 B.C.) Ya2ng Bo2ju4n 1644; Wa2ng Sho3uqia1n et al.1519; tr. Legge:i14
+# dating: 8120
+B12.7.5宋人圍曹，¶
+鄭桓子思曰：¶
+「宋人有曹，¶
+鄭之患也，¶
+不可以不救。」¶
+冬，
+鄭師救曹，¶
+侵宋。<pb:KR1e0001_tls_012-119a>¶
+
+# src: Zuo Ai 7.5.2 (488 B.C.) Ya2ng Bo2ju4n 1644; Wa2ng Sho3uqia1n et al.1519; tr. Legge:i14
+# dating: 8120
+初，¶
+曹人或夢眾君子立于社宮，¶
+而謀亡曹。¶
+曹叔振鐸請待公孫彊，¶
+許之。¶
+旦而求之
+曹，¶無之。¶
+
+# src: Zuo Ai 7.5.3 (488 B.C.) Ya2ng Bo2ju4n 1644; Wa2ng Sho3uqia1n et al.1519; tr. Legge:i14
+# dating: 8120
+戒其子曰：¶
+「我死，¶
+爾聞公孫彊為政，¶
+必去之。」¶
+及曹伯陽即位，¶
+好田弋。¶
+
+# src: Zuo Ai 7.5.4 (488 B.C.) Ya2ng Bo2ju4n 1644; Wa2ng Sho3uqia1n et al.1519; tr. Legge:i14
+# dating: 8120
+曹鄙人公孫彊好弋，¶
+獲白鴈，¶
+獻之，¶
+且言田弋之說，¶
+說之。¶
+因訪政事，¶
+大說之。¶
+有寵，¶
+使為司城以聽政。¶
+夢者之子乃行。<pb:KR1e0001_tls_012-120a>¶
+
+# src: Zuo Ai 7.5.5 (488 B.C.) Ya2ng Bo2ju4n 1645; Wa2ng Sho3uqia1n et al.1519; tr. Legge:i14
+# dating: 8120
+彊言霸說於曹伯，¶
+曹伯從之，¶
+乃背晉而奸宋。¶
+宋人伐之，¶
+晉人不救，¶
+築五邑於其郊，¶
+曰黍丘、¶揖丘、¶
+大城、¶鍾、邘。<pb:KR1e0001_tls_012-121a>¶
+
+# src: Zuo Ai 8.1.1 (487 B.C.) Ya2ng Bo2ju4n 1646; Wa2ng Sho3uqia1n et al.1520; tr. Legge:i16
+# dating: 8120
+A12.8《哀公八年經》
+<pb:KR1e0001_tls_012-122a>¶
+
+A12.8.1八年春，¶
+王正月，¶
+宋公入曹，¶
+以曹伯陽歸。
+<pb:KR1e0001_tls_012-123a>¶
+
+A12.8.2吳伐我。
+<pb:KR1e0001_tls_012-124a>¶
+
+A12.8.3夏，¶
+齊人取讙及闡。
+<pb:KR1e0001_tls_012-125a>¶
+
+A12.8.4歸邾子益于邾。
+<pb:KR1e0001_tls_012-126a>¶
+
+A12.8.5秋七月。
+<pb:KR1e0001_tls_012-127a>¶
+
+A12.8.6冬十有二月癸亥，¶
+杞伯過卒。
+<pb:KR1e0001_tls_012-128a>¶
+
+A12.8.7齊人歸讙及闡。
+<pb:KR1e0001_tls_012-129a>¶
+
+B12.8《哀公八年傳》
+<pb:KR1e0001_tls_012-130a>¶
+
+B12.8.1八年春，¶
+宋公伐曹將還，¶
+褚師子肥殿。¶
+曹人詬之，¶
+不行。¶
+師待之。¶
+公聞之，¶
+怒，
+命反之，¶
+
+# src: Zuo Ai 8.1.2 (487 B.C.) Ya2ng Bo2ju4n 1646; Wa2ng Sho3uqia1n et al.1520; tr. Legge:i16
+# dating: 8120
+遂滅曹，¶
+執曹伯陽及司城彊以歸，¶
+殺之。<pb:KR1e0001_tls_012-131a>¶
+
+# src: Zuo Ai 8.2.1 (487 B.C.) Ya2ng Bo2ju4n 1647; Wa2ng Sho3uqia1n et al.1520; tr. Legge:i16
+# dating: 8120
+B12.8.2吳為邾故，¶
+將伐魯，¶
+問於叔孫輒。¶
+叔孫輒對曰：¶
+「魯有名而無情，¶
+伐之，¶
+必得志焉。」¶
+
+# src: Zuo Ai 8.2.2 (487 B.C.) Ya2ng Bo2ju4n 1647; Wa2ng Sho3uqia1n et al.1520; tr. Legge:i16
+# dating: 8120
+退而告公山不狃。¶
+公山不狃曰：¶
+「非禮也。¶
+君子違，¶
+不適讎國。¶
+未臣而有伐之，¶
+奔命焉，¶
+死之可也。¶
+所託也則隱。¶
+
+# src: Zuo Ai 8.2.3 (487 B.C.) Ya2ng Bo2ju4n 1647; Wa2ng Sho3uqia1n et al.1520; tr. Legge:i17
+# dating: 8120
+且夫人之行也，¶
+不以所惡廢鄉。¶
+今子以小惡而欲覆宗國，¶不亦難乎？¶
+若使子率，¶
+子必辭。¶
+王將使我。」¶
+
+# src: Zuo Ai 8.2.4 (487 B.C.) Ya2ng Bo2ju4n 1647; Wa2ng Sho3uqia1n et al.1520; tr. Legge:i17
+# dating: 8120
+子張疾之。¶
+王問於子洩。¶
+對曰：¶
+「魯雖無與立，¶
+必有與斃；¶
+諸侯將救之，¶
+未可以得志焉。¶
+晉與齊、¶楚輔之，¶
+是四讎也。¶
+
+# src: Zuo Ai 8.2.5 (487 B.C.) Ya2ng Bo2ju4n 1647; Wa2ng Sho3uqia1n et al.1521; tr. Legge:i17
+# dating: 8120
+夫魯，¶
+齊、晉之脣。¶
+脣亡齒寒，¶
+君所知也，¶
+不救何為？」<pb:KR1e0001_tls_012-132a>¶
+
+# src: Zuo Ai 8.2.6 (487 B.C.) Ya2ng Bo2ju4n 1648; Wa2ng Sho3uqia1n et al.1521; tr. Legge:i17
+# dating: 8120
+三月，¶
+吳伐我，¶
+子洩率，¶
+故道險，¶
+從武城。¶
+初，
+武城人或有因於吳竟田焉，¶
+拘鄫人之漚菅者，¶
+曰：¶
+「何故使吾水滋？」¶
+
+# src: Zuo Ai 8.2.7 (487 B.C.) Ya2ng Bo2ju4n 1648; Wa2ng Sho3uqia1n et al.1521; tr. Legge:i17
+# dating: 8120
+及吳師至，¶
+拘者道之以伐武城，¶
+克之。¶
+王犯嘗為之宰，¶
+澹臺子羽之父好焉，¶
+國人懼。¶
+懿子謂景伯：¶
+「若之何？」¶
+
+# src: Zuo Ai 8.2.8 (487 B.C.) Ya2ng Bo2ju4n 1648; Wa2ng Sho3uqia1n et al.1521; tr. Legge:i17
+# dating: 8120
+對曰：¶
+「吳師來，¶
+斯與之戰，¶
+何患焉？¶
+且召之而至，¶
+又何求焉？」¶
+吳師克東陽而進，¶
+舍於五梧。¶
+
+# src: Zuo Ai 8.2.9 (487 B.C.) Ya2ng Bo2ju4n 1648; Wa2ng Sho3uqia1n et al.1521; tr. Legge:i17
+# dating: 8120
+明日，¶
+舍於蠶室。¶
+公賓庚、¶
+公甲叔子與戰于夷，¶
+獲叔子與析朱鉏，¶
+獻於王。¶
+王曰：¶
+「此同車，¶
+必使能，¶
+國未可望也。」¶
+
+# src: Zuo Ai 8.2.10 (487 B.C.) Ya2ng Bo2ju4n 1649; Wa2ng Sho3uqia1n et al.1521; tr. Legge:i17
+# dating: 8120
+明日，¶
+舍于庚宗，¶
+遂次於泗上。¶
+微虎欲宵攻王舍，¶
+私屬徒七百人三踊於幕庭，¶
+卒三百人，¶
+有若與焉。¶
+
+# src: Zuo Ai 8.2.11 (487 B.C.) Ya2ng Bo2ju4n 1649; Wa2ng Sho3uqia1n et al.1521; tr. Legge:i17
+# dating: 8120
+及稷門之內，¶
+或謂季孫曰：¶
+「不足以害吳，¶
+而多殺國士，¶
+不如已也。」¶
+乃止之。¶
+吳子聞之，¶
+一夕三遷。<pb:KR1e0001_tls_012-133a>¶
+
+# src: Zuo Ai 8.2.12 (487 B.C.) Ya2ng Bo2ju4n 1649; Wa2ng Sho3uqia1n et al.1521; tr. Legge:i17
+# dating: 8120
+吳人行成，¶
+將盟，¶
+景伯曰：¶
+「楚人圍宋，¶
+易子而食，¶
+析骸而爨，¶
+猶無城下之盟；¶
+
+# src: Zuo Ai 8.2.13 (487 B.C.) Ya2ng Bo2ju4n 1649; Wa2ng Sho3uqia1n et al.1521; tr. Legge:i17
+# dating: 8120
+我未及虧，¶
+而有城下之盟，¶
+是棄國也。¶
+吳輕而遠，¶
+不能久，¶
+將歸矣，¶
+請少待之。」¶
+弗從。¶
+景伯負載，¶
+造於萊門。¶
+
+# src: Zuo Ai 8.2.14 (487 B.C.) Ya2ng Bo2ju4n 1650; Wa2ng Sho3uqia1n et al.1521; tr. Legge:i17
+# dating: 8120
+乃請釋子服何於吳，¶
+吳人許之，¶
+以王子姑曹當之，¶
+而後止。¶
+吳人盟而還。<pb:KR1e0001_tls_012-134a>¶
+
+# src: Zuo Ai 8.3.1 (487 B.C.) Ya2ng Bo2ju4n 1650; Wa2ng Sho3uqia1n et al.1524; tr. Legge:i17
+# dating: 8120
+B12.8.3齊悼公之來也，¶
+季康子以其妹妻之，¶
+即位而逆之。¶
+季魴侯通焉，¶
+女言其情，¶
+弗敢與也。¶
+齊侯怒。¶
+夏五月，¶
+齊鮑牧帥師伐我，¶
+取讙及闡。<pb:KR1e0001_tls_012-135a>¶
+
+# src: Zuo Ai 8.4.1 (487 B.C.) Ya2ng Bo2ju4n 1650; Wa2ng Sho3uqia1n et al.1524; tr. Legge:i17
+# dating: 8120
+B12.8.4或譖胡姬於齊侯曰：¶
+「安孺子之黨也。」¶
+六月，¶
+齊侯殺胡姬。<pb:KR1e0001_tls_012-136a>¶
+
+# src: Zuo Ai 8.5.1 (487 B.C.) Ya2ng Bo2ju4n 1650; Wa2ng Sho3uqia1n et al.1524; tr. Legge:i17
+# dating: 8120
+B12.8.5齊侯使如吳請師，¶
+將以伐我，¶
+乃歸邾子。¶
+邾子又無道，¶
+吳子使大宰子餘討之，¶
+囚諸樓臺，¶
+栫之以棘。¶
+使諸大夫奉大子革以為政。<pb:KR1e0001_tls_012-137a>¶
+
+# src: Zuo Ai 8.6.1 (487 B.C.) Ya2ng Bo2ju4n 1650; Wa2ng Sho3uqia1n et al.1524; tr. Legge:i17
+# dating: 8120
+B12.8.6秋，¶
+及齊平。¶
+九月，¶
+臧賓如如齊涖盟。¶
+齊閭丘明來涖盟，¶
+且逆季姬以歸，¶
+嬖。<pb:KR1e0001_tls_012-138a>¶
+鮑牧又謂群公子曰：¶
+「使女有馬千乘乎？」¶
+
+# src: Zuo Ai 8.6.2 (487 B.C.) Ya2ng Bo2ju4n 1651; Wa2ng Sho3uqia1n et al.1524; tr. Legge:i17
+# dating: 8120
+公子愬之。¶
+公謂鮑子：¶
+「或譖子，¶
+子姑居於潞以察之。¶
+若有之，¶
+則分室以行；¶
+若無之，¶
+則反子之所。」¶
+
+# src: Zuo Ai 8.6.3 (487 B.C.) Ya2ng Bo2ju4n 1651; Wa2ng Sho3uqia1n et al.1524; tr. Legge:i17
+# dating: 8120
+出門，¶
+使以三分之一行；¶
+半道，¶
+使以二乘。¶
+及潞，¶
+麇之以入，¶
+遂殺之。<pb:KR1e0001_tls_012-139a>¶
+
+# src: Zuo Ai 8.7.1 (487 B.C.) Ya2ng Bo2ju4n 1651; Wa2ng Sho3uqia1n et al.1525; tr. Legge:i17
+# dating: 8120
+B12.8.7冬十二月，¶
+齊人歸讙及闡，¶
+季姬嬖故也。<pb:KR1e0001_tls_012-140a>¶
+
+# src: Zuo Ai 9.1.1 (486 B.C.) Ya2ng Bo2ju4n 1652; Wa2ng Sho3uqia1n et al.1526; tr. Legge:i19
+# dating: 8120
+A12.9《哀公九年經》
+<pb:KR1e0001_tls_012-141a>¶
+
+A12.9.1九年春，¶
+王二月，¶
+葬杞僖公。
+<pb:KR1e0001_tls_012-142a>¶
+
+A12.9.2宋皇瑗帥師取鄭師于雍丘。
+<pb:KR1e0001_tls_012-143a>¶
+
+A12.9.3夏，¶
+楚人伐陳。
+<pb:KR1e0001_tls_012-144a>¶
+
+A12.9.4秋，¶
+宋公伐鄭。
+<pb:KR1e0001_tls_012-145a>¶
+
+A12.9.5冬十月。
+<pb:KR1e0001_tls_012-146a>¶
+
+B12.9《哀公九年傳》
+<pb:KR1e0001_tls_012-147a>¶
+
+B12.9.1九年春，¶
+齊侯使公孟綽辭師于吳。¶
+吳子曰：¶
+「昔歲寡人聞命，¶
+今又革之，¶
+不知所從，¶
+將進受命於君。」<pb:KR1e0001_tls_012-148a>¶
+
+# src: Zuo Ai 9.2.1 (486 B.C.) Ya2ng Bo2ju4n 1652; Wa2ng Sho3uqia1n et al.1526; tr. Legge:i19
+# dating: 8120
+B12.9.2鄭武子賸之嬖許瑕求邑，¶
+無以與之。¶
+請外取，¶
+許之，¶
+故圍宋雍丘。¶
+宋皇瑗圍鄭師，¶
+每日遷舍，¶
+壘合。¶
+
+# src: Zuo Ai 9.2.2 (486 B.C.) Ya2ng Bo2ju4n 1652; Wa2ng Sho3uqia1n et al.1526; tr. Legge:i19
+# dating: 8120
+鄭師哭。¶
+子姚救之，¶
+大敗。¶
+二月甲戌，¶
+宋取鄭師于雍丘，¶
+使有能者無死，¶
+以郟張與鄭羅歸。<pb:KR1e0001_tls_012-149a>¶
+
+# src: Zuo Ai 9.3.1 (486 B.C.) Ya2ng Bo2ju4n 1652; Wa2ng Sho3uqia1n et al.1526; tr. Legge:i19
+# dating: 8120
+B12.9.3夏，¶
+楚人伐陳，¶
+陳即吳故也。<pb:KR1e0001_tls_012-150a>¶
+
+# src: Zuo Ai 9.4.1 (486 B.C.) Ya2ng Bo2ju4n 1652; Wa2ng Sho3uqia1n et al.1526; tr. Legge:i19
+# dating: 8120
+B12.9.4宋公伐鄭。<pb:KR1e0001_tls_012-151a>¶
+
+# src: Zuo Ai 9.5.1 (486 B.C.) Ya2ng Bo2ju4n 1652; Wa2ng Sho3uqia1n et al.1526; tr. Legge:i19
+# dating: 8120
+B12.9.5秋，¶
+吳城邗，¶
+溝通江、¶淮。<pb:KR1e0001_tls_012-152a>¶
+
+# src: Zuo Ai 9.6.1 (486 B.C.) Ya2ng Bo2ju4n 1652; Wa2ng Sho3uqia1n et al.1526; tr. Legge:i19
+# dating: 8120
+B12.9.6晉趙鞅卜救鄭，¶
+遇水適火，¶
+占諸史趙、¶史墨、¶史龜。¶
+史龜曰：¶
+「『是謂沈陽，¶
+可以興兵，¶
+利以伐姜，¶
+不利予商。』¶
+
+# src: Zuo Ai 9.6.2 (486 B.C.) Ya2ng Bo2ju4n 1653; Wa2ng Sho3uqia1n et al.1527; tr. Legge:i19
+# dating: 8120
+伐齊則可，¶
+敵宋不吉。」¶
+史墨曰：¶
+「盈、¶
+水名也，¶
+子、
+水位也。¶
+名位敵，¶
+不可干也。¶
+
+# src: Zuo Ai 9.6.3 (486 B.C.) Ya2ng Bo2ju4n 1653; Wa2ng Sho3uqia1n et al.1527; tr. Legge:i19
+# dating: 8120
+炎帝為火師，¶
+姜姓、¶其後也。¶
+水勝火，¶
+伐姜則可。」¶
+史趙曰：¶
+「是謂如川之滿，¶
+不可游也。¶
+鄭方有罪，¶
+不可救也。¶
+救鄭則不吉，¶
+不知其他。」¶
+
+# src: Zuo Ai 9.6.4 (486 B.C.) Ya2ng Bo2ju4n 1653; Wa2ng Sho3uqia1n et al.1527; tr. Legge:i19
+# dating: 8120
+陽虎以《周易》筮之，¶
+遇《泰》䷊之《需》䷄，¶
+曰：¶「宋方吉，¶
+不可與也。¶
+微子啟、¶
+帝乙之元子也。¶
+宋、鄭，¶
+甥舅也。¶
+
+# src: Zuo Ai 9.6.5 (486 B.C.) Ya2ng Bo2ju4n 1654; Wa2ng Sho3uqia1n et al.1527; tr. Legge:i19
+# dating: 8120
+祉、
+祿也。¶
+若帝乙之元子歸妹而有吉祿，¶
+我安得吉焉？」¶
+乃止。<pb:KR1e0001_tls_012-153a>¶
+
+# src: Zuo Ai 9.7.1 (486 B.C.) Ya2ng Bo2ju4n 1654; Wa2ng Sho3uqia1n et al.1527; tr. Legge:i19
+# dating: 8120
+B12.9.7冬，¶
+吳子使來儆師伐齊。<pb:KR1e0001_tls_012-154a>¶
+
+# src: Zuo Ai 10.1.1 (485 B.C.) Ya2ng Bo2ju4n 1655; Wa2ng Sho3uqia1n et al.1529; tr. Legge:i20
+# dating: 8120
+A12.10《哀公十年經》
+<pb:KR1e0001_tls_012-155a>¶
+
+A12.10.1十年春，¶
+王二月，¶
+邾子益來奔。
+<pb:KR1e0001_tls_012-156a>¶
+
+A12.10.2公會吳伐齊。
+<pb:KR1e0001_tls_012-157a>¶
+
+A12.10.3三月戊戌，¶
+齊侯陽生卒。
+<pb:KR1e0001_tls_012-158a>¶
+
+A12.10.4夏，¶
+宋人伐鄭。
+<pb:KR1e0001_tls_012-159a>¶
+
+A12.10.5晉趙鞅帥師侵齊。
+<pb:KR1e0001_tls_012-160a>¶
+
+A12.10.6五月，¶
+公至自伐齊。
+<pb:KR1e0001_tls_012-161a>¶
+
+A12.10.7葬齊悼公。
+<pb:KR1e0001_tls_012-162a>¶
+
+A12.10.8衛公孟彄自齊歸于衛。
+<pb:KR1e0001_tls_012-163a>¶
+
+A12.10.9薛伯夷卒。
+<pb:KR1e0001_tls_012-164a>¶
+
+A12.10.10秋，¶
+葬薛惠公。
+<pb:KR1e0001_tls_012-165a>¶
+
+A12.10.11冬，¶
+楚公子結帥師伐陳。
+<pb:KR1e0001_tls_012-166a>¶
+
+A12.10.12吳救陳。
+<pb:KR1e0001_tls_012-167a>¶
+
+B12.10《哀公十年傳》
+<pb:KR1e0001_tls_012-168a>¶
+
+B12.10.1十年春，¶
+邾隱公來奔；¶
+齊甥也，¶
+故遂奔齊。<pb:KR1e0001_tls_012-169a>¶
+
+# src: Zuo Ai 10.2.1 (485 B.C.) Ya2ng Bo2ju4n 1655; Wa2ng Sho3uqia1n et al.1529; tr. Legge:i20
+# dating: 8120
+B12.10.2公會吳子、¶邾子、¶
+郯子伐齊南鄙，¶
+師于鄎。<pb:KR1e0001_tls_012-170a>¶
+
+# src: Zuo Ai 10.3.1 (485 B.C.) Ya2ng Bo2ju4n 1656; Wa2ng Sho3uqia1n et al.1529; tr. Legge:i21
+# dating: 8120
+B12.10.3齊人弒悼公，¶
+赴于師。¶
+吳子三日哭于軍門之外。¶
+徐承帥舟師將自海入齊，¶
+齊人敗之，¶
+吳師乃還。<pb:KR1e0001_tls_012-171a>¶
+
+# src: Zuo Ai 10.4.1 (485 B.C.) Ya2ng Bo2ju4n 1656; Wa2ng Sho3uqia1n et al.1529; tr. Legge:i21
+# dating: 8120
+B12.10.4夏，¶
+趙鞅帥師伐齊，¶
+大夫請卜之。¶
+趙孟曰：¶
+「吾卜於此起兵，¶
+事不再令，¶
+卜不襲吉。¶
+行也！」¶
+於是乎取犂及轅，¶
+毀高唐之郭，¶
+侵及賴而還。<pb:KR1e0001_tls_012-172a>¶
+
+# src: Zuo Ai 10.5.1 (485 B.C.) Ya2ng Bo2ju4n 1656; Wa2ng Sho3uqia1n et al.1529; tr. Legge:i21
+# dating: 8120
+B12.10.5秋，¶
+吳子使來復儆師。<pb:KR1e0001_tls_012-173a>¶
+
+# src: Zuo Ai 10.6.1 (485 B.C.) Ya2ng Bo2ju4n 1656; Wa2ng Sho3uqia1n et al.1529; tr. Legge:i21
+# dating: 8120
+B12.10.6冬，¶
+楚子期伐陳，¶
+吳延州來季子救陳，¶
+謂子期曰：¶
+
+# src: Zuo Ai 10.6.2 (485 B.C.) Ya2ng Bo2ju4n 1656; Wa2ng Sho3uqia1n et al.1529; tr. Legge:i21
+# dating: 8120
+「二君不務德，¶
+而力爭諸侯，¶
+民何罪焉？¶
+我請退，¶
+以為子名，¶
+務德而安民。」¶
+乃還。<pb:KR1e0001_tls_012-174a>¶
+
+# src: ZuoAi 11.1.1 (4i4 B.C.) Ya2ng Bo2ju4n 1657; Wa2ng Sho3uqia1n et al.1530; tr. Legge:i24
+# dating: 8120
+A12.11《哀公十一年經》
+<pb:KR1e0001_tls_012-175a>¶
+
+A12.11.1十有一年春，¶
+齊國書帥師伐我。
+<pb:KR1e0001_tls_012-176a>¶
+
+A12.11.2夏，¶
+陳轅頗出奔鄭。
+<pb:KR1e0001_tls_012-177a>¶
+
+A12.11.3五月，¶
+公會吳伐齊。¶
+甲戌，¶
+齊國書帥師及吳戰于艾陵，¶
+齊師敗績，¶
+獲齊國書。
+<pb:KR1e0001_tls_012-178a>¶
+
+A12.11.4秋七月辛酉，¶
+滕子虞母卒。
+<pb:KR1e0001_tls_012-179a>¶
+
+A12.11.5冬十有一月，¶
+葬滕隱公。
+<pb:KR1e0001_tls_012-180a>¶
+
+A12.11.6衛世叔齊出奔宋。
+<pb:KR1e0001_tls_012-181a>¶
+
+B12.11《哀公十一年傳》
+<pb:KR1e0001_tls_012-182a>¶
+
+B12.11.1十一年春，¶
+齊為鄎故，¶
+國書、¶高無丕帥師伐我，¶
+及清。¶
+季孫謂其宰冉求曰：¶
+
+# src: ZuoAi 11.1.2 (4i4 B.C.) Ya2ng Bo2ju4n 1658; Wa2ng Sho3uqia1n et al.1531; tr. Legge:i24
+# dating: 8120
+「齊師在清，¶
+必魯故也，¶
+若之何？」¶
+求曰：¶
+「一子守，¶二子從公禦諸竟。」¶
+季孫曰：¶
+
+# src: ZuoAi 11.1.3 (4i4 B.C.) Ya2ng Bo2ju4n 1658; Wa2ng Sho3uqia1n et al.1531; tr. Legge:i24
+# dating: 8120
+「不能。」¶求曰：¶
+「居封疆之間。」¶
+季孫告二子，¶
+二子不可。¶
+求曰：¶
+「若不可，¶
+則君無出。¶
+一子帥師，¶
+背城而戰，¶
+
+# src: ZuoAi 11.1.4 (4i4 B.C.) Ya2ng Bo2ju4n 1658; Wa2ng Sho3uqia1n et al.1531; tr. Legge:i24
+# dating: 8120
+不屬者，¶
+非魯人也。¶
+魯之群室眾於齊之兵車，¶
+一室敵車優矣，¶
+子何患焉？¶
+
+# src: ZuoAi 11.1.5 (4i4 B.C.) Ya2ng Bo2ju4n 1658; Wa2ng Sho3uqia1n et al.1531; tr. Legge:i24
+# dating: 8120
+二子之不欲戰也宜，¶
+政在季氏。¶
+當子之身，¶
+齊人伐魯而不能戰，¶
+子之恥也，¶
+大不列於諸侯矣。」¶
+
+# src: Zuo Ai 11.1.6 (4i4 B.C.) Ya2ng Bo2ju4n 1658; Wa2ng Sho3uqia1n et al.1531; tr. Legge:i24
+# dating: 8120
+季孫使從於朝，¶
+俟於黨氏之溝。¶
+武叔呼而問戰焉。¶
+對曰：¶
+「君子有遠慮，¶
+小人何知？」¶
+懿子強問之，¶
+對曰：¶
+
+# src: ZuoAi 11.1.7 (4i4 B.C.) Ya2ng Bo2ju4n 1659; Wa2ng Sho3uqia1n et al.1531; tr. Legge:i24
+# dating: 8120
+「小人慮材而言，¶
+量力而共者也。」¶
+武叔曰：¶
+「是謂我不成丈夫也。」¶
+退而蒐乘。¶
+孟孺子洩帥右師，¶
+顏羽御，¶
+邴洩為右。¶
+
+# src: ZuoAi 11.1.8 (4i4 B.C.) Ya2ng Bo2ju4n 1659; Wa2ng Sho3uqia1n et al.1531; tr. Legge:i24
+# dating: 8120
+冉求帥左師，¶
+管周父御，¶
+樊遲為右。¶
+季孫曰：¶
+「須也弱。」¶
+有子曰：¶
+「就用命焉。」¶
+
+# src: ZuoAi 11.1.9 (4i4 B.C.) Ya2ng Bo2ju4n 1659; Wa2ng Sho3uqia1n et al.1531; tr. Legge:i24
+# dating: 8120
+季氏之甲七千，¶
+冉有以武城人三百為己徒卒，¶
+老幼守宮，¶
+次于雩門之外。¶
+五日，¶
+右師從之。¶
+公叔務人見保者而泣，¶
+曰：¶
+
+# src: ZuoAi 11.1.10 (4i4 B.C.) Ya2ng Bo2ju4n 1659; Wa2ng Sho3uqia1n et al.1531; tr. Legge:i24
+# dating: 8120
+「事充，¶
+政重，¶
+上不能謀，¶
+士不能死，¶
+何以治民？¶
+吾既言之矣，¶
+敢不勉乎！」<pb:KR1e0001_tls_012-183a>¶
+
+# src: ZuoAi 11.1.11 (4i4 B.C.) Ya2ng Bo2ju4n 1659; Wa2ng Sho3uqia1n et al.1531; tr. Legge:i24
+# dating: 8120
+師及齊師戰于郊。¶
+齊師自稷曲，¶
+師不踰溝。¶
+樊遲曰：¶
+「非不能也，¶
+不信子也，¶
+請三刻而踰之。」¶
+如之，¶
+眾從之。¶
+師入齊軍。<pb:KR1e0001_tls_012-184a>¶
+
+# src: ZuoAi 11.1.12 (4i4 B.C.) Ya2ng Bo2ju4n 1660; Wa2ng Sho3uqia1n et al.1531; tr. Legge:i25
+# dating: 8120
+右師奔，¶
+齊人從之。¶
+陳瓘、¶陳莊涉泗。¶
+孟之側後入以為殿，¶
+抽矢策其馬，¶
+曰：¶
+「馬不進也。」¶
+林不狃之伍曰：¶
+「走乎？」¶
+不狃曰：¶
+「誰不如？」¶
+
+# src: ZuoAi 11.1.13 (4i4 B.C.) Ya2ng Bo2ju4n 1660; Wa2ng Sho3uqia1n et al.1531; tr. Legge:i25
+# dating: 8120
+曰：¶「然則止乎？」¶
+不狃曰：¶
+「惡賢？」¶
+徐步而死。<pb:KR1e0001_tls_012-185a>¶
+師獲甲首八十，¶
+齊人不能師。¶
+宵諜曰：¶
+「齊人遁。」¶
+
+# src: Zuo Ai 11.1.14 (4i4 B.C.) Ya2ng Bo2ju4n 1660; Wa2ng Sho3uqia1n et al.1532; tr. Legge:i25
+# dating: 8120
+冉有請從之三，¶
+季孫弗許。<pb:KR1e0001_tls_012-186a>¶
+孟孺子語人曰：¶
+「我不如顏羽，¶
+而賢於邴洩。¶
+子羽銳敏，¶
+我不欲戰而能默，¶
+洩曰¶
+『驅之』。」¶
+
+# src: Zuo Ai 11.1.15 (4i4 B.C.) Ya2ng Bo2ju4n 1660; Wa2ng Sho3uqia1n et al.1532; tr. Legge:i25
+# dating: 8120
+公為與其嬖僮汪錡乘，¶皆死，¶
+皆殯。¶
+孔子曰：¶
+「能執干戈以衛社稷，¶
+可無殤也。」¶
+冉有用矛於齊師，¶
+故能入其軍。¶
+孔子曰：¶
+「義也。」<pb:KR1e0001_tls_012-187a>¶
+
+# src: Zuo Ai 11.2.1 (4i4 B.C.) Ya2ng Bo2ju4n 1661; Wa2ng Sho3uqia1n et al.1535; tr. Legge:i25
+# dating: 8120
+B12.11.2夏，¶
+陳轅頗出奔鄭。¶
+初，
+轅頗為司徒，¶
+賦封田以嫁公女；¶
+有餘，¶
+以為己大器。¶
+國人逐之，¶
+故出。¶
+
+# src: Zuo Ai 11.2.2 (4i4 B.C.) Ya2ng Bo2ju4n 1661; Wa2ng Sho3uqia1n et al.1535; tr. Legge:i25
+# dating: 8120
+道渴，¶
+其族轅咺進稻醴、¶粱糗、¶腶脯焉。¶
+喜，曰：¶
+「何其給也？」¶
+對曰：¶
+「器成而具。」¶
+曰：¶「何不吾諫？」¶
+對曰：¶「懼先行。」<pb:KR1e0001_tls_012-188a>¶
+
+# src: Zuo Ai 11.3.1 (4i4 B.C.) Ya2ng Bo2ju4n 1661; Wa2ng Sho3uqia1n et al.1535; tr. Legge:i25
+# dating: 8120
+B12.11.3為郊戰故，¶
+公會吳子伐齊。¶
+五月，¶
+克博。¶
+壬申，¶
+至于嬴。¶
+中軍從王，¶
+
+# src: Zuo Ai 11.3.2 (4i4 B.C.) Ya2ng Bo2ju4n 1661; Wa2ng Sho3uqia1n et al.1535; tr. Legge:i25
+# dating: 8120
+胥門巢將上軍，¶
+王子姑曹將下軍，¶
+展如將右軍。¶
+齊國書將中軍，¶
+高無丕將上軍，¶
+宗樓將下軍。¶
+陳僖子謂其弟書：¶
+
+# src: Zuo Ai 11.3.3 (4i4 B.C.) Ya2ng Bo2ju4n 1662; Wa2ng Sho3uqia1n et al.1535; tr. Legge:i25
+# dating: 8120
+「爾死，¶
+我必得志。」¶
+宗子陽與閭丘明相厲也。¶
+桑掩胥御國子。¶
+公孫夏曰：¶
+「二子必死。」¶
+
+# src: Zuo Ai 11.3.4 (4i4 B.C.) Ya2ng Bo2ju4n 1662; Wa2ng Sho3uqia1n et al.1535; tr. Legge:i25
+# dating: 8120
+將戰，¶
+公孫夏命其徒歌《虞殯》。¶
+陳子行命其徒具含玉。¶
+公孫揮命其徒曰：¶
+「人尋約，¶
+吳髮短。」¶
+東郭書曰：¶
+
+# src: Zuo Ai 11.3.5 (4i4 B.C.) Ya2ng Bo2ju4n 1662; Wa2ng Sho3uqia1n et al.1535; tr. Legge:i25
+# dating: 8120
+「三戰必死，¶
+於此三矣。」¶
+使問弦多以琴，¶
+曰：¶
+「吾不復見子矣。」¶
+陳書曰：¶
+「此行也，¶
+吾聞鼓而已，¶
+不聞金矣。」<pb:KR1e0001_tls_012-189a>¶
+
+# src: Zuo Ai 11.3.6 (4i4 B.C.) Ya2ng Bo2ju4n 1663; Wa2ng Sho3uqia1n et al.1535; tr. Legge:i25
+# dating: 8120
+甲戌，¶
+戰于艾陵。¶
+展如敗高子，¶
+國子敗胥門巢，¶
+王卒助之，¶
+大敗齊師，¶
+獲國書、¶公孫夏、¶
+閭丘明、¶陳書、¶東郭書，¶
+革車八百乘，¶
+甲首三千，¶
+以獻于公。<pb:KR1e0001_tls_012-190a>¶
+
+# src: Zuo Ai 11.3.7 (4i4 B.C.) Ya2ng Bo2ju4n 1663; Wa2ng Sho3uqia1n et al.1535; tr. Legge:i25
+# dating: 8120
+將戰，¶
+吳子呼叔孫，¶
+曰：¶
+「而事何也？」¶
+對曰：¶
+「從司馬。」¶
+王賜之甲、¶劍鈹，¶
+曰：¶
+「奉爾君事，¶
+敬無廢命！」¶
+
+# src: Zuo Ai 11.3.8 (4i4 B.C.) Ya2ng Bo2ju4n 1663; Wa2ng Sho3uqia1n et al.1535; tr. Legge:i25
+# dating: 8120
+叔孫未能對。¶
+衛賜進，¶
+曰：¶
+「州仇奉甲從君。」¶
+而拜。<pb:KR1e0001_tls_012-191a>¶
+
+# src: Zuo Ai 11.3.9 (4i4 B.C.) Ya2ng Bo2ju4n 1663; Wa2ng Sho3uqia1n et al.1536; tr. Legge:i25
+# dating: 8120
+公使大史固歸國子之元，¶
+寘之新篋，¶
+褽之以玄纁，¶
+加組帶焉。¶
+寘書于其上，¶
+曰：¶
+「天若不識不衷，¶
+何以使下國？」<pb:KR1e0001_tls_012-192a>¶
+
+# src: Zuo Ai 11.4.1 (4i4 B.C.) Ya2ng Bo2ju4n 1664; Wa2ng Sho3uqia1n et al.1538; tr. Legge:i25
+# dating: 8120
+B12.11.4吳將伐齊，¶
+越子率其眾以朝焉，¶
+王及列士皆有饋賂。¶
+吳人皆喜，¶
+唯子胥懼，¶
+曰：¶
+「是豢吳也夫！」¶
+
+# src: Zuo Ai 11.4.2 (4i4 B.C.) Ya2ng Bo2ju4n 1664; Wa2ng Sho3uqia1n et al.1538; tr. Legge:i26
+# dating: 8120
+諫曰：¶
+「越在我，¶
+心腹之疾也，¶
+壤地同，¶
+而有欲於我。¶
+夫其柔服，¶
+求濟其欲也，¶
+
+# src: Zuo Ai 11.4.3 (4i4 B.C.) Ya2ng Bo2ju4n 1664; Wa2ng Sho3uqia1n et al.1538; tr. Legge:i26
+# dating: 8120
+不如早從事焉。¶
+得志於齊，¶
+猶獲石田也，¶
+無所用之。¶
+越不為沼，¶
+吳其泯矣。¶
+
+# src: Zuo Ai 11.4.4 (4i4 B.C.) Ya2ng Bo2ju4n 1664; Wa2ng Sho3uqia1n et al.1538; tr. Legge:i26
+# dating: 8120
+使醫除疾，¶
+而曰¶
+『必遺類焉』¶者，
+未之有也。¶
+《盤庚之誥》曰：¶
+『其有顛越不共，¶
+則劓殄無遺育，¶
+無俾易種于茲邑』，¶
+是商所以興也。¶
+今君易之，¶
+將以求大，¶
+不亦難乎！」¶
+
+# src: Zuo Ai 11.4.5 (4i4 B.C.) Ya2ng Bo2ju4n 1664; Wa2ng Sho3uqia1n et al.1538; tr. Legge:i26
+# dating: 8120
+弗聽。¶
+使於齊，¶
+屬其子於鮑氏，¶
+為王孫氏。¶
+反役，¶
+王聞之，¶
+使賜之屬鏤以死。<pb:KR1e0001_tls_012-193a>¶
+將死，¶
+
+# src: Zuo Ai 11.4.6 (4i4 B.C.) Ya2ng Bo2ju4n 1665; Wa2ng Sho3uqia1n et al.1538; tr. Legge:i26
+# dating: 8120
+曰：¶
+「樹吾墓檟，¶
+檟可材也。¶
+吳其亡乎！¶
+三年，¶
+其始弱矣。¶
+盈必毀，¶
+天之道也。」<pb:KR1e0001_tls_012-194a>¶
+
+# src: Zuo Ai 11.5.1 (4i4 B.C.) Ya2ng Bo2ju4n 1665; Wa2ng Sho3uqia1n et al.1540; tr. Legge:i26
+# dating: 8120
+B12.11.5秋，¶
+季孫命脩守備，¶
+曰：¶
+「小勝大，¶
+禍也，¶
+齊至無日矣。」<pb:KR1e0001_tls_012-195a>¶
+
+# src: Zuo Ai 11.6.1 (4i4 B.C.) Ya2ng Bo2ju4n 1665; Wa2ng Sho3uqia1n et al.1540; tr. Legge:i26
+# dating: 8120
+B12.11.6冬，¶
+衛大叔疾出奔宋。¶
+初，
+疾娶于宋子朝，¶
+其娣嬖。¶
+
+# src: Zuo Ai 11.6.2 (4i4 B.C.) Ya2ng Bo2ju4n 1665; Wa2ng Sho3uqia1n et al.1540; tr. Legge:i26
+# dating: 8120
+子朝出，¶
+孔文子使疾出其妻，¶
+而妻之。¶
+疾使侍人誘其初妻之娣寘於犂，¶
+而為之一宮，¶
+如二妻。¶
+文子怒，¶
+欲攻之，¶
+仲尼止之。¶
+
+# src: Zuo Ai 11.6.3 (4i4 B.C.) Ya2ng Bo2ju4n 1666; Wa2ng Sho3uqia1n et al.1540; tr. Legge:i26
+# dating: 8120
+遂奪其妻。¶
+或淫于外州，¶
+外州人奪之軒以獻。¶
+恥是二者，¶
+故出。¶
+衛人立遺，¶
+使室孔姞。¶
+
+# src: Zuo Ai 11.6.4 (4i4 B.C.) Ya2ng Bo2ju4n 1666; Wa2ng Sho3uqia1n et al.1540; tr. Legge:i26
+# dating: 8120
+疾臣向魋，¶
+納美珠焉，¶
+與之城鉏。¶
+宋公求珠，¶
+魋不與，¶
+由是得罪。¶
+及桓氏出，¶
+城鉏人攻大叔疾，¶
+
+# src: Zuo Ai 11.6.5 (4i4 B.C.) Ya2ng Bo2ju4n 1666; Wa2ng Sho3uqia1n et al.1540; tr. Legge:i26
+# dating: 8120
+衛莊公復之，¶
+使處巢，¶
+死焉。¶
+殯於鄖，¶
+葬於少禘。<pb:KR1e0001_tls_012-196a>¶
+
+# src: Zuo Ai 11.6.6 (4i4 B.C.) Ya2ng Bo2ju4n 1666; Wa2ng Sho3uqia1n et al.1540; tr. Legge:i26
+# dating: 8120
+初，¶
+晉悼公子憖亡在衛，¶
+使其女僕而田，¶
+大叔懿子止而飲之酒，¶
+遂聘之，¶
+生悼子。¶
+悼子即位，¶
+故夏戊為大夫。¶
+悼子亡，¶
+衛人翦夏戊。<pb:KR1e0001_tls_012-197a>¶
+
+# src: Zuo Ai 11.6.7 (4i4 B.C.) Ya2ng Bo2ju4n 1667; Wa2ng Sho3uqia1n et al.1540; tr. Legge:i26
+# dating: 8120
+孔文子之將攻大叔也，¶
+訪於仲尼。¶
+仲尼曰：¶
+「胡簋之事，¶
+則嘗學之矣；¶
+甲兵之事，¶
+未之聞也。」¶
+退，
+命駕而行，¶
+曰：¶
+
+# src: Zuo Ai 11.6.8 (4i4 B.C.) Ya2ng Bo2ju4n 1667; Wa2ng Sho3uqia1n et al.1541; tr. Legge:i26
+# dating: 8120
+「鳥則擇木，¶
+木豈能擇鳥？」¶
+文子遽止之，¶
+曰：¶
+「圉豈敢度其私，¶
+訪衛國之難也。」¶
+將止，¶
+魯人以幣召之，¶
+乃歸。<pb:KR1e0001_tls_012-198a>¶
+
+# src: Zuo Ai 11.7.1 (4i4 B.C.) Ya2ng Bo2ju4n 1667; Wa2ng Sho3uqia1n et al.1541; tr. Legge:i26
+# dating: 8120
+B12.11.7季孫欲以田賦，¶
+使冉有訪諸仲尼。¶
+仲尼曰：¶
+「丘不識也。」¶
+三發，¶
+卒曰：¶
+「子為國老，¶
+待子而行，¶
+若之何子之不言也？」¶
+
+# src: Zuo Ai 11.7.2 (4i4 B.C.) Ya2ng Bo2ju4n 1668; Wa2ng Sho3uqia1n et al.1541; tr. Legge:i26
+# dating: 8120
+仲尼不對，¶
+而私於冉有曰：¶
+「君子之行也，¶
+度於禮：¶
+施取其厚，¶
+事舉其中，¶
+斂從其薄。¶
+
+# src: Zuo Ai 11.7.3 (4i4 B.C.) Ya2ng Bo2ju4n 1668; Wa2ng Sho3uqia1n et al.1541; tr. Legge:i26
+# dating: 8120
+如是，¶
+則以丘亦足矣。¶
+若不度於禮，¶
+而貪冒無厭，¶
+則雖以田賦，¶
+將又不足。¶
+且子季孫若欲行而法，¶
+則周公之典在；¶
+若欲苟而行，¶
+又何訪焉？」¶
+弗聽。<pb:KR1e0001_tls_012-199a>¶
+
+# src: Zuo Ai 12.1.1 (4i3 B.C.) Ya2ng Bo2ju4n 1670; Wa2ng Sho3uqia1n et al.1543; tr. Legge:i28
+# dating: 8120
+A12.12《哀公十二年經》
+<pb:KR1e0001_tls_012-200a>¶
+
+A12.12.1十有二年春，¶
+用田賦。
+<pb:KR1e0001_tls_012-201a>¶
+
+A12.12.2夏五月甲辰，¶
+孟子卒。
+<pb:KR1e0001_tls_012-202a>¶
+
+A12.12.3公會吳于橐皋。
+<pb:KR1e0001_tls_012-203a>¶
+
+A12.12.4秋，¶
+公會衛侯、¶
+宋皇瑗于鄖。
+<pb:KR1e0001_tls_012-204a>¶
+
+A12.12.5宋向巢帥師伐鄭。
+<pb:KR1e0001_tls_012-205a>¶
+
+A12.12.6冬十有二月，¶
+螽。
+<pb:KR1e0001_tls_012-206a>¶
+
+B12.12《哀公十二年傳》
+<pb:KR1e0001_tls_012-207a>¶
+
+B12.12.1十二年春，¶
+王正月，¶
+用田賦。<pb:KR1e0001_tls_012-208a>¶
+
+# src: Zuo Ai 12.2.1 (4i3 B.C.) Ya2ng Bo2ju4n 1670; Wa2ng Sho3uqia1n et al.1543; tr. Legge:i28
+# dating: 8120
+B12.12.2夏五月，¶
+昭夫人孟子卒。¶
+昭公娶于吳，¶
+故不書姓。¶
+死不赴，¶
+故不稱夫人。¶
+不反哭，¶
+故不言葬小君。¶
+孔子與弔，¶
+適季氏。¶
+季氏不絻，¶
+放絰而拜。<pb:KR1e0001_tls_012-209a>¶
+
+# src: Zuo Ai 12.3.1 (4i3 B.C.) Ya2ng Bo2ju4n 1671; Wa2ng Sho3uqia1n et al.1543; tr. Legge:i28
+# dating: 8120
+B12.12.3公會吳于橐皋，¶
+吳子使大宰嚭請尋盟。¶
+公不欲，¶
+使子貢對，¶曰：¶
+「盟，¶
+所以周信也，¶
+
+# src: Zuo Ai 12.3.2 (4i3 B.C.) Ya2ng Bo2ju4n 1671; Wa2ng Sho3uqia1n et al.1543; tr. Legge:i28
+# dating: 8120
+故心以制之，¶
+玉帛以奉之，¶
+言以結之，¶
+明神以要之。¶
+
+# src: Zuo Ai 12.3.3 (4i3 B.C.) Ya2ng Bo2ju4n 1671; Wa2ng Sho3uqia1n et al.1543; tr. Legge:i29
+# dating: 8120
+寡君以為苟有盟焉，¶
+弗可改也已。¶
+若猶可改，¶
+日盟何益？¶
+今吾子曰¶
+『必尋盟』，¶
+若可尋也，¶
+亦可寒也。」¶
+乃不尋盟。<pb:KR1e0001_tls_012-210a>¶
+
+# src: Zuo Ai 12.4.1 (4i3 B.C.) Ya2ng Bo2ju4n 1671; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+B12.12.4吳徵會于衛。¶
+初，
+衛人殺吳行人且姚而懼，¶
+謀於行人子羽。¶
+子羽曰：¶
+「吳方無道，¶
+無乃辱吾君，¶
+不如止也。」¶
+
+# src: Zuo Ai 12.4.2 (4i3 B.C.) Ya2ng Bo2ju4n 1671; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+子木曰：¶
+「吳方無道，¶
+國無道，¶
+必棄疾於人。¶
+吳雖無道，¶
+猶足以患衛。¶
+往也！¶
+
+# src: Zuo Ai 12.4.3 (4i3 B.C.) Ya2ng Bo2ju4n 1671; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+長木之斃，¶
+無不摽也；¶
+國狗之瘈，¶
+無不噬也，¶
+而況大國乎！」<pb:KR1e0001_tls_012-211a>¶
+
+# src: Zuo Ai 12.4.4 (4i3 B.C.) Ya2ng Bo2ju4n 1672; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+秋，¶
+衛侯會吳于鄖。¶
+公及衛侯、¶宋皇瑗盟，¶
+而卒辭吳盟。¶
+吳人藩衛侯之舍。¶
+子服景伯謂子貢曰：¶
+
+# src: Zuo Ai 12.4.5 (4i3 B.C.) Ya2ng Bo2ju4n 1672; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+「夫諸侯之會，¶
+事既畢矣，¶
+侯伯致禮，¶
+地主歸餼，¶
+以相辭也。¶
+今吳不行禮於衛，¶
+而藩其君舍以難之，¶
+子盍見大宰
+
+# src: Zuo Ai 12.4.6 (4i3 B.C.) Ya2ng Bo2ju4n 1672; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+嚭？」¶
+乃請束錦以行。¶
+語及衛故，¶
+大宰嚭曰：¶
+「寡君願事衛君，¶
+衛君之來也緩，¶
+寡君懼，¶
+故將止之。」¶
+子貢曰：¶
+
+# src: Zuo Ai 12.4.7 (4i3 B.C.) Ya2ng Bo2ju4n 1672; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+「衛君之來，¶
+必謀於其眾，¶
+其眾或欲或否，¶
+是以緩來。¶
+其欲來者，¶
+子之黨也；¶
+其不欲來者，¶
+子之讎也。¶
+
+# src: Zuo Ai 12.4.8 (4i3 B.C.) Ya2ng Bo2ju4n 1672; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+若執衛君，¶
+是墮黨而崇讎也，¶
+夫墮子者得其志矣。¶
+且合諸侯而執衛君，¶
+誰敢不懼？¶
+墮黨、¶崇讎，¶
+而懼諸侯，¶
+或者難以霸乎！」¶
+
+# src: Zuo Ai 12.4.9 (4i3 B.C.) Ya2ng Bo2ju4n 1672; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+大宰嚭說，¶
+乃舍衛侯。¶
+衛侯歸，¶
+效夷言。¶
+子之尚幼，¶
+曰：¶
+「君必不免，¶
+其死於夷乎！¶
+執焉而又說其言，¶
+從之固矣。」<pb:KR1e0001_tls_012-212a>¶
+
+# src: Zuo Ai 12.5.1 (4i3 B.C.) Ya2ng Bo2ju4n 1673; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+B12.12.5冬十二月，¶
+螽，季孫問諸仲尼。¶
+仲尼曰：¶
+「丘聞之，¶
+火伏而後蟄者畢。¶
+今火猶西流，¶
+司厤過也。」<pb:KR1e0001_tls_012-213a>¶
+
+# src: Zuo Ai 12.6.1 (4i3 B.C.) Ya2ng Bo2ju4n 1673; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+B12.12.6宋、¶鄭之間有隙地焉，¶
+曰彌作、¶頃丘、¶玉暢、¶喦、戈、¶鍚。
+子產與宋人為成，¶
+曰：¶
+「勿有是」。¶
+
+# src: Zuo Ai 12.6.2 (4i3 B.C.) Ya2ng Bo2ju4n 1673; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+及宋平、¶元之族自蕭奔鄭，¶
+鄭人為之城喦、¶戈、鍚。¶
+九月，¶
+宋向巢伐鄭，¶
+取鍚，¶
+殺元公之孫，¶
+遂圍喦。¶
+
+# src: Zuo Ai 12.6.3 (4i3 B.C.) Ya2ng Bo2ju4n 1673; Wa2ng Sho3uqia1n et al.1544; tr. Legge:i29
+# dating: 8120
+十二月，¶
+鄭罕達救喦。¶
+丙申，¶
+圍宋師。<pb:KR1e0001_tls_012-214a>¶
+
+# src: Zuo Ai 13.1.1 (4i2 B.C.) Ya2ng Bo2ju4n 1675; Wa2ng Sho3uqia1n et al.1547; tr. Legge:i31
+# dating: 8120
+A12.13《哀公十三年經》
+<pb:KR1e0001_tls_012-215a>¶
+
+A12.13.1十有三年春，¶
+鄭罕達帥師取宋師于喦。
+<pb:KR1e0001_tls_012-216a>¶
+
+A12.13.2夏，¶
+許男成卒。
+<pb:KR1e0001_tls_012-217a>¶
+
+A12.13.3公會晉侯及吳子于黃池。
+<pb:KR1e0001_tls_012-218a>¶
+
+A12.13.4楚公子申帥師伐陳。
+<pb:KR1e0001_tls_012-219a>¶
+
+A12.13.5於越入吳。
+<pb:KR1e0001_tls_012-220a>¶
+
+A12.13.6秋，¶
+公至自會。
+<pb:KR1e0001_tls_012-221a>¶
+
+A12.13.7晉魏曼多帥師侵衛。
+<pb:KR1e0001_tls_012-222a>¶
+
+A12.13.8葬許元公。
+<pb:KR1e0001_tls_012-223a>¶
+
+A12.13.9九月，¶
+螽。
+<pb:KR1e0001_tls_012-224a>¶
+
+A12.13.10冬十有一月，¶
+有星孛于東方。
+<pb:KR1e0001_tls_012-225a>¶
+
+A12.13.11盜殺陳夏區夫。
+<pb:KR1e0001_tls_012-226a>¶
+
+A12.13.12十有二月，¶
+螽。
+<pb:KR1e0001_tls_012-227a>¶
+
+B12.13《哀公十三年傳》
+<pb:KR1e0001_tls_012-228a>¶
+
+B12.13.1十三年春，¶
+宋向魋救其師。¶
+鄭子賸使徇曰：¶
+「得桓魋者有賞。」¶
+魋也逃歸。¶
+遂取宋師于喦，¶
+獲成讙、¶郜延。¶
+以六邑為虛。<pb:KR1e0001_tls_012-229a>¶
+
+# src: Zuo Ai 13.2.1 (4i2 B.C.) Ya2ng Bo2ju4n 1676; Wa2ng Sho3uqia1n et al.1547; tr. Legge:i32
+# dating: 8120
+B12.13.2夏，¶
+公會單平公、¶晉定公、¶吳夫差于黃池。<pb:KR1e0001_tls_012-230a>¶
+
+# src: Zuo Ai 13.3.1 (4i2 B.C.) Ya2ng Bo2ju4n 1676; Wa2ng Sho3uqia1n et al.1548; tr. Legge:i32
+# dating: 8120
+B12.13.3六月丙子，¶
+越子伐吳，¶
+為二隧，¶
+疇無餘、¶謳陽自南方，¶
+先及郊。¶
+吳大子友、¶王子地、¶
+王孫彌庸、¶壽於姚自泓上觀之。¶
+
+# src: Zuo Ai 13.3.2 (4i2 B.C.) Ya2ng Bo2ju4n 1676; Wa2ng Sho3uqia1n et al.1548; tr. Legge:i32
+# dating: 8120
+彌庸見姑蔑之旗，¶
+曰：¶
+「吾父之旗也。¶
+不可以見讎而弗殺也。」¶
+大子曰：¶
+「戰而不克，¶
+將亡國，¶
+請待之。」¶
+彌庸不可，¶
+屬徒五千，¶
+
+# src: Zuo Ai 13.3.3 (4i2 B.C.) Ya2ng Bo2ju4n 1676; Wa2ng Sho3uqia1n et al.1548; tr. Legge:i32
+# dating: 8120
+王子地助之。¶
+乙酉，¶
+戰，
+彌庸獲疇無餘，¶
+地獲謳陽。¶
+越子至，¶
+王子地守。¶
+丙戌，¶
+復戰，¶
+
+# src: Zuo Ai 13.3.4 (4i2 B.C.) Ya2ng Bo2ju4n 1677; Wa2ng Sho3uqia1n et al.1548; tr. Legge:i32
+# dating: 8120
+大敗吳師，¶
+獲大子友、¶
+王孫彌庸、¶
+壽於姚。¶
+丁亥，¶
+入吳。¶
+吳人告敗于王。¶
+王惡其聞也，¶
+自剄七人於幕下。<pb:KR1e0001_tls_012-231a>¶
+
+# src: Zuo Ai 13.4.1 (4i2 B.C.) Ya2ng Bo2ju4n 1677; Wa2ng Sho3uqia1n et al.1548; tr. Legge:i32
+# dating: 8120
+B12.13.4秋七月辛丑，¶盟，
+吳、¶晉爭先。¶
+吳人曰：¶
+「於周室，¶
+我為長。」¶
+晉人曰：¶
+「於姬姓，¶
+我為伯。」¶
+
+# src: Zuo Ai 13.4.2 (4i2 B.C.) Ya2ng Bo2ju4n 1677; Wa2ng Sho3uqia1n et al.1549; tr. Legge:i32
+# dating: 8120
+趙鞅呼司馬寅曰：¶
+「日旰矣，¶
+大事未成，¶
+二臣之罪也。¶
+建鼓整列，¶
+二臣死之，¶
+長幼必可知也。」¶
+
+# src: Zuo Ai 13.4.3 (4i2 B.C.) Ya2ng Bo2ju4n 1677; Wa2ng Sho3uqia1n et al.1549; tr. Legge:i32
+# dating: 8120
+對曰：¶
+「請姑視之。」¶
+反，
+曰：¶
+「肉食者無墨。¶
+今吳王有墨，¶
+國勝乎？¶
+大子死乎？¶
+且夷德輕，¶
+不忍久，¶
+請少待之。」¶
+乃先晉人。<pb:KR1e0001_tls_012-232a>¶
+
+# src: Zuo Ai 13.4.4 (4i2 B.C.) Ya2ng Bo2ju4n 1678; Wa2ng Sho3uqia1n et al.1551; tr. Legge:i32
+# dating: 8120
+吳人將以公見晉侯，¶
+子服景伯對使者曰：¶
+「王合諸侯，¶
+則伯帥侯牧以見於王；¶
+伯合諸侯，¶
+則侯帥子、¶
+男以見於伯。¶
+
+# src: Zuo Ai 13.4.5 (4i2 B.C.) Ya2ng Bo2ju4n 1678; Wa2ng Sho3uqia1n et al.1551; tr. Legge:i32
+# dating: 8120
+自王以下，¶
+朝聘玉帛不同；¶
+故敝邑之職貢於吳，¶
+有豐於晉，¶
+無不及焉，¶
+以為伯也。¶
+
+# src: Zuo Ai 13.4.6 (4i2 B.C.) Ya2ng Bo2ju4n 1678; Wa2ng Sho3uqia1n et al.1551; tr. Legge:i32
+# dating: 8120
+今諸侯會，¶
+而君將以寡君見晉君，¶
+則晉成為伯矣，¶
+敝邑將改職貢：¶
+魯賦於吳八百乘，¶
+若為子、¶
+男，
+則將半邾以屬於吳，¶
+而如邾以事晉。¶
+且執事以伯召諸侯，¶
+而以侯終之，¶
+何利之有焉？」¶
+
+# src: Zuo Ai 13.4.7 (4i2 B.C.) Ya2ng Bo2ju4n 1678; Wa2ng Sho3uqia1n et al.1551; tr. Legge:i32
+# dating: 8120
+吳人乃止。¶
+既而悔之，¶
+將囚景伯。¶
+景伯曰：¶
+「何也立後於魯矣，¶
+將以二乘與六人從，¶
+遲速唯命。」¶
+
+# src: Zuo Ai 13.4.8 (4i2 B.C.) Ya2ng Bo2ju4n 1678; Wa2ng Sho3uqia1n et al.1551; tr. Legge:i32
+# dating: 8120
+遂囚以還。¶
+及戶牖，¶
+謂太宰曰：¶
+「魯將以十月上辛有事於上帝、¶先公，¶
+季辛而畢，¶
+何世有職焉，¶
+自襄以來，¶
+未之改也。¶
+若不會，¶
+
+# src: Zuo Ai 13.4.9 (4i2 B.C.) Ya2ng Bo2ju4n 1679; Wa2ng Sho3uqia1n et al.1551; tr. Legge:i32
+# dating: 8120
+祝宗將曰¶
+『吳實然』，¶
+且謂魯不共，¶
+而執其賤者七人，¶
+何損焉？」¶
+大宰嚭言於王曰：¶
+「無損於魯，¶
+而祗為名，¶
+不如歸之。」¶
+乃歸景伯。<pb:KR1e0001_tls_012-233a>¶
+
+# src: Zuo Ai 13.4.10 (4i2 B.C.) Ya2ng Bo2ju4n 1679; Wa2ng Sho3uqia1n et al.1551; tr. Legge:i32
+# dating: 8120
+吳申叔儀乞糧於公孫有山氏，¶
+曰：¶
+「佩玉繠兮，¶
+余無所繫之；¶
+旨酒一盛兮，¶
+余與褐之父睨之。」¶
+
+# src: Zuo Ai 13.4.11 (4i2 B.C.) Ya2ng Bo2ju4n 1679; Wa2ng Sho3uqia1n et al.1551; tr. Legge:i33
+# dating: 8120
+對曰：¶
+「粱則無矣，¶
+麤則有之。¶
+若登首山以呼曰¶
+『庚癸乎』，¶
+則諾。」<pb:KR1e0001_tls_012-234a>¶
+
+# src: Zuo Ai 13.4.12 (4i2 B.C.) Ya2ng Bo2ju4n 1679; Wa2ng Sho3uqia1n et al.1551; tr. Legge:i33
+# dating: 8120
+王欲伐宋，¶
+殺其丈夫而囚其婦人。¶
+大宰嚭曰：¶
+「可勝也，¶
+而弗能居也。」¶
+乃歸。<pb:KR1e0001_tls_012-235a>¶
+
+# src: Zuo Ai 13.4.13 (4i2 B.C.) Ya2ng Bo2ju4n 1679; Wa2ng Sho3uqia1n et al.1551; tr. Legge:i33
+# dating: 8120
+B12.13.5冬，¶
+吳及越平。<pb:KR1e0001_tls_012-236a>¶
+
+# src: Zuo Ai 14.1.1 (4i1 B.C.) Ya2ng Bo2ju4n 16i2; Wa2ng Sho3uqia1n et al.1553; tr. Legge:i34
+# dating: 8120
+A12.14《哀公十四年經》
+<pb:KR1e0001_tls_012-237a>¶
+
+A12.14.1十有四年春，¶
+西狩獲麟。
+<pb:KR1e0001_tls_012-238a>¶
+
+A12.14.2小邾射以句繹來奔。
+<pb:KR1e0001_tls_012-239a>¶
+
+A12.14.3夏四月，¶
+齊陳恆執其君，¶
+寘于舒州。
+<pb:KR1e0001_tls_012-240a>¶
+
+A12.14.4庚戌，¶
+叔還卒。
+<pb:KR1e0001_tls_012-241a>¶
+
+A12.14.5五月庚申朔，¶
+日有食之。
+<pb:KR1e0001_tls_012-242a>¶
+
+A12.14.6陳宗豎出奔楚。
+<pb:KR1e0001_tls_012-243a>¶
+
+A12.14.7宋向魋入于曹以叛。
+<pb:KR1e0001_tls_012-244a>¶
+
+A12.14.8莒子狂卒。
+<pb:KR1e0001_tls_012-245a>¶
+
+A12.14.9六月，¶
+宋向魋自曹出奔衛。
+<pb:KR1e0001_tls_012-246a>¶
+
+A12.14.10宋向巢來奔。
+<pb:KR1e0001_tls_012-247a>¶
+
+A12.14.11齊人弒其君壬于舒州。
+<pb:KR1e0001_tls_012-248a>¶
+
+A12.14.12秋，¶
+晉趙鞅帥師伐衛。
+<pb:KR1e0001_tls_012-249a>¶
+
+A12.14.13八月辛丑，¶
+仲孫何忌卒。
+<pb:KR1e0001_tls_012-250a>¶
+
+A12.14.14冬，¶
+陳宗豎自楚復入于陳，¶
+陳人殺之。
+<pb:KR1e0001_tls_012-251a>¶
+
+A12.14.15陳轅買出奔楚。
+<pb:KR1e0001_tls_012-252a>¶
+
+A12.14.16有星孛。
+<pb:KR1e0001_tls_012-253a>¶
+
+A12.14.17饑。
+<pb:KR1e0001_tls_012-254a>¶
+
+B12.14《哀公十四年傳》
+<pb:KR1e0001_tls_012-255a>¶
+
+B12.14.1十四年春，¶
+西狩於大野，¶
+叔孫氏之車子鉏商獲麟，¶
+以為不祥，¶
+以賜虞人。¶
+仲尼觀之，¶
+曰：¶
+「麟也」，¶
+然後取之。<pb:KR1e0001_tls_012-256a>¶
+
+# src: Zuo Ai 14.2.1 (4i1 B.C.) Ya2ng Bo2ju4n 16i2; Wa2ng Sho3uqia1n et al.1554; tr. Legge:i38
+# dating: 8120
+B12.14.2小邾射以句繹來奔，¶
+曰：¶
+「使季路要我，¶
+吾無盟矣。」¶
+使子路，¶
+子路辭。¶
+季康子使冉有謂之曰：¶
+「千乘之國，¶
+不信其盟，¶
+而信子之言，¶
+子何辱焉？」¶
+
+# src: Zuo Ai 14.2.2 (4i1 B.C.) Ya2ng Bo2ju4n 16i2; Wa2ng Sho3uqia1n et al.1554; tr. Legge:i38
+# dating: 8120
+對曰：¶
+「魯有事于小邾，¶
+不敢問故，¶
+死其城下可也。¶
+彼不臣，¶
+而濟其言，¶
+是義之也，¶
+由弗能。」<pb:KR1e0001_tls_012-257a>¶
+
+# src: Zuo Ai 14.3.1 (4i1 B.C.) Ya2ng Bo2ju4n 16i2; Wa2ng Sho3uqia1n et al.1554; tr. Legge:i38
+# dating: 8120
+B12.14.3齊簡公之在魯也，¶
+闞止有寵焉。¶
+及即位，¶
+使為政。¶
+陳成子憚之，¶
+驟顧諸朝。¶
+諸御鞅言於公曰：¶
+「陳、¶
+闞不可並也，¶
+君其擇焉。」¶
+
+# src: Zuo Ai 14.3.2 (4i1 B.C.) Ya2ng Bo2ju4n 16i3; Wa2ng Sho3uqia1n et al.1554; tr. Legge:i38
+# dating: 8120
+弗聽。<pb:KR1e0001_tls_012-258a>¶
+子我夕，¶
+陳逆殺人，¶
+逢之，¶
+遂執以入。¶
+陳氏方睦，¶
+使疾，¶
+而遺之潘沐，¶
+備酒肉焉，¶
+
+# src: Zuo Ai 14.3.3 (4i1 B.C.) Ya2ng Bo2ju4n 16i3; Wa2ng Sho3uqia1n et al.1554; tr. Legge:i38
+# dating: 8120
+饗守囚者，¶
+醉而殺之，¶
+而逃。¶
+子我盟諸陳於陳宗。<pb:KR1e0001_tls_012-259a>¶
+
+# src: Zuo Ai 14.3.4 (4i1 B.C.) Ya2ng Bo2ju4n 16i3; Wa2ng Sho3uqia1n et al.1554; tr. Legge:i38
+# dating: 8120
+初，¶
+陳豹欲為子我臣，¶
+使公孫言己，¶
+已有喪而止，¶
+既，而言之，¶曰：¶
+
+# src: Zuo Ai 14.3.5 (4i1 B.C.) Ya2ng Bo2ju4n 16i3; Wa2ng Sho3uqia1n et al.1554; tr. Legge:i38
+# dating: 8120
+「有陳豹者，¶
+長而上僂，¶
+望視，¶
+事君子必得志，¶
+欲為子臣。¶
+吾憚其為人也，¶
+故緩以告。」¶
+
+# src: Zuo Ai 14.3.6 (4i1 B.C.) Ya2ng Bo2ju4n 16i4; Wa2ng Sho3uqia1n et al.1554; tr. Legge:i38
+# dating: 8120
+子我曰：¶「何害，¶
+是其在我也。」¶
+使為臣。¶
+他日，¶
+與之言政，¶
+說，
+遂有寵，¶
+謂之曰：¶
+「我盡逐陳氏而立女，¶
+若何？」¶
+對曰：¶
+
+# src: Zuo Ai 14.3.7 (4i1 B.C.) Ya2ng Bo2ju4n 16i4; Wa2ng Sho3uqia1n et al.1554; tr. Legge:i38
+# dating: 8120
+「我遠於陳氏矣，¶
+且其違者不過數人，¶
+何盡逐焉？」¶
+遂告陳氏。¶
+子行曰：¶
+「彼得君，¶
+弗先，¶
+必禍子。」¶
+子行舍於公宮。<pb:KR1e0001_tls_012-260a>¶
+
+# src: Zuo Ai 14.3.8 (4i1 B.C.) Ya2ng Bo2ju4n 16i4; Wa2ng Sho3uqia1n et al.1554; tr. Legge:i39
+# dating: 8120
+夏五月壬申，¶
+成子兄弟四乘如公。¶
+子我在幄，¶
+出，
+逆之，¶
+遂入，¶
+閉門。¶
+侍人禦之，¶
+子行殺侍人。¶
+
+# src: Zuo Ai 14.3.9 (4i1 B.C.) Ya2ng Bo2ju4n 1685; Wa2ng Sho3uqia1n et al.1554; tr. Legge:i39
+# dating: 8120
+公與婦人飲酒于檀臺，¶
+成子遷諸寢。¶
+公執戈，¶
+將擊之。¶
+大史子餘曰：¶
+「非不利也，¶
+將除害也。」¶
+成子出舍于庫，¶
+聞公猶怒，¶
+將出，¶
+
+# src: Zuo Ai 14.3.10 (4i1 B.C.) Ya2ng Bo2ju4n 1685; Wa2ng Sho3uqia1n et al.1554; tr. Legge:i39
+# dating: 8120
+曰：¶
+「何所無君？」¶
+子行抽劍，¶
+曰：¶
+「需、¶
+事之賊也。¶
+誰非陳宗？¶
+所不殺子者，¶
+有如陳宗！」¶
+乃止。<pb:KR1e0001_tls_012-261a>¶
+
+# src: Zuo Ai 14.3.11 (4i1 B.C.) Ya2ng Bo2ju4n 1685; Wa2ng Sho3uqia1n et al.1555; tr. Legge:i39
+# dating: 8120
+子我歸，¶
+屬徒，¶
+攻闈與大門，¶
+皆不勝，¶
+乃出。¶
+陳氏追之，¶
+失道於弇中，¶
+適豐丘。¶
+豐丘人執之，¶
+以告，¶
+殺諸郭關。¶
+
+# src: Zuo Ai 14.3.12 (4i1 B.C.) Ya2ng Bo2ju4n 1685; Wa2ng Sho3uqia1n et al.1555; tr. Legge:i39
+# dating: 8120
+成子將殺大陸子方，¶
+陳逆請而免之。¶
+以公命取車於道，¶
+及耏，¶
+眾知而東之，¶
+出雍門，¶
+
+# src: Zuo Ai 14.3.13 (4i1 B.C.) Ya2ng Bo2ju4n 1686; Wa2ng Sho3uqia1n et al.1555; tr. Legge:i39
+# dating: 8120
+陳豹與之車，¶
+弗受，¶
+曰：¶
+「逆為余請，¶
+豹與余車，¶
+余有私焉。¶
+事子我而有私於其讎，¶
+何以見魯、¶衛之士？」¶
+
+# src: Zuo Ai 14.3.14 (4i1 B.C.) Ya2ng Bo2ju4n 1686; Wa2ng Sho3uqia1n et al.1555; tr. Legge:i39
+# dating: 8120
+東郭賈奔衛。<pb:KR1e0001_tls_012-262a>¶
+庚辰，¶
+陳恆執公于舒州。¶
+公曰：¶
+「吾早從鞅之言，¶
+不及此。」<pb:KR1e0001_tls_012-263a>¶
+
+# src: Zuo Ai 14.4.1 (4i1 B.C.) Ya2ng Bo2ju4n 1686; Wa2ng Sho3uqia1n et al.1558; tr. Legge:i39
+# dating: 8120
+B12.14.4宋桓魋之寵害於公，¶
+公使夫人驟請享焉，¶
+而將討之。¶
+未及，¶
+魋先謀公，¶
+請以鞌易薄。¶
+公曰：¶
+「不可。¶
+薄、
+宗邑也。」¶
+
+# src: Zuo Ai 14.4.2 (4i1 B.C.) Ya2ng Bo2ju4n 1686; Wa2ng Sho3uqia1n et al.1558; tr. Legge:i39
+# dating: 8120
+乃益鞌七邑，¶
+而請享公焉，¶
+以日中為期，¶
+家備盡往。¶
+公知之，¶
+告皇野曰：¶
+「余長魋也，¶
+今將禍余，¶
+請即救。」¶
+
+# src: Zuo Ai 14.4.3 (4i1 B.C.) Ya2ng Bo2ju4n 1687; Wa2ng Sho3uqia1n et al.1558; tr. Legge:i39
+# dating: 8120
+司馬子仲曰：¶
+「有臣不順，¶
+神之所惡也，¶
+而況人乎？¶
+敢不承命。¶
+不得左師不可，¶
+請以君命召之。」¶
+
+# src: Zuo Ai 14.4.4 (4i1 B.C.) Ya2ng Bo2ju4n 1687; Wa2ng Sho3uqia1n et al.1558; tr. Legge:i39
+# dating: 8120
+左師每食，¶
+擊鍾。¶
+聞鍾聲，¶
+公曰：¶「夫子將食。」¶
+既食，¶
+又奏。¶
+公曰：¶
+「可矣。」¶
+
+# src: Zuo Ai 14.4.5 (4i1 B.C.) Ya2ng Bo2ju4n 1687; Wa2ng Sho3uqia1n et al.1558; tr. Legge:i39
+# dating: 8120
+以乘車往，¶
+曰：¶
+「迹人來告曰：¶
+『逢澤有介麇焉。』¶
+公曰：¶
+「『雖魋未來，¶
+得左師，¶
+吾與之田，¶
+若何？』¶
+
+# src: Zuo Ai 14.4.6 (4i1 B.C.) Ya2ng Bo2ju4n 1687; Wa2ng Sho3uqia1n et al.1558; tr. Legge:i39
+# dating: 8120
+君憚
+告子，¶
+野曰：¶
+『嘗私焉。』¶
+君欲速，¶
+故以乘車逆子。」¶
+與之乘，¶
+至，
+公告之故，¶
+拜，
+不能起。¶
+
+# src: Zuo Ai 14.4.7 (4i1 B.C.) Ya2ng Bo2ju4n 1687; Wa2ng Sho3uqia1n et al.1558; tr. Legge:i39
+# dating: 8120
+司馬曰：¶「君與之言。」¶
+公曰：¶
+「所難子者，¶
+上有天，¶
+下有先君。」¶
+對曰：¶
+
+# src: Zuo Ai 14.4.8 (4i1 B.C.) Ya2ng Bo2ju4n 1687; Wa2ng Sho3uqia1n et al.1558; tr. Legge:i39
+# dating: 8120
+「魋之不共，¶
+宋之禍也，¶
+敢不唯命是聽。」¶
+司馬請瑞焉，¶
+以命其徒攻桓氏。¶
+其父兄故臣曰¶
+「不可」，¶
+其新臣曰¶
+「從吾君之命」。¶
+
+# src: Zuo Ai 14.4.9 (4i1 B.C.) Ya2ng Bo2ju4n 1687; Wa2ng Sho3uqia1n et al.1558; tr. Legge:i39
+# dating: 8120
+遂攻之。¶
+子頎騁而告桓司馬。¶
+司馬欲入，¶
+子車止之，¶
+曰：¶
+「不能事君，¶
+而又伐國，¶
+民不與也，¶
+衹取死焉。」¶
+向魋遂入于曹以叛。¶
+
+# src: Zuo Ai 14.4.10 (4i1 B.C.) Ya2ng Bo2ju4n 1688; Wa2ng Sho3uqia1n et al.1558; tr. Legge:i39
+# dating: 8120
+六月，¶
+使左師巢伐之，¶
+欲質大夫以入焉。¶
+不能，¶
+亦入于曹，¶
+取質。¶
+魋曰：¶
+
+# src: Zuo Ai 14.4.11 (4i1 B.C.) Ya2ng Bo2ju4n 1688; Wa2ng Sho3uqia1n et al.1558; tr. Legge:i40
+# dating: 8120
+「不可。¶
+既不能事君，¶
+又得罪于民，¶
+將若之何？」¶
+乃舍之。¶
+民遂叛之。¶
+向魋奔衛。¶
+向巢來奔，¶
+宋公使止之，¶
+曰：¶
+
+# src: Zuo Ai 14.4.12 (4i1 B.C.) Ya2ng Bo2ju4n 1688; Wa2ng Sho3uqia1n et al.1558; tr. Legge:i40
+# dating: 8120
+「寡人與子有言矣，¶
+不可以絕向氏之祀。」¶
+辭曰：¶
+「臣之罪大，¶
+盡滅桓氏可也。¶
+若以先臣之故，¶
+而使有後，¶
+君之惠也。¶
+若臣，¶
+則不可以入矣。」<pb:KR1e0001_tls_012-264a>¶
+
+# src: Zuo Ai 14.4.13 (4i1 B.C.) Ya2ng Bo2ju4n 1688; Wa2ng Sho3uqia1n et al.1559; tr. Legge:i40
+# dating: 8120
+司馬牛致其邑與珪焉，¶而適齊。¶
+向魋出於衛地，¶
+公文氏攻之，¶
+求夏后氏之璜焉。¶
+與之他玉，¶
+而奔齊，¶
+陳成子使為次卿，¶
+司馬牛又致其邑焉，¶
+而適吳。¶
+
+# src: Zuo Ai 14.4.14 (4i1 B.C.) Ya2ng Bo2ju4n 1688; Wa2ng Sho3uqia1n et al.1559; tr. Legge:i40
+# dating: 8120
+吳人惡之，¶
+而反。¶
+趙簡子召之，¶
+陳成子亦召之，¶
+卒於魯郭門之外，¶
+阬氏葬諸丘輿。<pb:KR1e0001_tls_012-265a>¶
+
+# src: Zuo Ai 14.5.1 (4i1 B.C.) Ya2ng Bo2ju4n 1689; Wa2ng Sho3uqia1n et al.1559; tr. Legge:i40
+# dating: 8120
+B12.14.5甲午，¶
+齊陳恆弒其君壬于舒州。¶
+孔丘三日齊，¶
+而請伐齊三。¶
+公曰：¶
+「魯為齊弱久矣，¶
+子之伐之，¶
+將若之何？」¶
+
+# src: Zuo Ai 14.5.2 (4i1 B.C.) Ya2ng Bo2ju4n 1689; Wa2ng Sho3uqia1n et al.1559; tr. Legge:i40
+# dating: 8120
+對曰：¶
+「陳恆弒其君，¶
+民之不與者半。¶
+以魯之眾加齊之半，¶
+可克也。」¶
+公曰：¶
+「子告季孫。」¶
+孔子辭，¶
+退而告人曰：¶
+「吾以從大夫之後也，¶
+故不敢不言。」<pb:KR1e0001_tls_012-266a>¶
+
+# src: Zuo Ai 14.6.1 (4i1 B.C.) Ya2ng Bo2ju4n 1689; Wa2ng Sho3uqia1n et al.1559; tr. Legge:i40
+# dating: 8120
+B12.14.6初，¶
+孟孺子洩將圉馬於成，¶
+成宰公孫宿不受，¶
+曰：¶
+「孟孫為成之病，¶
+不圉馬焉。」¶
+孺子怒，¶
+襲成，¶
+從者不得入，¶
+乃反。¶
+
+# src: Zuo Ai 14.6.2 (4i1 B.C.) Ya2ng Bo2ju4n 1689; Wa2ng Sho3uqia1n et al.1559; tr. Legge:i40
+# dating: 8120
+成有司使，¶
+孺子鞭之。¶
+秋八月辛丑，¶
+孟懿子卒，¶
+成人奔喪，¶
+弗內；¶
+袒、免，¶
+哭于衢，¶
+聽共，¶
+弗許；¶
+懼，
+不歸。<pb:KR1e0001_tls_012-267a>¶
+
+# src: Zuo Ai 15.1.1 (480 B.C.) Ya2ng Bo2ju4n 1690; Wa2ng Sho3uqia1n et al.1562; tr. Legge:i41
+# dating: 8120
+A12.15《哀公十五年經》
+<pb:KR1e0001_tls_012-268a>¶
+
+A12.15.1十有五年春，¶
+王正月，¶
+成叛。
+<pb:KR1e0001_tls_012-269a>¶
+
+A12.15.2夏五月，¶
+齊高無丕出奔北燕。
+<pb:KR1e0001_tls_012-270a>¶
+
+A12.15.3鄭伯伐宋。
+<pb:KR1e0001_tls_012-271a>¶
+
+A12.15.4秋八月，¶
+大雩。
+<pb:KR1e0001_tls_012-272a>¶
+
+A12.15.5晉趙鞅帥師伐衛。
+<pb:KR1e0001_tls_012-273a>¶
+
+A12.15.6冬，¶
+晉侯伐鄭。
+<pb:KR1e0001_tls_012-274a>¶
+
+A12.15.7及齊平。
+<pb:KR1e0001_tls_012-275a>¶
+
+A12.15.8衛公孟彄出奔齊。
+<pb:KR1e0001_tls_012-276a>¶
+
+B12.15《哀公十五年傳》
+<pb:KR1e0001_tls_012-277a>¶
+
+B12.15.1十五年春，¶
+成叛于齊。¶
+武伯伐成，¶
+不克，¶
+遂城輸。<pb:KR1e0001_tls_012-278a>¶
+
+# src: Zuo Ai 15.2.1 (480 B.C.) Ya2ng Bo2ju4n 1690; Wa2ng Sho3uqia1n et al.1562; tr. Legge:i41
+# dating: 8120
+B12.15.2夏，¶
+楚子西、¶子期伐吳，¶
+及桐汭，¶
+陳侯使公孫貞子弔焉，¶
+及良而卒，¶
+將以尸入。¶
+吳子使大宰嚭勞，¶
+且辭曰：¶
+
+# src: Zuo Ai 15.2.2 (480 B.C.) Ya2ng Bo2ju4n 1691; Wa2ng Sho3uqia1n et al.1562; tr. Legge:i41
+# dating: 8120
+「以水潦之不時，¶
+無乃廩然隕大夫之尸，¶
+以重寡君之憂，¶
+寡君敢辭。」¶
+上介芋尹蓋對曰：¶
+
+# src: Zuo Ai 15.2.3 (480 B.C.) Ya2ng Bo2ju4n 1691; Wa2ng Sho3uqia1n et al.1562; tr. Legge:i41
+# dating: 8120
+「寡君聞楚為不道，¶
+荐伐吳國，¶
+滅厥民人，¶
+寡君使蓋備使，¶
+弔君之下吏。¶
+無祿，¶
+使人逢天之慼，¶
+大命隕隊，¶
+絕世于良。¶
+
+# src: Zuo Ai 15.2.4 (480 B.C.) Ya2ng Bo2ju4n 1691; Wa2ng Sho3uqia1n et al.1562; tr. Legge:i41
+# dating: 8120
+廢日共積，¶
+一日遷次。¶
+今君命逆使人曰¶
+『無以尸造于門』，¶
+是我寡君之命委于草莽也。¶
+且臣聞之曰：¶
+『事死如事生，¶
+禮也。』¶
+
+# src: Zuo Ai 15.2.5 (480 B.C.) Ya2ng Bo2ju4n 1692; Wa2ng Sho3uqia1n et al.1562; tr. Legge:i41
+# dating: 8120
+於是乎有朝聘而終、¶
+以尸將事之禮，¶
+又有朝聘而遭喪之禮。¶
+若不以尸將命，¶
+是遭喪而還也，¶
+無乃不可乎！¶
+以禮防民，¶
+猶或踰之，¶
+
+# src: Zuo Ai 15.2.6 (480 B.C.) Ya2ng Bo2ju4n 1692; Wa2ng Sho3uqia1n et al.1562; tr. Legge:i41
+# dating: 8120
+今大夫曰¶
+『死而棄之』，¶
+是棄禮也，¶
+其何以為諸侯主？¶
+先民有言曰：¶
+『無穢虐士。』¶
+備使奉尸將命，¶
+苟我寡君之命達于君所，¶
+雖隕于深淵，¶
+則天命也，¶
+非君與涉人之過也。」¶
+吳人內之。<pb:KR1e0001_tls_012-279a>¶
+
+# src: Zuo Ai 15.3.1 (480 B.C.) Ya2ng Bo2ju4n 1692; Wa2ng Sho3uqia1n et al.1563; tr. Legge:i41
+# dating: 8120
+B12.15.3秋，¶
+齊陳瓘如楚，¶
+過衛，¶
+仲由見之，¶
+曰：¶
+「天或者以陳氏為斧斤，¶
+既斲喪公室，¶
+而他人有之，¶
+不可知也；¶
+其使終饗之，¶
+
+# src: Zuo Ai 15.3.2 (480 B.C.) Ya2ng Bo2ju4n 1693; Wa2ng Sho3uqia1n et al.1563; tr. Legge:i41
+# dating: 8120
+亦不可知也。¶
+若善魯以待時，¶
+不亦可乎！¶
+何必惡焉？」¶
+子玉曰：¶
+「然。¶
+吾受命矣，¶
+子使告我弟。」<pb:KR1e0001_tls_012-280a>¶
+
+# src: Zuo Ai 15.4.1 (480 B.C.) Ya2ng Bo2ju4n 1693; Wa2ng Sho3uqia1n et al.1563; tr. Legge:i41
+# dating: 8120
+B12.15.4冬，¶
+及齊平。¶
+子服景伯如齊，¶
+子贛為介，¶
+見公孫成，¶
+曰：¶
+「人皆臣人，¶
+而有背人之心，¶
+況齊人雖為子役，¶
+其有不貳乎？¶
+
+# src: Zuo Ai 15.4.2 (480 B.C.) Ya2ng Bo2ju4n 1693; Wa2ng Sho3uqia1n et al.1563; tr. Legge:i42
+# dating: 8120
+子、
+周公之孫也，¶
+多饗大利，¶
+猶思不義。¶
+利不可得，¶
+而喪宗國，¶
+將焉用之？」¶
+成曰：¶
+「善哉！¶
+吾不早聞命。」<pb:KR1e0001_tls_012-281a>¶
+
+# src: Zuo Ai 15.4.3 (480 B.C.) Ya2ng Bo2ju4n 1693; Wa2ng Sho3uqia1n et al.1563; tr. Legge:i42
+# dating: 8120
+陳成子館客，¶
+曰：¶
+「寡君使恆告曰：¶
+『寡君願事君如事衛君。』」¶
+景伯揖子贛而進之，¶
+對曰：¶
+
+# src: Zuo Ai 15.4.4 (480 B.C.) Ya2ng Bo2ju4n 1693; Wa2ng Sho3uqia1n et al.1563; tr. Legge:i42
+# dating: 8120
+「寡君之願也。¶
+昔晉人伐衛，¶
+齊為衛故，¶
+伐晉冠氏，¶
+喪車五百。¶
+因與衛地，¶
+自濟以西，¶
+禚、媚、¶杏以南，¶
+書社五百。¶
+
+# src: Zuo Ai 15.4.5 (480 B.C.) Ya2ng Bo2ju4n 1693; Wa2ng Sho3uqia1n et al.1563; tr. Legge:i42
+# dating: 8120
+吳人加敝邑以亂，¶
+齊因其病，¶
+取讙與闡，¶
+寡君是以寒心。¶
+若得視衛君之事君也，¶
+則固所願也。」¶
+成子病之，¶
+乃歸成，¶
+公孫宿以其兵甲入于嬴。<pb:KR1e0001_tls_012-282a>¶
+
+# src: Zuo Ai 15.5.1 (480 B.C.) Ya2ng Bo2ju4n 1694; Wa2ng Sho3uqia1n et al.1566; tr.Watson:1989 197
+# dating: 8120
+B12.15.5衛孔圉取大子蒯聵之姊，¶
+生悝。¶
+孔氏之豎渾良夫長而美，¶
+孔文子卒，¶
+通於內。¶
+大子在戚，¶
+孔姬使之焉。¶
+
+# src: Zuo Ai 15.5.2 (480 B.C.) Ya2ng Bo2ju4n 1694; Wa2ng Sho3uqia1n et al.1566; tr.Watson:1989 198
+# dating: 8120
+大子與之言曰：¶
+「苟使我入獲國，¶
+服冕、¶乘軒，¶
+三死無與。」¶
+與之盟，¶
+為請於伯姬。<pb:KR1e0001_tls_012-283a>¶
+
+# src: Zuo Ai 15.5.3 (480 B.C.) Ya2ng Bo2ju4n 1694; Wa2ng Sho3uqia1n et al.1566; tr.Watson:1989 198
+# dating: 8120
+閏月，¶
+良夫與大子入，¶
+舍於孔氏之外圃。¶
+昏，
+二人蒙衣而乘，¶
+寺人羅御，¶
+如孔氏。¶
+孔氏之老欒寧問之，¶
+稱姻妾以告，¶
+
+# src: Zuo Ai 15.5.4 (480 B.C.) Ya2ng Bo2ju4n 1694; Wa2ng Sho3uqia1n et al.1566; tr.Watson:1989 198
+# dating: 8120
+遂入，¶
+適伯姬氏。¶
+既食，¶
+孔伯姬杖戈而先，¶
+大子與五人介，¶
+輿豭從之。¶
+迫孔悝於廁，¶
+強盟之，¶
+遂劫以登臺。¶
+
+# src: Zuo Ai 15.5.5 (480 B.C.) Ya2ng Bo2ju4n 1695; Wa2ng Sho3uqia1n et al.1566; tr.Watson:1989 198
+# dating: 8120
+欒寧將飲酒，¶
+炙未熟，¶
+聞亂，¶
+使告季子；¶
+召獲駕乘車，¶
+行爵，¶食炙，¶
+奉衛侯輒來奔。<pb:KR1e0001_tls_012-284a>¶
+
+# src: Zuo Ai 15.5.6 (480 B.C.) Ya2ng Bo2ju4n 1695; Wa2ng Sho3uqia1n et al.1566; tr.Watson:1989 198
+# dating: 8120
+季子將入，¶
+遇子羔將出，¶
+曰：¶「門已閉矣。」¶
+季子曰：¶「吾姑至焉。」¶
+子羔曰：¶「弗及，¶
+不踐其難！」¶
+
+# src: Zuo Ai 15.5.7 (480 B.C.) Ya2ng Bo2ju4n 1696; Wa2ng Sho3uqia1n et al.1566; tr.Watson:1989 198
+# dating: 8120
+季子曰：¶
+「食焉，¶
+不辟其難。」¶
+子羔遂出，¶子路入。¶
+及門，¶公孫敢門焉，¶
+曰：¶「無入為也。」¶
+
+# src: Zuo Ai 15.5.8 (480 B.C.) Ya2ng Bo2ju4n 1696; Wa2ng Sho3uqia1n et al.1567; tr.Watson:1989 199
+# dating: 8120
+季子曰：¶
+「是公孫也，¶
+求利焉，¶
+而逃其難。¶
+由不然，¶
+利其祿，¶
+必救其患。」¶
+有使者出，¶
+乃入，¶
+
+# src: Zuo Ai 15.5.9 (480 B.C.) Ya2ng Bo2ju4n 1696; Wa2ng Sho3uqia1n et al.1567; tr.Watson:1989 199
+# dating: 8120
+曰：¶
+「大子焉用孔悝？¶
+雖殺之，¶
+必或繼之。」¶
+且曰：¶
+「大子無勇，¶
+若燔臺，¶
+半，必舍孔叔。」¶
+
+# src: Zuo Ai 15.5.10 (480 B.C.) Ya2ng Bo2ju4n 1696; Wa2ng Sho3uqia1n et al.1567; tr.Watson:1989 199
+# dating: 8120
+大子聞之，¶
+懼，
+下石乞、¶盂黶敵子路，¶
+以戈擊之，¶
+斷纓。¶
+子路曰：¶
+
+# src: Zuo Ai 15.5.11 (480 B.C.) Ya2ng Bo2ju4n 1696; Wa2ng Sho3uqia1n et al.1567; tr.Watson:1989 199
+# dating: 8120
+「君子死，¶
+冠不免。」¶
+結纓而死。¶
+孔子聞衛亂，¶
+曰：¶
+「柴也其來，¶
+由也死矣。」<pb:KR1e0001_tls_012-285a>¶
+
+# src: Zuo Ai 15.5.12 (480 B.C.) Ya2ng Bo2ju4n 1696; Wa2ng Sho3uqia1n et al.1567; tr.Watson:1989 199
+# dating: 8120
+孔悝立莊公。¶
+莊公害故政，¶
+欲盡去之，¶
+先謂司徒瞞成曰：¶
+「寡人離病於外久矣，¶
+子請亦嘗之。」¶
+歸告褚師比，¶
+欲與之伐公，¶
+不果。<pb:KR1e0001_tls_012-286a>¶
+
+# src: Zuo Ai 16.1.1 (479 B.C.) Ya2ng Bo2ju4n 1697; Wa2ng Sho3uqia1n et al.1569; tr. Legge:i46
+# dating: 8120
+A12.16《哀公十六年經》
+<pb:KR1e0001_tls_012-287a>¶
+
+A12.16.1十有六年春，¶
+王正月己卯，¶
+衛世子蒯聵自戚入于衛，¶
+衛侯輒來奔。
+<pb:KR1e0001_tls_012-288a>¶
+
+A12.16.2二月，¶
+衛子還成出奔宋。
+<pb:KR1e0001_tls_012-289a>¶
+
+A12.16.3夏四月己丑，¶
+孔丘卒。
+<pb:KR1e0001_tls_012-290a>¶
+
+B12.16《哀公十六年傳》
+<pb:KR1e0001_tls_012-291a>¶
+
+B12.16.1十六年春，¶
+瞞成、¶褚師比出奔宋。<pb:KR1e0001_tls_012-292a>¶
+
+# src: Zuo Ai 16.2.1 (479 B.C.) Ya2ng Bo2ju4n 1697; Wa2ng Sho3uqia1n et al.1569; tr. Legge:i46
+# dating: 8120
+B12.16.2衛侯使鄢武子告于周曰：¶
+「蒯聵得罪于君父、¶君母，¶
+逋竄于晉。¶
+晉以王室之故，¶
+不棄兄弟，¶
+寘諸河上。¶
+天誘其衷，¶
+獲嗣守封焉，¶
+使下臣肸敢告執事。」¶
+
+# src: Zuo Ai 16.2.2 (479 B.C.) Ya2ng Bo2ju4n 1698; Wa2ng Sho3uqia1n et al.1569; tr. Legge:i46
+# dating: 8120
+王使單平公對，¶
+曰：¶
+「肸以嘉命來告余一人，¶
+往謂叔父：¶
+余嘉乃成世，¶
+復爾祿次。¶
+敬之哉！¶
+方天之休。¶
+弗敬弗休，¶
+悔其可追？」<pb:KR1e0001_tls_012-293a>¶
+
+# src: Zuo Ai 16.3.1 (479 B.C.) Ya2ng Bo2ju4n 1698; Wa2ng Sho3uqia1n et al.1569; tr. Legge:i46
+# dating: 8120
+B12.16.3夏四月己丑，¶
+孔丘卒。¶
+公誄之曰：¶
+「旻天不弔，¶
+不憖遺一老，¶
+俾屏余一人以在位，¶
+煢煢余在疚。¶
+嗚呼哀哉尼父！¶
+無自律。」<pb:KR1e0001_tls_012-294a>¶
+子贛曰：¶
+「君其不沒於魯乎！¶
+
+# src: Zuo Ai 16.3.2 (479 B.C.) Ya2ng Bo2ju4n 1698; Wa2ng Sho3uqia1n et al.1569; tr. Legge:i46
+# dating: 8120
+夫子之言曰：¶
+『禮失則昏，¶
+名失則愆。』¶
+失志為昏，¶
+失所為愆。¶
+生不能用，¶
+死而誄之，¶
+非禮也；¶
+稱一人，¶
+非名也。¶
+君兩失之。」<pb:KR1e0001_tls_012-295a>¶
+
+# src: Zuo Ai 16.4.1 (479 B.C.) Ya2ng Bo2ju4n 1699; Wa2ng Sho3uqia1n et al.1570; tr. Legge:i46
+# dating: 8120
+B12.16.4六月，¶
+衛侯飲孔悝酒於平陽，¶
+重酬之。¶
+大夫皆有納焉。¶
+醉而送之，¶
+夜半而遣之。¶
+載伯姬於平陽而行，¶
+
+# src: Zuo Ai 16.4.2 (479 B.C.) Ya2ng Bo2ju4n 1699; Wa2ng Sho3uqia1n et al.1570; tr. Legge:i46
+# dating: 8120
+及西門，¶
+使貳車反祏於西圃。¶
+子伯季子初為孔氏臣，¶
+新登于公，¶
+請追之，¶
+遇載祏者，¶
+殺而乘其車。¶
+許公為反祏，¶
+遇之，¶
+
+# src: Zuo Ai 16.4.3 (479 B.C.) Ya2ng Bo2ju4n 1699; Wa2ng Sho3uqia1n et al.1570; tr. Legge:i46
+# dating: 8120
+曰：¶
+「與不仁人爭明，¶
+無不勝。」¶
+必使先射，¶
+射三發，¶
+皆遠許為。¶
+許為射之，¶
+殪。
+或以其車從，¶
+得祏於橐中。¶
+孔悝出奔宋。<pb:KR1e0001_tls_012-296a>¶
+
+# src: Zuo Ai 16.5.1 (479 B.C.) Ya2ng Bo2ju4n 1700; Wa2ng Sho3uqia1n et al.1571; tr.Watson:1989 202
+# dating: 8120
+B12.16.5楚大子建之遇讒也，¶
+自城父奔宋；¶
+又辟華氏之亂於鄭。¶
+鄭人甚善之。¶
+又適晉，¶
+與晉人謀襲鄭，¶
+
+# src: Zuo Ai 16.5.2 (479 B.C.) Ya2ng Bo2ju4n 1700; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 202
+# dating: 8120
+乃求復焉。¶
+鄭人復之如初。¶
+晉人使諜於子木，¶
+請行而期焉。¶
+子木暴虐於其私邑，¶
+邑人訴之。¶
+
+# src: Zuo Ai 16.5.3 (479 B.C.) Ya2ng Bo2ju4n 1700; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 202
+# dating: 8120
+鄭人省之，¶
+得晉諜焉，¶
+遂殺子木。¶
+其子曰勝，¶
+在吳，¶
+子西欲召之。¶
+葉公曰：¶
+
+# src: Zuo Ai 16.5.4 (479 B.C.) Ya2ng Bo2ju4n 1700; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 203
+# dating: 8120
+「吾聞勝也詐而亂，¶
+無乃害乎？」¶
+子西曰：¶
+「吾聞勝也信而勇，¶
+不為不利。¶
+舍諸邊竟，¶
+使衛藩焉。」¶
+
+# src: Zuo Ai 16.5.5 (479 B.C.) Ya2ng Bo2ju4n 1700; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 203
+# dating: 8120
+葉公曰：¶
+「周仁之謂信，¶
+率義之謂勇。¶
+吾聞勝也好復言，¶
+而求死士，¶
+殆有私乎！¶
+
+# src: Zuo Ai 16.5.6 (479 B.C.) Ya2ng Bo2ju4n 1700; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 203
+# dating: 8120
+復言，¶
+非信也；¶
+期死，¶
+非勇也。¶
+－－子必悔之。」¶
+弗從。¶
+召之，¶
+使處竟
+為白公。¶
+
+# src: Zuo Ai 16.5.7 (479 B.C.) Ya2ng Bo2ju4n 1701; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 203
+# dating: 8120
+請伐鄭，¶
+子西曰：¶
+「楚未節也。¶
+不然，¶
+吾不忘也。」¶
+他日，¶
+又請，¶
+許之，¶
+未起師。¶
+晉人伐鄭，¶
+楚救之，¶
+與之盟。¶
+
+# src: Zuo Ai 16.5.8 (479 B.C.) Ya2ng Bo2ju4n 1701; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 203
+# dating: 8120
+勝怒，¶
+曰：¶
+「鄭人在此，¶
+讎不遠矣。」<pb:KR1e0001_tls_012-297a>¶
+勝自厲劍，¶
+子期之子平見之，¶
+曰：¶
+「王孫何自厲也？」¶
+曰：¶
+
+# src: Zuo Ai 16.5.9 (479 B.C.) Ya2ng Bo2ju4n 1701; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 203
+# dating: 8120
+「勝以直聞，¶
+不告女，¶
+庸為直乎？¶
+將以殺爾父。」¶
+平以告子西。¶
+子西曰：¶
+「勝如卵，¶
+余翼而長之。¶
+
+# src: Zuo Ai 16.5.10 (479 B.C.) Ya2ng Bo2ju4n 1701; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 203
+# dating: 8120
+楚國，¶
+第我死，¶
+令尹、¶司馬，¶
+非勝而誰？」¶
+勝聞之，¶
+曰：¶
+「令尹之狂也！¶
+得死，¶
+乃非我。」¶
+
+# src: Zuo Ai 16.5.11 (479 B.C.) Ya2ng Bo2ju4n 1701; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 203
+# dating: 8120
+子西不悛。¶
+勝謂石乞曰：¶
+「王與二卿士，¶
+皆五百人當之，¶
+則可矣。」¶
+乞曰：¶
+「不可得也。」¶
+曰：¶
+「市南有熊宜僚者，¶
+若得之，¶
+可以當五百人矣。」¶
+
+# src: Zuo Ai 16.5.12 (479 B.C.) Ya2ng Bo2ju4n 1702; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 204
+# dating: 8120
+乃從白公而見之。¶
+與之言，¶
+說。
+告之故，¶
+辭。
+承之以劍，¶
+不動。¶
+勝曰：¶
+
+# src: Zuo Ai 16.5.13 (479 B.C.) Ya2ng Bo2ju4n 1702; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 204
+# dating: 8120
+「不為利諂、¶
+不為威惕、¶
+不洩人言以求媚者，¶
+去之。」<pb:KR1e0001_tls_012-298a>¶
+吳人伐慎，¶
+
+# src: Zuo Ai 16.5.14 (479 B.C.) Ya2ng Bo2ju4n 1702; Wa2ng Sho3uqia1n et al.1572; tr.Watson:1989 204
+# dating: 8120
+白公敗之。¶
+請以戰備獻，¶
+許之，¶
+遂作亂。¶
+秋七月，¶
+殺子西、¶子期于朝，¶
+而劫惠王。¶
+子西以袂掩面而死。¶
+子期曰：¶
+
+# src: Zuo Ai 16.5.15 (479 B.C.) Ya2ng Bo2ju4n 1702; Wa2ng Sho3uqia1n et al.1573; tr.Watson:1989 204
+# dating: 8120
+「昔者吾以力事君，¶
+不可以弗終。」¶
+抉豫章以殺人而後死。¶
+石乞曰：¶
+「焚庫、¶弒王。¶
+不然，¶
+不濟。」¶
+
+# src: Zuo Ai 16.5.16 (479 B.C.) Ya2ng Bo2ju4n 1702; Wa2ng Sho3uqia1n et al.1573; tr.Watson:1989 204
+# dating: 8120
+白公曰：¶
+「不可。¶
+弒王，¶
+不祥；¶
+焚庫，¶
+無聚，¶
+將何以守矣？」¶
+乞曰：¶
+
+# src: Zuo Ai 16.5.17 (479 B.C.) Ya2ng Bo2ju4n 1702; Wa2ng Sho3uqia1n et al.1573; tr.Watson:1989 204
+# dating: 8120
+「有楚國而治其民，¶
+以敬事神，¶
+可以得祥，¶
+且有聚矣，¶
+何患？」¶
+弗從。<pb:KR1e0001_tls_012-299a>¶
+葉公在蔡，¶
+方城之外皆曰：¶
+
+# src: Zuo Ai 16.5.18 (479 B.C.) Ya2ng Bo2ju4n 1703; Wa2ng Sho3uqia1n et al.1575; tr.Watson:1989 204
+# dating: 8120
+「可以入矣。」¶
+子高曰：¶
+「吾聞之，¶
+以險徼幸者，¶
+其求無饜，¶
+偏重必離。」¶
+聞其殺齊管脩也
+而後入。<pb:KR1e0001_tls_012-300a>¶
+白公欲以子閭為王，¶
+
+# src: Zuo Ai 16.5.19 (479 B.C.) Ya2ng Bo2ju4n 1703; Wa2ng Sho3uqia1n et al.1575; tr.Watson:1989 205
+# dating: 8120
+子閭不可，¶
+遂劫以兵。¶
+子閭曰：¶
+「王孫若安靖楚國，¶
+匡正王室，¶
+而後庇焉，¶
+啟之願也，¶
+敢不聽從？¶
+若將專利以傾王室，¶
+不顧楚國，¶
+有死不能。」¶
+
+# src: Zuo Ai 16.5.20 (479 B.C.) Ya2ng Bo2ju4n 1703; Wa2ng Sho3uqia1n et al.1575; tr.Watson:1989 205
+# dating: 8120
+遂殺之，¶
+而以王如高府。¶
+石乞尹門。¶
+圉公陽穴宮，¶
+負王以如昭夫人之宮。<pb:KR1e0001_tls_012-301a>¶
+
+# src: Zuo Ai 16.5.21 (479 B.C.) Ya2ng Bo2ju4n 1703; Wa2ng Sho3uqia1n et al.1575; tr.Watson:1989 205
+# dating: 8120
+葉公亦至，¶
+及北門，¶
+或遇之，¶
+曰：¶
+「君胡不冑？¶
+國人望君如望慈父母焉，¶
+盜賊之矢若傷君，¶
+是絕民望也，¶
+若之何不冑？」¶
+乃冑而進。¶
+又遇一人，¶曰：¶
+
+# src: Zuo Ai 16.5.22 (479 B.C.) Ya2ng Bo2ju4n 1703; Wa2ng Sho3uqia1n et al.1575; tr.Watson:1989 205
+# dating: 8120
+「君胡冑？¶
+國人望君如望歲焉，¶
+日日以幾，¶
+若見君面，¶
+是得艾也。¶
+民知不死，¶
+其亦夫有奮心，¶
+
+# src: Zuo Ai 16.5.23 (479 B.C.) Ya2ng Bo2ju4n 1704; Wa2ng Sho3uqia1n et al.1576; tr.Watson:1989 205
+# dating: 8120
+猶將旌君以徇於國；¶
+而又掩面以絕民望，¶
+不亦甚乎！」¶
+乃免冑而進。¶
+遇箴尹固帥其屬，¶
+將與白公。¶
+子高曰：¶
+
+# src: Zuo Ai 16.5.24 (479 B.C.) Ya2ng Bo2ju4n 1704; Wa2ng Sho3uqia1n et al.1576; tr.Watson:1989 205
+# dating: 8120
+「微二子者，¶
+楚不國矣。¶
+棄德從賊，¶
+其可保乎？」¶
+乃從葉公。¶
+使與國人以攻白公，¶
+白公奔山而縊。¶
+其徒微之。¶
+
+# src: Zuo Ai 16.5.25 (479 B.C.) Ya2ng Bo2ju4n 1704; Wa2ng Sho3uqia1n et al.1576; tr.Watson:1989 206
+# dating: 8120
+生拘石乞而問白公之死焉。¶
+對曰：¶
+「余知其死所，¶
+而長者使余勿言。」¶
+曰：¶
+「不言，¶將烹。」¶
+
+# src: Zuo Ai 16.5.26 (479 B.C.) Ya2ng Bo2ju4n 1704; Wa2ng Sho3uqia1n et al.1576; tr.Watson:1989 206
+# dating: 8120
+乞曰：¶
+「此事也克則為卿，¶
+不克則烹，¶
+固其所也，¶
+何害？」¶
+乃烹石乞。¶
+王孫燕奔頯黃氏。<pb:KR1e0001_tls_012-302a>¶
+沈諸梁兼二事，¶
+國寧，¶
+乃使寧為令尹，¶
+使寬為司馬，¶
+而老於葉。<pb:KR1e0001_tls_012-303a>¶
+
+# src: Zuo Ai 16.6.1 (479 B.C.) Ya2ng Bo2ju4n 1705; Wa2ng Sho3uqia1n et al.1576; tr. Legge:i48
+# dating: 8120
+B12.16.6衛侯占夢，¶
+嬖人求酒於大叔僖子，¶
+不得，¶
+與卜人比
+而告公曰：¶
+「君有大臣在西南隅，¶
+弗去，¶
+懼害。」¶
+乃逐大叔遺。¶
+遺奔晉。<pb:KR1e0001_tls_012-304a>¶
+
+# src: Zuo Ai 16.7.1 (479 B.C.) Ya2ng Bo2ju4n 1705; Wa2ng Sho3uqia1n et al.1578; tr. Legge:i48
+# dating: 8120
+B12.16.7衛侯謂渾良夫曰：¶
+「吾繼先君而不得其器，¶
+若之何？」¶
+良夫代執火者而言，¶
+曰：¶
+「疾與亡君，¶皆君之子也，¶
+召之而擇材焉可也。¶
+若不材，¶
+器可得也。」¶
+
+# src: Zuo Ai 16.7.2 (479 B.C.) Ya2ng Bo2ju4n 1705; Wa2ng Sho3uqia1n et al.1578; tr. Legge:i48
+# dating: 8120
+豎告大子。¶
+大子使五人輿豭從己，¶
+劫公而強盟之，¶
+且請殺良夫。¶
+公曰：¶
+曰：¶
+「請三之後有罪殺之。」¶
+公曰：¶
+「諾哉！」<pb:KR1e0001_tls_012-305a>¶
+
+# src: Zuo Ai 17.1.1 (478 B.C.) Ya2ng Bo2ju4n 1706; Wa2ng Sho3uqia1n et al.1579; tr. Legge:i49
+# dating: 8120
+B12.17《哀公十七年傳》
+<pb:KR1e0001_tls_012-306a>¶
+
+B12.17.1十七年春，¶
+衛侯為虎幄於藉圃，¶
+成，
+求令名者而與之始食焉。¶
+大子請使良夫。¶
+良夫乘衷甸兩牡，¶
+紫衣狐裘。¶
+
+# src: Zuo Ai 17.1.2 (478 B.C.) Ya2ng Bo2ju4n 1706; Wa2ng Sho3uqia1n et al.1579; tr. Legge:i49
+# dating: 8120
+至，
+袒裘，¶
+不釋劍而食。¶
+大子使牽以退，¶
+數之以三罪而殺之。<pb:KR1e0001_tls_012-307a>¶
+
+# src: Zuo Ai 17.2.1 (478 B.C.) Ya2ng Bo2ju4n 1707; Wa2ng Sho3uqia1n et al.1579; tr. Legge:i49
+# dating: 8120
+B12.17.2三月，¶
+越子伐吳，¶
+吳子禦之笠澤，¶
+夾水而陳。¶
+越子為左右句卒，¶
+使夜或左或右，¶
+鼓譟而進；¶
+
+# src: Zuo Ai 17.2.2 (478 B.C.) Ya2ng Bo2ju4n 1707; Wa2ng Sho3uqia1n et al.1579; tr. Legge:i49
+# dating: 8120
+吳師分以禦之。¶
+越子以三軍潛涉，¶
+當吳中軍而鼓之，¶
+吳師大亂，¶
+遂敗之。<pb:KR1e0001_tls_012-308a>¶
+
+# src: Zuo Ai 17.3.1 (478 B.C.) Ya2ng Bo2ju4n 1707; Wa2ng Sho3uqia1n et al.1579; tr. Legge:850
+# dating: 8120
+B12.17.3晉趙鞅使告于衛，¶
+曰：¶
+「君之在晉也，¶
+志父為主。¶
+請君若大子來，¶
+以免志父。¶
+不然，¶
+寡君其曰志父之為也。」¶
+衛侯辭以難，¶
+大子又使椓之。<pb:KR1e0001_tls_012-309a>¶
+
+# src: Zuo Ai 17.3.2 (478 B.C.) Ya2ng Bo2ju4n 1707; Wa2ng Sho3uqia1n et al.1579; tr. Legge:850
+# dating: 8120
+夏六月，¶
+趙鞅圍衛。¶
+齊國觀、¶陳瓘救衛，¶
+得晉人之致師者。¶
+子玉使服而見之，¶
+曰：¶「國子實執齊柄，¶
+而命瓘曰：¶
+
+# src: Zuo Ai 17.3.3 (478 B.C.) Ya2ng Bo2ju4n 1708; Wa2ng Sho3uqia1n et al.1579; tr. Legge:850
+# dating: 8120
+『無辟晉師！』¶
+豈敢廢命？¶
+子又何辱？」¶
+簡子曰：¶
+「我卜伐衛，¶
+未卜與齊戰。」¶
+乃還。<pb:KR1e0001_tls_012-310a>¶
+
+# src: Zuo Ai 17.4.1 (478 B.C.) Ya2ng Bo2ju4n 1708; Wa2ng Sho3uqia1n et al.1579; tr. Legge:850
+# dating: 8120
+B12.17.4楚白公之亂，¶
+陳人恃其聚而侵楚。¶
+楚既寧，¶
+將取陳麥。¶
+楚子問帥於大師子穀與葉公諸梁，¶
+子穀曰：¶
+「右領差車與左史老
+皆相令尹、¶司馬以伐陳，¶
+其可使也。」¶
+
+# src: Zuo Ai 17.4.2 (478 B.C.) Ya2ng Bo2ju4n 1708; Wa2ng Sho3uqia1n et al.1580; tr. Legge:850
+# dating: 8120
+子高曰：¶
+「率賤，¶
+民慢之，¶
+懼不用命焉。」¶
+子穀曰：¶
+「觀丁父、¶
+鄀俘也，¶
+武王以為軍率，¶
+是以克州、¶蓼，
+服隨、¶唐，
+大啟群蠻。¶
+
+# src: Zuo Ai 17.4.3 (478 B.C.) Ya2ng Bo2ju4n 1708; Wa2ng Sho3uqia1n et al.1580; tr. Legge:850
+# dating: 8120
+彭仲爽、¶
+申俘也，¶
+文王以為令尹，¶
+實縣申、¶
+息，
+朝陳、¶蔡，
+封畛於汝。¶
+唯其任也，¶
+何賤之有？」¶
+
+# src: Zuo Ai 17.4.4 (478 B.C.) Ya2ng Bo2ju4n 1708; Wa2ng Sho3uqia1n et al.1580; tr. Legge:850
+# dating: 8120
+子高曰：¶
+「天命不謟。¶
+令尹有憾於陳，¶
+天若亡之，¶
+其必令尹之子是與，¶
+君盍舍焉？¶
+臣懼右領與左史有二俘之賤
+而無其令德也。」¶
+
+# src: Zuo Ai 17.4.5 (478 B.C.) Ya2ng Bo2ju4n 1709; Wa2ng Sho3uqia1n et al.1580; tr. Legge:850
+# dating: 8120
+王卜之，¶
+武城尹吉。¶
+使帥師取陳麥。¶
+陳人御之，¶
+敗，
+遂圍陳。¶
+秋七月己卯，¶
+楚公孫朝帥師滅陳。<pb:KR1e0001_tls_012-311a>¶
+
+# src: Zuo Ai 17.4.6 (478 B.C.) Ya2ng Bo2ju4n 1709; Wa2ng Sho3uqia1n et al.1580; tr. Legge:850
+# dating: 8120
+王與葉公枚卜子良以為令尹。¶
+沈尹朱曰：¶
+「吉。¶
+過於其志。」¶
+葉公曰：¶
+「王子而相國，¶
+過將何為！」¶
+他日，¶
+改卜子國而使為令尹。<pb:KR1e0001_tls_012-312a>¶
+
+# src: Zuo Ai 17.5.1 (478 B.C.) Ya2ng Bo2ju4n 1709; Wa2ng Sho3uqia1n et al.15i2; tr. Legge:850
+# dating: 8120
+B12.17.5衛侯夢于北宮，¶
+見人登昆吾之觀，¶
+被髮北面而譟曰：¶
+「登此昆吾之虛，¶
+緜緜生之瓜。¶
+余為渾良夫，¶
+叫天無辜。」¶
+公親筮之，¶
+胥彌赦占之，¶
+
+# src: Zuo Ai 17.5.2 (478 B.C.) Ya2ng Bo2ju4n 1709; Wa2ng Sho3uqia1n et al.15i2; tr. Legge:850
+# dating: 8120
+曰：¶
+「不害。」¶
+與之邑，¶
+寘之而逃，¶奔宋。¶
+衛侯貞卜，¶
+其繇曰：¶
+「如魚竀尾，¶
+衡流而方羊。¶
+裔焉大國，¶
+
+# src: Zuo Ai 17.5.3 (478 B.C.) Ya2ng Bo2ju4n 1710; Wa2ng Sho3uqia1n et al.15i2; tr. Legge:850
+# dating: 8120
+滅之，¶
+將亡。¶
+闔門塞竇，¶
+乃自後踰。」<pb:KR1e0001_tls_012-313a>¶
+冬十月，¶
+
+# src: Zuo Ai 17.5.4 (478 B.C.) Ya2ng Bo2ju4n 1710; Wa2ng Sho3uqia1n et al.15i3; tr. Legge:850
+# dating: 8120
+晉復伐衛，¶
+入其郛，¶
+將入城。¶
+簡子曰：¶
+「止！¶
+叔向有言曰：¶
+『怙亂滅國者無後。』」¶
+衛人出莊公而與晉平。¶
+晉立襄公之孫般師而還。<pb:KR1e0001_tls_012-314a>¶
+
+# src: Zuo Ai 17.5.5 (478 B.C.) Ya2ng Bo2ju4n 1710; Wa2ng Sho3uqia1n et al.15i3; tr. Legge:850
+# dating: 8120
+十一月，¶
+衛侯自鄄入，¶
+般師出。¶
+初，
+公登城以望，¶
+見戎州。¶
+問之，¶
+以告。¶
+公曰：¶
+
+# src: Zuo Ai 17.5.6 (478 B.C.) Ya2ng Bo2ju4n 1710; Wa2ng Sho3uqia1n et al.15i3; tr. Legge:850
+# dating: 8120
+「我、¶
+姬姓也，¶
+何戎之有焉？」¶
+翦之。¶
+公使匠久。¶
+公欲逐石圃，¶
+未及而難作。¶
+辛巳，¶
+石圃因匠氏攻公。¶
+
+# src: Zuo Ai 17.5.7 (478 B.C.) Ya2ng Bo2ju4n 1711; Wa2ng Sho3uqia1n et al.15i3; tr. Legge:850
+# dating: 8120
+公闔門而請，¶
+弗許。¶
+踰于北方而隊，¶
+折股。¶
+戎州人攻之，¶
+大子疾、¶公子青踰從公，¶
+戎州人殺之。¶
+公入于戎州己氏。¶
+
+# src: Zuo Ai 17.5.8 (478 B.C.) Ya2ng Bo2ju4n 1711; Wa2ng Sho3uqia1n et al.15i3; tr. Legge:850
+# dating: 8120
+初，
+公自城上見己氏之妻髮美，¶
+使髡之，¶
+以為呂姜髢。¶
+既入焉，¶
+而示之璧，¶
+曰：¶
+「活我，¶
+吾與女璧。」¶
+己氏曰：¶
+
+# src: Zuo Ai 17.5.9 (478 B.C.) Ya2ng Bo2ju4n 1711; Wa2ng Sho3uqia1n et al.15i3; tr. Legge:851
+# dating: 8120
+「殺女，¶
+璧其焉往？」¶
+遂殺之，¶
+而取其璧。¶
+衛人復公孫般師而立之。¶
+十二月，¶
+齊人伐衛，¶
+衛人請平，¶
+立公子起，¶
+執般師以歸，¶
+舍諸潞。<pb:KR1e0001_tls_012-315a>¶
+
+# src: Zuo Ai 17.6.1 (478 B.C.) Ya2ng Bo2ju4n 1711; Wa2ng Sho3uqia1n et al.15i3; tr. Legge:851
+# dating: 8120
+B12.17.6公會齊侯盟于蒙，¶
+孟武伯相。¶
+齊侯稽首，¶
+公拜。¶
+齊人怒。¶
+武伯曰：¶
+「非天子，¶
+寡君無所稽首。」¶
+
+# src: Zuo Ai 17.6.2 (478 B.C.) Ya2ng Bo2ju4n 1711; Wa2ng Sho3uqia1n et al.15i3; tr. Legge:851
+# dating: 8120
+武伯問於高柴曰：¶
+「諸侯盟，¶
+誰執牛耳？」¶
+季羔曰：¶
+「鄫衍之役，¶
+吳公子姑曹；¶
+發陽之役，¶
+衛石魋。」¶
+武伯曰：¶
+「然則彘也。」<pb:KR1e0001_tls_012-316a>¶
+
+# src: Zuo Ai 17.7.1 (478 B.C.) Ya2ng Bo2ju4n 1712; Wa2ng Sho3uqia1n et al.15i3; tr. Legge:851
+# dating: 8120
+B12.17.7宋皇瑗之子麇有友曰田丙，¶
+而奪其兄酁般邑以與之。¶
+酁般慍而行，¶
+告桓司馬之臣子儀克。¶
+子儀克適宋，¶
+告夫人曰：¶
+「麇將納桓氏。」¶
+公問諸子仲。¶
+
+# src: Zuo Ai 17.7.2 (478 B.C.) Ya2ng Bo2ju4n 1712; Wa2ng Sho3uqia1n et al.15i3; tr. Legge:851
+# dating: 8120
+初，
+子仲將以杞姒之子非我為子。¶
+麇曰：¶
+「必立伯也，¶
+是良材。」¶
+子仲怒，¶
+弗從，¶
+故對曰：¶
+「右師則老矣，¶
+不識麇也。」¶
+
+# src: Zuo Ai 17.7.3 (478 B.C.) Ya2ng Bo2ju4n 1712; Wa2ng Sho3uqia1n et al.15i4; tr. Legge:851
+# dating: 8120
+公執之。¶
+皇瑗奔晉，¶
+召之。<pb:KR1e0001_tls_012-317a>¶
+
+# src: Zuo Ai 18.1.1 (477 B.C.) Ya2ng Bo2ju4n 1713; Wa2ng Sho3uqia1n et al.1586; tr. Legge:851
+# dating: 8120
+B12.18《哀公十八年傳》
+<pb:KR1e0001_tls_012-318a>¶
+
+B12.18.1十八年春，¶
+宋殺皇瑗。¶
+公聞其情，¶
+復皇氏之族，¶
+使皇緩為右師。<pb:KR1e0001_tls_012-319a>¶
+
+# src: Zuo Ai 18.2.1 (477 B.C.) Ya2ng Bo2ju4n 1713; Wa2ng Sho3uqia1n et al.1586; tr. Legge:851
+# dating: 8120
+B12.18.2巴人伐楚，¶
+圍鄾。¶
+初，
+右司馬子國之卜也，¶
+觀瞻曰：¶
+「如志。」¶
+故命之。¶
+及巴師至，¶
+將卜帥。¶
+
+# src: Zuo Ai 18.2.2 (477 B.C.) Ya2ng Bo2ju4n 1713; Wa2ng Sho3uqia1n et al.1586; tr. Legge:851
+# dating: 8120
+王曰：¶
+「寧如志，¶
+何卜焉？」¶
+使帥師而行。¶
+請承，¶
+王曰：¶
+「寢尹、¶工尹勤先君者也。」¶
+
+# src: Zuo Ai 18.2.3 (477 B.C.) Ya2ng Bo2ju4n 1713; Wa2ng Sho3uqia1n et al.1586; tr. Legge:851
+# dating: 8120
+三月，¶
+楚公孫寧、¶吳由于、¶
+薳固敗巴師于鄾，¶
+故封子國於析。<pb:KR1e0001_tls_012-320a>¶
+君子曰：¶
+「惠王知志。¶
+《夏書》曰：¶
+
+# src: Zuo Ai 18.2.4 (477 B.C.) Ya2ng Bo2ju4n 1713; Wa2ng Sho3uqia1n et al.1586; tr. Legge:851
+# dating: 8120
+『官占唯能蔽志，¶
+昆命于元龜』，¶
+其是之謂乎！¶
+《志》曰¶
+『聖人不煩卜筮』，¶
+惠王其有焉。」<pb:KR1e0001_tls_012-321a>¶
+
+# src: Zuo Ai 18.3.1 (477 B.C.) Ya2ng Bo2ju4n 1713; Wa2ng Sho3uqia1n et al.1586; tr. Legge:851
+# dating: 8120
+B12.18.3夏，¶
+衛石圃逐其君起，¶
+起奔齊。¶
+衛侯輒自齊復歸，¶
+逐石圃，¶
+而復石魋與大叔遺。<pb:KR1e0001_tls_012-322a>¶
+
+# src: Zuo Ai 19.1.1 (476 B.C.) Ya2ng Bo2ju4n 1714; Wa2ng Sho3uqia1n et al.1588; tr. Legge:852
+# dating: 8120
+B12.19《哀公十九年傳》
+<pb:KR1e0001_tls_012-323a>¶
+
+B12.19.1十九年春，¶
+越人侵楚，¶
+以誤吳也。¶
+夏，
+楚公子慶、¶公孫寬追越師，¶
+至冥，¶
+不及，¶
+乃還。<pb:KR1e0001_tls_012-324a>¶
+
+# src: Zuo Ai 19.2.1 (476 B.C.) Ya2ng Bo2ju4n 1714; Wa2ng Sho3uqia1n et al.1588; tr. Legge:852
+# dating: 8120
+B12.19.2秋，¶
+楚沈諸梁伐東夷，¶
+三夷男女及楚師盟于敖。<pb:KR1e0001_tls_012-325a>¶
+
+# src: Zuo Ai 19.3.1 (476 B.C.) Ya2ng Bo2ju4n 1714; Wa2ng Sho3uqia1n et al.1588; tr. Legge:852
+# dating: 8120
+B12.19.3冬，¶
+叔青如京師，¶
+敬王崩故也。<pb:KR1e0001_tls_012-326a>¶
+
+# src: Zuo Ai 20.1.1 (475 B.C.) Ya2ng Bo2ju4n 1715; Wa2ng Sho3uqia1n et al.1588; tr. Legge:852
+# dating: 8120
+B12.20《哀公二十年傳》
+<pb:KR1e0001_tls_012-327a>¶
+
+B12.20.1二十年春，¶
+齊人來徵會。¶
+夏，
+會于廩丘，¶
+為鄭故，¶
+謀伐晉。¶
+鄭人辭諸侯。¶
+秋，
+師還。<pb:KR1e0001_tls_012-328a>¶
+
+# src: Zuo Ai 20.2.1 (475 B.C.) Ya2ng Bo2ju4n 1715; Wa2ng Sho3uqia1n et al.1589; tr. Legge:852
+# dating: 8120
+B12.20.2吳公子慶忌驟諫吳子，¶
+曰：¶
+「不改，¶
+必亡。」¶
+弗聽。¶
+出居于艾，¶
+遂適楚。¶
+聞越將伐吳，¶
+
+# src: Zuo Ai 20.2.2 (475 B.C.) Ya2ng Bo2ju4n 1716; Wa2ng Sho3uqia1n et al.1589; tr. Legge:852
+# dating: 8120
+冬，
+請歸平越，¶
+遂歸。¶
+欲除不忠者以說于越。¶
+吳人殺之。<pb:KR1e0001_tls_012-329a>¶
+
+# src: Zuo Ai 20.3.1 (475 B.C.) Ya2ng Bo2ju4n 1716; Wa2ng Sho3uqia1n et al.1589; tr. Legge:853
+# dating: 8120
+B12.20.3十一月，¶
+越圍吳，¶
+趙孟降於喪食。¶
+楚隆曰：¶
+「三年之喪，¶
+親暱之極也，¶
+主又降之，¶
+無乃有故乎？」¶
+
+# src: Zuo Ai 20.3.2 (475 B.C.) Ya2ng Bo2ju4n 1716; Wa2ng Sho3uqia1n et al.1589; tr. Legge:853
+# dating: 8120
+趙孟曰：¶
+「黃池之役，¶
+先主與吳王有質，¶
+曰：¶
+『好惡同之。』¶
+今越圍吳，¶
+嗣子不廢舊業而敵之，¶
+非晉之所能及也，¶
+吾是以為降。」¶
+
+# src: Zuo Ai 20.3.3 (475 B.C.) Ya2ng Bo2ju4n 1716; Wa2ng Sho3uqia1n et al.1589; tr. Legge:853
+# dating: 8120
+楚隆曰：¶
+「若使吳王知之，¶
+若何？」¶
+趙孟曰：¶「可乎？」¶
+隆曰：¶
+「請嘗之。」¶
+
+# src: Zuo Ai 20.3.4 (475 B.C.) Ya2ng Bo2ju4n 1716; Wa2ng Sho3uqia1n et al.1589; tr. Legge:853
+# dating: 8120
+乃往，¶先造于越軍，¶
+曰：¶
+「吳犯間上國多矣，¶
+聞君親討焉，¶
+諸夏之人莫不欣喜，¶
+唯恐君志之不從，¶
+請入視之。」¶
+許之。¶
+告于吳王曰：¶
+
+# src: Zuo Ai 20.3.5 (475 B.C.) Ya2ng Bo2ju4n 1716; Wa2ng Sho3uqia1n et al.1589; tr. Legge:853
+# dating: 8120
+「寡君之老無恤使陪臣隆，¶
+敢展謝其不共：¶
+黃池之役，¶
+君之先臣志父得承齊盟，¶
+曰¶
+『好惡同之』。¶
+
+# src: Zuo Ai 20.3.6 (475 B.C.) Ya2ng Bo2ju4n 1716; Wa2ng Sho3uqia1n et al.1589; tr. Legge:853
+# dating: 8120
+今君在難，¶
+無恤不敢憚勞，¶
+非晉國之所能及也，¶
+使陪臣敢展布之。」¶
+王拜稽首曰：¶
+「寡人不佞，¶
+不能事越，¶
+以為大夫憂，¶
+拜命之辱。」¶
+
+# src: Zuo Ai 20.3.7 (475 B.C.) Ya2ng Bo2ju4n 1717; Wa2ng Sho3uqia1n et al.1589; tr. Legge:853
+# dating: 8120
+與之一簞珠，¶
+使問趙孟，¶
+曰：¶
+「句踐將生憂寡人，¶
+寡人死之不得矣。」¶
+王曰：¶
+
+# src: Zuo Ai 20.3.8 (475 B.C.) Ya2ng Bo2ju4n 1717; Wa2ng Sho3uqia1n et al.1589; tr. Legge:853
+# dating: 8120
+「溺人必笑，¶
+吾將有問也。¶
+史黯何以得為君子？」¶
+對曰：¶「黯也進不見惡，¶
+退無謗言。」¶
+王曰：¶「宜哉！」<pb:KR1e0001_tls_012-330a>¶
+
+# src: Zuo Ai 21.1.1 (474 B.C.) Ya2ng Bo2ju4n 1717; Wa2ng Sho3uqia1n et al.1591; tr. Legge:853
+# dating: 8120
+B12.21《哀公二十一年傳》
+<pb:KR1e0001_tls_012-331a>¶
+
+B12.21.1二十一年夏五月，¶
+越人始來。<pb:KR1e0001_tls_012-332a>¶
+
+# src: Zuo Ai 21.2.1 (474 B.C.) Ya2ng Bo2ju4n 1717; Wa2ng Sho3uqia1n et al.1591; tr. Legge:853
+# dating: 8120
+B12.21.2秋八月，¶
+公及齊侯、¶邾子盟于顧。¶
+齊人責稽首，¶
+因歌之曰：¶
+「魯人之皋，¶
+數年不覺，¶
+使我高蹈。¶
+唯其儒書，¶
+以為二國憂。」<pb:KR1e0001_tls_012-333a>¶
+
+# src: Zuo Ai 21.2.2 (474 B.C.) Ya2ng Bo2ju4n 1718; Wa2ng Sho3uqia1n et al.1591; tr. Legge:853
+# dating: 8120
+是行也，¶
+公先至于陽穀。¶
+齊閭丘息曰：¶
+「君辱舉玉趾，¶
+以在寡君之軍，¶
+群臣將傳遽以告寡君。¶
+比其復也，¶
+君無乃勤？¶
+為僕人之未次，¶
+請除館於舟道。」¶
+辭曰：¶
+「敢勤僕人？」<pb:KR1e0001_tls_012-334a>¶
+
+# src: Zuo Ai 22.1.1 (473 B.C.) Ya2ng Bo2ju4n 1719; Wa2ng Sho3uqia1n et al.1592; tr. Legge:854
+# dating: 8120
+B12.22《哀公二十二年傳》
+<pb:KR1e0001_tls_012-335a>¶
+
+B12.22.1二十二年夏四月，¶
+邾隱公自齊奔越，¶
+曰：¶
+「吳為無道，¶
+執父立子。」¶
+越人歸之，¶
+大子革奔越。<pb:KR1e0001_tls_012-336a>¶
+
+# src: Zuo Ai 22.2.1 (473 B.C.) Ya2ng Bo2ju4n 1719; Wa2ng Sho3uqia1n et al.1592; tr. Legge:854
+# dating: 8120
+B12.22.2冬十一月丁卯，¶
+越滅吳，¶
+請使吳王居甬東。¶
+辭曰：¶
+「孤老矣，¶
+焉能事君？」¶
+乃縊。¶
+越人以歸。<pb:KR1e0001_tls_012-337a>¶
+
+# src: Zuo Ai 23.1.1 (473 B.C.) Ya2ng Bo2ju4n 1720; Wa2ng Sho3uqia1n et al.1593; tr. Legge:854
+# dating: 8120
+B12.23《哀公二十三年傳》
+<pb:KR1e0001_tls_012-338a>¶
+
+B12.23.1二十三年春，¶
+宋景曹卒。¶
+季康子使冉有弔，¶
+且送葬，¶
+曰：¶
+「敝邑有社稷之事，¶
+使肥與有職競焉，¶
+是以不得助執紼，¶
+使求從輿人，¶
+
+# src: Zuo Ai 23.1.2 (473 B.C.) Ya2ng Bo2ju4n 1720; Wa2ng Sho3uqia1n et al.1593; tr. Legge:854
+# dating: 8120
+曰：¶
+『以肥之得備彌甥也，¶
+有不腆先人之產馬，¶
+使求薦諸夫人之宰，¶
+其可以稱旌繁乎！』」<pb:KR1e0001_tls_012-339a>¶
+
+# src: Zuo Ai 23.2.1 (473 B.C.) Ya2ng Bo2ju4n 1721; Wa2ng Sho3uqia1n et al.1593; tr. Legge:854
+# dating: 8120
+B12.23.2夏六月，¶
+晉荀瑤伐齊，¶
+高無丕帥師御之。¶
+知伯視齊師，¶
+馬駭，¶
+遂驅之，¶
+曰：¶
+「齊人知余旗，¶
+其謂余畏而反也。」¶
+
+# src: Zuo Ai 23.2.2 (473 B.C.) Ya2ng Bo2ju4n 1721; Wa2ng Sho3uqia1n et al.1593; tr. Legge:854
+# dating: 8120
+及壘而還。<pb:KR1e0001_tls_012-340a>¶
+將戰，¶
+長武子請卜。¶
+知伯曰：¶
+「君告於天子，¶
+而卜之以守龜於宗祧，¶
+吉矣，¶
+吾又何卜焉？¶
+
+# src: Zuo Ai 23.2.3 (473 B.C.) Ya2ng Bo2ju4n 1721; Wa2ng Sho3uqia1n et al.1593; tr. Legge:854
+# dating: 8120
+且齊人取我英丘，¶
+君命瑤，¶
+非敢燿武也，¶
+治英丘也。¶
+以辭伐罪足矣，¶
+何必卜？」<pb:KR1e0001_tls_012-341a>¶
+
+# src: Zuo Ai 23.2.4 (473 B.C.) Ya2ng Bo2ju4n 1721; Wa2ng Sho3uqia1n et al.1593; tr. Legge:854
+# dating: 8120
+壬辰，¶
+戰于犂丘，¶
+齊師敗績。¶
+知伯親禽顏庚。<pb:KR1e0001_tls_012-342a>¶
+
+# src: Zuo Ai 23.3.1 (473 B.C.) Ya2ng Bo2ju4n 1722; Wa2ng Sho3uqia1n et al.1593; tr. Legge:854
+# dating: 8120
+B12.23.3秋八月，¶
+叔青如越，¶
+始使越也。¶
+越諸鞅來聘，¶
+報叔青也。<pb:KR1e0001_tls_012-343a>¶
+
+# src: Zuo Ai 24.1.1 (472 B.C.) Ya2ng Bo2ju4n 1722; Wa2ng Sho3uqia1n et al.1595; tr. Legge:855
+# dating: 8120
+B12.24《哀公二十四年傳》
+<pb:KR1e0001_tls_012-344a>¶
+
+B12.24.1二十四年夏四月，¶
+晉侯將伐齊，¶
+使來乞師，¶
+曰：¶
+「昔臧文仲以楚師伐齊，¶
+取穀；¶
+宣叔以晉師伐齊，¶
+取汶陽。¶
+
+# src: Zuo Ai 24.1.2 (472 B.C.) Ya2ng Bo2ju4n 1722; Wa2ng Sho3uqia1n et al.1595; tr. Legge:855
+# dating: 8120
+寡君欲徼福於周公，¶
+願乞靈於臧氏。」¶
+臧石帥師會之，¶
+取廩丘。¶
+軍吏令繕，¶
+將進。¶
+萊章曰：¶
+
+# src: Zuo Ai 24.1.3 (472 B.C.) Ya2ng Bo2ju4n 1722; Wa2ng Sho3uqia1n et al.1595; tr. Legge:855
+# dating: 8120
+「君卑、¶政暴，¶
+往歲克敵，¶
+今又勝都，¶
+天奉多矣，¶
+又焉能進？¶
+是躗言也。¶
+役將班矣。」¶
+晉師乃還。¶
+餼臧石牛，¶
+
+# src: Zuo Ai 24.1.4 (472 B.C.) Ya2ng Bo2ju4n 1723; Wa2ng Sho3uqia1n et al.1595; tr. Legge:855
+# dating: 8120
+大史謝之，¶
+曰：¶
+「以寡君之在行，¶
+牢禮不度，¶
+敢展謝之。」<pb:KR1e0001_tls_012-345a>¶
+
+# src: Zuo Ai 24.2.1 (472 B.C.) Ya2ng Bo2ju4n 1723; Wa2ng Sho3uqia1n et al.1595; tr. Legge:855
+# dating: 8120
+B12.24.2邾子又無道，¶
+越人執之以歸，¶
+而立公子何。¶
+何亦無道。<pb:KR1e0001_tls_012-346a>¶
+
+# src: Zuo Ai 24.3.1 (472 B.C.) Ya2ng Bo2ju4n 1723; Wa2ng Sho3uqia1n et al.1595; tr. Legge:855
+# dating: 8120
+B12.24.3公子荊之母嬖，¶
+將以為夫人，¶
+使宗人釁夏獻其禮。¶
+對曰：¶
+「無之。」¶
+公怒曰：¶
+「女為宗司，¶
+立夫人，¶
+國之大禮也，¶
+何故無之？」¶
+
+# src: Zuo Ai 24.3.2 (472 B.C.) Ya2ng Bo2ju4n 1723; Wa2ng Sho3uqia1n et al.1595; tr. Legge:855
+# dating: 8120
+對曰：¶
+「周公及武公娶於薛，¶
+孝、惠娶於商，¶
+自桓以下娶於齊，¶
+此禮也則有。¶
+若以妾為夫人，¶
+則固無其禮也。」¶
+公卒立之，¶
+而以荊為大子，¶
+國人始惡之。<pb:KR1e0001_tls_012-347a>¶
+
+# src: Zuo Ai 24.4.1 (472 B.C.) Ya2ng Bo2ju4n 1723; Wa2ng Sho3uqia1n et al.1596; tr. Legge:855
+# dating: 8120
+B12.24.4閏月，¶
+公如越，¶
+得大子適郢，¶
+將妻公而多與之地。¶
+公孫有山使告于季孫。¶
+季孫懼，¶
+使因大宰嚭而納賂焉，¶
+乃止。<pb:KR1e0001_tls_012-348a>¶
+
+# src: Zuo Ai 25.1.1 (471 B.C.) Ya2ng Bo2ju4n 1724; Wa2ng Sho3uqia1n et al.1597; tr. Legge:856
+# dating: 8120
+B12.25《哀公二十五年傳》
+<pb:KR1e0001_tls_012-349a>¶
+
+B12.25.1二十五年夏五月庚辰，¶
+衛侯出奔宋。<pb:KR1e0001_tls_012-350a>¶
+衛侯為靈臺于藉圃，¶
+與諸大夫飲酒焉，¶
+褚師聲子韤而登席，¶
+公怒。¶
+辭曰：¶
+
+# src: Zuo Ai 25.1.2 (471 B.C.) Ya2ng Bo2ju4n 1724; Wa2ng Sho3uqia1n et al.1597; tr. Legge:856
+# dating: 8120
+「臣有疾，¶
+異於人；¶
+若見之，¶
+君將㱿之，¶
+是以不敢。」¶
+公愈怒。¶
+大夫辭之，¶
+不可。¶
+
+# src: Zuo Ai 25.1.3 (471 B.C.) Ya2ng Bo2ju4n 1724; Wa2ng Sho3uqia1n et al.1597; tr. Legge:856
+# dating: 8120
+褚師出。¶
+公戟其手，¶
+曰：¶
+「必斷而足！」¶
+聞之。¶
+褚師與司寇亥乘，¶
+曰：¶
+「今日幸而後亡。」<pb:KR1e0001_tls_012-351a>¶
+
+# src: Zuo Ai 25.1.4 (471 B.C.) Ya2ng Bo2ju4n 1725; Wa2ng Sho3uqia1n et al.1597; tr. Legge:857
+# dating: 8120
+公之入也，¶
+奪南氏邑
+而奪司寇亥政。¶
+公使侍人納公文懿子之車于池。¶
+初，
+衛人翦夏丁氏，¶
+以其帑賜彭封彌子。¶
+彌子飲公酒，¶
+納夏戊之女，¶
+
+# src: Zuo Ai 25.1.5 (471 B.C.) Ya2ng Bo2ju4n 1725; Wa2ng Sho3uqia1n et al.1598; tr. Legge:857
+# dating: 8120
+嬖，
+以為夫人。¶
+其弟期、¶
+大叔疾之從孫甥也，¶
+少畜於公，¶
+以為司徒。¶
+夫人寵衰，¶
+期得罪。¶
+
+# src: Zuo Ai 25.1.6 (471 B.C.) Ya2ng Bo2ju4n 1725; Wa2ng Sho3uqia1n et al.1598; tr. Legge:857
+# dating: 8120
+公使三匠久。¶
+公使優狡盟拳彌，¶
+而甚近信之。¶
+故褚師比、¶
+公孫彌牟、¶
+公文要、¶
+司寇亥、¶
+j司徒期因三匠與拳彌以作亂，¶
+
+# src: Zuo Ai 25.1.7 (471 B.C.) Ya2ng Bo2ju4n 1725; Wa2ng Sho3uqia1n et al.1598; tr. Legge:857
+# dating: 8120
+皆執利兵，¶
+無者執斤。¶
+使拳彌入于公宮，¶
+而自大子疾之宮譟以攻公。¶
+鄄子士請禦之，¶
+彌援其手，¶
+曰：¶
+
+# src: Zuo Ai 25.1.8 (471 B.C.) Ya2ng Bo2ju4n 1725; Wa2ng Sho3uqia1n et al.1598; tr. Legge:857
+# dating: 8120
+「子則勇矣，¶
+將若君何？¶
+不見先君乎？¶
+君何所不逞欲？¶
+且君嘗在外矣，¶
+豈必不反？¶
+當今不可，¶
+眾怒難犯。¶
+休而易間也。」¶
+
+# src: Zuo Ai 25.1.9 (471 B.C.) Ya2ng Bo2ju4n 1726; Wa2ng Sho3uqia1n et al.1598; tr. Legge:857
+# dating: 8120
+乃出。¶
+將適蒲，¶
+彌曰：¶
+「晉無信，¶
+不可。」¶
+將適鄄，¶
+彌曰：¶
+「齊、¶
+晉爭我，¶不可。」¶
+
+# src: Zuo Ai 25.1.10 (471 B.C.) Ya2ng Bo2ju4n 1726; Wa2ng Sho3uqia1n et al.1598; tr. Legge:857
+# dating: 8120
+將適泠，¶
+彌曰：¶
+「魯不足與。¶
+請適城鉏，¶
+以鉤越。¶
+越有君。」¶
+乃適城鉏。¶
+彌曰：¶
+「衛盜不可知也，¶
+請速，¶
+自我始。」¶
+乃載寶以歸。<pb:KR1e0001_tls_012-352a>¶
+
+# src: Zuo Ai 25.1.11 (471 B.C.) Ya2ng Bo2ju4n 1726; Wa2ng Sho3uqia1n et al.1600; tr. Legge:857
+# dating: 8120
+公為支離之卒，¶
+因祝史揮以侵衛。¶
+衛人病之。¶
+懿子知之，¶
+見子之，¶
+請逐揮。¶
+文子曰：¶
+「無罪。」¶
+
+# src: Zuo Ai 25.1.12 (471 B.C.) Ya2ng Bo2ju4n 1726; Wa2ng Sho3uqia1n et al.1600; tr. Legge:857
+# dating: 8120
+懿子曰：¶
+「彼好專利而妄，¶
+夫見君之入也，¶
+將先道焉。¶
+若逐之，¶
+必出於南門，¶
+而適君所。¶
+夫越新得諸侯，¶
+將必請師焉。」¶
+
+# src: Zuo Ai 25.1.13 (471 B.C.) Ya2ng Bo2ju4n 1726; Wa2ng Sho3uqia1n et al.1600; tr. Legge:857
+# dating: 8120
+揮在朝，¶
+使吏遣諸其室。¶
+揮出，¶
+信，
+弗內。¶
+五日，¶
+乃館諸外里，¶
+遂有寵，¶
+使如越請師。<pb:KR1e0001_tls_012-353a>¶
+
+# src: Zuo Ai 25.2.1 (471 B.C.) Ya2ng Bo2ju4n 1727; Wa2ng Sho3uqia1n et al.1600; tr. Legge:857
+# dating: 8120
+B12.25.2六月，¶
+公至自越，¶
+季康子、¶孟武伯逆於五梧。¶
+郭重僕，¶
+見二子，¶
+曰：¶
+「惡言多矣，¶
+君請盡之。」¶
+
+# src: Zuo Ai 25.2.2 (471 B.C.) Ya2ng Bo2ju4n 1727; Wa2ng Sho3uqia1n et al.1600; tr. Legge:857
+# dating: 8120
+公宴於五梧，¶
+武伯為祝，¶
+惡郭重，¶
+曰：¶
+「何肥也？」¶
+季孫曰：¶
+「請飲彘也！¶
+以魯國之密邇仇讎，¶
+臣是以不獲從君，¶
+克免於大行，¶
+又謂重也肥？」¶
+
+# src: Zuo Ai 25.2.3 (471 B.C.) Ya2ng Bo2ju4n 1727; Wa2ng Sho3uqia1n et al.1600; tr. Legge:857
+# dating: 8120
+公曰：¶
+「是食言多矣，¶
+能無肥乎？」¶
+飲酒不樂，¶
+公與大夫始有惡。<pb:KR1e0001_tls_012-354a>¶
+
+# src: Zuo Ai 26.1.1 (470 B.C.) Ya2ng Bo2ju4n 1727; Wa2ng Sho3uqia1n et al.1602; tr. Legge:859
+# dating: 8120
+B12.26《哀公二十六年傳》
+<pb:KR1e0001_tls_012-355a>¶
+
+B12.26.1二十六年夏五月，¶
+叔孫舒帥師會越皋如、¶
+舌庸、¶宋樂茷納衛侯，¶
+文子欲納之。¶
+懿子曰：¶
+「君愎而虐，¶
+少待之，¶
+必毒於民，¶
+乃睦於子矣。」¶
+
+# src: Zuo Ai 26.1.2 (470 B.C.) Ya2ng Bo2ju4n 1728; Wa2ng Sho3uqia1n et al.1602; tr. Legge:859
+# dating: 8120
+師侵外州，¶
+大獲。¶
+出禦之，¶
+大敗。¶
+掘褚師定子之墓，¶
+焚之于平莊之上。<pb:KR1e0001_tls_012-356a>¶
+文子使王孫齊私於皋如，¶
+
+# src: Zuo Ai 26.1.3 (470 B.C.) Ya2ng Bo2ju4n 1728; Wa2ng Sho3uqia1n et al.1602; tr. Legge:859
+# dating: 8120
+曰：¶
+「子將大滅衛乎？¶
+抑納君而已乎？」¶
+皋如曰：¶
+「寡君之命無他，¶
+納衛君而已。」¶
+文子致眾而問焉，¶
+曰：¶
+
+# src: Zuo Ai 26.1.4 (470 B.C.) Ya2ng Bo2ju4n 1728; Wa2ng Sho3uqia1n et al.1602; tr. Legge:859
+# dating: 8120
+「君以蠻夷伐國，¶
+國幾亡矣，¶
+請納之。」¶
+眾曰：¶
+「勿納。」¶
+曰：¶
+「彌牟亡而有益，¶
+請自北門出。」¶
+眾曰：¶「勿出。」¶
+
+# src: Zuo Ai 26.1.5 (470 B.C.) Ya2ng Bo2ju4n 1728; Wa2ng Sho3uqia1n et al.1602; tr. Legge:859
+# dating: 8120
+重賂越人，¶
+申開、¶守陴而納公，¶
+公不敢入。¶
+師還。¶
+立悼公，¶
+南氏相之。¶
+以城鉏與越人。¶
+公曰：¶
+
+# src: Zuo Ai 26.1.6 (470 B.C.) Ya2ng Bo2ju4n 1728; Wa2ng Sho3uqia1n et al.1602; tr. Legge:859
+# dating: 8120
+「期則為此。」¶
+令苟有怨於夫人者報之。¶
+司徒期聘於越，¶
+公攻而奪之幣。¶
+期告王，¶
+王命取之，¶
+期以眾取之。¶
+公怒，¶
+殺期之甥之為大子者，¶
+遂卒于越。<pb:KR1e0001_tls_012-357a>¶
+
+# src: Zuo Ai 26.2.1 (470 B.C.) Ya2ng Bo2ju4n 1729; Wa2ng Sho3uqia1n et al.1602; tr. Legge:859
+# dating: 8120
+B12.26.2宋景公無子，¶
+取公孫周之子得與啟畜諸公宮，¶
+未有立焉。¶
+於是皇緩為右師，¶
+皇非我為大司馬，¶
+皇懷為司徒，¶
+靈不緩為左師，¶
+樂茷為司城，¶
+樂朱鉏為大司寇，¶
+
+# src: Zuo Ai 26.2.2 (470 B.C.) Ya2ng Bo2ju4n 1729; Wa2ng Sho3uqia1n et al.1602; tr. Legge:859
+# dating: 8120
+六卿三族降聽政，¶
+因大尹以達。¶
+大尹常不告，¶
+而以其欲稱君命以令。¶
+國人惡之。¶
+司城欲去大尹，¶
+左師曰：¶
+「縱之，¶
+使盈其罪。¶
+重而無基，¶
+能無敝乎？」<pb:KR1e0001_tls_012-358a>¶
+
+# src: Zuo Ai 26.2.3 (470 B.C.) Ya2ng Bo2ju4n 1729; Wa2ng Sho3uqia1n et al.1604; tr. Legge:859
+# dating: 8120
+冬十月，¶
+公游于空澤，¶
+辛巳，¶
+卒于連中。¶
+大尹興空澤之士千甲，¶
+奉公自空桐入如沃宮，¶
+使召六子，¶
+曰：¶
+「聞下有師，¶
+君請六子畫。」¶
+
+# src: Zuo Ai 26.2.4 (470 B.C.) Ya2ng Bo2ju4n 1730; Wa2ng Sho3uqia1n et al.1604; tr. Legge:859
+# dating: 8120
+六子至，¶
+以甲劫之，¶曰：¶
+「君有疾，¶病，
+請二三子盟。」¶
+乃盟于少寢之庭，¶
+曰：¶「無為公室不利！」¶
+
+# src: Zuo Ai 26.2.5 (470 B.C.) Ya2ng Bo2ju4n 1730; Wa2ng Sho3uqia1n et al.1604; tr. Legge:859
+# dating: 8120
+大尹立啟，¶
+奉喪殯于大宮，¶
+三日而後國人知之。¶
+司城茷使宣言于國曰：¶
+「大尹惑蠱其君
+而專其利，¶
+今君無疾而死，¶
+死又匿之，¶
+是無他矣，¶
+大尹之罪也。」<pb:KR1e0001_tls_012-359a>¶
+
+# src: Zuo Ai 26.2.6 (470 B.C.) Ya2ng Bo2ju4n 1730; Wa2ng Sho3uqia1n et al.1604; tr. Legge:859
+# dating: 8120
+得夢啟北首而寢於盧門之外，¶
+己為烏而集於其上，¶
+咮加於南門，¶
+尾加於桐門。¶
+曰：¶「余夢美，¶
+必立。」<pb:KR1e0001_tls_012-360a>¶
+
+# src: Zuo Ai 26.2.7 (470 B.C.) Ya2ng Bo2ju4n 1731; Wa2ng Sho3uqia1n et al.1604; tr. Legge:859
+# dating: 8120
+大尹謀曰：¶
+「我不在盟，¶
+無乃逐我？¶
+復盟之乎！」¶
+使祝為載書。¶
+六子在唐盂，¶
+將盟之。¶
+祝襄以載書告皇非我。¶
+皇非我因子潞、¶門尹得、¶
+
+# src: Zuo Ai 26.2.8 (470 B.C.) Ya2ng Bo2ju4n 1731; Wa2ng Sho3uqia1n et al.1604; tr. Legge:859
+# dating: 8120
+左師謀曰：¶
+「民與我，¶
+逐之乎！」¶
+皆歸授甲，¶
+使徇于國，¶
+曰：¶
+「大尹惑蠱其君，¶
+以陵虐公室；¶
+與我者，¶
+救君者也。」¶
+
+# src: Zuo Ai 26.2.9 (470 B.C.) Ya2ng Bo2ju4n 1731; Wa2ng Sho3uqia1n et al.1604; tr. Legge:859
+# dating: 8120
+眾曰：¶
+「與之！」¶
+大尹徇曰：¶
+「戴氏、¶皇氏將不利公室，¶
+與我者，¶
+無憂不富。」¶
+
+# src: Zuo Ai 26.2.10 (470 B.C.) Ya2ng Bo2ju4n 1731; Wa2ng Sho3uqia1n et al.1605; tr. Legge:859
+# dating: 8120
+眾曰：¶
+「無別！」¶
+戴氏、¶皇氏欲伐公，¶
+樂得曰：¶
+「不可。¶
+彼以陵公有罪；¶
+我伐公，¶
+則甚焉。」¶
+
+# src: Zuo Ai 26.2.11 (470 B.C.) Ya2ng Bo2ju4n 1731; Wa2ng Sho3uqia1n et al.1605; tr. Legge:859
+# dating: 8120
+使國人施于大尹，¶
+大尹奉啟以奔楚，¶
+乃立得。¶
+司城為上卿，¶
+盟曰：¶
+「三族共政，¶
+無相害也！」<pb:KR1e0001_tls_012-361a>¶
+
+# src: Zuo Ai 26.3.1 (470 B.C.) Ya2ng Bo2ju4n 1731; Wa2ng Sho3uqia1n et al.1605; tr. Legge:859
+# dating: 8120
+B12.26.3衛出公自城鉏使以弓問子贛，¶
+且曰：¶
+「吾其入乎？」¶
+子贛稽首受弓，¶
+對曰：¶
+「臣不識也。」¶
+
+# src: Zuo Ai 26.3.2 (470 B.C.) Ya2ng Bo2ju4n 1732; Wa2ng Sho3uqia1n et al.1605; tr. Legge:860
+# dating: 8120
+私於使者，¶曰：¶
+「昔成公孫於陳，¶
+甯武子、¶孫莊子為宛濮之盟而君入。¶
+獻公孫於齊，¶
+子鮮、¶子展為夷儀之盟而君入。¶
+
+# src: Zuo Ai 26.3.3 (470 B.C.) Ya2ng Bo2ju4n 1732; Wa2ng Sho3uqia1n et al.1605; tr. Legge:860
+# dating: 8120
+今君再在孫矣，¶
+內不聞獻之親，¶
+外不聞成之卿，¶
+則賜不識所由入也。¶
+《詩》曰：¶
+『無競惟人，¶
+四方其順之。』¶
+若得其人，¶
+四方以為主，¶
+而國於何有？」<pb:KR1e0001_tls_012-362a>¶
+
+# src: Zuo Ai 27.1.1 (469 B.C.) Ya2ng Bo2ju4n 1732; Wa2ng Sho3uqia1n et al.1607; tr. Legge:861
+# dating: 8120
+B12.27《哀公二十七年傳》
+<pb:KR1e0001_tls_012-363a>¶
+
+B12.27.1二十七年春，¶
+越子使舌庸來聘，¶
+且言邾田，¶
+封于駘上。<pb:KR1e0001_tls_012-364a>¶
+二月，¶
+盟于平陽，¶
+三子皆從。¶
+
+# src: Zuo Ai 27.1.2 (469 B.C.) Ya2ng Bo2ju4n 1733; Wa2ng Sho3uqia1n et al.1607; tr. Legge:861
+# dating: 8120
+康子病之，¶
+言及子贛，¶
+曰：¶
+「若在此，¶
+吾不及此夫！」¶
+武伯曰：¶
+「然。¶
+何不召？」¶
+曰：¶
+「固將召之。」¶
+文子曰：¶
+「他日請念。」<pb:KR1e0001_tls_012-365a>¶
+
+# src: Zuo Ai 27.2.1 (469 B.C.) Ya2ng Bo2ju4n 1733; Wa2ng Sho3uqia1n et al.1607; tr. Legge:861
+# dating: 8120
+B12.27.2夏四月己亥，¶
+季康子卒。¶
+公弔焉，¶
+降禮。<pb:KR1e0001_tls_012-366a>¶
+
+# src: Zuo Ai 27.3.1 (469 B.C.) Ya2ng Bo2ju4n 1733; Wa2ng Sho3uqia1n et al.1607; tr. Legge:861
+# dating: 8120
+B12.27.3晉荀瑤帥師伐鄭，¶
+次于桐丘。¶
+鄭駟弘請救于齊。¶
+齊師將興，¶
+陳成子屬孤子三日朝。¶
+設乘車兩馬，¶
+繫五邑焉。¶
+
+# src: Zuo Ai 27.3.2 (469 B.C.) Ya2ng Bo2ju4n 1733; Wa2ng Sho3uqia1n et al.1607; tr. Legge:861
+# dating: 8120
+召顏涿聚之子晉，¶
+曰：¶
+「隰之役，¶
+而父死焉。¶
+以國之多難，¶
+未女恤也。¶
+今君命女以是邑也，¶
+服車而朝，¶
+毋廢前勞！」¶
+
+# src: Zuo Ai 27.3.3 (469 B.C.) Ya2ng Bo2ju4n 1734; Wa2ng Sho3uqia1n et al.1608; tr. Legge:861
+# dating: 8120
+乃救鄭。¶
+及留舒，¶
+違穀七里，¶
+穀人不知。¶
+及濮，¶
+雨，
+不涉。¶
+子思曰：¶
+
+# src: Zuo Ai 27.3.4 (469 B.C.) Ya2ng Bo2ju4n 1734; Wa2ng Sho3uqia1n et al.1608; tr. Legge:861
+# dating: 8120
+「大國在敝邑之宇下，¶
+是以告急。¶
+今師不行，¶
+恐無及也。」¶
+成子衣製、¶杖戈，¶
+立於阪上，¶
+馬不出者，¶助之鞭之。¶
+知伯聞之，¶
+乃還，¶
+曰：¶
+
+# src: Zuo Ai 27.3.5 (469 B.C.) Ya2ng Bo2ju4n 1734; Wa2ng Sho3uqia1n et al.1608; tr. Legge:861
+# dating: 8120
+「我卜伐鄭，¶
+不卜敵齊。」¶
+使謂成子曰：¶
+「大夫陳子，¶
+陳之自出。¶
+陳之不祀，¶
+鄭之罪也，¶
+故寡君使瑤察陳衷焉，¶
+謂大夫其恤陳乎？¶
+
+# src: Zuo Ai 27.3.6 (469 B.C.) Ya2ng Bo2ju4n 1734; Wa2ng Sho3uqia1n et al.1608; tr. Legge:861
+# dating: 8120
+若利本之顛，¶
+瑤何有焉？」¶
+成子怒曰：¶
+「多陵人者皆不在，¶
+知伯其能久乎！」<pb:KR1e0001_tls_012-367a>¶
+
+# src: Zuo Ai 27.3.7 (469 B.C.) Ya2ng Bo2ju4n 1734; Wa2ng Sho3uqia1n et al.1608; tr. Legge:861
+# dating: 8120
+中行文子告成子曰：¶
+「有自晉師告寅者，¶
+將為輕車千乘以厭齊師之門，¶
+則可盡也。」¶
+成子曰：¶
+「寡君命恆曰：¶
+『無及寡，¶
+無畏眾。』¶
+
+# src: Zuo Ai 27.3.8 (469 B.C.) Ya2ng Bo2ju4n 1735; Wa2ng Sho3uqia1n et al.1608; tr. Legge:861
+# dating: 8120
+雖過千乘，¶
+敢辟之乎？¶
+將以子之命告寡君。」¶
+文子曰：¶
+「吾乃今知所以亡。¶
+君子之謀也，¶
+始、衷、¶終皆舉之，¶
+而後入焉。¶
+今我三不知而入之，¶
+不亦難乎！」<pb:KR1e0001_tls_012-368a>¶
+
+# src: Zuo Ai 27.4.1 (469 B.C.) Ya2ng Bo2ju4n 1735; Wa2ng Sho3uqia1n et al.1610; tr. Legge:861
+# dating: 8120
+B12.27.4公患三桓之侈也，¶
+欲以諸侯去之；¶
+三桓亦患公之妄也，¶
+故君臣多間。¶
+公游于陵阪，¶
+遇孟武伯於孟氏之衢，¶
+
+# src: Zuo Ai 27.4.2 (469 B.C.) Ya2ng Bo2ju4n 1735; Wa2ng Sho3uqia1n et al.1610; tr. Legge:861
+# dating: 8120
+曰：¶「請有問於子：¶
+余及死乎？」¶
+對曰：¶
+「臣無由知之。」¶
+
+# src: Zuo Ai 27.4.3 (469 B.C.) Ya2ng Bo2ju4n 1735; Wa2ng Sho3uqia1n et al.1610; tr. Legge:861
+# dating: 8120
+三問，¶
+卒辭不對。¶
+公欲以越伐魯而去三桓，¶
+秋八月甲戌，¶
+公如公孫有陘氏。¶
+因孫於邾，¶
+乃遂如越。¶
+國人施公孫有山氏。<pb:KR1e0001_tls_012-369a>¶
+
+# src: Zuo Ai 27.5.1 (469 B.C.) Ya2ng Bo2ju4n 1735; Wa2ng Sho3uqia1n et al.1610; tr. Legge:861
+# dating: 8120
+B12.27.5悼之四年，¶
+晉荀瑤帥師圍鄭，¶
+未至，¶
+鄭駟弘曰：¶
+「知伯愎而好勝，¶
+早下之，¶
+則可行也。」¶
+乃先保南里以待之。¶
+知伯入南里，¶
+
+# src: Zuo Ai 27.5.2 (469 B.C.) Ya2ng Bo2ju4n 1736; Wa2ng Sho3uqia1n et al.1611; tr. Legge:861
+# dating: 8120
+門于桔柣之門。¶
+鄭人俘酅魁壘，¶
+賂之以知政，¶
+閉其口而死。¶
+將門，¶
+「入之！」¶
+對曰：¶
+「主在此。」¶
+
+# src: Zuo Ai 27.5.3 (469 B.C.) Ya2ng Bo2ju4n 1736; Wa2ng Sho3uqia1n et al.1611; tr. Legge:861
+# dating: 8120
+知伯曰：¶
+「惡而無勇，¶
+何以為子？」¶
+對曰：¶
+「以能忍恥，¶
+庶無害趙宗乎！」¶
+知伯不悛，¶
+趙襄子由是惎知伯，¶
+遂喪之。¶
+知伯貪而愎，¶
+故韓、¶
+魏反而喪之。
+

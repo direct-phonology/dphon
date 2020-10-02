@@ -2,3 +2,5 @@ setuptools==49.2.1
 wheel==0.34.2
 twine==3.2.0
 coverage==5.0.3
+pylint
+mypy

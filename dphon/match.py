@@ -4,7 +4,7 @@ from spacy.tokens import Doc, Span, Token
 
 
 class Match():
-    """Matches are immutable pairs of locations (Spans) in two documents."""
+    """Matches are immutable pairs of locations in two documents."""
 
     _left: Span
     _right: Span
@@ -15,14 +15,14 @@ class Match():
         self._right = right.doc[right.start:right.end]
 
     def __repr__(self) -> str:
-        """Return the representation of the match locations as a string."""
-        return f"Match([{self._left.start}:{self._left.end}], [{self._right.start}:{self._right.end}])"
+        """Return the match locations as a string."""
+        return f"Match({id(self._left.doc)}[{self._left.start}:{self._left.end}], {id(self._right.doc)}[{self._right.start}:{self._right.end}])"
 
     def __str__(self) -> str:
         """Return the text of the match as a string."""
-        left_text = self._left.text.replace("\n", "")
-        right_text = self._right.text.replace("\n", "")
-        return f"{left_text} :: {right_text}"
+        if Doc.has_extension("title"):
+            return f"{self._left.text} ({self._left.doc._.title}) :: {self._right.text} ({self._right.doc._.title})"
+        return f"{self._left.text} :: {self._right.text}"
 
     def __lt__(self, other: object) -> bool:
         """Order matches by left location, then right. Group by doc."""
@@ -49,6 +49,10 @@ class Match():
         if self._left != other.left or self._right != other.right:
             return False
         return True
+
+    def __len__(self) -> int:
+        """Return the length of shorter of the two locations in the match."""
+        return min(len(self.left), len(self.right))
 
     @property
     def left(self) -> Span:

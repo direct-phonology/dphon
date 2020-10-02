@@ -14,9 +14,9 @@ Language.factories["ngrams"] = lambda nlp, **cfg: Ngrams(nlp, **cfg)
 class Ngrams():
     """A spaCy pipeline component for generating Token n-grams from Docs."""
 
-    n: int           # number of tokens per n-gram
     name = "ngrams"  # will appear in spaCy pipeline
     attr = "ngrams"  # name for getter for ngrams, e.g. doc._.ngrams
+    n: int           # number of tokens per n-gram (order)
 
     def __init__(self, nlp: Language, n: int, name: str = None, attr: str = None):
         """Initialize the n-gram component."""

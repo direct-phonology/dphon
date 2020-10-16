@@ -33,7 +33,8 @@ class TestMatch(TestCase):
         left = self.doc1[4:6]
         right = self.doc2[2:4]
         match = Match(left, right)
-        self.assertEqual(match.__repr__(), "Match([4:6], [2:4])")
+        self.assertEqual(match.__repr__(),
+                         f"Match({id(self.doc1)}[4:6], {id(self.doc2)}[2:4])")
 
     def test_str(self) -> None:
         """should print its text in both docs as a string"""

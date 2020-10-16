@@ -1,8 +1,6 @@
 """Tests for the n-grams module."""
 
-from typing import Any
 from unittest import TestCase
-from unittest.mock import Mock, patch
 
 import spacy
 from spacy.tokens import Doc
@@ -20,7 +18,7 @@ class TestNgrams(TestCase):
     def tearDown(self) -> None:
         """Explicitly destroy the component to prevent name collisions."""
         if hasattr(self, "ng"):
-            del self.ng
+            Doc.remove_extension(self.ng.attr)
 
     def test_defaults(self) -> None:
         """should populate name and attr by default and store n"""

@@ -30,11 +30,6 @@ class Ngrams():
         self.name = name if name else self.name
         logging.info(f"created component \"{self.name}\" with n={self.n}")
 
-    def __del__(self) -> None:
-        """Unregister the n-gram custom extension."""
-        # this is mostly used for tests, to prevent name collisions
-        Doc.remove_extension(self.attr)
-
     def __call__(self, doc: Doc) -> Doc:
         """Return the Doc unmodified."""
         return doc

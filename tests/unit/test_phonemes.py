@@ -3,7 +3,7 @@
 from unittest import TestCase, skip
 
 import spacy
-from spacy.tokens import Doc
+from spacy.tokens import Doc, Span, Token
 
 from dphon.phonemes import Phonemes
 
@@ -18,9 +18,13 @@ class TestPhonemes(TestCase):
         self.nlp = spacy.blank("en")
 
     def tearDown(self) -> None:
-        """Explicitly destroy the component to prevent name collisions."""
+        """Unregister the component to prevent name collisions."""
         if hasattr(self, "px"):
-            del self.px
+            self.nlp.lookups.remove_table(self.px.attr)
+            Doc.remove_extension(self.px.attr)
+            Span.remove_extension(self.px.attr)
+            Token.remove_extension(self.px.attr)
+            Token.remove_extension("is_oov")
 
     @skip("todo")
     def test_defaults(self) -> None:

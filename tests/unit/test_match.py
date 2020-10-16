@@ -1,6 +1,6 @@
 """Tests for the match module."""
 
-from unittest import TestCase
+from unittest import TestCase, skip
 
 import spacy
 from spacy.tokens import Doc
@@ -34,7 +34,7 @@ class TestMatch(TestCase):
         left = self.doc1[4:6]   # "glass tumbler"
         right = self.doc2[2:4]  # "glass tumbler"
         match = Match(left, right)
-        # match has its own copy of the spans 
+        # match has its own copy of the spans
         self.assertNotEqual(id(left), id(match.left))
         self.assertNotEqual(id(right), id(match.right))
         # but its spans point to the same tokens in memory
@@ -49,11 +49,16 @@ class TestMatch(TestCase):
         self.assertEqual(match.__repr__(), f"Match(doc1[4:6], doc2[2:4])")
 
     def test_str(self) -> None:
-        """should print its text in both docs as a string"""
+        """should print its text in both docs"""
         left = self.doc1[4:6]
         right = self.doc2[2:4]
         match = Match(left, right)
         self.assertEqual(str(match), "glass tumbler (doc1)\nglass tumbler (doc2)")
+
+    @skip("todo")
+    def test_str_title(self) -> None:
+        """should print its text in both docs with doc title when available"""
+        pass
 
     def test_lt(self) -> None:
         """should form a total order by both doc and position"""
@@ -85,3 +90,13 @@ class TestMatch(TestCase):
         # pre-copied spans should also be equal
         m3 = Match(self.doc1[4:6], self.doc2[2:4])
         self.assertEqual(m1, m3)
+
+    def test_norm_eq(self) -> None:
+        """should detect if its texts are identical after normalization"""
+        doc1 = self.nlp.make_doc("What's that?")
+        doc2 = self.nlp.make_doc("whatsthat")
+        doc3 = self.nlp.make_doc("Whats that now?")
+        m1 = Match(doc1[:], doc2[:])
+        m2 = Match(doc1[:], doc3[:])
+        self.assertTrue(m1.is_norm_eq)
+        self.assertFalse(m2.is_norm_eq)

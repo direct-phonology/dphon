@@ -1,19 +1,22 @@
 """dphon - a tool for old chinese phonetic analysis
  
 Usage:
-    dphon <path>... [--n=<n>] [--output=<file>] [--variants-only]
+    dphon <path>... [options]
     dphon -h | --help
     dphon --version
  
 Options:
-    -h --help           Show this screen.
-    --version           Show program version.
-    --variants-only     Limit to matches with graphic variation.
-    --n=<n>             Limit to matches with length >= n [default: 3].
+    -h --help                   Show this help.
+    -v --version                Show program version.
+    --variants-only             Limit to matches with graphic variation.
+    -a --all                    Include matches with no variation at all.
+    -o <file> --output <file>   Write output to a file.
+    --min <min>                 Limit to matches with length >= min.
+    --max <max>                 Limit to matches with length <= max.
  
 Examples:
-    dphon ./texts --n=8
-    dphon 老子甲.txt 老子丙.txt 老子乙.txt --output=matches.txt
+    dphon texts/ --min 8
+    dphon 老子甲.txt 老子丙.txt 老子乙.txt --output matches.txt
     dphon 周南.txt 鹿鳴之什.txt --variants-only
  
 Help:
@@ -109,7 +112,7 @@ def run() -> None:
         for seed, locations in groups:
             for left, right in combinations(locations, 2):
                 if left.doc != right.doc: # skip same-doc matches
-                    matches.append(Match(left, right)) # FIXME ignore those without graphic var?
+                    matches.append(Match(left, right))
             progress.update(matches_task, advance=1)
         progress.remove_task(matches_task)
     finish = time.perf_counter() - start
@@ -120,26 +123,32 @@ def run() -> None:
     with progress:
         extend_task = progress.add_task("extending matches", total=len(matches))
         start = time.perf_counter()
-        new_matches = extend_matches(matches, extender)
+        results = extend_matches(matches, extender)
         progress.remove_task(extend_task)
     finish = time.perf_counter() - start
-    logging.info(f"extended {len(new_matches):,} matches in {finish:.3f}s")
+    logging.info(f"extended {len(results):,} matches in {finish:.3f}s")
 
-    # drop matches with length < n if requested
-    if args["--n"]:
-        new_matches = list(filterfalse(lambda m: len(m) < int(args["--n"]), new_matches))
+    # limit via min and max lengths if requested
+    if args["--min"]:
+        results = list(filterfalse(lambda m: len(m) < int(args["--min"]), results))
+    if args["--max"]:
+        results = list(filterfalse(lambda m: len(m) > int(args["--max"]), results))
 
-    # drop matches with no variation if requested
+    # unless --all was requested, drop matches that are equal after normalization
+    if not args["--all"]:
+        results = list(filterfalse(lambda m: m.is_norm_eq, results))
+
+    # TODO drop matches with no graphic variation if requested
     if args["--variants-only"]:
-        new_matches = list(filterfalse(lambda m: m.left.text == m.right.text, new_matches))
+        pass
 
     # write to a file if requested; otherwise write to stdout
     if args["--output"]:
         with open(args["--output"], mode="w", encoding="utf-8") as file:
-            for match in new_matches:
+            for match in results:
                 file.write(f"{match}\n")
     else:
-        for match in new_matches:
+        for match in results:
             stdout.buffer.write(f"{match}\n".encode("utf-8"))
 
 

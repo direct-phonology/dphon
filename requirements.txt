@@ -2,3 +2,4 @@ docopt
 spacy
 python-levenshtein
 sinopy
+rich

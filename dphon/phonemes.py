@@ -50,9 +50,13 @@ class Phonemes():
         self.table = self.lookups.add_table(self.attr, sound_table)
         logging.info(f"created component \"{self.name}\"")
 
-    def __del__(self) -> None:
-        """Unregister the sound table."""
+    def teardown(self) -> None:
+        """Unregister the sound table and attributes to prevent collisions."""
         self.lookups.remove_table(self.attr)
+        Doc.remove_extension(self.attr)
+        Span.remove_extension(self.attr)
+        Token.remove_extension(self.attr)
+        Token.remove_extension("is_oov")
 
     def __call__(self, doc: Doc) -> Doc:
         """Return the Doc unmodified."""

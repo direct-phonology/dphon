@@ -7,7 +7,7 @@ from typing import Tuple
 import numpy as np
 import pkg_resources
 
-from dphon.matcher import Match
+from dphon.match import Match
 
 
 class Aligner(ABC):

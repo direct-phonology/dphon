@@ -11,6 +11,8 @@ from dphon.match import Match
 class TestMatch(TestCase):
     """Test the Match model."""
 
+    maxDiff = None   # don't limit length of diff output for failures
+
     @classmethod
     def setUpClass(cls) -> None:
         """Register the title attribute on Docs."""
@@ -19,7 +21,7 @@ class TestMatch(TestCase):
     @classmethod
     def tearDownClass(cls) -> None:
         """Unregister the title attribute on Docs."""
-        Doc.remove_extension("title")
+        Doc.remove_extension("title")    
 
     def setUp(self) -> None:
         """Create example Docs to test with."""

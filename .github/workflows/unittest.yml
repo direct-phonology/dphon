@@ -1,4 +1,4 @@
-name: test
+name: unittest
 
 on: [push]
 
@@ -29,5 +29,5 @@ jobs:
     - name: Install app
       run: python setup.py develop
       
-    - name: Run tests
-      run: python -m unittest
+    - name: Run unittest with coverage report
+      run: coverage run -m unittest

@@ -76,7 +76,8 @@ class Phonemes():
         - If any tokens are not in the sound table, returns False.
         - If any tokens are non-voiced, returns False.
         - If any tokens have identical text (graphs), returns False.
-        - If any tokens have differing phonemes, returns False."""
+        - If any tokens have differing phonemes, returns False.
+        """
 
         # O(n) implementation: compare all tokens against first one
         base_text = tokens[0].text
@@ -95,10 +96,14 @@ class Phonemes():
     def get_all_phonemes(self, tokens: Iterable[Token]) -> Iterator[str]:
         """Return a flattened iterator over all phonemes in a Span or Doc.
 
-        Skips parts of the syllable that are not used (stored as None)."""
+        - Skips parts of the syllable that are not used (stored as None).
+        - Skips non-voiced tokens, such as punctuation.
+        - Skips tokens with no phonetic entry in the sound table.
+        """
+
         for token in tokens:
             for phoneme in self.get_token_phonemes(token):
-                if phoneme:
+                if phoneme and phoneme != OOV_PHONEMES:
                     yield phoneme
 
     def get_token_phonemes(self, token: Token) -> Phonemes_T:
@@ -113,8 +118,8 @@ class Phonemes():
 
         if not token.is_alpha and not token.like_num:
             return self.empty_phonemes
-        elif token.text not in self.table:
-            # logging.warn(f"no entry for token in sound table: {token.text}")
+        elif token._.is_oov:
+            logging.warn(f"no entry for token in sound table: {token.text}")
             return (OOV_PHONEMES,)
         else:
             return self.table[token.text]

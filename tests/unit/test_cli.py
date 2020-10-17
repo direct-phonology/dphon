@@ -67,15 +67,18 @@ class TestOptions(TestCase):
         for result in results:
             self.assertTrue(len(result) <= 4)
 
-    @skip("todo")
     def test_min_and_max(self) -> None:
         """--min and --max options together should limit to exact length"""
-        pass
+        args = {"--min": "8", "--max": "8", "<path>": ["tests/fixtures/laozi/"]}
+        results = process(self.nlp, self.progress, args)
+        for result in results:
+            self.assertTrue(len(result) == 8)
 
-    @skip("todo")
     def test_all(self) -> None:
         """--all flag should include trivial results with little variation"""
-        pass
+        args = {"--all": True, "<path>": ["tests/fixtures/shijing/"]}
+        results = process(self.nlp, self.progress, args)
+        self.assertTrue(results[0].is_norm_eq)
 
     @skip("todo")
     def test_variants_only(self) -> None:

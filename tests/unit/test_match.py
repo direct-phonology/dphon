@@ -3,6 +3,7 @@
 from unittest import TestCase
 
 import spacy
+from spacy.tokens import Doc
 
 from dphon.match import Match
 
@@ -10,11 +11,23 @@ from dphon.match import Match
 class TestMatch(TestCase):
     """Test the Match model."""
 
+    @classmethod
+    def setUpClass(cls) -> None:
+        """Register the title attribute on Docs."""
+        Doc.set_extension("title", default="")
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        """Unregister the title attribute on Docs."""
+        Doc.remove_extension("title")
+
     def setUp(self) -> None:
         """Create example Docs to test with."""
         self.nlp = spacy.blank("en")
         self.doc1 = self.nlp.make_doc("a bumblebee under a glass tumbler")
         self.doc2 = self.nlp.make_doc("an inverted glass tumbler of fireflies")
+        self.doc1._.title = "doc1"
+        self.doc2._.title = "doc2"
 
     def test_init(self) -> None:
         """should make a shallow copy of its provided locations on init"""
@@ -33,21 +46,23 @@ class TestMatch(TestCase):
         left = self.doc1[4:6]
         right = self.doc2[2:4]
         match = Match(left, right)
-        self.assertEqual(match.__repr__(),
-                         f"Match({id(self.doc1)}[4:6], {id(self.doc2)}[2:4])")
+        self.assertEqual(match.__repr__(), f"Match(doc1[4:6], doc2[2:4])")
 
     def test_str(self) -> None:
         """should print its text in both docs as a string"""
         left = self.doc1[4:6]
         right = self.doc2[2:4]
         match = Match(left, right)
-        self.assertEqual(str(match), "glass tumbler :: glass tumbler")
+        self.assertEqual(str(match), "glass tumbler (doc1)\nglass tumbler (doc2)")
 
     def test_lt(self) -> None:
         """should form a total order by both doc and position"""
         doc1 = self.nlp.make_doc("A B C D A B C D E F G H")
         doc2 = self.nlp.make_doc("Z Z G H Z Z C D Z Z Z Z")
         doc3 = self.nlp.make_doc("E F X X A B C D X X X X")
+        doc1._.title = "doc1"
+        doc2._.title = "doc2"
+        doc3._.title = "doc3"
         m1 = Match(doc1[8:10], doc3[0:2]) # 1:EF :: 3:EF
         m2 = Match(doc1[0:4], doc3[4:9]) # 1:ABCD :: 3:ABCD
         m3 = Match(doc1[10:12], doc2[0:2]) # 1:GH :: 2:GH

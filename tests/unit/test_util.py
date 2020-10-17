@@ -111,6 +111,16 @@ class TestCondenseMatches(TestCase):
 class TestExtendMatches(TestCase):
     """Test extending match lists."""
 
+    @classmethod
+    def setUpClass(cls) -> None:
+        """Register the title attribute on Docs."""
+        Doc.set_extension("title", default="")
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        """Unregister the title attribute on Docs."""
+        Doc.remove_extension("title")
+
     def setUp(self) -> None:
         """Create a blank spaCy model and extender to test with."""
         self.nlp = spacy.blank("zh")
@@ -126,6 +136,8 @@ class TestExtendMatches(TestCase):
         # create mock documents
         left = self.nlp.make_doc("千室之邑百乘之家")
         right = self.nlp.make_doc("千室之邑百乘之家")
+        left._.title = "analects"
+        right._.title = "shiji"
         # create matches and extend them
         matches = [Match(left[0:8], right[0:8])]
         # output should be identical to input
@@ -141,6 +153,8 @@ class TestExtendMatches(TestCase):
 
         left = self.nlp.make_doc("與朋友交言而有信雖曰未學吾必謂之學矣")
         right = self.nlp.make_doc("與朋友交言而有信雖曰未學吾必謂之學矣")
+        left._.title = "analects"
+        right._.title = "yiwen-leiju"
         matches = [
             Match(left[0:4], right[0:4]),
             Match(left[1:5], right[1:5])
@@ -153,6 +167,8 @@ class TestExtendMatches(TestCase):
         """consecutive overlapping matches should be independently extended"""
         left = self.nlp.make_doc("水善利萬物而不爭自見者不明弊則新無關")
         right = self.nlp.make_doc("可者不明下母得已以百姓為芻自見者不明")
+        left._.title = "left"
+        right._.title = "right"
         matches = [
             Match(left[8:10], right[13:15]),
             Match(left[9:11], right[14:16]),
@@ -174,6 +190,8 @@ class TestExtendMatches(TestCase):
         """longer matches shouldn't generate internal mirrored submatches"""
         left = self.nlp.make_doc("邑與學吾交言而有信雖曰未學吾矣")
         right = self.nlp.make_doc("室與學吾交言而有信雖曰未學吾恐")
+        left._.title = "left"
+        right._.title = "right"
         matches = [
             Match(left[1:3], right[1:3]),
             Match(left[2:4], right[2:4]),

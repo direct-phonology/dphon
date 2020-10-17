@@ -16,24 +16,22 @@ class Match():
 
     def __repr__(self) -> str:
         """Return the match locations as a string."""
-        return f"Match({id(self._left.doc)}[{self._left.start}:{self._left.end}], {id(self._right.doc)}[{self._right.start}:{self._right.end}])"
+        return f"Match({self._left.doc._.title}[{self._left.start}:{self._left.end}], {self._right.doc._.title}[{self._right.start}:{self._right.end}])"
 
     def __str__(self) -> str:
         """Return the text of the match as a string."""
-        if Doc.has_extension("title"):
-            return f"{self._left.text} ({self._left.doc._.title}) :: {self._right.text} ({self._right.doc._.title})"
-        return f"{self._left.text} :: {self._right.text}"
+        return f"{self._left.text} ({self._left.doc._.title})\n{self._right.text} ({self._right.doc._.title})"
 
     def __lt__(self, other: object) -> bool:
-        """Order matches by left location, then right. Group by doc."""
+        """Order matches by left location, then right. Group by doc title."""
         if not isinstance(other, Match):
             return False
-        if id(self._left.doc) < id(other.left.doc):
+        if self._left.doc._.title < other.left.doc._.title:
             return True
-        if id(self._left.doc) == id(other.left.doc):
-            if id(self._right.doc) < id(other.right.doc):
+        if self._left.doc._.title == other.left.doc._.title:
+            if self._right.doc._.title < other.right.doc._.title:
                 return True
-            if id(self._right.doc) == id(other.right.doc):
+            if self._right.doc._.title == other.right.doc._.title:
                 if self._left < other.left:
                     return True
                 if self._left == other.left:

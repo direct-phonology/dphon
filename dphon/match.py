@@ -8,14 +8,11 @@ class Match():
 
     _left: Span
     _right: Span
-    _norm_eq: bool
-    _graphic_var: bool
 
     def __init__(self, left: Span, right: Span):
         """Create a new Match with shallow copies of its two locations."""
         self._left = left.doc[left.start:left.end]
         self._right = right.doc[right.start:right.end]
-        self._norm_eq = is_norm_eq(self)
 
     def __repr__(self) -> str:
         """Return the match locations as a string."""
@@ -67,17 +64,12 @@ class Match():
 
     @property
     def is_norm_eq(self) -> bool:
-        """See `dphon.match.is_norm_eq`."""
-        return self._norm_eq
+        """True if a match's texts are equal after normalization.
 
+        This comparison ignores whitespace, case, and punctuation, returning
+        True if all alphanumeric characters of the left location match all
+        alphanumeric characters of the right location and False otherwise."""
 
-def is_norm_eq(match: Match) -> bool:
-    """True if a match's texts are equal after normalization.
-
-    This comparison ignores whitespace, case, and punctuation, returning
-    True if all alphanumeric characters of the left location match all
-    alphanumeric characters of the right location and False otherwise."""
-
-    left_norm = "".join([c.lower() for c in match._left.text if c.isalnum()])
-    right_norm = "".join([c.lower() for c in match._right.text if c.isalnum()])
-    return left_norm == right_norm
+        left_norm = "".join([c.lower() for c in self._left.text if c.isalnum()])
+        right_norm = "".join([c.lower() for c in self._right.text if c.isalnum()])
+        return left_norm == right_norm

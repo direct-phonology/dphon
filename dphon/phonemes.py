@@ -119,7 +119,7 @@ class Phonemes():
         if not token.is_alpha and not token.like_num:
             return self.empty_phonemes
         elif token._.is_oov:
-            logging.warn(f"no entry for token in sound table: {token.text}")
+            logging.warning(f"no entry for token in sound table: {token.text}")
             return (OOV_PHONEMES,)
         else:
             return self.table[token.text]

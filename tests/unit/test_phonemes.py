@@ -20,11 +20,7 @@ class TestPhonemes(TestCase):
     def tearDown(self) -> None:
         """Unregister the component to prevent name collisions."""
         if hasattr(self, "px"):
-            self.nlp.lookups.remove_table(self.px.attr)
-            Doc.remove_extension(self.px.attr)
-            Span.remove_extension(self.px.attr)
-            Token.remove_extension(self.px.attr)
-            Token.remove_extension("is_oov")
+            self.px.teardown()
 
     @skip("todo")
     def test_defaults(self) -> None:

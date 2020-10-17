@@ -1,19 +1,22 @@
 """dphon - a tool for old chinese phonetic analysis
  
 Usage:
-    dphon <path>... [--n=<n>] [--output=<file>] [--variants-only]
+    dphon <path>... [options]
     dphon -h | --help
     dphon --version
  
 Options:
-    -h --help           Show this screen.
-    --version           Show program version.
-    --variants-only     Limit to matches with graphic variation.
-    --n=<n>             Limit to matches with length >= n [default: 3].
+    -h --help                   Show this help.
+    -v --version                Show program version.
+    --variants-only             Limit to matches with graphic variation.
+    -a --all                    Include matches with no variation at all.
+    -o <file> --output <file>   Write output to a file.
+    --min <min>                 Limit to matches with length >= min.
+    --max <max>                 Limit to matches with length <= max.
  
 Examples:
-    dphon ./texts --n=8
-    dphon 老子甲.txt 老子丙.txt 老子乙.txt --output=matches.txt
+    dphon texts/ --min 8
+    dphon 老子甲.txt 老子丙.txt 老子乙.txt --output matches.txt
     dphon 周南.txt 鹿鳴之什.txt --variants-only
  
 Help:
@@ -35,14 +38,15 @@ from rich.logging import RichHandler
 from rich.progress import BarColumn, Progress, TextColumn
 from rich.traceback import install
 from spacy.lang.zh import ChineseDefaults
+from spacy.language import Language
 from spacy.tokens import Doc
 
 from dphon import __version__
+from dphon.extender import LevenshteinPhoneticExtender
 from dphon.index import Index
 from dphon.match import Match
 from dphon.ngrams import Ngrams
 from dphon.phonemes import Phonemes, get_sound_table_json
-from dphon.extender import LevenshteinPhoneticExtender
 from dphon.util import extend_matches
 
 # turn off default settings for spacy's chinese model
@@ -58,6 +62,37 @@ def run() -> None:
     """CLI entrypoint."""
     args = docopt(__doc__, version=__version__)
 
+    # setup pipeline
+    nlp = setup()
+
+    # create progress visualization
+    progress = Progress(
+        "{task.elapsed:.0f}s",
+        "{task.description}",
+        BarColumn(bar_width=None),
+        "{task.completed:,}/{task.total:,}",
+        "{task.percentage:.1f}%",
+        transient=True
+    )
+
+    # process all texts
+    results = process(nlp, progress, args)
+
+    # teardown pipeline
+    teardown(nlp)
+
+    # write to a file if requested; otherwise write to stdout
+    if args["--output"]:
+        with open(args["--output"], mode="w", encoding="utf-8") as file:
+            for match in results:
+                file.write(f"{match}\n")
+    else:
+        for match in results:
+            stdout.buffer.write(f"{match}\n".encode("utf-8"))
+
+
+def setup() -> Language:
+    """Set up the spaCy proecssing pipeline."""
     # get sound table
     sound_table = get_sound_table_json(Path("./dphon/data/sound_table.json"))
 
@@ -72,24 +107,18 @@ def run() -> None:
                        filter_fn=lambda ngram: ngram.text.isalpha(),
                        key_fn=lambda ngram: "".join(ngram._.phonemes)))
     logging.info("loaded default spaCy model")
+    return nlp
 
-    # create progress visualization
-    progress = Progress(
-        "{task.elapsed:.0f}s",
-        "{task.description}",
-        BarColumn(bar_width=None),
-        "{task.completed:,}/{task.total:,}",
-        "{task.percentage:.1f}%",
-        transient=True
-    )
 
-    # process all texts
+def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
+    """Run the spaCy processing pipeline."""
     with progress:
         docs_task = progress.add_task("indexing documents")
         all_start = time.perf_counter()
         start = all_start
         for doc, context in nlp.pipe(load_texts(args["<path>"]), as_tuples=True):
-            doc._.title = context["title"]
+            if Doc.has_extension("title"):
+                doc._.title = context["title"]
             progress.update(docs_task, advance=1)
             finish = time.perf_counter() - start
             logging.debug(f"processed doc {context['title']} in {finish:.3f}s")
@@ -99,17 +128,19 @@ def run() -> None:
     logging.info(f"completed spaCy pipeline in {all_finish:.3f}s")
 
     # drop all ngrams from index that only occur once
-    groups = list(nlp.get_pipe("index").filter(lambda entry: len(entry[1]) > 1))
+    groups = list(nlp.get_pipe("index").filter(
+        lambda entry: len(entry[1]) > 1))
 
     # create initial pairwise matches from seed groups
     matches: List[Match] = []
     with progress:
-        matches_task = progress.add_task("generating matches", total=len(groups))
+        matches_task = progress.add_task(
+            "generating matches", total=len(groups))
         start = time.perf_counter()
         for seed, locations in groups:
             for left, right in combinations(locations, 2):
-                if left.doc != right.doc: # skip same-doc matches
-                    matches.append(Match(left, right)) # FIXME ignore those without graphic var?
+                if left.doc != right.doc:  # skip same-doc matches
+                    matches.append(Match(left, right))
             progress.update(matches_task, advance=1)
         progress.remove_task(matches_task)
     finish = time.perf_counter() - start
@@ -118,30 +149,40 @@ def run() -> None:
     # query match groups from the index and extend them
     extender = LevenshteinPhoneticExtender(threshold=0.8, len_limit=50)
     with progress:
-        extend_task = progress.add_task("extending matches", total=len(matches))
+        extend_task = progress.add_task(
+            "extending matches", total=len(matches))
         start = time.perf_counter()
-        new_matches = extend_matches(matches, extender)
+        results = extend_matches(matches, extender)
         progress.remove_task(extend_task)
     finish = time.perf_counter() - start
-    logging.info(f"extended {len(new_matches):,} matches in {finish:.3f}s")
+    logging.info(f"extended {len(results):,} matches in {finish:.3f}s")
 
-    # drop matches with length < n if requested
-    if args["--n"]:
-        new_matches = list(filterfalse(lambda m: len(m) < int(args["--n"]), new_matches))
+    # limit via min and max lengths if requested
+    if args.get("--min", None):
+        results = list(filterfalse(lambda m: len(m) <
+                                   int(args["--min"]), results))
+    if args.get("--max", None):
+        results = list(filterfalse(lambda m: len(m) >
+                                   int(args["--max"]), results))
 
-    # drop matches with no variation if requested
-    if args["--variants-only"]:
-        new_matches = list(filterfalse(lambda m: m.left.text == m.right.text, new_matches))
+    # unless --all was requested, drop matches that are equal after normalization
+    if not args.get("--all", None):
+        results = list(filterfalse(lambda m: m.is_norm_eq, results))
 
-    # write to a file if requested; otherwise write to stdout
-    if args["--output"]:
-        with open(args["--output"], mode="w", encoding="utf-8") as file:
-            for match in new_matches:
-                file.write(f"{match}\n")
-    else:
-        for match in new_matches:
-            stdout.buffer.write(f"{match}\n".encode("utf-8"))
+    # TODO drop matches with no graphic variation if requested
+    if args.get("--variants-only", None):
+        pass
 
+    return results
+
+def teardown(nlp: Language) -> None:
+    """Unregister spaCy extensions to prevent name collisions."""
+    Doc.remove_extension("title")
+
+    # iterate over all pipeline components and call teardown() if it exists
+    for _name, component in nlp.pipeline:
+        if hasattr(component, "teardown"):
+            component.teardown()
 
 def load_texts(paths: List[str]) -> Iterator[Tuple[str, Dict[str, Any]]]:
     """Load texts from all provided file or directory paths.

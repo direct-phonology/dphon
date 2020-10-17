@@ -34,6 +34,10 @@ class Ngrams():
         """Return the Doc unmodified."""
         return doc
 
+    def teardown(self) -> None:
+        """Unregister the attribute to prevent collisions."""
+        Doc.remove_extension(self.attr)
+
     def get_doc_ngrams(self, doc: Doc) -> Iterator[Span]:
         """Return an iterator over n-grams in a Doc as Spans."""
         # if empty doc, nothing should happen

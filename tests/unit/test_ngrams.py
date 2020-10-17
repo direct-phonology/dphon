@@ -18,7 +18,7 @@ class TestNgrams(TestCase):
     def tearDown(self) -> None:
         """Explicitly destroy the component to prevent name collisions."""
         if hasattr(self, "ng"):
-            Doc.remove_extension(self.ng.attr)
+            self.ng.teardown()
 
     def test_defaults(self) -> None:
         """should populate name and attr by default and store n"""

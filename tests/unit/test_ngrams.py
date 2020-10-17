@@ -16,7 +16,7 @@ class TestNgrams(TestCase):
         self.nlp = spacy.blank("en")
 
     def tearDown(self) -> None:
-        """Explicitly destroy the component to prevent name collisions."""
+        """Unregister the component to prevent name collisions."""
         if hasattr(self, "ng"):
             self.ng.teardown()
 

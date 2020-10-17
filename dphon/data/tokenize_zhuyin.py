@@ -5,7 +5,7 @@ import json
 import sys
 
 if __name__ == '__main__':
-    with open(sys.argv[1]) as dict_file:
+    with open(sys.argv[1], encoding="utf8") as dict_file:
         zhuyin_dict = json.loads(dict_file.read())
 
     sys.stdin.reconfigure(encoding="utf-8")

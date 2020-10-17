@@ -165,14 +165,14 @@ def load_texts(paths: List[str]) -> Iterator[Tuple[str, Dict[str, Any]]]:
     for _path in paths:
         path = Path(_path)
         if path.is_file():
-            with path.open() as contents:
+            with path.open(encoding="utf8") as contents:
                 file_contents = contents.read()
             logging.debug(f"loaded text {path.stem}")
             total += 1
             yield (file_contents, {"title": path.stem})
         elif path.is_dir():
             for file in path.glob("**/*.txt"):
-                with file.open() as contents:
+                with file.open(encoding="utf8") as contents:
                     file_contents = contents.read()
                 logging.debug(f"loaded text {file.stem}")
                 total += 1

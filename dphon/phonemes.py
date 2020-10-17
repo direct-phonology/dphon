@@ -98,7 +98,7 @@ def get_sound_table_csv(path: Path) -> SoundTable_T:
     sound_table: SoundTable_T = defaultdict(tuple)
     parts = ["Preinitial1", "Preinitial 2", "Initial", "Medial",
              "Nucleus", "Final", "Postcoda *-ʔ", "Postcoda *-s"]
-    with open(path) as file:
+    with open(path, encoding="utf8") as file:
         reader = csv.DictReader(file)
         for row in reader:
             if row["\ufeffzi"] == "":
@@ -112,7 +112,7 @@ def get_sound_table_csv(path: Path) -> SoundTable_T:
 
 def get_sound_table_json(path: Path) -> SoundTable_T:
     sound_table: SoundTable_T = defaultdict(tuple)
-    with open(path) as file:
+    with open(path, encoding="utf8") as file:
         entries = json.loads(file.read())
         for char, entry in entries.items():
             sound_table[char] = tuple(entry)

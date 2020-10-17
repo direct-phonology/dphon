@@ -131,7 +131,7 @@ def get_texts(directory: Path) -> List[Tuple[str, Dict[str, Any]]]:
     # load all texts and format with context
     texts = []
     for file in directory.glob("**/*.txt"):
-        with file.open() as contents:
+        with file.open(encoding="utf8") as contents:
             text = contents.read()
             texts.append((text, {"title": file.stem, "len": len(text)}))
     logging.info(f"loaded {len(texts)} texts from {directory}")

@@ -5,7 +5,7 @@ import json
 import logging
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict, Iterable, Iterator, Optional, Tuple
+from typing import Iterable, Iterator, Mapping, Optional, Tuple
 
 from spacy.language import Language
 from spacy.lookups import Lookups, Table
@@ -20,7 +20,8 @@ OOV_PHONEMES = "\ue000"
 
 # types for sound tables: map a string to a tuple of syllable phonemes
 Phonemes_T = Tuple[Optional[str], ...]
-SoundTable_T = Dict[str, Phonemes_T]
+SoundTable_T = Mapping[str, Phonemes_T]
+
 
 class Phonemes():
     """A spaCy pipeline component that enables converting Tokens to phonemes."""
@@ -32,11 +33,14 @@ class Phonemes():
 
     def __init__(self, nlp: Language, sound_table: SoundTable_T, name: str = None, attr: str = None):
         """Initialize the phonemes component."""
-        # store the name that will appear in the pipeline
+        # store the attr accessor & name that will appear in the pipeline
         self.name = name if name else self.name
         self.attr = attr if attr else self.attr
+
+        # infer the syllable segmentation and map it to an empty phoneme set
         self.syllable_parts = len(next(iter(sound_table.values())))
-        self.empty_phonemes = tuple(None for part in range(self.syllable_parts))
+        self.empty_phonemes = tuple(
+            None for part in range(self.syllable_parts))
 
         # register attribute getters with customizable names; see:
         # https://spacy.io/usage/processing-pipelines#custom-components-best-practices
@@ -66,14 +70,31 @@ class Phonemes():
         """Check if a token has a phonetic entry in the sound table."""
         return token.text not in self.table
 
-    def graphic_variants(self, tokens: Iterable[Token]) -> bool:
-        """Check if a set of tokens are graphic variants of the same word."""
-        # TODO implement
-        raise NotImplementedError
+    def are_graphic_variants(self, *tokens: Token) -> bool:
+        """Check if a set of tokens are graphic variants of the same word.
+
+        - If any tokens are not in the sound table, returns False.
+        - If any tokens are non-voiced, returns False.
+        - If any tokens have identical text (graphs), returns False.
+        - If any tokens have differing phonemes, returns False."""
+
+        # O(n) implementation: compare all tokens against first one
+        base_text = tokens[0].text
+        base_phon = self.get_token_phonemes(tokens[0])
+        if base_phon == self.empty_phonemes or base_phon == (OOV_PHONEMES,):
+            return False
+        for token in tokens[1:]:
+            phonemes = self.get_token_phonemes(token)
+            if phonemes == self.empty_phonemes or \
+               phonemes == (OOV_PHONEMES,) or \
+               phonemes != base_phon or \
+               token.text == base_text:
+                return False
+        return True
 
     def get_all_phonemes(self, tokens: Iterable[Token]) -> Iterator[str]:
         """Return a flattened iterator over all phonemes in a Span or Doc.
-        
+
         Skips parts of the syllable that are not used (stored as None)."""
         for token in tokens:
             for phoneme in self.get_token_phonemes(token):
@@ -83,20 +104,21 @@ class Phonemes():
     def get_token_phonemes(self, token: Token) -> Phonemes_T:
         """Return a Token's phonemes as an n-tuple.
 
-        - If a Token is non-alphabetic, all elements of the tuple will be None.
+        - If a Token is non-alphanumeric, all elements of the tuple will be None.
         - If a Token is not in the sound table, all elements of the tuple will
         use a special marker token (OOV_PHONEMES).
         - If some parts of the syllable are not present, their corresponding
         elements in the tuple will be None.
         """
 
-        if not token.is_alpha:
+        if not token.is_alpha and not token.like_num:
             return self.empty_phonemes
         elif token.text not in self.table:
             # logging.warn(f"no entry for token in sound table: {token.text}")
             return (OOV_PHONEMES,)
         else:
             return self.table[token.text]
+
 
 def get_sound_table_csv(path: Path) -> SoundTable_T:
     sound_table: SoundTable_T = defaultdict(tuple)
@@ -113,6 +135,7 @@ def get_sound_table_csv(path: Path) -> SoundTable_T:
             )
     logging.info(f"loaded sound table \"{path.stem}\"")
     return sound_table
+
 
 def get_sound_table_json(path: Path) -> SoundTable_T:
     sound_table: SoundTable_T = defaultdict(tuple)

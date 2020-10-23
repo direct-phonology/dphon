@@ -1,7 +1,7 @@
 """Tests for the phonemes module."""
 
 import logging
-from unittest import TestCase, skip
+from unittest import TestCase
 
 import spacy
 from dphon.phonemes import Phonemes, OOV_PHONEMES

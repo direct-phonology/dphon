@@ -75,6 +75,10 @@ class Index():
         """Get the total number of keys in the index."""
         return len(self.table)
 
+    def __contains__(self, key: KT) -> bool:
+        """Check if a key is in the index."""
+        return key in self.table
+
     def __getitem__(self, key: KT) -> List[VT]:
         """Return a list of all values indexed at a given key."""
         return self.table.get(key)

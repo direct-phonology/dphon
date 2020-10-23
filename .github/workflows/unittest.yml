@@ -10,24 +10,63 @@ jobs:
       matrix:
         python-version: [3.6, 3.7]
         os: [ubuntu-latest, windows-latest, macOS-latest]
-
     steps:
     - name: Pull code
       uses: actions/checkout@v1
-
     - name: Set up python
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-        
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install -r dev-requirements.txt
-        
+        pip install -r dev-requirements.txt      
     - name: Install app
-      run: python setup.py develop
-      
-    - name: Run unittest with coverage report
+      run: python setup.py develop 
+    - name: Run unittest
       run: coverage run -m unittest
+    - name: Generate coverage results
+      run: |
+        coverage report -m
+        coverage html
+    - name: Upload coverage results # only do this once
+      uses: actions/upload-artifact@v2
+      if: matrix.python-version == 3.7 && matrix.os == 'ubuntu-latest'
+      with:
+        name: coverage-results
+        path: |
+          .coverage
+          htmlcov/
+  
+  coverage-badge:
+    name: update coverage badge
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' # only update badge on commits to main
+    needs: test
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - name: Pull code
+      uses: actions/checkout@v1
+    - name: Set up python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install coverage-badge
+      run: |
+        pip install coverage
+        pip install coverage-badge
+    - name: Download coverage results
+      uses: actions/download-artifact@v2
+      with:
+        name: coverage-results
+    - name: Generate badge
+      run: |
+        rm coverage.svg
+        coverage-badge -o coverage.svg
+    - name: Commit badge
+      uses: EndBug/add-and-commit@v5
+      with:
+        add: 'coverage.svg'
+        message: 'Update coverage badge'

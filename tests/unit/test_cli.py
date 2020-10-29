@@ -13,14 +13,10 @@ from dphon.cli import __version__ as version
 from dphon.cli import process, run, setup, teardown
 from dphon.index import Index
 from dphon.ngrams import Ngrams
-from spacy.lang.zh import ChineseDefaults
 from spacy.tokens import Doc
 
 # disconnect logging for testing
 logging.disable(logging.CRITICAL)
-
-# turn off default settings for spacy's chinese model
-ChineseDefaults.use_jieba = False
 
 
 class TestCommands(TestCase):
@@ -69,7 +65,8 @@ class TestOptions(TestCase):
 
     def test_min_and_max(self) -> None:
         """--min and --max options together should limit to exact length"""
-        args = {"--min": "8", "--max": "8", "<path>": ["tests/fixtures/laozi/"]}
+        args = {"--min": "8", "--max": "8",
+                "<path>": ["tests/fixtures/laozi/"]}
         results = process(self.nlp, self.progress, args)
         for result in results:
             self.assertTrue(len(result) == 8)

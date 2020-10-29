@@ -3,13 +3,9 @@
 from unittest import TestCase
 
 import spacy
-from spacy.lang.zh import ChineseDefaults
 
 from dphon.extender import LevenshteinExtender
 from dphon.match import Match
-
-# turn off default settings for spacy's chinese model
-ChineseDefaults.use_jieba = False
 
 
 class TestLevenshteinExtender(TestCase):
@@ -17,7 +13,8 @@ class TestLevenshteinExtender(TestCase):
 
     def setUp(self) -> None:
         """Create a blank spaCy model to test with."""
-        self.nlp = spacy.blank("zh")
+        self.nlp = spacy.blank(
+            "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
 
     def test_no_extension(self) -> None:
         """matches that can't be extended any further should be unchanged

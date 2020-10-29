@@ -3,15 +3,11 @@
 from unittest import TestCase
 
 import spacy
-from spacy.lang.zh import ChineseDefaults
 from spacy.tokens import Doc, Span, Token
 
 from dphon.extender import LevenshteinExtender
 from dphon.match import Match
 from dphon.util import extend_matches
-
-# turn off default settings for spacy's chinese model
-ChineseDefaults.use_jieba = False
 
 '''
 class TestCondenseMatches(TestCase):
@@ -108,6 +104,7 @@ class TestCondenseMatches(TestCase):
         ])
 '''
 
+
 class TestExtendMatches(TestCase):
     """Test extending match lists."""
 
@@ -123,7 +120,8 @@ class TestExtendMatches(TestCase):
 
     def setUp(self) -> None:
         """Create a blank spaCy model and extender to test with."""
-        self.nlp = spacy.blank("zh")
+        self.nlp = spacy.blank(
+            "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
         self.extender = LevenshteinExtender(threshold=0.75, len_limit=100)
 
     def test_no_extension(self) -> None:

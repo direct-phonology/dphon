@@ -37,7 +37,6 @@ from rich.console import Console
 from rich.logging import RichHandler
 from rich.progress import BarColumn, Progress, TextColumn
 from rich.traceback import install
-from spacy.lang.zh import ChineseDefaults
 from spacy.language import Language
 from spacy.tokens import Doc
 
@@ -48,9 +47,6 @@ from dphon.match import Match
 from dphon.ngrams import Ngrams
 from dphon.phonemes import Phonemes, get_sound_table_json
 from dphon.util import extend_matches
-
-# turn off default settings for spacy's chinese model
-ChineseDefaults.use_jieba = False
 
 # install logging and exception handlers
 logging.basicConfig(level="DEBUG", format="%(message)s",
@@ -100,7 +96,8 @@ def setup() -> Language:
     Doc.set_extension("title", default="")
 
     # setup spaCy model
-    nlp = spacy.blank("zh")
+    nlp = spacy.blank(
+        "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
     nlp.add_pipe(Phonemes(nlp, sound_table=sound_table), first=True)
     nlp.add_pipe(Ngrams(nlp, n=4), after="phonemes")
     nlp.add_pipe(Index(nlp, val_fn=lambda doc: doc._.ngrams,
@@ -175,6 +172,7 @@ def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
 
     return results
 
+
 def teardown(nlp: Language) -> None:
     """Unregister spaCy extensions to prevent name collisions."""
     Doc.remove_extension("title")
@@ -183,6 +181,7 @@ def teardown(nlp: Language) -> None:
     for _name, component in nlp.pipeline:
         if hasattr(component, "teardown"):
             component.teardown()
+
 
 def load_texts(paths: List[str]) -> Iterator[Tuple[str, Dict[str, Any]]]:
     """Load texts from all provided file or directory paths.

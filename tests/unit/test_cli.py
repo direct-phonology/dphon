@@ -2,18 +2,13 @@
 
 import logging
 import sys
-import tempfile
 from io import StringIO
 from unittest import TestCase, skip
 from unittest.mock import MagicMock, patch
 
-import spacy
 from dphon.cli import __doc__ as doc
 from dphon.cli import __version__ as version
 from dphon.cli import process, run, setup, teardown
-from dphon.index import Index
-from dphon.ngrams import Ngrams
-from spacy.tokens import Doc
 
 # disconnect logging for testing
 logging.disable(logging.CRITICAL)
@@ -77,10 +72,19 @@ class TestOptions(TestCase):
         results = process(self.nlp, self.progress, args)
         self.assertTrue(results[0].is_norm_eq)
 
+    def test_keep_newlines(self) -> None:
+        """--keep-newlines flag should preserve newlines in output"""
+        args = {"--keep-newlines": True,
+                "<path>": ["tests/fixtures/laozi/"],
+                "--min": "11",
+                "--max": "11"}
+        results = process(self.nlp, self.progress, args)
+        self.assertTrue("\n" in results[-3].alignment[0])
+
     @skip("todo")
     def test_variants_only(self) -> None:
         """--variants-only flag should limit to results with graphic variation"""
-        pass
+        
 
     @skip("todo")
     def test_output_file(self) -> None:

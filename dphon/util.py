@@ -3,11 +3,10 @@ Utility functions
 """
 
 import logging
-from collections import defaultdict
 from typing import Any, Dict, List, Tuple, Iterable
 from pathlib import Path
-
-from rich.progress import TaskID, Progress
+from itertools import groupby, chain
+from spacy.tokens import Doc
 
 from dphon.extender import Extender
 from dphon.match import Match
@@ -78,16 +77,34 @@ def condense_matches(matches: List[Match]) -> List[Match]:
 
 '''
 
+
+def group_by_doc(matches: Iterable[Match]) -> List[Match]:
+    """Group matches by left doc, sorting by sequence position.
+    
+    Uses doc titles to sort if available, otherwise uses id(doc). Output is
+    not stable in the second case and will vary by machine."""
+
+    temp = []
+    if Doc.has_extension("title"):
+        left_doc = lambda match: match.left.doc._.title
+    else:
+        left_doc = lambda match: id(match.left.doc)
+    for _doc, group in groupby(sorted(matches, key=left_doc), key=left_doc):
+        temp.append(sorted(group))
+    return list(chain.from_iterable(temp))
+
+
 def extend_matches(matches: Iterable[Match], extender: Extender) -> List[Match]:
     """Extend matches using a provided extension strategy, returning maximal
     matches."""
-    
-    # order matches by location in left doc; keep active matches in a queue
-    matches = list(reversed(sorted(matches)))
+
     new_matches: List[Match] = []
     queue: List[Match] = []
     last_left = None
     last_right = None
+
+    # iterate in reverse order 
+    matches = list(reversed(group_by_doc(matches)))
 
     # drain the old match list to fill up the new one
     while len(matches) > 0:
@@ -110,8 +127,8 @@ def extend_matches(matches: Iterable[Match], extender: Extender) -> List[Match]:
             for match in queue:
                 # if match is internal to one in queue, skip it
                 if current.right.start >= match.right.start and \
-                    current.right.start <= match.right.end and \
-                    current.right.end <= match.right.end:
+                        current.right.start <= match.right.end and \
+                        current.right.end <= match.right.end:
                     skip = True
                     break
 
@@ -126,6 +143,7 @@ def extend_matches(matches: Iterable[Match], extender: Extender) -> List[Match]:
     # add any remaining matches from queue and return finished list
     new_matches += queue
     return new_matches
+
 
 def get_texts(directory: Path) -> List[Tuple[str, Dict[str, Any]]]:
     # load all texts and format with context

@@ -13,23 +13,11 @@ class TestMatch(TestCase):
 
     maxDiff = None   # don't limit length of diff output for failures
 
-    @classmethod
-    def setUpClass(cls) -> None:
-        """Register the title attribute on Docs."""
-        Doc.set_extension("title", default="")
-
-    @classmethod
-    def tearDownClass(cls) -> None:
-        """Unregister the title attribute on Docs."""
-        Doc.remove_extension("title")    
-
     def setUp(self) -> None:
         """Create example Docs to test with."""
         self.nlp = spacy.blank("en")
         self.doc1 = self.nlp.make_doc("a bumblebee under a glass tumbler")
         self.doc2 = self.nlp.make_doc("an inverted glass tumbler of fireflies")
-        self.doc1._.title = "doc1"
-        self.doc2._.title = "doc2"
 
     def test_init(self) -> None:
         """should make a shallow copy of its provided locations on init"""
@@ -48,41 +36,33 @@ class TestMatch(TestCase):
         left = self.doc1[4:6]
         right = self.doc2[2:4]
         match = Match(left, right)
-        self.assertEqual(match.__repr__(), f"Match(doc1[4:6], doc2[2:4])")
+        self.assertEqual(match.__repr__(), f"Match([4:6], [2:4])")
 
     def test_str(self) -> None:
         """should print its text in both docs"""
         left = self.doc1[4:6]
         right = self.doc2[2:4]
         match = Match(left, right)
-        self.assertEqual(str(match), "glass tumbler (doc1)\nglass tumbler (doc2)")
-
-    @skip("todo")
-    def test_str_title(self) -> None:
-        """should print its text in both docs with doc title when available"""
-        pass
+        self.assertEqual(str(match), "glass tumbler :: glass tumbler")
 
     def test_lt(self) -> None:
-        """should form a total order by both doc and position"""
+        """should form a total order by position"""
         doc1 = self.nlp.make_doc("A B C D A B C D E F G H")
         doc2 = self.nlp.make_doc("Z Z G H Z Z C D Z Z Z Z")
         doc3 = self.nlp.make_doc("E F X X A B C D X X X X")
-        doc1._.title = "doc1"
-        doc2._.title = "doc2"
-        doc3._.title = "doc3"
-        m1 = Match(doc1[8:10], doc3[0:2]) # 1:EF :: 3:EF
-        m2 = Match(doc1[0:4], doc3[4:9]) # 1:ABCD :: 3:ABCD
-        m3 = Match(doc1[10:12], doc2[0:2]) # 1:GH :: 2:GH
-        m4 = Match(doc1[4:9], doc3[4:9]) # 1:ABCD :: 3:ABCD
-        m5 = Match(doc1[2:4], doc2[6:8]) # 1:CD :: 2:CD
-        m6 = Match(doc1[7:9], doc2[6:8]) # 1:CD :: 2:CD
-        m7 = Match(doc2[6:8], doc3[6:8]) # 2:CD :: 3:CD
+        m1 = Match(doc1[8:10], doc3[0:2])  # 1:EF :: 3:EF
+        m2 = Match(doc1[0:4], doc3[4:9])  # 1:ABCD :: 3:ABCD
+        m3 = Match(doc1[10:12], doc2[0:2])  # 1:GH :: 2:GH
+        m4 = Match(doc1[4:9], doc3[4:9])  # 1:ABCD :: 3:ABCD
+        m5 = Match(doc1[2:4], doc2[6:8])  # 1:CD :: 2:CD
+        m6 = Match(doc1[7:9], doc2[6:8])  # 1:CD :: 2:CD
+        m7 = Match(doc2[6:8], doc3[6:8])  # 2:CD :: 3:CD
         m_unsorted = [m1, m2, m3, m4, m5, m6, m7]
         m_sorted = list(sorted(m_unsorted))
-        self.assertEqual(m_sorted, [m5, m6, m3, m2, m4, m1, m7])
+        self.assertEqual(m_sorted, [m2, m5, m4, m7, m6, m1, m3])
 
     def test_eq(self) -> None:
-        """should test equality via both doc and position"""
+        """should test equality via position"""
         left = self.doc1[4:6]
         right = self.doc2[2:4]
         # shallow copies of spans should be equal

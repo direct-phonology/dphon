@@ -28,19 +28,19 @@ import logging
 import time
 from itertools import combinations, filterfalse
 from pathlib import Path
-from sys import stdin, stdout
+from sys import stdout
 from typing import Any, Dict, Iterator, List, Tuple
 
 import spacy
 from docopt import docopt
-from rich.console import Console
 from rich.logging import RichHandler
-from rich.progress import BarColumn, Progress, TextColumn
+from rich.progress import BarColumn, Progress
 from rich.traceback import install
 from spacy.language import Language
 from spacy.tokens import Doc
 
 from dphon import __version__
+from dphon.aligner import SmithWatermanAligner
 from dphon.extender import LevenshteinPhoneticExtender
 from dphon.index import Index
 from dphon.match import Match
@@ -73,9 +73,7 @@ def run() -> None:
 
     # process all texts
     results = process(nlp, progress, args)
-
-    # teardown pipeline
-    teardown(nlp)
+    logging.info(f"{len(results)} total results matching query")
 
     # write to a file if requested; otherwise write to stdout
     if args["--output"]:
@@ -85,6 +83,9 @@ def run() -> None:
     else:
         for match in results:
             stdout.buffer.write(f"{match}\n".encode("utf-8"))
+
+    # teardown pipeline
+    teardown(nlp)
 
 
 def setup() -> Language:
@@ -109,6 +110,7 @@ def setup() -> Language:
 
 def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
     """Run the spaCy processing pipeline."""
+
     with progress:
         docs_task = progress.add_task("indexing documents")
         all_start = time.perf_counter()
@@ -153,6 +155,20 @@ def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
         progress.remove_task(extend_task)
     finish = time.perf_counter() - start
     logging.info(f"extended {len(results):,} matches in {finish:.3f}s")
+
+    # align all matches
+    aligner = SmithWatermanAligner()
+    aligned_results = []
+    with progress:
+        align_task = progress.add_task("aligning matches", total=len(results))
+        start = time.perf_counter()
+        for match in results:
+            aligned_results.append(aligner.align(match))
+            progress.update(align_task, advance=1)
+        progress.remove_task(align_task)
+    finish = time.perf_counter() - start
+    logging.info(f"aligned {len(aligned_results):,} matches in {finish:.3f}s")
+    results = aligned_results
 
     # limit via min and max lengths if requested
     if args.get("--min", None):

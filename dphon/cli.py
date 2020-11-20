@@ -8,7 +8,8 @@ Usage:
 Options:
     -h --help                   Show this help.
     -v --version                Show program version.
-    --variants-only             Limit to matches with graphic variation.
+    --variants-only             Limit to matches with true graphic variation.
+    --keep-newlines             Preserve newlines in output.
     -a --all                    Include matches with no variation at all.
     -o <file> --output <file>   Write output to a file.
     --min <min>                 Limit to matches with length >= min.
@@ -43,6 +44,7 @@ from dphon import __version__
 from dphon.aligner import SmithWatermanAligner
 from dphon.extender import LevenshteinPhoneticExtender
 from dphon.index import Index
+from dphon.fmt import SimpleFormatter
 from dphon.match import Match
 from dphon.ngrams import Ngrams
 from dphon.phonemes import Phonemes, get_sound_table_json
@@ -76,13 +78,16 @@ def run() -> None:
     logging.info(f"{len(results)} total results matching query")
 
     # write to a file if requested; otherwise write to stdout
+    format = SimpleFormatter(gap_char="　", nl_char="＄")
+    fmt_results = [format(match) for match in results]
     if args["--output"]:
-        with open(args["--output"], mode="w", encoding="utf-8") as file:
-            for match in results:
-                file.write(f"{match}\n")
+        with open(args["--output"], mode="w", encoding="utf8") as file:
+            for match in fmt_results:
+                file.write(match + "\n\n")
+        logging.info(f"wrote {args['--output']}")
     else:
-        for match in results:
-            stdout.buffer.write(f"{match}\n".encode("utf-8"))
+        for match in fmt_results:
+            stdout.buffer.write((match + "\n\n").encode("utf8"))
 
     # teardown pipeline
     teardown(nlp)
@@ -97,8 +102,7 @@ def setup() -> Language:
     Doc.set_extension("title", default="")
 
     # setup spaCy model
-    nlp = spacy.blank(
-        "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
+    nlp = spacy.blank("zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
     nlp.add_pipe(Phonemes(nlp, sound_table=sound_table), first=True)
     nlp.add_pipe(Ngrams(nlp, n=4), after="phonemes")
     nlp.add_pipe(Index(nlp, val_fn=lambda doc: doc._.ngrams,
@@ -111,13 +115,13 @@ def setup() -> Language:
 def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
     """Run the spaCy processing pipeline."""
 
+    newlines = args.get("--keep-newlines", False)
     with progress:
         docs_task = progress.add_task("indexing documents")
         all_start = time.perf_counter()
         start = all_start
-        for doc, context in nlp.pipe(load_texts(args["<path>"]), as_tuples=True):
-            if Doc.has_extension("title"):
-                doc._.title = context["title"]
+        for doc, context in nlp.pipe(load_texts(args["<path>"], newlines=newlines), as_tuples=True):
+            doc._.title = context["title"]
             progress.update(docs_task, advance=1)
             finish = time.perf_counter() - start
             logging.debug(f"processed doc {context['title']} in {finish:.3f}s")
@@ -199,7 +203,7 @@ def teardown(nlp: Language) -> None:
             component.teardown()
 
 
-def load_texts(paths: List[str]) -> Iterator[Tuple[str, Dict[str, Any]]]:
+def load_texts(paths: List[str], newlines: bool = False) -> Iterator[Tuple[str, Dict[str, Any]]]:
     """Load texts from all provided file or directory paths.
 
     All provided paths will be searched. If the path is a text file its contents
@@ -212,10 +216,13 @@ def load_texts(paths: List[str]) -> Iterator[Tuple[str, Dict[str, Any]]]:
 
     Args:
         paths: List of file or directory paths to search.
+        newlines: Whether to preserve newlines in text. False by default.
 
     Yields:
         A tuple of (text, metadata) for the next document found in all paths.
     """
+
+    logging.debug(f"preserve newlines: {newlines}")
 
     total = 0
     for _path in paths:
@@ -223,6 +230,8 @@ def load_texts(paths: List[str]) -> Iterator[Tuple[str, Dict[str, Any]]]:
         if path.is_file():
             with path.open(encoding="utf8") as contents:
                 file_contents = contents.read()
+            if not newlines:
+                file_contents = file_contents.replace("\n", "")
             logging.debug(f"loaded text {path.stem}")
             total += 1
             yield (file_contents, {"title": path.stem})
@@ -230,6 +239,8 @@ def load_texts(paths: List[str]) -> Iterator[Tuple[str, Dict[str, Any]]]:
             for file in path.glob("**/*.txt"):
                 with file.open(encoding="utf8") as contents:
                     file_contents = contents.read()
+                if not newlines:
+                    file_contents = file_contents.replace("\n", "")
                 logging.debug(f"loaded text {file.stem}")
                 total += 1
                 yield (file_contents, {"title": file.stem})

@@ -21,7 +21,7 @@ Examples:
     dphon 周南.txt 鹿鳴之什.txt --variants-only
  
 Help:
-    For more information on using this tool, please visit the Github repository:
+    For more information on using this tool, visit the Github repository:
     https://github.com/direct-phonology/direct
 """
 
@@ -29,11 +29,11 @@ import logging
 import time
 from itertools import combinations, filterfalse
 from pathlib import Path
-from sys import stdout
 from typing import Any, Dict, Iterator, List, Tuple
 
 import spacy
 from docopt import docopt
+from rich.console import Console
 from rich.logging import RichHandler
 from rich.progress import BarColumn, Progress
 from rich.traceback import install
@@ -41,10 +41,10 @@ from spacy.language import Language
 from spacy.tokens import Doc
 
 from dphon import __version__
-from dphon.aligner import SmithWatermanAligner
+from dphon.align import SmithWatermanAligner
 from dphon.extender import LevenshteinPhoneticExtender
 from dphon.index import Index
-from dphon.fmt import SimpleFormatter
+from dphon.fmt import SimpleFormatter, DEFAULT_THEME
 from dphon.match import Match
 from dphon.ngrams import Ngrams
 from dphon.phonemes import Phonemes, get_sound_table_json
@@ -77,17 +77,19 @@ def run() -> None:
     results = process(nlp, progress, args)
     logging.info(f"{len(results)} total results matching query")
 
-    # write to a file if requested; otherwise write to stdout
+    # set up formatting - colorize for terminal but not for files
+    console = Console(theme=DEFAULT_THEME)
     format = SimpleFormatter(gap_char="　", nl_char="＄")
-    fmt_results = [format(match) for match in results]
+
+    # write to a file if requested; otherwise write to stdout
     if args["--output"]:
         with open(args["--output"], mode="w", encoding="utf8") as file:
-            for match in fmt_results:
-                file.write(match + "\n\n")
+            for match in results:
+                file.write(format(match) + "\n\n")
         logging.info(f"wrote {args['--output']}")
     else:
-        for match in fmt_results:
-            stdout.buffer.write((match + "\n\n").encode("utf8"))
+        for match in results:
+            console.print((format(match) + "\n\n"))
 
     # teardown pipeline
     teardown(nlp)
@@ -140,7 +142,7 @@ def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
         matches_task = progress.add_task(
             "generating matches", total=len(groups))
         start = time.perf_counter()
-        for seed, locations in groups:
+        for _seed, locations in groups:
             for left, right in combinations(locations, 2):
                 if left.doc != right.doc:  # skip same-doc matches
                     matches.append(Match(left, right))
@@ -161,13 +163,13 @@ def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
     logging.info(f"extended {len(results):,} matches in {finish:.3f}s")
 
     # align all matches
-    aligner = SmithWatermanAligner()
+    align = SmithWatermanAligner()
     aligned_results = []
     with progress:
         align_task = progress.add_task("aligning matches", total=len(results))
         start = time.perf_counter()
         for match in results:
-            aligned_results.append(aligner.align(match))
+            aligned_results.append(align(match))
             progress.update(align_task, advance=1)
         progress.remove_task(align_task)
     finish = time.perf_counter() - start
@@ -221,8 +223,6 @@ def load_texts(paths: List[str], newlines: bool = False) -> Iterator[Tuple[str, 
     Yields:
         A tuple of (text, metadata) for the next document found in all paths.
     """
-
-    logging.debug(f"preserve newlines: {newlines}")
 
     total = 0
     for _path in paths:

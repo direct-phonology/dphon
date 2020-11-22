@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
-"""Classes for formatting and display and matches."""
+"""Classes for formatting and display of matches."""
 
 from abc import ABC, abstractmethod
-from typing import List
+from typing import Tuple
 
+from rich.theme import Theme
 from spacy.tokens import Doc
 
 from dphon.match import Match, NotAlignedError
+
+# Default color scheme for the RichFormatter
+DEFAULT_THEME = Theme({
+    "context": "dim",
+    "variant": "blue",
+    "insertion": "green",
+    "mismatch": "red"
+})
 
 
 class MatchFormatter(ABC):
@@ -20,7 +29,7 @@ class MatchFormatter(ABC):
 
 class SimpleFormatter(MatchFormatter):
     """Basic formatter that displays aligned matches with doc information.
-    
+
     The characters used to represent gaps in alignment and newlines can be
     customized by specifying gap_char and nl_char respectively."""
 
@@ -32,14 +41,17 @@ class SimpleFormatter(MatchFormatter):
         self.gap_char = gap_char
         self.nl_char = nl_char
 
-    def format_seq(self, seq: str) -> str:
-        """Replace gap and newline characters in a sequence."""
+    def format_seqs(self, left: str, right: str) -> Tuple[str, str]:
+        """Replace gap and newline characters in sequences."""
         # alignment result uses "-" to indicate gaps
-        return seq.replace("-", self.gap_char).replace("\n", self.nl_char)
+        return (
+            left.replace("-", self.gap_char).replace("\n", self.nl_char),
+            right.replace("-", self.gap_char).replace("\n", self.nl_char)
+        )
 
     def __call__(self, match: Match) -> str:
         """Display the match sequences with document information.
-        
+
         - Uses the aligned versions of match texts, if available.
         - Uses the document title if available, otherwise unique id.
         """
@@ -50,8 +62,7 @@ class SimpleFormatter(MatchFormatter):
         except NotAlignedError:
             left, right = match.left.text, match.right.text
         # format the two sequences
-        fmt_left = self.format_seq(left)
-        fmt_right = self.format_seq(right)
+        fmt_left, fmt_right = self.format_seqs(left, right)
         # add doc titles if present, otherwise use IDs
         if Doc.has_extension("title"):
             top = f"{fmt_left} ({match.left.doc._.title})"
@@ -61,3 +72,14 @@ class SimpleFormatter(MatchFormatter):
             bottom = f"{fmt_right} ({id(match.right.doc)})"
         # join with a newline
         return f"{top}\n{bottom}"
+
+
+class ColorFormatter(SimpleFormatter):
+    """Formatter that annotates output so it can be colorized in terminal.
+
+    Uses a DFA approach to parse the sequences and annotate them with markers
+    that correspond to a color scheme."""
+
+    # TODO
+
+    pass

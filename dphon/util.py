@@ -79,16 +79,9 @@ def condense_matches(matches: List[Match]) -> List[Match]:
 
 
 def group_by_doc(matches: Iterable[Match]) -> List[Match]:
-    """Group matches by left doc, sorting by sequence position.
-    
-    Uses doc titles to sort if available, otherwise uses id(doc). Output is
-    not stable in the second case and will vary by machine."""
-
+    """Group matches by left doc title, sorting by sequence position."""
     temp = []
-    if Doc.has_extension("title"):
-        left_doc = lambda match: match.left.doc._.title
-    else:
-        left_doc = lambda match: id(match.left.doc)
+    left_doc = lambda match: match.left.doc._.title
     for _doc, group in groupby(sorted(matches, key=left_doc), key=left_doc):
         temp.append(sorted(group))
     return list(chain.from_iterable(temp))

@@ -1,13 +1,13 @@
 """Utility function unit tests."""
 
-from unittest import TestCase
+from unittest import TestCase, skip
 
 import spacy
-from spacy.tokens import Doc, Span, Token
+from spacy.tokens import Doc
 
 from dphon.extender import LevenshteinExtender
 from dphon.match import Match
-from dphon.util import extend_matches
+from dphon.util import extend_matches, group_by_doc
 
 '''
 class TestCondenseMatches(TestCase):
@@ -105,8 +105,8 @@ class TestCondenseMatches(TestCase):
 '''
 
 
-class TestExtendMatches(TestCase):
-    """Test extending match lists."""
+class TestGroupByDoc(TestCase):
+    """Test grouping matches by doc."""
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -114,6 +114,40 @@ class TestExtendMatches(TestCase):
         Doc.set_extension("title", default="")
 
     @classmethod
+    def tearDownClass(cls) -> None:
+        """Unregister the title attribute on Docs."""
+        Doc.remove_extension("title")
+
+    def setUp(self) -> None:
+        """Create a blank spaCy model to test with."""
+        self.nlp = spacy.blank("en")
+
+    @skip("todo")
+    def test_groups(self) -> None:
+        """should group by left doc, then sort by sequence position"""
+        doc1 = self.nlp.make_doc("A B C D A B C D E F G H")
+        doc2 = self.nlp.make_doc("Z Z G H Z Z C D Z Z Z Z")
+        doc3 = self.nlp.make_doc("E F X X A B C D X X X X")
+        m1 = Match(doc1[8:10], doc3[0:2])  # 1:EF :: 3:EF
+        m2 = Match(doc1[0:4], doc3[4:9])  # 1:ABCD :: 3:ABCD
+        m3 = Match(doc1[10:12], doc2[0:2])  # 1:GH :: 2:GH
+        m4 = Match(doc1[4:9], doc3[4:9])  # 1:ABCD :: 3:ABCD
+        m5 = Match(doc1[2:4], doc2[6:8])  # 1:CD :: 2:CD
+        m6 = Match(doc1[7:9], doc2[6:8])  # 1:CD :: 2:CD
+        m7 = Match(doc2[6:8], doc3[6:8])  # 2:CD :: 3:CD
+        m_unsorted = [m1, m2, m3, m4, m5, m6, m7]
+        m_grouped = list(group_by_doc(m_unsorted))
+
+
+class TestExtendMatches(TestCase):
+    """Test extending match lists."""
+
+    @ classmethod
+    def setUpClass(cls) -> None:
+        """Register the title attribute on Docs."""
+        Doc.set_extension("title", default="")
+
+    @ classmethod
     def tearDownClass(cls) -> None:
         """Unregister the title attribute on Docs."""
         Doc.remove_extension("title")

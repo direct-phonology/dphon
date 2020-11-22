@@ -22,10 +22,10 @@ Alignment_T = Tuple[Aligned_T, Aligned_T, float]
 
 
 class Aligner(ABC):
-    """Abstract class; implements pairwise alignment via the align() method."""
+    """Abstract class; implements pairwise alignment."""
 
     @abstractmethod
-    def align(self, match: Match) -> Match:
+    def __call__(self, match: Match) -> Match:
         """Return an aligned copy of a match. Should not mutate its argument."""
         raise NotImplementedError
 
@@ -38,11 +38,7 @@ class SmithWatermanAligner(Aligner):
     def __init__(self, scorer: Scorer_T = None) -> None:
         self.scorer = scorer
 
-    def get_alignment(self, match: Match) -> Alignment_T:
-        """Return a Smith-Waterman alignment of the match sequences."""
-        return sw_align(match.left.text, match.right.text, self.scorer)
-
-    def align(self, match: Match) -> Match:
+    def __call__(self, match: Match) -> Match:
         """Perform the alignment and use it to create and return a new match.
 
         The new match uses the values calculated from alignment to adjust the
@@ -50,7 +46,9 @@ class SmithWatermanAligner(Aligner):
         and sequence texts calculated for the alignment."""
 
         # compute the alignment and keep non-aligned regions
-        (bl, cl, al), (br, cr, ar), score = self.get_alignment(match)
+        (bl, cl, al), (br, cr, ar), score = sw_align(match.left.text,
+                                                     match.right.text,
+                                                     self.scorer)
 
         # use lengths of non-aligned regions to move the sequence boundaries
         # [...] ["A", "B", "C"] [...]

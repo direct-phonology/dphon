@@ -12,39 +12,34 @@ from spacy.tokens import Doc
 class TestSimpleFormatter(TestCase):
     """Test the SimpleFormatter."""
 
+    @classmethod
+    def setUpClass(cls) -> None:
+        """Register the title attribute on Docs."""
+        Doc.set_extension("title", default="")
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        """Unregister the title attribute on Docs."""
+        Doc.remove_extension("title")
+
     def setUp(self) -> None:
         """Create docs and match for testing."""
         self.nlp = spacy.blank("en")
         self.doc1 = self.nlp.make_doc("a bumblebee under a glass tumbler")
         self.doc2 = self.nlp.make_doc("an inverted glass tumbler of fireflies")
+        self.doc1._.title = "doc1"
+        self.doc2._.title = "doc2"
         # a glass tumbler (doc1)
         # an inverted glass tumbler (doc2)
         self.match = Match(self.doc1[3:], self.doc2[:4])
 
-    def tearDown(self) -> None:
-        """Unregister doc attribute to prevent name collisions."""
-        if Doc.has_extension("title"):
-            Doc.remove_extension("title")
-
     def test_doc_title(self) -> None:
-        """should format matches with doc titles if present"""
+        """should format matches with doc titles"""
         fmt = SimpleFormatter()
-        # add doc titles
-        Doc.set_extension("title", default="")
-        self.doc1._.title = "doc1"
-        self.doc2._.title = "doc2"
         output = fmt(self.match)
         # should be in output
         self.assertTrue("doc1" in output)
         self.assertTrue("doc2" in output)
-
-    def test_no_doc_title(self) -> None:
-        """should format matches with doc ids if no doc titles"""
-        fmt = SimpleFormatter()
-        output = fmt(self.match)
-        # ids should be in output
-        self.assertTrue(str(id(self.doc1)) in output)
-        self.assertTrue(str(id(self.doc2)) in output)
 
     def test_aligned_match(self) -> None:
         """should format matches using stored alignment if present"""

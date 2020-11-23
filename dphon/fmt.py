@@ -38,6 +38,9 @@ class SimpleFormatter(MatchFormatter):
 
     def __init__(self, gap_char: str = " ", nl_char: str = "⏎") -> None:
         """Create a formatter with specified gap and newline characters."""
+        # Doc titles are required
+        if not Doc.has_extension("title"):
+            raise RuntimeError("Missing title extension attribute on Doc.")
         self.gap_char = gap_char
         self.nl_char = nl_char
 
@@ -50,26 +53,18 @@ class SimpleFormatter(MatchFormatter):
         )
 
     def __call__(self, match: Match) -> str:
-        """Display the match sequences with document information.
-
-        - Uses the aligned versions of match texts, if available.
-        - Uses the document title if available, otherwise unique id.
-        """
-
+        """Display the match sequences with document titles."""
         # check for alignment, if none use unaligned version
         if match.alignment:
             left, right = match.alignment
         else:
             left, right = match.left.text, match.right.text
+
         # format the two sequences
         fmt_left, fmt_right = self.format_seqs(left, right)
-        # add doc titles if present, otherwise use IDs
-        if Doc.has_extension("title"):
-            top = f"{fmt_left} ({match.left.doc._.title})"
-            bottom = f"{fmt_right} ({match.right.doc._.title})"
-        else:
-            top = f"{fmt_left} ({id(match.left.doc)})"
-            bottom = f"{fmt_right} ({id(match.right.doc)})"
+        top = f"{fmt_left} ({match.left.doc._.title})"
+        bottom = f"{fmt_right} ({match.right.doc._.title})"
+        
         # join with a newline
         return f"{top}\n{bottom}"
 

@@ -8,8 +8,8 @@ from pathlib import Path
 from itertools import groupby, chain
 from spacy.tokens import Doc
 
-from dphon.extender import Extender
-from dphon.match import Match
+from dphon.extend import Extender
+from dphon.reuse import Match
 
 '''
 
@@ -78,6 +78,19 @@ def condense_matches(matches: List[Match]) -> List[Match]:
 '''
 
 
+def is_norm_eq(match: Match) -> bool:
+    """True if a match's sequences are equal after normalization.
+
+    This comparison ignores whitespace, case, and punctuation, returning
+    True if all alphanumeric characters of the left location match all
+    alphanumeric characters of the right location and False otherwise."""
+    left_norm = "".join([c.lower()
+                         for c in match.left.text if c.isalnum()])
+    right_norm = "".join([c.lower()
+                          for c in match.right.text if c.isalnum()])
+    return left_norm == right_norm
+
+
 def group_by_doc(matches: Iterable[Match]) -> List[Match]:
     """Group matches by left doc title, sorting by sequence position."""
     temp = []
@@ -87,7 +100,7 @@ def group_by_doc(matches: Iterable[Match]) -> List[Match]:
     return list(chain.from_iterable(temp))
 
 
-def extend_matches(matches: Iterable[Match], extender: Extender) -> List[Match]:
+def extend_matches(matches: Iterable[Match], extend: Extender) -> List[Match]:
     """Extend matches using a provided extension strategy, returning maximal
     matches."""
 
@@ -96,7 +109,7 @@ def extend_matches(matches: Iterable[Match], extender: Extender) -> List[Match]:
     last_left = None
     last_right = None
 
-    # iterate in reverse order 
+    # iterate in reverse order
     matches = list(reversed(group_by_doc(matches)))
 
     # drain the old match list to fill up the new one
@@ -106,12 +119,12 @@ def extend_matches(matches: Iterable[Match], extender: Extender) -> List[Match]:
         # if new left doc or new right doc, dump queue and start over
         if current.left.doc != last_left or current.right.doc != last_right:
             new_matches += queue
-            queue = [extender.extend(current)]
+            queue = [extend(current)]
 
         # if match is outside current range, dump queue and start over
         elif current.left.start >= queue[0].left.end:
             new_matches += queue
-            queue = [extender.extend(current)]
+            queue = [extend(current)]
 
         # if match overlaps in left doc, check the queue
         elif current.left.start >= queue[0].left.start:
@@ -127,7 +140,7 @@ def extend_matches(matches: Iterable[Match], extender: Extender) -> List[Match]:
 
             # if match hits new location in right doc, add to queue
             if not skip:
-                queue.append(extender.extend(current))
+                queue.append(extend(current))
 
         # track doc changes
         last_left = current.left.doc

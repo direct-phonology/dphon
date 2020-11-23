@@ -6,7 +6,7 @@ from typing import Tuple, Mapping, List, Optional
 
 from lingpy.align.pairwise import sw_align
 
-from dphon.match import Match
+from dphon.reuse import Match
 
 # Lingpy scoring matrices: a × b = 1.0 -> { ("a", "b"): 1.0, ("b", "a"): 1.0 }
 # Matrix cells are represented as tuples; both a × b and b × a need to exist
@@ -26,7 +26,7 @@ class Aligner(ABC):
 
     @abstractmethod
     def __call__(self, match: Match) -> Match:
-        """Return an aligned copy of a match. Should not mutate its argument."""
+        """Align and return a match."""
         raise NotImplementedError
 
 
@@ -39,10 +39,10 @@ class SmithWatermanAligner(Aligner):
         self.scorer = scorer
 
     def __call__(self, match: Match) -> Match:
-        """Perform the alignment and use it to create and return a new match.
+        """Perform the alignment and use it to modify the provided match.
 
-        The new match uses the values calculated from alignment to adjust the
-        start and end points of its sequences, as well as storing the score
+        The updated match uses the values calculated from alignment to adjust
+        the start and end points of its sequences, as well as storing the score
         and sequence texts calculated for the alignment."""
 
         # compute the alignment and keep non-aligned regions
@@ -53,11 +53,10 @@ class SmithWatermanAligner(Aligner):
         # use lengths of non-aligned regions to move the sequence boundaries
         # [...] ["A", "B", "C"] [...]
         # ---->                <----
-        return Match(
-            match.left.doc[match.left.start + len(bl):
-                           match.left.end - len(al)],
-            match.right.doc[match.right.start + len(br):
-                            match.right.end - len(ar)],
-            (cl, cr),   # alignment text
-            score       # alignment score
-        )
+        match.left = match.left.doc[match.left.start + len(bl):match.left.end - len(al)]
+        match.right = match.right.doc[match.right.start + len(br):match.right.end - len(ar)]
+
+        # set score and aligned text
+        match.score = score
+        match.alignment = ("".join(cl), "".join(cr))
+        return match

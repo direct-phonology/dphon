@@ -2,7 +2,7 @@
 
 import logging
 from itertools import islice
-from unittest import TestCase, skip
+from unittest import TestCase
 
 import spacy
 from dphon.index import Index
@@ -99,4 +99,3 @@ class TestIndex(TestCase):
         entries = list(idx.filter(lambda entry: len(entry[1]) > 1))
         self.assertEqual(len(entries), 1) # "be" occurs twice
         self.assertEqual(entries[0][0], self.nlp.vocab["be"])
-

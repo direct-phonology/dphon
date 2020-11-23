@@ -5,9 +5,9 @@ from unittest import TestCase, skip
 import spacy
 from spacy.tokens import Doc
 
-from dphon.extender import LevenshteinExtender
-from dphon.match import Match
-from dphon.util import extend_matches, group_by_doc
+from dphon.extend import LevenshteinExtender
+from dphon.reuse import Match
+from dphon.util import extend_matches, group_by_doc, is_norm_eq
 
 '''
 class TestCondenseMatches(TestCase):
@@ -139,6 +139,23 @@ class TestGroupByDoc(TestCase):
         m_grouped = list(group_by_doc(m_unsorted))
 
 
+class TestIsNormEq(TestCase):
+
+    def setUp(self) -> None:
+        """Create a blank spaCy model to test with."""
+        self.nlp = spacy.blank("en")
+
+    def test_is_norm_eq(self) -> None:
+        """should detect if match texts are identical after normalization"""
+        doc1 = self.nlp.make_doc("What's that?")
+        doc2 = self.nlp.make_doc("whatsthat")
+        doc3 = self.nlp.make_doc("Whats that now?")
+        m1 = Match(doc1[:], doc2[:])
+        m2 = Match(doc1[:], doc3[:])
+        self.assertTrue(is_norm_eq(m1))
+        self.assertFalse(is_norm_eq(m2))
+
+
 class TestExtendMatches(TestCase):
     """Test extending match lists."""
 
@@ -156,7 +173,7 @@ class TestExtendMatches(TestCase):
         """Create a blank spaCy model and extender to test with."""
         self.nlp = spacy.blank(
             "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
-        self.extender = LevenshteinExtender(threshold=0.75, len_limit=100)
+        self.extend = LevenshteinExtender(threshold=0.75, len_limit=100)
 
     def test_no_extension(self) -> None:
         """matches that can't be extended any further should be unchanged
@@ -173,7 +190,7 @@ class TestExtendMatches(TestCase):
         # create matches and extend them
         matches = [Match(left[0:8], right[0:8])]
         # output should be identical to input
-        results = extend_matches(matches, self.extender)
+        results = extend_matches(matches, self.extend)
         self.assertEqual(results, matches)
 
     def test_perfect_match(self) -> None:
@@ -191,7 +208,7 @@ class TestExtendMatches(TestCase):
             Match(left[0:4], right[0:4]),
             Match(left[1:5], right[1:5])
         ]
-        results = extend_matches(matches, self.extender)
+        results = extend_matches(matches, self.extend)
         # first match is kept and extended; second is discarded as internal
         self.assertEqual(results, [Match(left[0:18], right[0:18])])
 
@@ -211,7 +228,7 @@ class TestExtendMatches(TestCase):
             Match(left[11:13], right[2:4]),
             Match(left[11:13], right[16:18]),
         ]
-        results = extend_matches(matches, self.extender)
+        results = extend_matches(matches, self.extend)
         # two different extended matches
         self.assertEqual(results, [
             Match(left[8:13], right[13:18]),
@@ -240,6 +257,6 @@ class TestExtendMatches(TestCase):
             Match(left[12:14], right[2:4]),
             Match(left[12:14], right[12:14]),
         ]
-        results = extend_matches(matches, self.extender)
+        results = extend_matches(matches, self.extend)
         # single match from chars 1-13, no internal matching
         self.assertEqual(results, [Match(left[1:14], right[1:14])])

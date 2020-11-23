@@ -4,8 +4,8 @@ from unittest import TestCase
 
 import spacy
 
-from dphon.extender import LevenshteinExtender
-from dphon.match import Match
+from dphon.extend import LevenshteinExtender
+from dphon.reuse import Match
 
 
 class TestLevenshteinExtender(TestCase):
@@ -28,9 +28,9 @@ class TestLevenshteinExtender(TestCase):
         right = self.nlp.make_doc("千室之邑百乘之家")
         # create a match and extend it
         match = Match(left[0:8], right[0:8])
-        extender = LevenshteinExtender(threshold=0.75, len_limit=100)
+        extend = LevenshteinExtender(threshold=0.75, len_limit=100)
         # shouldn't be extended
-        self.assertEqual(extender.extend(match), match)
+        self.assertEqual(extend(match), match)
 
     def test_perfect_match(self) -> None:
         """matches should be extended as far as possible
@@ -42,8 +42,8 @@ class TestLevenshteinExtender(TestCase):
         left = self.nlp.make_doc("與朋友交言而有信雖曰未學吾必謂之學矣")
         right = self.nlp.make_doc("與朋友交言而有信雖曰未學吾必謂之學矣")
         match = Match(left[0:4], right[0:4])
-        extender = LevenshteinExtender(threshold=0.75, len_limit=100)
-        self.assertEqual(extender.extend(match),
+        extend = LevenshteinExtender(threshold=0.75, len_limit=100)
+        self.assertEqual(extend(match),
                          Match(left[0:18], right[0:18]))
 
     def test_trail(self) -> None:
@@ -56,8 +56,8 @@ class TestLevenshteinExtender(TestCase):
         left = self.nlp.make_doc("行有餘力則以學文")
         right = self.nlp.make_doc("行有餘力博學覽古")
         match = Match(left[0:2], right[0:2])
-        extender = LevenshteinExtender(threshold=0.75, len_limit=100)
-        self.assertEqual(extender.extend(match), Match(left[0:4], right[0:4]))
+        extend = LevenshteinExtender(threshold=0.75, len_limit=100)
+        self.assertEqual(extend(match), Match(left[0:4], right[0:4]))
 
     def test_short_trail(self) -> None:
         """a trail of a single character should be removed
@@ -69,8 +69,8 @@ class TestLevenshteinExtender(TestCase):
         left = self.nlp.make_doc("行有餘力則")
         right = self.nlp.make_doc("行有餘力博")
         match = Match(left[0:2], right[0:2])
-        extender = LevenshteinExtender(threshold=0.75, len_limit=100)
-        self.assertEqual(extender.extend(match), Match(left[0:4], right[0:4]))
+        extend = LevenshteinExtender(threshold=0.75, len_limit=100)
+        self.assertEqual(extend(match), Match(left[0:4], right[0:4]))
 
     def test_fuzzy_match(self) -> None:
         """matches should extend as long as they're above the threshold
@@ -82,8 +82,8 @@ class TestLevenshteinExtender(TestCase):
         left = self.nlp.make_doc("子曰弟子入則孝出則弟謹而信汎愛眾而親仁行有餘力則以學文")
         right = self.nlp.make_doc("子曰弟子入則孝出則悌謹而信泛愛衆而親仁行有餘力則以學文")
         match = Match(left[0:4], right[0:4])
-        extender = LevenshteinExtender(threshold=0.75, len_limit=100)
-        self.assertEqual(extender.extend(match),
+        extend = LevenshteinExtender(threshold=0.75, len_limit=100)
+        self.assertEqual(extend(match),
                          Match(left[0:27], right[0:27]))
 
     def test_long_match(self) -> None:
@@ -103,6 +103,6 @@ class TestLevenshteinExtender(TestCase):
             "由也千乘之國可使治其賦也求也千室之邑百乘之家可使為之宰赤也束帶立於朝可使與賓客言也又曰子謂子產有君子之道四焉其行己也恭其事上也敬")
         match = Match(left[0:4], right[0:4])
         # lower threshold and len_limit
-        extender = LevenshteinExtender(threshold=0.5, len_limit=50)
-        self.assertEqual(extender.extend(match),
+        extend = LevenshteinExtender(threshold=0.5, len_limit=50)
+        self.assertEqual(extend(match),
                          Match(left[0:64], right[0:64]))

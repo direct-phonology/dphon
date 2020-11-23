@@ -42,13 +42,13 @@ from spacy.tokens import Doc
 
 from dphon import __version__
 from dphon.align import SmithWatermanAligner
-from dphon.extender import LevenshteinPhoneticExtender
+from dphon.extend import LevenshteinPhoneticExtender
 from dphon.index import Index
 from dphon.fmt import SimpleFormatter, DEFAULT_THEME
-from dphon.match import Match
+from dphon.reuse import Match
 from dphon.ngrams import Ngrams
 from dphon.phonemes import Phonemes, get_sound_table_json
-from dphon.util import extend_matches
+from dphon.util import extend_matches, is_norm_eq
 
 # install logging and exception handlers
 logging.basicConfig(level="DEBUG", format="%(message)s",
@@ -152,12 +152,12 @@ def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
     logging.info(f"created {len(matches):,} initial matches in {finish:.3f}s")
 
     # query match groups from the index and extend them
-    extender = LevenshteinPhoneticExtender(threshold=0.8, len_limit=50)
+    extend = LevenshteinPhoneticExtender(threshold=0.8, len_limit=50)
     with progress:
         extend_task = progress.add_task(
             "extending matches", total=len(matches))
         start = time.perf_counter()
-        results = extend_matches(matches, extender)
+        results = extend_matches(matches, extend)
         progress.remove_task(extend_task)
     finish = time.perf_counter() - start
     logging.info(f"extended {len(results):,} matches in {finish:.3f}s")
@@ -186,7 +186,7 @@ def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
 
     # unless --all was requested, drop matches that are equal after normalization
     if not args.get("--all", None):
-        results = list(filterfalse(lambda m: m.is_norm_eq, results))
+        results = list(filterfalse(is_norm_eq, results))
 
     # TODO drop matches with no graphic variation if requested
     if args.get("--variants-only", None):

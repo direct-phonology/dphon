@@ -7,7 +7,7 @@ from typing import Tuple
 from rich.theme import Theme
 from spacy.tokens import Doc
 
-from dphon.match import Match, NotAlignedError
+from dphon.reuse import Match
 
 # Default color scheme for the RichFormatter
 DEFAULT_THEME = Theme({
@@ -57,9 +57,9 @@ class SimpleFormatter(MatchFormatter):
         """
 
         # check for alignment, if none use unaligned version
-        try:
+        if match.alignment:
             left, right = match.alignment
-        except NotAlignedError:
+        else:
             left, right = match.left.text, match.right.text
         # format the two sequences
         fmt_left, fmt_right = self.format_seqs(left, right)

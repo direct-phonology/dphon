@@ -5,7 +5,7 @@ from unittest import TestCase
 
 import spacy
 from dphon.align import SmithWatermanAligner
-from dphon.match import Match
+from dphon.reuse import Match
 from lingpy.align.pairwise import _get_scorer
 
 

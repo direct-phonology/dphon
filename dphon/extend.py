@@ -1,25 +1,18 @@
 """Abstract base class and implementations for extending Matches."""
 
-import json
-import logging
 from abc import ABC, abstractmethod
 
 import Levenshtein as Lev
-import pkg_resources
 
-from dphon.match import Match
+from dphon.reuse import Match
 from dphon.phonemes import OOV_PHONEMES
 
 
 class Extender(ABC):
-    """Extenders lengthen a match as far as possible and return a new match.
-
-    Each Extender accepts a single match at a time to extend() and uses its
-    Docs to determine if the match can be extended, returning a longer match.
-    """
+    """Extenders use heuristics to lengthen and return match sequences."""
 
     @abstractmethod
-    def extend(self, match: Match) -> Match:
+    def __call__(self, match: Match) -> Match:
         """Extend the match as far as possible and return it."""
         raise NotImplementedError
 
@@ -47,7 +40,7 @@ class LevenshteinExtender(Extender):
         text2 = match.right.text
         return Lev.ratio(text1[-self.len_limit:], text2[-self.len_limit:])
 
-    def extend(self, match: Match) -> Match:
+    def __call__(self, match: Match) -> Match:
         """Extend a match using edit distance comparison.
 
         Compare the two Spans via their Levenshtein ratio, and extend both
@@ -66,10 +59,8 @@ class LevenshteinExtender(Extender):
         trail = 0
         while score >= self.threshold and match.left.end < doc1_len and match.right.end < doc2_len:
             # extend by one character and rescore
-            match = Match(
-                doc1[match.left.start:match.left.end+1],
-                doc2[match.right.start:match.right.end+1]
-            )
+            match.left = doc1[match.left.start:match.left.end + 1]
+            match.right = doc2[match.right.start:match.right.end + 1]
             extended += 1
             new_score = self.score(match)
 
@@ -81,10 +72,9 @@ class LevenshteinExtender(Extender):
             score = new_score
 
         # when finished, return match with the "trail" removed, if any
-        return Match(
-            doc1[match.left.start:match.left.end - trail],
-            doc2[match.right.start:match.right.end - trail]
-        )
+        match.left = doc1[match.left.start:match.left.end - trail]
+        match.right = doc2[match.right.start:match.right.end - trail]
+        return match
 
 
 class LevenshteinPhoneticExtender(LevenshteinExtender):
@@ -98,8 +88,8 @@ class LevenshteinPhoneticExtender(LevenshteinExtender):
         if OOV_PHONEMES in match.left._.phonemes or \
            OOV_PHONEMES in match.right._.phonemes:
             return -1
-        
-        # otherwise score based on phonemes 
+
+        # otherwise score based on phonemes
         text1 = "".join(match.left._.phonemes)
         text2 = "".join(match.right._.phonemes)
         return Lev.ratio(text1[-self.len_limit:], text2[-self.len_limit:])

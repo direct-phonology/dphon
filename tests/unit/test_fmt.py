@@ -5,7 +5,7 @@ from unittest import TestCase
 
 import spacy
 from dphon.fmt import SimpleFormatter
-from dphon.match import Match
+from dphon.reuse import Match
 from spacy.tokens import Doc
 
 
@@ -50,9 +50,9 @@ class TestSimpleFormatter(TestCase):
         """should format matches using stored alignment if present"""
         # add an alignment
         fmt = SimpleFormatter()
-        match = Match(self.match.left, self.match.right,
-                      (["a ", "-------- ", "glass ", "tumbler"],
-                       ["an ", "inverted ", "glass ", "tumbler"]))
+        match = Match(self.match.left, self.match.right, 0,
+                      ("a -------- glass tumbler",
+                       "an inverted glass tumbler"))
         output = fmt(match)
         # output should include aligned version
         self.assertTrue("a          glass tumbler" in output)
@@ -68,9 +68,9 @@ class TestSimpleFormatter(TestCase):
         """should allow customization of gap character in alignments"""
         fmt = SimpleFormatter(gap_char="$")
         # add an alignment
-        match = Match(self.match.left, self.match.right,
-                      (["a ", "-------- ", "glass ", "tumbler"],
-                       ["an ", "inverted ", "glass ", "tumbler"]))
+        match = Match(self.match.left, self.match.right, 0,
+                      ("a -------- glass tumbler",
+                       "an inverted glass tumbler"))
         output = fmt(match)
         # should use gap character in output
         self.assertTrue("a $$$$$$$$ glass tumbler" in output)

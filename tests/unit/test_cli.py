@@ -9,6 +9,7 @@ from unittest.mock import MagicMock, patch
 from dphon.cli import __doc__ as doc
 from dphon.cli import __version__ as version
 from dphon.cli import process, run, setup, teardown
+from dphon.util import is_norm_eq
 
 # disconnect logging for testing
 logging.disable(logging.CRITICAL)
@@ -70,7 +71,7 @@ class TestOptions(TestCase):
         """--all flag should include trivial results with little variation"""
         args = {"--all": True, "<path>": ["tests/fixtures/shijing/"]}
         results = process(self.nlp, self.progress, args)
-        self.assertTrue(results[0].is_norm_eq)
+        self.assertTrue(is_norm_eq(results[0]))
 
     def test_keep_newlines(self) -> None:
         """--keep-newlines flag should preserve newlines in output"""
@@ -79,6 +80,8 @@ class TestOptions(TestCase):
                 "--min": "11",
                 "--max": "11"}
         results = process(self.nlp, self.progress, args)
+        if not results[-3].alignment:
+            self.fail("results were not aligned")
         self.assertTrue("\n" in results[-3].alignment[0])
 
     @skip("todo")

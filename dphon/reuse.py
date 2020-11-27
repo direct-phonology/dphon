@@ -12,10 +12,10 @@ class Match():
 
     left: Span
     right: Span
-    score: Optional[float] = None
-    alignment: Optional[Tuple[str, str]] = None
+    score: float
+    alignment: Optional[Tuple[str, str]]
 
-    def __init__(self, left: Span, right: Span, score: Optional[float] = None,
+    def __init__(self, left: Span, right: Span, score: float = 0,
                  alignment: Optional[Tuple[str, str]] = None) -> None:
         """Make a shallow copy of the two sequences in the match."""
         self.left = left.doc[left.start:left.end]

@@ -85,11 +85,11 @@ def run() -> None:
     if args["--output"]:
         with open(args["--output"], mode="w", encoding="utf8") as file:
             for match in results:
-                file.write(format(match) + "\n\n")
+                file.write(format(match) + "\n")
         logging.info(f"wrote {args['--output']}")
     else:
         for match in results:
-            console.print((format(match) + "\n\n"))
+            console.print((format(match) + "\n"))
 
     # teardown pipeline
     teardown(nlp)
@@ -153,10 +153,6 @@ def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
     finish = time.perf_counter() - start
     logging.info(f"created {len(matches):,} initial matches in {finish:.3f}s")
 
-    # unless --all was requested, drop matches that are equal after normalization
-    if not args.get("--all", None):
-        matches = list(filterfalse(is_norm_eq, matches))
-
     # TODO drop matches with no graphic variation if requested
     if args.get("--variants-only", None):
         pass
@@ -193,6 +189,11 @@ def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
     if args.get("--max", None):
         results = list(filterfalse(lambda m: len(m) >
                                    int(args["--max"]), results))
+
+    # unless --all was requested, drop matches that are equal after normalization
+    if not args.get("--all", None):
+        results = list(filterfalse(is_norm_eq, results))
+
     return results
 
 
@@ -246,6 +247,7 @@ def load_texts(paths: List[str], newlines: bool = False) -> Iterator[Tuple[str, 
                 total += 1
                 yield (file_contents, {"title": file.stem})
     logging.info(f"loaded {total} total texts from filesystem")
+
 
 if __name__ == "__main__":
     run()

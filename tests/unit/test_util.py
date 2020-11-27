@@ -210,7 +210,8 @@ class TestExtendMatches(TestCase):
         ]
         results = extend_matches(matches, self.extend)
         # first match is kept and extended; second is discarded as internal
-        self.assertEqual(results, [Match(left[0:18], right[0:18])])
+        self.assertEqual(results[0].left, left[0:18])
+        self.assertEqual(results[0].right, right[0:18])
 
     def test_sub_overlap(self) -> None:
         """consecutive overlapping matches should be independently extended"""
@@ -230,10 +231,10 @@ class TestExtendMatches(TestCase):
         ]
         results = extend_matches(matches, self.extend)
         # two different extended matches
-        self.assertEqual(results, [
-            Match(left[8:13], right[13:18]),
-            Match(left[10:13], right[1:4])
-        ])
+        self.assertEqual((results[0].left, results[0].right),
+                          (left[8:13], right[13:18]))
+        self.assertEqual((results[1].left, results[1].right),
+                          (left[10:13], right[1:4]))
 
     def test_mirror_submatches(self) -> None:
         """longer matches shouldn't generate internal mirrored submatches"""
@@ -259,4 +260,5 @@ class TestExtendMatches(TestCase):
         ]
         results = extend_matches(matches, self.extend)
         # single match from chars 1-13, no internal matching
-        self.assertEqual(results, [Match(left[1:14], right[1:14])])
+        self.assertEqual(results[0].left, left[1:14])
+        self.assertEqual(results[0].right, right[1:14])

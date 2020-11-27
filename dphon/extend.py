@@ -4,8 +4,8 @@ from abc import ABC, abstractmethod
 
 import Levenshtein as Lev
 
-from dphon.reuse import Match
 from dphon.phonemes import OOV_PHONEMES
+from dphon.reuse import Match
 
 
 class Extender(ABC):
@@ -17,16 +17,14 @@ class Extender(ABC):
         raise NotImplementedError
 
 
-class LevenshteinExtender(Extender):
-    """Extends a match by adding tokens to both sequences until their
-    Levenshtein ratio drops below a given threshold.
+class StringDistanceExtender(Extender):
+    """Add tokens to sequences while string distance metric is above threshold.
 
-    This strategy is borrowed and adapted from Paul Vierthaler's chinesetextreuse
-    project, specifically:
-    https://github.com/vierth/chinesetextreuse/blob/master/detect_intertexuality.py#L189-L249
+    Subclass and implement the _score() method to implement the desired string
+    distance measure, e.g. Levenshtein ratio.
     """
 
-    threshold: float    # if the Levenshtein ratio falls below this, match ends
+    threshold: float    # if the score falls below this, match gets cut off
     len_limit: int      # only score this many tokens at the end of the match
 
     def __init__(self, threshold: float, len_limit: int) -> None:
@@ -34,57 +32,95 @@ class LevenshteinExtender(Extender):
         self.threshold = threshold
         self.len_limit = len_limit
 
-    def score(self, match: Match) -> float:
-        """Compare the two Spans of a Match to generate a similarity score."""
-        text1 = match.left.text
-        text2 = match.right.text
-        return Lev.ratio(text1[-self.len_limit:], text2[-self.len_limit:])
+    @abstractmethod
+    def _score(self, match: Match, rev: bool = False) -> float:
+        """Compare the match sequences using a string distance measurement.
+        
+        Compares only up to len_limit characters when scoring, to speed up
+        calculation and improve accuracy for long sequences. When looking in
+        reverse, set rev=True to compare the start of the match instead of the
+        ends."""
+        raise NotImplementedError
 
-    def __call__(self, match: Match) -> Match:
-        """Extend a match using edit distance comparison.
-
-        Compare the two Spans via their Levenshtein ratio, and extend both
-        Spans until that ratio falls below the stored threshold. Compare only 
-        the final len_limit characters when scoring.
-        """
-        # get the docs and their bounds
-        doc1 = match.left.doc
-        doc2 = match.right.doc
-        doc1_len = len(match.left.doc)
-        doc2_len = len(match.right.doc)
-
-        # extend until we drop below the threshold or reach end of texts
-        score = self.score(match)
-        extended = 0
+    def _extend_fwd(self, match: Match) -> Match:
+        """Extend the match forward and return it, updating the score."""
         trail = 0
-        while score >= self.threshold and match.left.end < doc1_len and match.right.end < doc2_len:
-            # extend by one character and rescore
-            match.left = doc1[match.left.start:match.left.end + 1]
-            match.right = doc2[match.right.start:match.right.end + 1]
-            extended += 1
-            new_score = self.score(match)
+        score = final_score = self._score(match)
+        left_len, right_len = len(match.left.doc), len(match.right.doc)
 
-            # keep track of consecutive decreases so we can discard the "trail"
-            if new_score < score:
-                trail += 1
-            else:
-                trail = 0
+        # extend while score is above threshold and we aren't at the end
+        while score >= self.threshold and \
+                match.left.end < left_len and match.right.end < right_len:
+            match.left = match.left.doc[match.left.start:match.left.end + 1]
+            match.right = match.right.doc[match.right.start:match.right.end + 1]
+
+            # track the last score increase and how far we've gone past it
+            new_score = self._score(match)
+            trail = trail + 1 if new_score < score else 0
+            final_score = new_score if new_score > score else final_score
             score = new_score
 
-        # when finished, return match with the "trail" removed, if any
-        match.left = doc1[match.left.start:match.left.end - trail]
-        match.right = doc2[match.right.start:match.right.end - trail]
+        # return match trimmed back to last increasing score, with final score
+        match.left = match.left.doc[match.left.start:match.left.end - trail]
+        match.right = match.right.doc[match.right.start:match.right.end - trail]
+        match.score = final_score
         return match
 
+    def _extend_rev(self, match: Match) -> Match:
+        """Extend the match backwards and return it, updating the score."""
+        trail = 0
+        score = final_score = self._score(match, rev=True)
 
-class LevenshteinPhoneticExtender(LevenshteinExtender):
-    """Extends a match by adding tokens to both sequences until the Levenshtein
-    ratio of their phonemes drops below a given threshold.
-    """
+        # extend while score is above threshold and we aren't at the start
+        while score >= self.threshold and \
+                match.left.start > 0 and match.right.start > 0:
+            match.left = match.left.doc[(match.left.start-1):match.left.end]
+            match.right = match.right.doc[(match.right.start-1):match.right.end]
 
-    def score(self, match: Match) -> float:
-        """Score the Match using the Levenshtein ratio of its phonemes."""
-        # if we encounter any OOV tokens, end the match
+            # track the last score increase and how far we've gone past it
+            new_score = self._score(match, rev=True)
+            trail = trail + 1 if new_score < score else 0
+            final_score = new_score if new_score > score else final_score
+            score = new_score
+
+        # return match trimmed back to last increasing score, with final score
+        match.left = match.left.doc[match.left.start + trail:match.left.end]
+        match.right = match.right.doc[match.right.start +
+                                      trail:match.right.end]
+        match.score = final_score
+        return match
+
+    def __call__(self, match: Match) -> Match:
+        """Extend a match using Levenshtein ratio comparison."""
+        return self._extend_rev(self._extend_fwd(match))
+
+
+class LevenshteinExtender(StringDistanceExtender):
+    """Add tokens to sequences while Levenshtein ratio is above threshold."""
+
+    def _score(self, match: Match, rev: bool = False) -> float:
+        """Compute the Levenshtein ratio of the match sequences."""
+
+        if rev:
+            return Lev.ratio(
+                match.left.text[:self.len_limit],
+                match.right.text[:self.len_limit]
+            )
+        else:
+            return Lev.ratio(
+                match.left.text[-self.len_limit:],
+                match.right.text[-self.len_limit:]
+            )
+
+
+class LevenshteinPhoneticExtender(StringDistanceExtender):
+    """Add tokens to sequences while Levenshtein ratio of phonemes is above
+    threshold."""
+
+    def _score(self, match: Match, rev: bool = False) -> float:
+        """Compute the Levenshtein ratio of the match sequence phonemes."""
+
+        # if we encounter any OOV tokens, count it as a mismatch
         if OOV_PHONEMES in match.left._.phonemes or \
            OOV_PHONEMES in match.right._.phonemes:
             return -1
@@ -92,4 +128,9 @@ class LevenshteinPhoneticExtender(LevenshteinExtender):
         # otherwise score based on phonemes
         text1 = "".join(match.left._.phonemes)
         text2 = "".join(match.right._.phonemes)
-        return Lev.ratio(text1[-self.len_limit:], text2[-self.len_limit:])
+
+        # score in the provided direction
+        if rev:
+            return Lev.ratio(text1[:self.len_limit], text2[:self.len_limit])
+        else:
+            return Lev.ratio(text1[-self.len_limit:], text2[-self.len_limit:])

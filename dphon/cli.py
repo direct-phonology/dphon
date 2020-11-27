@@ -104,7 +104,8 @@ def setup() -> Language:
     Doc.set_extension("title", default="")
 
     # setup spaCy model
-    nlp = spacy.blank("zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
+    nlp = spacy.blank(
+        "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
     nlp.add_pipe(Phonemes(nlp, sound_table=sound_table), first=True)
     nlp.add_pipe(Ngrams(nlp, n=4), after="phonemes")
     nlp.add_pipe(Index(nlp, val_fn=lambda doc: doc._.ngrams,
@@ -117,6 +118,7 @@ def setup() -> Language:
 def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
     """Run the spaCy processing pipeline."""
 
+    # load and index all documents
     newlines = args.get("--keep-newlines", False)
     with progress:
         docs_task = progress.add_task("indexing documents")
@@ -151,8 +153,16 @@ def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
     finish = time.perf_counter() - start
     logging.info(f"created {len(matches):,} initial matches in {finish:.3f}s")
 
+    # unless --all was requested, drop matches that are equal after normalization
+    if not args.get("--all", None):
+        matches = list(filterfalse(is_norm_eq, matches))
+
+    # TODO drop matches with no graphic variation if requested
+    if args.get("--variants-only", None):
+        pass
+
     # query match groups from the index and extend them
-    extend = LevenshteinPhoneticExtender(threshold=0.8, len_limit=50)
+    extend = LevenshteinPhoneticExtender(threshold=0.7, len_limit=50)
     with progress:
         extend_task = progress.add_task(
             "extending matches", total=len(matches))
@@ -183,15 +193,6 @@ def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
     if args.get("--max", None):
         results = list(filterfalse(lambda m: len(m) >
                                    int(args["--max"]), results))
-
-    # unless --all was requested, drop matches that are equal after normalization
-    if not args.get("--all", None):
-        results = list(filterfalse(is_norm_eq, results))
-
-    # TODO drop matches with no graphic variation if requested
-    if args.get("--variants-only", None):
-        pass
-
     return results
 
 
@@ -245,3 +246,6 @@ def load_texts(paths: List[str], newlines: bool = False) -> Iterator[Tuple[str, 
                 total += 1
                 yield (file_contents, {"title": file.stem})
     logging.info(f"loaded {total} total texts from filesystem")
+
+if __name__ == "__main__":
+    run()

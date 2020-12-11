@@ -60,13 +60,12 @@ class SimpleFormatter(MatchFormatter):
         else:
             left, right = match.left.text, match.right.text
 
-        # format the two sequences
+        # format the two sequences and join with newline
         fmt_left, fmt_right = self.format_seqs(left, right)
-        top = f"{fmt_left} ({match.left.doc._.title})"
-        bottom = f"{fmt_right} ({match.right.doc._.title})"
-        
-        # join with a newline
-        return f"{top}\n{bottom}"
+        return (f"{fmt_left} ({match.left.doc._.title} "
+                f"{match.left.start}–{match.left.end})\n"
+                f"{fmt_right} ({match.right.doc._.title} "
+                f"{match.right.start}–{match.right.end})")
 
 
 class ColorFormatter(SimpleFormatter):

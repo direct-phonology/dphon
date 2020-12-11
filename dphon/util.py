@@ -3,79 +3,28 @@ Utility functions
 """
 
 import logging
-from typing import Any, Dict, List, Tuple, Iterable
+from collections import deque
+from itertools import chain, groupby
+from operator import attrgetter
 from pathlib import Path
-from itertools import groupby, chain
-from spacy.tokens import Doc
+from typing import Any, Dict, Iterable, List, Tuple, Deque
+
+from py_lapper import Cursor, Interval, Lapper
 
 from dphon.extend import Extender
 from dphon.reuse import Match
 
-'''
-
-
-def has_graphic_variation(tokens: List[Token]) -> bool:
-    """
-    Check if provided tokens are not graphically identical.
-    """
-    # FIXME this should actually check if there's a graphic variant!
-    texts = [t.meta["orig_text"] for t in tokens]
-    return len(set(texts)) > 1
-
 
 def condense_matches(matches: List[Match]) -> List[Match]:
-    """
-    Combine matches for a single document that are overlapping, so that only
-    maximal matches remain.
-    """
-    # if no matches, nothing to do
-    if len(matches) == 0:
-        return []
-
-    # order matches by location in document 1; keep active matches in a queue
-    matches = list(reversed(sorted(matches)))
-    new_matches: List[Match] = []
-    queue: List[Match] = []
-
-    # drain the old match list to fill up the new one
-    queue.append(matches.pop())
-    while len(matches) > 0:
-        current = matches.pop()
-
-        # if match is outside current range, dump queue and start over
-        if current.left.start > queue[0].left.end:
-            new_matches += queue
-            new_matches.append(current)
-            queue = []
-
-        # if match overlaps in doc1, check the queue
-        elif current.left.start > queue[0].left.start:
-            updated = False
-
-            for match in queue:
-                # if match needs to be condensed, extend bounds
-                if current.right.start > match.right.start and \
-                    current.right.start < match.right.end and \
-                    current.right.end > match.right.end:
-                    match.left = slice(match.left.start, current.left.end)
-                    match.right = slice(match.right.start, current.right.end)
-                    updated = True
-                    break
-                # if match is subsumed by another, remove from queue
-                elif current.right.start > match.right.start and \
-                    current.right.end < match.right.end:
-                    updated = True
-                    break
-
-            # if match hits new location in doc2, add to queue
-            if not updated:
-                queue.append(current)
-
-    # add any remaining matches from queue and return finished list
-    new_matches += queue
-    return new_matches
-
-'''
+    """Combine all overlapping matches in a pairwise document comparison."""
+    # ensure list is sorted first to speed up querying
+    matches.sort()
+    # convert matches into Interval tuples for comparison
+    intervals = [(Interval(match.left.start, match.left.end, None),
+                  Interval(match.right.start, match.right.end, None))
+                  for match in matches]
+    stack: Deque[Tuple[Interval]] = deque()
+    return matches
 
 
 def is_norm_eq(match: Match) -> bool:
@@ -92,17 +41,22 @@ def is_norm_eq(match: Match) -> bool:
 
 
 def group_by_doc(matches: Iterable[Match]) -> List[Match]:
-    """Group matches by left doc title, sorting by sequence position."""
+    """Group matches by doc title, sorting by sequence position."""
+    return list(sorted(matches, key=attrgetter("left.doc._.title",
+                                               "right.doc._.title",
+                                               "left.start",
+                                               "left.end",
+                                               "right.start",
+                                               "right.end")))
     temp = []
-    left_doc = lambda match: match.left.doc._.title
+    def left_doc(match): return match.left.doc._.title
     for _doc, group in groupby(sorted(matches, key=left_doc), key=left_doc):
         temp.append(sorted(group))
     return list(chain.from_iterable(temp))
 
 
 def extend_matches(matches: Iterable[Match], extend: Extender) -> List[Match]:
-    """Extend matches using a provided extension strategy, returning maximal
-    matches."""
+    """Extend a list of matches using a provided Extender instance."""
 
     new_matches: List[Match] = []
     queue: List[Match] = []

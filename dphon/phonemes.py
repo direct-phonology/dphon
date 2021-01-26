@@ -1,9 +1,7 @@
 """SpaCy pipeline component for converting Tokens to phonetic equivalents."""
 
-import csv
 import json
 import logging
-from collections import defaultdict
 from pathlib import Path
 from typing import Iterable, Iterator, Mapping, Optional, Tuple
 
@@ -125,28 +123,21 @@ class Phonemes():
             return self.table[token.text]
 
 
-def get_sound_table_csv(path: Path) -> SoundTable_T:
-    sound_table: SoundTable_T = defaultdict(tuple)
-    parts = ["Preinitial1", "Preinitial 2", "Initial", "Medial",
-             "Nucleus", "Final", "Postcoda *-ʔ", "Postcoda *-s"]
-    with open(path, encoding="utf8") as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            if row["\ufeffzi"] == "":
-                continue
-            sound_table[row["\ufeffzi"]] = tuple(
-                [row[part].strip() if row[part].strip() !=
-                 "" else None for part in parts]
-            )
-    logging.info(f"loaded sound table \"{path.stem}\"")
-    return sound_table
-
 
 def get_sound_table_json(path: Path) -> SoundTable_T:
-    sound_table: SoundTable_T = defaultdict(tuple)
+    """Load a sound table as JSON."""
+    sound_table: SoundTable_T = {}
+
+    # open the file and load all readings
     with open(path, encoding="utf8") as file:
         entries = json.loads(file.read())
-        for char, entry in entries.items():
-            sound_table[char] = tuple(entry)
+        for char, readings in entries.items():
+
+            # FIXME just using first reading for now, ignoring multiple
+            # NOTE final two entries in current table are source info; ignore
+            *reading, _src, _src2 = readings[0]
+            sound_table[char] = tuple(reading)
+    
+    # log and return finished table
     logging.info(f"sound table {path.stem} loaded")
-    return dict(sound_table)
+    return sound_table

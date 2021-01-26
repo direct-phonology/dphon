@@ -2,12 +2,11 @@
 """Classes for formatting and display of matches."""
 
 from abc import ABC, abstractmethod
-from typing import Tuple
+from typing import Tuple, Callable, List
 
 from rich.theme import Theme
-from spacy.tokens import Doc
 
-from dphon.reuse import Match
+from dphon.match import Match
 
 # Default color scheme for the RichFormatter
 DEFAULT_THEME = Theme({
@@ -35,37 +34,35 @@ class SimpleFormatter(MatchFormatter):
 
     gap_char: str
     nl_char: str
+    _transforms: List[Callable[[str], str]]
 
     def __init__(self, gap_char: str = " ", nl_char: str = "⏎") -> None:
         """Create a formatter with specified gap and newline characters."""
-        # Doc titles are required
-        if not Doc.has_extension("title"):
-            raise RuntimeError("Missing title extension attribute on Doc.")
         self.gap_char = gap_char
         self.nl_char = nl_char
 
-    def format_seqs(self, left: str, right: str) -> Tuple[str, str]:
-        """Replace gap and newline characters in sequences."""
-        # alignment result uses "-" to indicate gaps
+    def _format_seqs(self, match: Match) -> Tuple[str, str]:
+        """Format the match sequences for display.
+
+        Uses aligned versions if they are present, replacing alignment gaps and
+        newlines with gap_char and nl_char."""
+        _u, _v, utxt, vtxt, _score, au, av = match
+        if au and av:
+            return (
+                au.replace("-", self.gap_char).replace("\n", self.nl_char),
+                av.replace("-", self.gap_char).replace("\n", self.nl_char)
+            )
         return (
-            left.replace("-", self.gap_char).replace("\n", self.nl_char),
-            right.replace("-", self.gap_char).replace("\n", self.nl_char)
+            utxt.text.replace("-", self.gap_char).replace("\n", self.nl_char),
+            vtxt.text.replace("-", self.gap_char).replace("\n", self.nl_char)
         )
 
     def __call__(self, match: Match) -> str:
-        """Display the match sequences with document titles."""
-        # check for alignment, if none use unaligned version
-        if match.alignment:
-            left, right = match.alignment
-        else:
-            left, right = match.left.text, match.right.text
-
-        # format the two sequences and join with newline
-        fmt_left, fmt_right = self.format_seqs(left, right)
-        return (f"{fmt_left} ({match.left.doc._.title} "
-                f"{match.left.start}–{match.left.end})\n"
-                f"{fmt_right} ({match.right.doc._.title} "
-                f"{match.right.start}–{match.right.end})")
+        """Display the match sequences with metadata."""
+        fu, fv = self._format_seqs(match)
+        u, v, utxt, vtxt, *_ = match
+        return (f"{fu} ({u} {utxt.start}–{utxt.end-1})\n"
+                f"{fv} ({v} {vtxt.start}–{vtxt.end-1})")
 
 
 class ColorFormatter(SimpleFormatter):

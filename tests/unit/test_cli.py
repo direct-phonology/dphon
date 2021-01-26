@@ -44,7 +44,6 @@ class TestOptions(TestCase):
         """Unregister components to prevent name collisions."""
         teardown(self.nlp)
 
-    @skip("fixme")
     def test_min(self) -> None:
         """--min option should limit to results with specified minimum length"""
         args = {"--min": "50", "<path>": ["tests/fixtures/laozi/"]}
@@ -52,7 +51,6 @@ class TestOptions(TestCase):
         for result in results:
             self.assertTrue(len(result) >= 50)
 
-    @skip("fixme")
     def test_max(self) -> None:
         """--max option should limit to results with specified maximum length"""
         args = {"--max": "4", "<path>": ["tests/fixtures/laozi/"]}
@@ -60,7 +58,6 @@ class TestOptions(TestCase):
         for match in results:
             self.assertTrue(len(match) <= 4)
 
-    @skip("fixme")
     def test_min_and_max(self) -> None:
         """--min and --max options together should limit to exact length"""
         args = {"--min": "8", "--max": "8",
@@ -69,17 +66,16 @@ class TestOptions(TestCase):
         for match in results:
             self.assertTrue(len(match) == 8)
 
-    @skip("fixme")
     def test_keep_newlines(self) -> None:
         """--keep-newlines flag should preserve newlines in output"""
         args = {"--keep-newlines": True,
                 "<path>": ["tests/fixtures/laozi/"],
                 "--min": "11",
                 "--max": "11"}
-        results = process(self.nlp, self.progress, args).matches
-        if not results[-3].alignment:
+        results = list(process(self.nlp, self.progress, args).matches)
+        if not results[-3].au:
             self.fail("results were not aligned")
-        self.assertTrue("\n" in results[-3].alignment[0])
+        self.assertTrue("\n" in results[-3].au)
 
     @skip("todo")
     def test_variants_only(self) -> None:

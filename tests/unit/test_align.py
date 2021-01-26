@@ -4,8 +4,8 @@
 from unittest import TestCase
 
 import spacy
+from dphon.match import Match
 from dphon.align import SmithWatermanAligner
-from dphon.reuse import Match
 from lingpy.align.pairwise import _get_scorer
 
 
@@ -15,9 +15,11 @@ class TestSmithWatermanAligner(TestCase):
 
     def setUp(self) -> None:
         """Create a spaCy pipeline and aligner for use in testing."""
+
         # blank chinese pipeline
         self.nlp = spacy.blank(
             "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
+
         # allow the aligner to create default matching matrix
         self.align = SmithWatermanAligner()
 
@@ -29,14 +31,15 @@ class TestSmithWatermanAligner(TestCase):
         - https://ctext.org/shiji/zhong-ni-di-zi-lie-zhuan?filter=503848"""
 
         # create docs and a match
-        left = self.nlp.make_doc("千室之邑百乘之家")
-        right = self.nlp.make_doc("千室之邑百乘之家")
-        match = Match(left=left[:], right=right[:])
+        u = self.nlp.make_doc("千室之邑百乘之家")
+        v = self.nlp.make_doc("千室之邑百乘之家")
+        match = Match("analects", "shiji", u[:], v[:])
 
-        # alignment should be identical
-        aligned_left, aligned_right = self.align(match).alignment
-        self.assertEqual(aligned_left, left.text)
-        self.assertEqual(aligned_right, right.text)
+        # alignment should be identical with perfect score
+        *_, score, au, av = self.align(match)
+        self.assertEqual(au, u.text)
+        self.assertEqual(av, v.text)
+        self.assertEqual(score, 8.0)
 
     def test_trim(self) -> None:
         """Matches with a trailing portion that doesn't match should be trimmed.
@@ -45,14 +48,14 @@ class TestSmithWatermanAligner(TestCase):
         - https://ctext.org/text.pl?node=370528&if=en&filter=497427"""
 
         # create docs and a match
-        left = self.nlp.make_doc("子如鄉黨恂恂如也似不能言者")
-        right = self.nlp.make_doc("子於鄉黨恂恂如也父母之國")
-        match = Match(left=left[:], right=right[:])
+        u = self.nlp.make_doc("子如鄉黨恂恂如也似不能言者")
+        v = self.nlp.make_doc("子於鄉黨恂恂如也父母之國")
+        match = Match("taipingyulan", "taipingyulan", u[:], v[:])
 
         # alignment should include only matching portion
-        aligned_left, aligned_right = self.align(match).alignment
-        self.assertEqual(aligned_left, "子如鄉黨恂恂如也")
-        self.assertEqual(aligned_right, "子於鄉黨恂恂如也")
+        *_, au, av = self.align(match)
+        self.assertEqual(au, "子如鄉黨恂恂如也")
+        self.assertEqual(av, "子於鄉黨恂恂如也")
 
     def test_spacing(self) -> None:
         """Matches with deletions should be padded so that lengths align.
@@ -62,19 +65,22 @@ class TestSmithWatermanAligner(TestCase):
         - https://ctext.org/text.pl?node=384985&if=en&filter=430524"""
 
         # create a mock match and align it
-        left = self.nlp.make_doc(("由也千乘之國可使治其賦也不知其仁也求也何如子曰求也千"
-                                  "室之邑百乘之家可使為之宰也不知其仁也赤也何如子曰赤也束帶立於朝可使與賓客言也"))
-        right = self.nlp.make_doc(("由也千乘之國可使治其賦也求也千室之邑百乘之家可使為之"
-                                   "宰赤也束帶立於朝可使與賓客言也又曰子謂子產有君子之道四焉其行己也恭其事上也敬"))
-        match = Match(left=left[:], right=right[:])
+        u = self.nlp.make_doc(("由也千乘之國可使治其賦也不知其仁也求也何如子曰求也千"
+                               "室之邑百乘之家可使為之宰也不知其仁也赤也何如子曰赤也"
+                               "束帶立於朝可使與賓客言也"))
+        v = self.nlp.make_doc(("由也千乘之國可使治其賦也求也千室之邑百乘之家可使為之"
+                               "宰赤也束帶立於朝可使與賓客言也又曰子謂子產有君子之道"
+                               "四焉其行己也恭其事上也敬"))
+        match = Match("analects", "taipingyulan", u[:], v[:])
 
         # first string shouldn't change when aligned
-        aligned_left, aligned_right = self.align(match).alignment
-        self.assertEqual(aligned_left, left.text)
+        *_, au, av = self.align(match)
+        self.assertEqual(au, u.text)
+
         # alignment should space out second string to match first
         # note that this isn't the ideal alignment for us, but it is considered
         # an optimal alignment by the algorithm
-        self.assertEqual(aligned_right, (
+        self.assertEqual(av, (
             "由也千乘之國可使治其賦-------也----求也千室之邑百乘之家"
             "可使為之宰------------赤也束帶立於朝可使與賓客言也"
         ))
@@ -87,16 +93,12 @@ class TestSmithWatermanAligner(TestCase):
         self.align = SmithWatermanAligner(scorer=scorer)
 
         # create match and align it
-        left = self.nlp.make_doc("AACABACABACABACC")
-        right = self.nlp.make_doc("CCCBBBCBBBCBBBAA")
-        match = Match(left=left[:], right=right[:])
+        u = self.nlp.make_doc("AACABACABACABACC")
+        v = self.nlp.make_doc("CCCBBBCBBBCBBBAA")
+        match = Match("u", "v", u[:], v[:])
 
-        # central part is aligned exactly
-        result = self.align(match)
-        aligned_left, aligned_right = result.alignment
-        self.assertEqual((aligned_left, aligned_right), (
-            "CABACABACABA",
-            "CBBBCBBBCBBB"
-        ))
-        # perfect score (1.0 × 12)
-        self.assertEqual(result.score, 12.0)
+        # central part is aligned exactly; perfect score
+        *_, score, au, av = self.align(match)
+        self.assertEqual(au, "CABACABACABA")
+        self.assertEqual(av, "CBBBCBBBCBBB")
+        self.assertEqual(score, 12.0)

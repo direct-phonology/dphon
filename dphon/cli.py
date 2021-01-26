@@ -10,7 +10,6 @@ Options:
     -v --version                Show program version.
     --variants-only             Limit to matches with true graphic variation.
     --keep-newlines             Preserve newlines in output.
-    -a --all                    Include matches with no variation at all.
     -o <file> --output <file>   Write output to a file.
     --min <min>                 Limit to matches with length >= min.
     --max <max>                 Limit to matches with length <= max.
@@ -27,7 +26,7 @@ Help:
 
 import logging
 import time
-from itertools import combinations, filterfalse
+from itertools import combinations
 from pathlib import Path
 from typing import Any, Dict, Iterator, List, Tuple
 
@@ -45,10 +44,10 @@ from dphon.align import SmithWatermanAligner
 from dphon.extend import LevenshteinPhoneticExtender
 from dphon.index import Index
 from dphon.fmt import SimpleFormatter, DEFAULT_THEME
-from dphon.reuse import Match
+from dphon.match import Match
+from dphon.reuse import MatchGraph
 from dphon.ngrams import Ngrams
 from dphon.phonemes import Phonemes, get_sound_table_json
-from dphon.util import extend_matches, is_norm_eq
 
 # install logging and exception handlers
 logging.basicConfig(level="DEBUG", format="%(message)s",
@@ -74,7 +73,8 @@ def run() -> None:
     )
 
     # process all texts
-    results = process(nlp, progress, args)
+    graph = process(nlp, progress, args)
+    results = list(graph.matches)
     logging.info(f"{len(results)} total results matching query")
 
     # set up formatting - colorize for terminal but not for files
@@ -96,7 +96,7 @@ def run() -> None:
 
 
 def setup() -> Language:
-    """Set up the spaCy proecssing pipeline."""
+    """Set up the spaCy processing pipeline."""
     # get sound table
     sound_table = get_sound_table_json(Path("./dphon/data/sound_table.json"))
 
@@ -115,10 +115,11 @@ def setup() -> Language:
     return nlp
 
 
-def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
+def process(nlp: Language, progress: Progress, args: Dict) -> MatchGraph:
     """Run the spaCy processing pipeline."""
 
     # load and index all documents
+    graph = MatchGraph()
     newlines = args.get("--keep-newlines", False)
     with progress:
         docs_task = progress.add_task("indexing documents")
@@ -126,6 +127,7 @@ def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
         start = all_start
         for doc, context in nlp.pipe(load_texts(args["<path>"], newlines=newlines), as_tuples=True):
             doc._.title = context["title"]
+            graph.add_doc(context["title"], doc)
             progress.update(docs_task, advance=1)
             finish = time.perf_counter() - start
             logging.debug(f"processed doc {context['title']} in {finish:.3f}s")
@@ -138,63 +140,31 @@ def process(nlp: Language, progress: Progress, args: Dict) -> List[Match]:
     groups = list(nlp.get_pipe("index").filter(
         lambda entry: len(entry[1]) > 1))
 
-    # create initial pairwise matches from seed groups
-    matches: List[Match] = []
-    with progress:
-        matches_task = progress.add_task(
-            "generating matches", total=len(groups))
-        start = time.perf_counter()
-        for _seed, locations in groups:
-            for left, right in combinations(locations, 2):
-                if left.doc != right.doc:  # skip same-doc matches
-                    matches.append(Match(left, right))
-            progress.update(matches_task, advance=1)
-        progress.remove_task(matches_task)
-    finish = time.perf_counter() - start
-    logging.info(f"created {len(matches):,} initial matches in {finish:.3f}s")
+    # create initial pairwise matches from seed groups; perfect score of 1.0
+    for _seed, locations in groups:
+        for utxt, vtxt in combinations(locations, 2):
+            if utxt.doc != vtxt.doc:  # skip same-doc matches
+                graph.add_match(
+                    Match(utxt.doc._.title, vtxt.doc._.title, utxt, vtxt, 1.0))
 
     # TODO drop matches with no graphic variation if requested
     if args.get("--variants-only", None):
         pass
 
     # query match groups from the index and extend them
-    extend = LevenshteinPhoneticExtender(threshold=0.7, len_limit=50)
-    with progress:
-        extend_task = progress.add_task(
-            "extending matches", total=len(matches))
-        start = time.perf_counter()
-        results = extend_matches(matches, extend)
-        progress.remove_task(extend_task)
-    finish = time.perf_counter() - start
-    logging.info(f"extended {len(results):,} matches in {finish:.3f}s")
+    graph.extend(LevenshteinPhoneticExtender(threshold=0.7, len_limit=50))
 
     # align all matches
-    align = SmithWatermanAligner()
-    aligned_results = []
-    with progress:
-        align_task = progress.add_task("aligning matches", total=len(results))
-        start = time.perf_counter()
-        for match in results:
-            aligned_results.append(align(match))
-            progress.update(align_task, advance=1)
-        progress.remove_task(align_task)
-    finish = time.perf_counter() - start
-    logging.info(f"aligned {len(aligned_results):,} matches in {finish:.3f}s")
-    results = aligned_results
+    graph.align(SmithWatermanAligner())
 
     # limit via min and max lengths if requested
     if args.get("--min", None):
-        results = list(filterfalse(lambda m: len(m) <
-                                   int(args["--min"]), results))
+        graph.filter(lambda m: len(m) >= int(args["--min"]))
     if args.get("--max", None):
-        results = list(filterfalse(lambda m: len(m) >
-                                   int(args["--max"]), results))
+        graph.filter(lambda m: len(m) <= int(args["--max"]))
 
-    # unless --all was requested, drop matches that are equal after normalization
-    if not args.get("--all", None):
-        results = list(filterfalse(is_norm_eq, results))
-
-    return results
+    # return completed reuse graph
+    return graph
 
 
 def teardown(nlp: Language) -> None:

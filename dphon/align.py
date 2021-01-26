@@ -6,19 +6,15 @@ from typing import Tuple, Mapping, List, Optional
 
 from lingpy.align.pairwise import sw_align
 
-from dphon.reuse import Match
+from dphon.match import Match
 
 # Lingpy scoring matrices: a × b = 1.0 -> { ("a", "b"): 1.0, ("b", "a"): 1.0 }
 # Matrix cells are represented as tuples; both a × b and b × a need to exist
 Scorer_T = Mapping[Tuple[str, str], float]
 
-# Single local alignment: "...ABC..." -> ([...], ["A", "B", "C"], [...])
-# Center section represents main aligned portion with highest similarity
-Aligned_T = Tuple[List[str], List[str], List[str]]
-
-# Match alignment results with score: (([], [ABC], []), ([], [ABC], []), 1.0)
-# Combines alignments for two sequences with the total score of the alignment
-Alignment_T = Tuple[Aligned_T, Aligned_T, float]
+# Match alignment results: (["A", "B", "C"], ["A", "B", "C"])
+# Set of two center aligned portions from sequences
+Alignment_T = Tuple[List[str], List[str]]
 
 
 class Aligner(ABC):
@@ -46,17 +42,17 @@ class SmithWatermanAligner(Aligner):
         and sequence texts calculated for the alignment."""
 
         # compute the alignment and keep non-aligned regions
-        (bl, cl, al), (br, cr, ar), score = sw_align(match.left.text,
-                                                     match.right.text,
+        (bu, cu, au), (bv, cv, av), score = sw_align(match.utxt.text,
+                                                     match.vtxt.text,
                                                      self.scorer)
 
         # use lengths of non-aligned regions to move the sequence boundaries
         # [...] ["A", "B", "C"] [...]
         # ---->                <----
-        match.left = match.left.doc[match.left.start + len(bl):match.left.end - len(al)]
-        match.right = match.right.doc[match.right.start + len(br):match.right.end - len(ar)]
+        u, v = match.utxt.doc, match.vtxt.doc
+        utxt = u[match.utxt.start + len(bu):match.utxt.end - len(au)]
+        vtxt = v[match.vtxt.start + len(bv):match.vtxt.end - len(av)]
 
-        # set score and aligned text
-        match.score = score
-        match.alignment = ("".join(cl), "".join(cr))
-        return match
+        # create a new match with alignment info and adjusted boundaries
+        au, av = map("".join, (cu, cv))
+        return Match(match.u, match.v, utxt, vtxt, score, au, av)

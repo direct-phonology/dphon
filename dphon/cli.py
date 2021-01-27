@@ -12,7 +12,6 @@ Options:
     -o <file>, --output <file>   Write output to a file.
     --min <min>                  Limit to matches with total tokens >= min.
     --max <max>                  Limit to matches with total tokens <= max.
-    --keep-newlines              Preserve newlines in output.
  
 Examples:
     dphon texts/ --min 8
@@ -24,8 +23,10 @@ Help:
     https://github.com/direct-phonology/direct
 """
 
+import glob
 import logging
 import time
+from collections import OrderedDict
 from itertools import combinations
 from pathlib import Path
 from typing import Any, Dict, Iterator, List, Tuple
@@ -34,7 +35,6 @@ import spacy
 from docopt import docopt
 from rich.console import Console
 from rich.logging import RichHandler
-from rich.progress import BarColumn, Progress
 from rich.traceback import install
 from spacy.language import Language
 from spacy.tokens import Doc
@@ -42,12 +42,13 @@ from spacy.tokens import Doc
 from dphon import __version__
 from dphon.align import SmithWatermanPhoneticAligner
 from dphon.extend import LevenshteinPhoneticExtender
+from dphon.fmt import DEFAULT_THEME, SimpleFormatter
 from dphon.index import Index
-from dphon.fmt import SimpleFormatter, DEFAULT_THEME
 from dphon.match import Match
-from dphon.reuse import MatchGraph
 from dphon.ngrams import Ngrams
 from dphon.phonemes import Phonemes, get_sound_table_json
+from dphon.reuse import MatchGraph
+from dphon.util import progress
 
 # install logging and exception handlers
 logging.basicConfig(level="DEBUG", format="%(message)s",
@@ -62,18 +63,8 @@ def run() -> None:
     # setup pipeline
     nlp = setup()
 
-    # create progress visualization
-    progress = Progress(
-        "{task.elapsed:.0f}s",
-        "{task.description}",
-        BarColumn(bar_width=None),
-        "{task.completed:,}/{task.total:,}",
-        "{task.percentage:.1f}%",
-        transient=True
-    )
-
     # process all texts
-    graph = process(nlp, progress, args)
+    graph = process(nlp, args)
     results = list(graph.matches)
     logging.info(f"{len(results)} total results matching query")
 
@@ -115,26 +106,26 @@ def setup() -> Language:
     return nlp
 
 
-def process(nlp: Language, progress: Progress, args: Dict) -> MatchGraph:
+def process(nlp: Language, args: Dict) -> MatchGraph:
     """Run the spaCy processing pipeline."""
 
     # load and index all documents
     graph = MatchGraph()
-    newlines = args["--keep-newlines"]
     with progress:
         docs_task = progress.add_task("indexing documents")
         all_start = time.perf_counter()
         start = all_start
-        for doc, context in nlp.pipe(load_texts(args["<path>"], newlines=newlines), as_tuples=True):
+        for doc, context in nlp.pipe(load_texts(args["<path>"]), as_tuples=True):
             doc._.title = context["title"]
             graph.add_doc(context["title"], doc)
             progress.update(docs_task, advance=1)
             finish = time.perf_counter() - start
-            logging.debug(f"processed doc {context['title']} in {finish:.3f}s")
+            logging.debug(
+                f"indexed doc \"{context['title']}\" in {finish:.3f}s")
             start = time.perf_counter()
         progress.remove_task(docs_task)
     all_finish = time.perf_counter() - all_start
-    logging.info(f"completed spaCy pipeline in {all_finish:.3f}s")
+    logging.info(f"indexing completed in {all_finish:.3f}s")
 
     # drop all ngrams from index that only occur once
     groups = nlp.get_pipe("index").filter(lambda g: len(g[1]) > 1)
@@ -176,7 +167,7 @@ def teardown(nlp: Language) -> None:
             component.teardown()
 
 
-def load_texts(paths: List[str], newlines: bool = False) -> Iterator[Tuple[str, Dict[str, Any]]]:
+def load_texts(paths: List[str]) -> Iterator[Tuple[str, Dict[str, Any]]]:
     """Load texts from all provided file or directory paths.
 
     All provided paths will be searched. If the path is a text file its contents
@@ -195,27 +186,28 @@ def load_texts(paths: List[str], newlines: bool = False) -> Iterator[Tuple[str, 
         A tuple of (text, metadata) for the next document found in all paths.
     """
 
+    # check all provided paths and get their filesize, if valid
+    logging.debug("checking paths...")
     total = 0
-    for _path in paths:
-        path = Path(_path)
-        if path.is_file():
-            with path.open(encoding="utf8") as contents:
-                file_contents = contents.read()
-            if not newlines:
-                file_contents = file_contents.replace("\n", "")
-            logging.debug(f"loaded text {path.stem}")
-            total += 1
-            yield (file_contents, {"title": path.stem})
-        elif path.is_dir():
-            for file in path.glob("**/*.txt"):
-                with file.open(encoding="utf8") as contents:
-                    file_contents = contents.read()
-                if not newlines:
-                    file_contents = file_contents.replace("\n", "")
-                logging.debug(f"loaded text {file.stem}")
+    files: Dict[str, Tuple[Path, int]] = {}
+    for path in paths:
+        for file in map(Path, glob.glob(path)):
+            if file.is_file():
+                files[file.stem] = file, file.stat().st_size
                 total += 1
-                yield (file_contents, {"title": file.stem})
-    logging.info(f"loaded {total} total texts from filesystem")
+                logging.debug(f"found \"{file}\", size={file.stat().st_size}")
+            else:
+                logging.warn(f"path \"{file}\" isn't a file")
+    logging.debug(f"found {total} total files")
+
+    # sort files by size, longest first, and yield with filename info
+    by_size = OrderedDict(
+        sorted(files.items(), key=lambda f: f[1][1], reverse=True))
+    progress.add_task("indexing")
+    for name, attrs in by_size.items():
+        with attrs[0].open(encoding="utf8") as contents:
+            logging.debug(f"loaded doc \"{name}\" with size={attrs[1]}B")
+            yield (contents.read(), {"title": name})
 
 
 if __name__ == "__main__":

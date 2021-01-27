@@ -36,10 +36,10 @@ class TestSmithWatermanAligner(TestCase):
         match = Match("analects", "shiji", u[:], v[:])
 
         # alignment should be identical with perfect score
-        *_, score, au, av = self.align(match)
-        self.assertEqual(au, u.text)
-        self.assertEqual(av, v.text)
-        self.assertEqual(score, 8.0)
+        aligned = self.align(match)
+        self.assertEqual(aligned.au, list(u.text))
+        self.assertEqual(aligned.av, list(v.text))
+        self.assertEqual(aligned.weight, 8.0)
 
     def test_trim(self) -> None:
         """Matches with a trailing portion that doesn't match should be trimmed.
@@ -53,9 +53,9 @@ class TestSmithWatermanAligner(TestCase):
         match = Match("taipingyulan", "taipingyulan", u[:], v[:])
 
         # alignment should include only matching portion
-        *_, au, av = self.align(match)
-        self.assertEqual(au, "子如鄉黨恂恂如也")
-        self.assertEqual(av, "子於鄉黨恂恂如也")
+        aligned = self.align(match)
+        self.assertEqual(aligned.au, list("子如鄉黨恂恂如也"))
+        self.assertEqual(aligned.av, list("子於鄉黨恂恂如也"))
 
     def test_spacing(self) -> None:
         """Matches with deletions should be padded so that lengths align.
@@ -74,16 +74,16 @@ class TestSmithWatermanAligner(TestCase):
         match = Match("analects", "taipingyulan", u[:], v[:])
 
         # first string shouldn't change when aligned
-        *_, au, av = self.align(match)
-        self.assertEqual(au, u.text)
+        aligned = self.align(match)
+        self.assertEqual(aligned.au, list(u.text))
 
         # alignment should space out second string to match first
         # note that this isn't the ideal alignment for us, but it is considered
         # an optimal alignment by the algorithm
-        self.assertEqual(av, (
+        self.assertEqual(aligned.av, list((
             "由也千乘之國可使治其賦-------也----求也千室之邑百乘之家"
             "可使為之宰------------赤也束帶立於朝可使與賓客言也"
-        ))
+        )))
 
     def test_scorer(self) -> None:
         """scoring matrix should affect alignment"""
@@ -98,7 +98,7 @@ class TestSmithWatermanAligner(TestCase):
         match = Match("u", "v", u[:], v[:])
 
         # central part is aligned exactly; perfect score
-        *_, score, au, av = self.align(match)
-        self.assertEqual(au, "CABACABACABA")
-        self.assertEqual(av, "CBBBCBBBCBBB")
-        self.assertEqual(score, 12.0)
+        aligned = self.align(match)
+        self.assertEqual(aligned.au, list("CABACABACABA"))
+        self.assertEqual(aligned.av, list("CBBBCBBBCBBB"))
+        self.assertEqual(aligned.weight, 12.0)

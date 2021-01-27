@@ -37,7 +37,6 @@ class SimpleFormatter(MatchFormatter):
     _transforms: List[Callable[[str], str]]
 
     def __init__(self, gap_char: str = " ", nl_char: str = "⏎") -> None:
-        """Create a formatter with specified gap and newline characters."""
         self.gap_char = gap_char
         self.nl_char = nl_char
 
@@ -46,16 +45,14 @@ class SimpleFormatter(MatchFormatter):
 
         Uses aligned versions if they are present, replacing alignment gaps and
         newlines with gap_char and nl_char."""
-        _u, _v, utxt, vtxt, _score, au, av = match
-        if au and av:
-            return (
-                au.replace("-", self.gap_char).replace("\n", self.nl_char),
-                av.replace("-", self.gap_char).replace("\n", self.nl_char)
-            )
-        return (
-            utxt.text.replace("-", self.gap_char).replace("\n", self.nl_char),
-            vtxt.text.replace("-", self.gap_char).replace("\n", self.nl_char)
-        )
+
+        if match.au and match.av:
+            au, av = map("".join, (match.au, match.av))
+            au, av = map(lambda s: s.replace("-", self.gap_char), (au, av))
+        else:
+            au, av = (match.utxt.text, match.vtxt.text)
+        au, av = map(lambda s: s.replace("\n", self.nl_char), (au, av))
+        return au, av
 
     def __call__(self, match: Match) -> str:
         """Display the match sequences with metadata."""
@@ -65,12 +62,31 @@ class SimpleFormatter(MatchFormatter):
                 f"{fv} ({v} {vtxt.start}–{vtxt.end-1})")
 
 
-class ColorFormatter(SimpleFormatter):
-    """Formatter that annotates output so it can be colorized in terminal.
+class RichFormatter(SimpleFormatter):
+    """Formatter that annotates output so it can be colorized in terminal."""
 
-    Uses a DFA approach to parse the sequences and annotate them with markers
-    that correspond to a color scheme."""
+    theme: Theme = DEFAULT_THEME
+    context_len: int = 4
 
-    # TODO
+    def _format_seqs(self, match: Match) -> Tuple[str, str]:
+        """Format the match sequences for display.
+        
+        Uses aligned versions if they are present, replacing alignment gaps and
+        newlines with gap_char and nl_char.
+        
+        Colorizes output using the stored theme, and adds context to either side
+        of the match sequences."""
 
-    pass
+        # convert to lists of strings; replace alignment gaps
+        if match.au and match.av:
+            au = [t if t != "-" else self.gap_char for t in match.au]
+            av = [t if t != "-" else self.gap_char for t in match.av]
+        else:
+            au = [t.text for t in match.utxt]
+            av = [t.text for t in match.vtxt]
+        
+        # replace newlines
+        au = [t if t != "\n" else self.nl_char for t in au]
+        av = [t if t != "\n" else self.nl_char for t in av]
+
+        return au, av

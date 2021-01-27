@@ -1,5 +1,5 @@
 from spacy.tokens import Span
-from typing import NamedTuple, Optional
+from typing import NamedTuple, Optional, List
 
 
 class Match(NamedTuple):
@@ -9,8 +9,8 @@ class Match(NamedTuple):
     utxt: Span
     vtxt: Span
     weight: float = 0
-    au: Optional[str] = None
-    av: Optional[str] = None
+    au: Optional[List[str]] = None
+    av: Optional[List[str]] = None
 
     def __len__(self) -> int:
         """Return the length of the longer sequence in the match."""

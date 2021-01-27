@@ -48,9 +48,11 @@ class MatchGraph():
         """Extend all matches in the graph using a provided strategy."""
         G = create_empty_copy(self._G)
         for u, v in combinations(self._G.nodes, 2):
-            matches = [Match(**data) for data in self._G.get_edge_data(u, v).values()]
-            extended = extend_matches(matches, extender)
-            G.add_edges_from([(m.u, m.v, m._asdict()) for m in extended])
+            edges = self._G.get_edge_data(u, v)
+            if edges:
+                matches = [Match(**data) for data in edges.values()]
+                extended = extend_matches(matches, extender)
+                G.add_edges_from([(m.u, m.v, m._asdict()) for m in extended])
         self._G = G
 
     def align(self, align: Aligner) -> None:

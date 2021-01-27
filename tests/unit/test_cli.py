@@ -3,6 +3,7 @@
 import logging
 import sys
 from io import StringIO
+from typing import Dict, Any
 from unittest import TestCase, skip
 from unittest.mock import MagicMock, patch
 
@@ -40,46 +41,51 @@ class TestOptions(TestCase):
         self.progress = MagicMock()
         self.nlp = setup()
 
+        # default CLI arguments; would be populated by docopt
+        self.args: Dict[str, Any] = {
+            "--min": None,
+            "--max": None,
+            "--all": False,
+            "--keep-newlines": False,
+            "<path>": ["tests/fixtures/laozi/"]  # testing fixture set
+        }
+
     def tearDown(self) -> None:
         """Unregister components to prevent name collisions."""
         teardown(self.nlp)
 
     def test_min(self) -> None:
         """--min option should limit to results with specified minimum length"""
-        args = {"--min": "50", "<path>": ["tests/fixtures/laozi/"]}
-        results = process(self.nlp, self.progress, args).matches
+        self.args["--min"] = "50"
+        results = process(self.nlp, self.progress, self.args).matches
         for result in results:
             self.assertTrue(len(result) >= 50)
 
     def test_max(self) -> None:
         """--max option should limit to results with specified maximum length"""
-        args = {"--max": "4", "<path>": ["tests/fixtures/laozi/"]}
-        results = process(self.nlp, self.progress, args).matches
+        self.args["--max"] = "4"
+        results = process(self.nlp, self.progress, self.args).matches
         for match in results:
             self.assertTrue(len(match) <= 4)
 
     def test_min_and_max(self) -> None:
         """--min and --max options together should limit to exact length"""
-        args = {"--min": "8", "--max": "8",
-                "<path>": ["tests/fixtures/laozi/"]}
-        results = process(self.nlp, self.progress, args).matches
+        self.args["--min"] = "8"
+        self.args["--max"] = "8"
+        results = process(self.nlp, self.progress, self.args).matches
         for match in results:
             self.assertTrue(len(match) == 8)
 
+    @skip("fixme")
     def test_keep_newlines(self) -> None:
         """--keep-newlines flag should preserve newlines in output"""
-        args = {"--keep-newlines": True,
-                "<path>": ["tests/fixtures/laozi/"],
-                "--min": "11",
-                "--max": "11"}
-        results = list(process(self.nlp, self.progress, args).matches)
-        if not results[-3].au:
-            self.fail("results were not aligned")
-        self.assertTrue("\n" in results[-3].au)
+        self.args["--keep-newlines"] = True
+        results = list(process(self.nlp, self.progress, self.args).matches)
+        self.assertTrue("\n" in results[0].utxt.text)
 
     @skip("todo")
     def test_variants_only(self) -> None:
-        """--variants-only flag should limit to results with graphic variation"""
+        """--all flag should show results without graphic variation"""
 
     @skip("todo")
     def test_output_file(self) -> None:

@@ -1,23 +1,23 @@
 """dphon - a tool for old chinese phonetic analysis
  
 Usage:
-    dphon <path>... [options]
     dphon -h | --help
     dphon --version
+    dphon [options] <path>... 
  
 Options:
-    -h --help                   Show this help.
-    -v --version                Show program version.
-    --variants-only             Limit to matches with true graphic variation.
-    --keep-newlines             Preserve newlines in output.
-    -o <file> --output <file>   Write output to a file.
-    --min <min>                 Limit to matches with length >= min.
-    --max <max>                 Limit to matches with length <= max.
+    -h, --help                   Show this help.
+    -v, --version                Show program version.
+    -a, --all                    Allow matches without graphic variation.
+    -o <file>, --output <file>   Write output to a file.
+    --min <min>                  Limit to matches with total tokens >= min.
+    --max <max>                  Limit to matches with total tokens <= max.
+    --keep-newlines              Preserve newlines in output.
  
 Examples:
     dphon texts/ --min 8
     dphon 老子甲.txt 老子丙.txt 老子乙.txt --output matches.txt
-    dphon 周南.txt 鹿鳴之什.txt --variants-only
+    dphon 周南.txt 鹿鳴之什.txt --all
  
 Help:
     For more information on using this tool, visit the Github repository:
@@ -40,7 +40,7 @@ from spacy.language import Language
 from spacy.tokens import Doc
 
 from dphon import __version__
-from dphon.align import SmithWatermanAligner
+from dphon.align import SmithWatermanPhoneticAligner
 from dphon.extend import LevenshteinPhoneticExtender
 from dphon.index import Index
 from dphon.fmt import SimpleFormatter, DEFAULT_THEME
@@ -120,7 +120,7 @@ def process(nlp: Language, progress: Progress, args: Dict) -> MatchGraph:
 
     # load and index all documents
     graph = MatchGraph()
-    newlines = args.get("--keep-newlines", False)
+    newlines = args["--keep-newlines"]
     with progress:
         docs_task = progress.add_task("indexing documents")
         all_start = time.perf_counter()
@@ -137,8 +137,7 @@ def process(nlp: Language, progress: Progress, args: Dict) -> MatchGraph:
     logging.info(f"completed spaCy pipeline in {all_finish:.3f}s")
 
     # drop all ngrams from index that only occur once
-    groups = list(nlp.get_pipe("index").filter(
-        lambda entry: len(entry[1]) > 1))
+    groups = nlp.get_pipe("index").filter(lambda g: len(g[1]) > 1)
 
     # create initial pairwise matches from seed groups; perfect score of 1.0
     for _seed, locations in groups:
@@ -147,20 +146,20 @@ def process(nlp: Language, progress: Progress, args: Dict) -> MatchGraph:
                 graph.add_match(
                     Match(utxt.doc._.title, vtxt.doc._.title, utxt, vtxt, 1.0))
 
-    # TODO drop matches with no graphic variation if requested
-    if args.get("--variants-only", None):
-        pass
+    # limit to seeds with graphic variants if requested
+    if not args["--all"]:
+        graph.filter(nlp.get_pipe("phonemes").has_variant)
 
-    # query match groups from the index and extend them
+    # extend all matches
     graph.extend(LevenshteinPhoneticExtender(threshold=0.7, len_limit=50))
 
     # align all matches
-    graph.align(SmithWatermanAligner())
+    graph.align(SmithWatermanPhoneticAligner())
 
     # limit via min and max lengths if requested
-    if args.get("--min", None):
+    if args["--min"]:
         graph.filter(lambda m: len(m) >= int(args["--min"]))
-    if args.get("--max", None):
+    if args["--max"]:
         graph.filter(lambda m: len(m) <= int(args["--max"]))
 
     # return completed reuse graph

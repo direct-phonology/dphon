@@ -6,11 +6,21 @@ import logging
 from itertools import chain, groupby
 from operator import attrgetter
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Tuple, Deque
+from typing import Any, Deque, Dict, Iterable, List, Tuple
+
+from rich.progress import BarColumn, Progress
 
 from dphon.extend import Extender
 from dphon.match import Match
 
+progress = Progress(
+    "{task.elapsed:.0f}s",
+    "{task.description}",
+    BarColumn(bar_width=None),
+    "{task.completed:,}/{task.total:,}",
+    "{task.percentage:.1f}%",
+    transient=True
+)
 
 def get_texts(directory: Path) -> List[Tuple[str, Dict[str, Any]]]:
     # load all texts and format with context

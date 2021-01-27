@@ -9,6 +9,8 @@ from spacy.language import Language
 from spacy.lookups import Lookups, Table
 from spacy.tokens import Doc, Span, Token
 
+from dphon.match import Match
+
 # register the pipeline component factory; see:
 # https://spacy.io/usage/processing-pipelines#custom-components-factories
 Language.factories["phonemes"] = lambda nlp, **cfg: Phonemes(nlp, **cfg)
@@ -68,6 +70,18 @@ class Phonemes():
         """Check if a token has a phonetic entry in the sound table."""
         return token.text not in self.table
 
+    def has_variant(self, match: Match) -> bool:
+        """True if a seed contains a graphic variant.
+        
+        This is designed to be called on seeds that are of the same length,
+        so that the match doesn't need to be aligned for it to work."""
+        
+        # compare each token pairwise, True if we find a variant, else False
+        for i in range(len(match)):
+            if self.are_graphic_variants(match.utxt[i], match.vtxt[i]):
+                return True
+        return False
+
     def are_graphic_variants(self, *tokens: Token) -> bool:
         """Check if a set of tokens are graphic variants of the same word.
 
@@ -123,7 +137,6 @@ class Phonemes():
             return self.table[token.text]
 
 
-
 def get_sound_table_json(path: Path) -> SoundTable_T:
     """Load a sound table as JSON."""
     sound_table: SoundTable_T = {}
@@ -137,7 +150,7 @@ def get_sound_table_json(path: Path) -> SoundTable_T:
             # NOTE final two entries in current table are source info; ignore
             *reading, _src, _src2 = readings[0]
             sound_table[char] = tuple(reading)
-    
+
     # log and return finished table
     logging.info(f"sound table {path.stem} loaded")
     return sound_table

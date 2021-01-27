@@ -4,7 +4,8 @@ import logging
 from unittest import TestCase
 
 import spacy
-from dphon.phonemes import Phonemes, OOV_PHONEMES
+from dphon.match import Match
+from dphon.phonemes import OOV_PHONEMES, Phonemes
 from spacy.tokens import Doc, Span, Token
 
 # disconnect logging for testing
@@ -73,6 +74,25 @@ class TestPhonemes(TestCase):
         # "remember" isn't in our table, so it can't be a variant
         self.assertFalse(self.px.are_graphic_variants(
             doc1[2], doc2[1], doc3[2]))
+
+    def test_has_variant(self) -> None:
+        """should detect if seed sequences have a graphic variant"""
+        # create testing docs
+        doc1 = self.nlp.make_doc("that's two now!")
+        doc2 = self.nlp.make_doc("that's 2 now!")
+        doc3 = self.nlp.make_doc("that's three now!")
+
+        # "two" and "2" are variants
+        m1 = Match("doc1", "doc2", doc1[:], doc2[:])
+        self.assertTrue(self.px.has_variant(m1))
+
+        # identical text means no variant
+        m2 = Match("doc1", "doc1", doc1[:], doc1[:])
+        self.assertFalse(self.px.has_variant(m2))
+
+        # different sound means no variant
+        m3 = Match("doc1", "doc3", doc1[:], doc3[:])
+        self.assertFalse(self.px.has_variant(m3))
 
     def test_get_all_phonemes(self) -> None:
         """should iterate over all valid phonemes in a span or doc"""

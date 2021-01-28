@@ -1,4 +1,6 @@
-"""SpaCy pipeline component for converting Tokens to phonetic equivalents."""
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""SpaCy pipeline component for converting Token graphemes to phonemes."""
 
 import json
 import logging

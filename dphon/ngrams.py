@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """SpaCy pipeline component for generating Token n-grams from Docs."""
 
 import logging

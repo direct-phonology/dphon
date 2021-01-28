@@ -1,14 +1,16 @@
-"""Classes and functions for analyzing text reuse."""
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""Classes for analyzing text reuse."""
 
 from itertools import combinations
-from typing import Iterable, Iterator, Tuple, Callable
+from typing import Callable, Iterable, Iterator, Tuple
 
 from networkx import MultiGraph, create_empty_copy
 from spacy.tokens import Doc
 
-from dphon.align import Aligner
-from dphon.extend import Extender, extend_matches
-from dphon.match import Match
+from .align import Aligner
+from .extend import Extender, extend_matches
+from .match import Match
 
 
 class MatchGraph():

@@ -1,13 +1,14 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Classes and types for pairwise match alignment."""
 
 from abc import ABC, abstractmethod
-from typing import Mapping, Optional, Tuple, Union, List
+from typing import List, Mapping, Optional, Tuple, Union
 
 from lingpy.align.pairwise import sw_align
 from spacy.tokens import Span
 
-from dphon.match import Match
+from .match import Match
 
 # Lingpy scoring matrices: a × b = 1.0 -> { ("a", "b"): 1.0, ("b", "a"): 1.0 }
 # Matrix cells are represented as tuples; both a × b and b × a need to exist

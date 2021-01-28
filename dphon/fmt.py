@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Classes for formatting and display of matches."""
 
@@ -89,4 +90,4 @@ class RichFormatter(SimpleFormatter):
         au = [t if t != "\n" else self.nl_char for t in au]
         av = [t if t != "\n" else self.nl_char for t in av]
 
-        return au, av
+        return "".join(au), "".join(av)

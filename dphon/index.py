@@ -1,4 +1,6 @@
-"""SpaCy pipeline components for building indexes of arbitrary Token data."""
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""SpaCy pipeline components for building indices of arbitrary Token data."""
 
 import logging
 from itertools import filterfalse

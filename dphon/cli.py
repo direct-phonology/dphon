@@ -12,6 +12,7 @@ Options:
     -v, --version                Show program version.
     -a, --all                    Allow matches without graphic variation.
     -o <file>, --output <file>   Write output to a file.
+    -f <fmt>, --format <fmt>     Set input file type [default: txt].
     --min <min>                  Limit to matches with total tokens >= min.
     --max <max>                  Limit to matches with total tokens <= max.
  
@@ -44,7 +45,7 @@ from .align import SmithWatermanPhoneticAligner
 from .extend import LevenshteinPhoneticExtender
 from .fmt import DEFAULT_THEME, SimpleFormatter
 from .index import Index
-from .io import JsonLinesCorpusLoader, PlaintextCorpusLoader
+from .io import CorpusLoader, JsonLinesCorpusLoader, PlaintextCorpusLoader
 from .match import Match
 from .ngrams import Ngrams
 from .phonemes import Phonemes, get_sound_table_json
@@ -110,10 +111,15 @@ def setup() -> Language:
 
 def process(nlp: Language, args: Dict) -> MatchGraph:
     """Run the spaCy processing pipeline."""
+    # set up graph and loader
+    graph = MatchGraph()
+    load_texts: CorpusLoader
+    if args["--format"] == "jsonl":
+        load_texts = JsonLinesCorpusLoader()
+    else:
+        load_texts = PlaintextCorpusLoader()
 
     # load and index all documents
-    graph = MatchGraph()
-    load_texts = JsonLinesCorpusLoader()
     with progress:
         docs_task = progress.add_task("indexing documents")
         all_start = time.perf_counter()

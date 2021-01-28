@@ -18,6 +18,8 @@ DocInfo_T = Tuple[str, Dict[str, Any]]
 class CorpusLoader(ABC):
     """Abstract base class; implements loading of document corpora."""
 
+    filetype: str
+
     @abstractmethod
     def __call__(self, paths: Iterable[str]) -> Iterable[DocInfo_T]:
         """Load valid files from all paths, returning contents and metadata.
@@ -42,13 +44,14 @@ class CorpusLoader(ABC):
         # if we succeed so that we can later open the file using it
         for path in paths:
             for file in map(Path, glob(path)):
-                if file.is_file():
+                if file.is_file() and file.suffix == self.filetype:
                     size = file.stat().st_size
                     files[file] = {"size": size, "id": file.stem}
                     total += 1
-                    logging.debug(f"found {file}, size={size}B")
+                    logging.debug(f"found {file.resolve()}, size={size}B")
                 else:
-                    logging.warn(f"path {file} isn't a file")
+                    logging.warn(
+                        f"path {file.resolve()} isn't a {self.filetype} file")
 
         # if no valid files were found, warn the user. otherwise report the
         # total number of files
@@ -61,6 +64,8 @@ class CorpusLoader(ABC):
 
 class PlaintextCorpusLoader(CorpusLoader):
     """Loads documents stored as one or more .txt files."""
+
+    filetype = ".txt"
 
     def __call__(self, paths: Iterable[str]) -> Iterable[DocInfo_T]:
         """Load valid files and metadata and yield in order of size, desc.
@@ -88,12 +93,14 @@ class PlaintextCorpusLoader(CorpusLoader):
         for file, meta in files_by_size.items():
             with file.open(encoding="utf8") as contents:
                 logging.debug(
-                    f"loaded doc \"{meta['id']}\" from {file}")
+                    f"loaded doc \"{meta['id']}\" from {file.resolve()}")
                 yield contents.read(), {"id": meta["id"]}
 
 
 class JsonLinesCorpusLoader(CorpusLoader):
     """Loads documents stored as lines in one or more .jsonl files."""
+
+    filetype = ".jsonl"
 
     def __call__(self, paths: Iterable[str]) -> Iterable[DocInfo_T]:
         """Parse .jsonl files and yield document text and metadata.
@@ -121,5 +128,5 @@ class JsonLinesCorpusLoader(CorpusLoader):
                 for doc in reader:
                     meta = {k: v for k, v in doc.items() if k != "text"}
                     logging.debug(
-                        f"loaded doc \"{doc['id']}\" from {file}")
+                        f"loaded doc \"{doc['id']}\" from {file.resolve()}")
                     yield doc["text"], meta

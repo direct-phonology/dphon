@@ -17,9 +17,9 @@ Options:
     --max <max>                  Limit to matches with total tokens <= max.
  
 Examples:
-    dphon texts/ --min 8
-    dphon 老子甲.txt 老子丙.txt 老子乙.txt --output matches.txt
-    dphon 周南.txt 鹿鳴之什.txt --all
+    dphon texts/*.txt --min 8
+    dphon file1.txt file2.txt --output matches.txt
+    dphon docs.jsonl --format jsonl
  
 Help:
     For more information on using this tool, visit the Github repository:

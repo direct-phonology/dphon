@@ -57,6 +57,20 @@ class TestSmithWatermanAligner(TestCase):
         self.assertEqual(aligned.au, list("子如鄉黨恂恂如也"))
         self.assertEqual(aligned.av, list("子於鄉黨恂恂如也"))
 
+    def test_trim_punct(self) -> None:
+        """Leading or trailing non-alphanumeric content should be trimmed."""
+
+        # create docs and a match
+        u = self.nlp.make_doc("，子如鄉黨恂恂如也。似不能言者")
+        v = self.nlp.make_doc("，子於鄉黨恂恂如也。父母之國")
+        match = Match("taipingyulan", "taipingyulan", u[:], v[:])
+
+        # alignment should include only matching portion, no punctuation
+        aligned = self.align(match)
+        self.assertEqual(aligned.au, list("子如鄉黨恂恂如也"))
+        self.assertEqual(aligned.av, list("子於鄉黨恂恂如也"))
+
+
     def test_spacing(self) -> None:
         """Matches with deletions should be padded so that lengths align.
 

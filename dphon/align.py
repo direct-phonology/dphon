@@ -74,6 +74,13 @@ class SmithWatermanAligner(Aligner):
             else:
                 av.append("-")
 
+        # trim back the sequence boundaries further to remove any non-alphanum.
+        # tokens from the start and end of both alignment and orig. sequence
+        while not au[-1].isalnum() or not av[-1].isalnum():
+            utxt, vtxt, au, av = utxt[:-1], vtxt[:-1], au[:-1], av[:-1]
+        while not au[0].isalnum() or not av[0].isalnum():
+            utxt, vtxt, au, av = utxt[1:], vtxt[1:], au[1:], av[1:]
+
         # create a new match with alignment info and adjusted boundaries
         return Match(match.u, match.v, utxt, vtxt, score, au, av)
 

@@ -129,7 +129,7 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
     groups = nlp.get_pipe("index").filter(lambda g: len(g[1]) > 1)
 
     # create initial pairwise matches from seed groups; perfect score of 1.0
-    for _seed, locations in track(groups, description="seeding matches"):
+    for _seed, locations in groups:
         for utxt, vtxt in combinations(locations, 2):
             if utxt.doc != vtxt.doc:  # skip same-doc matches
                 graph.add_match(

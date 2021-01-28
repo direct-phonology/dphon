@@ -10,7 +10,6 @@ from unittest.mock import patch
 from dphon.cli import __doc__ as doc
 from dphon.cli import __version__ as version
 from dphon.cli import process, run, setup, teardown
-from rich.progress import Progress
 
 # disconnect logging for testing
 logging.disable(logging.CRITICAL)
@@ -34,7 +33,7 @@ class TestCommands(TestCase):
             self.assertEqual(output.getvalue().strip(), version.strip())
 
 
-@patch("dphon.cli.progress")
+
 class TestOptions(TestCase):
     """Test the various options available when running."""
 
@@ -47,6 +46,7 @@ class TestOptions(TestCase):
             "--min": None,
             "--max": None,
             "--all": False,
+            "--format": "txt",
             "<path>": ["tests/fixtures/laozi/"]  # testing fixture set
         }
 
@@ -54,21 +54,21 @@ class TestOptions(TestCase):
         """Unregister components to prevent name collisions."""
         teardown(self.nlp)
 
-    def test_min(self, _progress: Progress) -> None:
+    def test_min(self) -> None:
         """--min option should limit to results with specified minimum length"""
         self.args["--min"] = "50"
         results = process(self.nlp, self.args).matches
         for result in results:
             self.assertTrue(len(result) >= 50)
 
-    def test_max(self, _progress: Progress) -> None:
+    def test_max(self) -> None:
         """--max option should limit to results with specified maximum length"""
         self.args["--max"] = "4"
         results = process(self.nlp, self.args).matches
         for match in results:
             self.assertTrue(len(match) <= 4)
 
-    def test_min_and_max(self, _progress: Progress) -> None:
+    def test_min_and_max(self) -> None:
         """--min and --max options together should limit to exact length"""
         self.args["--min"] = "8"
         self.args["--max"] = "8"

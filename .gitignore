@@ -3,6 +3,7 @@ env/
 htmlcov/
 build/
 dist/
+docs/
 tmp/
 .vscode
 .coverage

@@ -1,5 +1,10 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""The Match class for encoding text reuse relationships."""
+
+from typing import List, NamedTuple, Optional
+
 from spacy.tokens import Span
-from typing import NamedTuple, Optional, List
 
 
 class Match(NamedTuple):

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """Abstract base class and implementations for extending Matches."""
 
 from abc import ABC, abstractmethod
@@ -6,8 +8,8 @@ from typing import List
 import Levenshtein as Lev
 from spacy.tokens import Span
 
-from dphon.match import Match
-from dphon.phonemes import OOV_PHONEMES
+from .match import Match
+from .phonemes import OOV_PHONEMES
 
 
 class Extender(ABC):

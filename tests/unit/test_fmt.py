@@ -45,8 +45,8 @@ class TestSimpleFormatter(TestCase):
         # add an alignment
         fmt = SimpleFormatter()
         match = Match("doc1", "doc2", self.match.utxt, self.match.vtxt, 0,
-                      "a -------- glass tumbler",
-                      "an inverted glass tumbler")
+                      list("a -------- glass tumbler"),
+                      list("an inverted glass tumbler"))
         output = fmt(match)
 
         # output should include aligned version
@@ -65,8 +65,8 @@ class TestSimpleFormatter(TestCase):
 
         # add an alignment
         match = Match("doc1", "doc2", self.match.utxt, self.match.vtxt, 0,
-                      "a -------- glass tumbler",
-                      "an inverted glass tumbler")
+                      list("a -------- glass tumbler"),
+                      list("an inverted glass tumbler"))
         output = fmt(match)
 
         # should use gap character in output

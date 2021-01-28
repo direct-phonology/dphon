@@ -16,7 +16,7 @@ class TestMatch(TestCase):
         self.doc2 = self.nlp.make_doc("an inverted glass tumbler of fireflies")
 
     def test_sort(self) -> None:
-        """should form a total order by doc title and position"""
+        """should form a total order by doc id and position"""
         doc1 = self.nlp.make_doc("A B C D A B C D E F G H")
         doc2 = self.nlp.make_doc("Z Z G H Z Z C D Z Z Z Z")
         doc3 = self.nlp.make_doc("E F X X A B C D X X X X")

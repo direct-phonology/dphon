@@ -1,11 +1,12 @@
 # DIRECT
 _Digital Intertextual Resonances in Early Chinese Texts_
 
-![Unit Tests](https://github.com/direct-phonology/direct/workflows/unittest/badge.svg)
-![Test Coverage](coverage.svg)
-![Dependency Status](https://pyup.io/repos/github/direct-phonology/direct/shield.svg?t=1568910750251)
-[![PyPi Version](https://img.shields.io/pypi/v/dphon.svg?style=flat)](https://pypi.org/project/dphon/)
-![Python Versions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
+[![ci](https://github.com/direct-phonology/direct/workflows/ci/badge.svg)](https://github.com/direct-phonology/direct/actions?query=workflow%3Aci)
+[![docs](https://github.com/direct-phonology/direct/workflows/docs/badge.svg)](https://direct-phonology.github.io/direct)
+[![codecov](https://codecov.io/gh/direct-phonology/direct/branch/main/graph/badge.svg?token=uGbgB5UFtk)](https://codecov.io/gh/direct-phonology/direct)
+![pyup](https://pyup.io/repos/github/direct-phonology/direct/shield.svg?t=1568910750251)
+[![pypi](https://img.shields.io/pypi/v/dphon.svg?style=flat)](https://pypi.org/project/dphon/)
+![pyversions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
 
 ## installation
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Formatter unit tests."""
 
@@ -20,12 +21,12 @@ class TestSimpleFormatter(TestCase):
         # a glass tumbler (doc1) :: an inverted glass tumbler (doc2)
         self.match = Match("doc1", "doc2", self.doc1[3:], self.doc2[:4])
 
-    def test_doc_title(self) -> None:
-        """should format matches with doc titles"""
+    def test_doc_id(self) -> None:
+        """should format matches with doc ids"""
         fmt = SimpleFormatter()
         output = fmt(self.match)
 
-        # both titles should be in output
+        # both ids should be in output
         self.assertTrue("doc1" in output)
         self.assertTrue("doc2" in output)
 

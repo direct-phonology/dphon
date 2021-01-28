@@ -16,12 +16,12 @@ class TestMatchGraph(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         """register spaCy extensions"""
-        Doc.set_extension("title", default="")
+        Doc.set_extension("id", default="")
 
     @classmethod
     def tearDown(cls) -> None:
         """unregister spaCy extensions to prevent collisions"""
-        Doc.remove_extension("title")
+        Doc.remove_extension("id")
 
     def setUp(self) -> None:
         """create a spaCy pipeline and match graph for testing"""

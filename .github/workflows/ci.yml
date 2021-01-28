@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  push:
+    paths-ignore:
+      - "docs/**"
+
+jobs:
+  test:
+    name: test python ${{ matrix.python-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -r dev-requirements.txt
+      - run: python setup.py develop
+      - run: python -m unittest
+
+  coverage:
+    name: generate test coverage and upload to codecov
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "PYTHON_VERSION=$(cat .python-version)" >> $GITHUB_ENV
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: pip install -r dev-requirements.txt
+      - run: python setup.py develop
+      - run: coverage run -m unittest
+      - uses: codecov/codecov-action@v1

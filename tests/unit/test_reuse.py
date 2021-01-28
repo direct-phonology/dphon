@@ -6,6 +6,7 @@ import spacy
 from dphon.reuse import MatchGraph
 from spacy.tokens import Doc
 from dphon.extend import LevenshteinExtender
+from dphon.match import Match
 
 
 class TestMatchGraph(TestCase):
@@ -42,12 +43,12 @@ class TestMatchGraph(TestCase):
                          ("藝文類聚·錢", doc2),
                          ("顏氏家訓·勉學", doc3)])
         self.G.add_matches([
-            ("論語·學而", "藝文類聚·錢", doc1[0:4], doc2[0:4]),         # 與朋友交
-            ("論語·學而", "藝文類聚·錢", doc1[4:8], doc2[4:8]),         # 言而有信
-            ("論語·學而", "顏氏家訓·勉學", doc1[0:4], doc3[0:4]),       # 與朋友交
-            ("論語·學而", "顏氏家訓·勉學", doc1[4:8], doc3[4:8]),       # 言而有信
-            ("藝文類聚·錢", "顏氏家訓·勉學", doc2[0:4], doc3[0:4]),     # 與朋友交
-            ("藝文類聚·錢", "顏氏家訓·勉學", doc2[4:8], doc3[4:8]),     # 言而有信
+            Match("論語·學而", "藝文類聚·錢", doc1[0:4], doc2[0:4]),         # 與朋友交
+            Match("論語·學而", "藝文類聚·錢", doc1[4:8], doc2[4:8]),         # 言而有信
+            Match("論語·學而", "顏氏家訓·勉學", doc1[0:4], doc3[0:4]),       # 與朋友交
+            Match("論語·學而", "顏氏家訓·勉學", doc1[4:8], doc3[4:8]),       # 言而有信
+            Match("藝文類聚·錢", "顏氏家訓·勉學", doc2[0:4], doc3[0:4]),     # 與朋友交
+            Match("藝文類聚·錢", "顏氏家訓·勉學", doc2[4:8], doc3[4:8]),     # 言而有信
         ])
         extender = LevenshteinExtender(threshold=0.8, len_limit=50)
         self.G.extend(extender)
@@ -63,12 +64,12 @@ class TestMatchGraph(TestCase):
                          ("藝文類聚·錢", doc2),
                          ("顏氏家訓·勉學", doc3)])
         self.G.add_matches([
-            ("論語·學而", "藝文類聚·錢", doc1[0:4], doc2[0:4]),         # 與朋友交
-            ("論語·學而", "藝文類聚·錢", doc1[4:8], doc2[4:8]),         # 言而有信
-            ("論語·學而", "顏氏家訓·勉學", doc1[0:4], doc3[0:4]),       # 與朋友交
-            ("論語·學而", "顏氏家訓·勉學", doc1[4:8], doc3[4:8]),       # 言而有信
-            ("藝文類聚·錢", "顏氏家訓·勉學", doc2[0:4], doc3[0:4]),     # 與朋友交
-            ("藝文類聚·錢", "顏氏家訓·勉學", doc2[4:8], doc3[4:8]),     # 言而有信
+            Match("論語·學而", "藝文類聚·錢", doc1[0:4], doc2[0:4]),         # 與朋友交
+            Match("論語·學而", "藝文類聚·錢", doc1[4:8], doc2[4:8]),         # 言而有信
+            Match("論語·學而", "顏氏家訓·勉學", doc1[0:4], doc3[0:4]),       # 與朋友交
+            Match("論語·學而", "顏氏家訓·勉學", doc1[4:8], doc3[4:8]),       # 言而有信
+            Match("藝文類聚·錢", "顏氏家訓·勉學", doc2[0:4], doc3[0:4]),     # 與朋友交
+            Match("藝文類聚·錢", "顏氏家訓·勉學", doc2[4:8], doc3[4:8]),     # 言而有信
         ])
         extender = LevenshteinExtender(threshold=0.8, len_limit=50)
         self.G.extend(extender)

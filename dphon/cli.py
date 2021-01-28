@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """dphon - a tool for old chinese phonetic analysis
  
 Usage:
@@ -23,37 +25,37 @@ Help:
     https://github.com/direct-phonology/direct
 """
 
-import glob
 import logging
 import time
-from collections import OrderedDict
 from itertools import combinations
 from pathlib import Path
-from typing import Any, Dict, Iterator, List, Tuple
+from typing import Dict
 
 import spacy
 from docopt import docopt
+from rich import traceback
 from rich.console import Console
 from rich.logging import RichHandler
-from rich.traceback import install
 from spacy.language import Language
 from spacy.tokens import Doc
 
-from dphon import __version__
-from dphon.align import SmithWatermanPhoneticAligner
-from dphon.extend import LevenshteinPhoneticExtender
-from dphon.fmt import DEFAULT_THEME, SimpleFormatter
-from dphon.index import Index
-from dphon.match import Match
-from dphon.ngrams import Ngrams
-from dphon.phonemes import Phonemes, get_sound_table_json
-from dphon.reuse import MatchGraph
-from dphon.util import progress
+from . import __version__
+from .align import SmithWatermanPhoneticAligner
+from .extend import LevenshteinPhoneticExtender
+from .fmt import DEFAULT_THEME, SimpleFormatter
+from .index import Index
+from .io import JsonLinesCorpusLoader, PlaintextCorpusLoader
+from .match import Match
+from .ngrams import Ngrams
+from .phonemes import Phonemes, get_sound_table_json
+from .reuse import MatchGraph
+from .util import progress
 
 # install logging and exception handlers
 logging.basicConfig(level="DEBUG", format="%(message)s",
                     datefmt="[%X]", handlers=[RichHandler()])
-install()
+logging.captureWarnings(True)
+traceback.install()
 
 
 def run() -> None:
@@ -70,7 +72,7 @@ def run() -> None:
 
     # set up formatting - colorize for terminal but not for files
     console = Console(theme=DEFAULT_THEME)
-    format = SimpleFormatter(gap_char="　", nl_char="＄")
+    format = SimpleFormatter(gap_char="　")
 
     # write to a file if requested; otherwise write to stdout
     if args["--output"]:
@@ -92,7 +94,7 @@ def setup() -> Language:
     sound_table = get_sound_table_json(Path("./dphon/data/sound_table.json"))
 
     # add Doc metadata
-    Doc.set_extension("title", default="")
+    Doc.set_extension("id", default="")
 
     # setup spaCy model
     nlp = spacy.blank(
@@ -111,17 +113,18 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
 
     # load and index all documents
     graph = MatchGraph()
+    load_texts = JsonLinesCorpusLoader()
     with progress:
         docs_task = progress.add_task("indexing documents")
         all_start = time.perf_counter()
         start = all_start
         for doc, context in nlp.pipe(load_texts(args["<path>"]), as_tuples=True):
-            doc._.title = context["title"]
-            graph.add_doc(context["title"], doc)
+            doc._.id = context["id"]
+            graph.add_doc(context["id"], doc)
             progress.update(docs_task, advance=1)
             finish = time.perf_counter() - start
             logging.debug(
-                f"indexed doc \"{context['title']}\" in {finish:.3f}s")
+                f"indexed doc \"{context['id']}\" in {finish:.3f}s")
             start = time.perf_counter()
         progress.remove_task(docs_task)
     all_finish = time.perf_counter() - all_start
@@ -135,7 +138,7 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
         for utxt, vtxt in combinations(locations, 2):
             if utxt.doc != vtxt.doc:  # skip same-doc matches
                 graph.add_match(
-                    Match(utxt.doc._.title, vtxt.doc._.title, utxt, vtxt, 1.0))
+                    Match(utxt.doc._.id, vtxt.doc._.id, utxt, vtxt, 1.0))
 
     # limit to seeds with graphic variants if requested
     if not args["--all"]:
@@ -159,55 +162,12 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
 
 def teardown(nlp: Language) -> None:
     """Unregister spaCy extensions to prevent name collisions."""
-    Doc.remove_extension("title")
+    Doc.remove_extension("id")
 
     # iterate over all pipeline components and call teardown() if it exists
     for _name, component in nlp.pipeline:
         if hasattr(component, "teardown"):
             component.teardown()
-
-
-def load_texts(paths: List[str]) -> Iterator[Tuple[str, Dict[str, Any]]]:
-    """Load texts from all provided file or directory paths.
-
-    All provided paths will be searched. If the path is a text file its contents
-    will be loaded; if it is a directory all text files within will be loaded.
-
-    The output is a list of tuples containing the document text and a context
-    dict that maps arbitrary string keys to values; this will be passed to
-    spaCy and can be used to assign metadata to documents. Currently, the only
-    piece of metadata set is "title", which is mapped to the text's filename.
-
-    Args:
-        paths: List of file or directory paths to search.
-        newlines: Whether to preserve newlines in text. False by default.
-
-    Yields:
-        A tuple of (text, metadata) for the next document found in all paths.
-    """
-
-    # check all provided paths and get their filesize, if valid
-    logging.debug("checking paths...")
-    total = 0
-    files: Dict[str, Tuple[Path, int]] = {}
-    for path in paths:
-        for file in map(Path, glob.glob(path)):
-            if file.is_file():
-                files[file.stem] = file, file.stat().st_size
-                total += 1
-                logging.debug(f"found \"{file}\", size={file.stat().st_size}")
-            else:
-                logging.warn(f"path \"{file}\" isn't a file")
-    logging.debug(f"found {total} total files")
-
-    # sort files by size, longest first, and yield with filename info
-    by_size = OrderedDict(
-        sorted(files.items(), key=lambda f: f[1][1], reverse=True))
-    progress.add_task("indexing")
-    for name, attrs in by_size.items():
-        with attrs[0].open(encoding="utf8") as contents:
-            logging.debug(f"loaded doc \"{name}\" with size={attrs[1]}B")
-            yield (contents.read(), {"title": name})
 
 
 if __name__ == "__main__":

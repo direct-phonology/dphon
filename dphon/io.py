@@ -89,7 +89,7 @@ class PlaintextCorpusLoader(CorpusLoader):
             with file.open(encoding="utf8") as contents:
                 logging.debug(
                     f"loaded doc \"{meta['id']}\" from {file}")
-                yield contents.read(), meta
+                yield contents.read(), {"id": meta["id"]}
 
 
 class JsonLinesCorpusLoader(CorpusLoader):

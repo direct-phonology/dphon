@@ -10,6 +10,8 @@ from glob import glob
 from pathlib import Path
 from typing import Any, Dict, Iterable, Tuple
 
+from rich.progress import track
+
 # Type for a doc ready to be indexed by spaCy's `nlp.pipe(as_tuples=True)`:
 # (content, metadata) where content is a string and metadata is a dict
 DocInfo_T = Tuple[str, Dict[str, Any]]
@@ -90,7 +92,7 @@ class PlaintextCorpusLoader(CorpusLoader):
                                            reverse=True))
 
         # open each file and yield contents with metadata as DocInfo_T
-        for file, meta in files_by_size.items():
+        for file, meta in track(files_by_size.items(), description="loading files"):
             with file.open(encoding="utf8") as contents:
                 logging.debug(
                     f"loaded doc \"{meta['id']}\" from {file.resolve()}")
@@ -123,7 +125,7 @@ class JsonLinesCorpusLoader(CorpusLoader):
         # open each file and yield each line, with all properties except "text"
         # being passed as second element in tuple
         files = self._check(paths)
-        for file in files.keys():
+        for file in track(files.keys(), description="loading files"):
             with jsonlines.open(file) as reader:
                 for doc in reader:
                     meta = {k: v for k, v in doc.items() if k != "text"}

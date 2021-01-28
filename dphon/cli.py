@@ -27,7 +27,6 @@ Help:
 """
 
 import logging
-import time
 from itertools import combinations
 from pathlib import Path
 from typing import Dict
@@ -35,6 +34,7 @@ from typing import Dict
 import spacy
 from docopt import docopt
 from rich import traceback
+from rich.progress import track
 from rich.console import Console
 from rich.logging import RichHandler
 from spacy.language import Language
@@ -50,7 +50,6 @@ from .match import Match
 from .ngrams import Ngrams
 from .phonemes import Phonemes, get_sound_table_json
 from .reuse import MatchGraph
-from .util import progress
 
 # install logging and exception handlers
 logging.basicConfig(level="DEBUG", format="%(message)s",
@@ -120,27 +119,17 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
         load_texts = PlaintextCorpusLoader()
 
     # load and index all documents
-    with progress:
-        docs_task = progress.add_task("indexing documents")
-        all_start = time.perf_counter()
-        start = all_start
-        for doc, context in nlp.pipe(load_texts(args["<path>"]), as_tuples=True):
-            doc._.id = context["id"]
-            graph.add_doc(context["id"], doc)
-            progress.update(docs_task, advance=1)
-            finish = time.perf_counter() - start
-            logging.debug(
-                f"indexed doc \"{context['id']}\" in {finish:.3f}s")
-            start = time.perf_counter()
-        progress.remove_task(docs_task)
-    all_finish = time.perf_counter() - all_start
-    logging.info(f"indexing completed in {all_finish:.3f}s")
+    for doc, context in nlp.pipe(load_texts(args["<path>"]), as_tuples=True):
+        doc._.id = context["id"]
+        graph.add_doc(context["id"], doc)
+        logging.debug(f"indexed doc \"{doc._.id}\"")
+    logging.info(f"indexing completed")
 
     # drop all ngrams from index that only occur once
     groups = nlp.get_pipe("index").filter(lambda g: len(g[1]) > 1)
 
     # create initial pairwise matches from seed groups; perfect score of 1.0
-    for _seed, locations in groups:
+    for _seed, locations in track(groups, description="seeding matches"):
         for utxt, vtxt in combinations(locations, 2):
             if utxt.doc != vtxt.doc:  # skip same-doc matches
                 graph.add_match(

@@ -4,3 +4,4 @@ python-levenshtein
 sinopy
 lingpy
 rich
+jsonlines

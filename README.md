@@ -57,7 +57,7 @@ $ dphon --version
 
 ## methodology
 
-matching sequences are determined by a "dictionary" file that represents a particular reconstruction of old chinese phonology (you can see some examples in the `dphon/data/` folder). these data structures perform grapheme-to-phoneme conversion, yielding an associated sound for each character:
+matching sequences are determined by a "dictionary" file that represents a particular reconstruction of old chinese phonology. these data structures perform grapheme-to-phoneme conversion, yielding the associated sound for each character:
 
 ```
 "埃": "qˤə"
@@ -66,7 +66,9 @@ matching sequences are determined by a "dictionary" file that represents a parti
 ...
 ```
 
-in version 1.0, `dphon`'s default reconstruction was based on Schuessler 2007[<sup>1</sup>](#note1), but used a single "dummy" character to represent all the lexemes in a particular sound class. [the dictionary](dphon/data/sound_table_v1.json) was compiled by John O'Leary (@valgrinderror) and Gian Duri Rominger (@GDRom). since version 2.0, `dphon` uses [a dictionary](dphon/data/sound_table_v2.json) based on the Baxter-Sagart 2014 reconstruction[<sup>2</sup>](#note2), with additional work by Gian Duri Rominger.
+for characters with multiple readings, `dphon` currently chooses the first available reading for comparison. more work is planned for version 3.0 to address this shortcoming.
+
+in version 1.0, `dphon`'s default reconstruction was based on Schuessler 2007[<sup>1</sup>](#note1), but used a single "dummy" character to represent all the lexemes in a particular sound class. [the dictionary](dphon/data/sound_table_v1.json) was compiled by John O'Leary ([@valgrinderror](https://github.com/valgrinderror)) and Gian Duri Rominger ([@GDRom](https://github.com/GDRom)). since version 2.0, `dphon` uses [a dictionary](dphon/data/sound_table_v2.json) based on the Baxter-Sagart 2014 reconstruction[<sup>2</sup>](#note2), with additional work by Gian Duri Rominger.
 
 the matching algorithm is based on Paul Vierthaler's [`chinesetextreuse`](https://github.com/vierth/chinesetextreuse) project, with some modifications. it uses a [BLAST](https://en.wikipedia.org/wiki/BLAST_(biotechnology))-like strategy to identify initial match candidates, and then extend them via phonetic [edit distance](https://en.wikipedia.org/wiki/Edit_distance) comparison. finally, the results are aligned using a version of the [Smith-Waterman algorithm](https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm) that operates on phonemes. 
 

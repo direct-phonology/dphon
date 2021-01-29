@@ -1,7 +1,7 @@
 # dphon
 [![ci](https://github.com/direct-phonology/dphon/workflows/ci/badge.svg)](https://github.com/direct-phonology/dphon/actions?query=workflow%3Aci)
-[![docs](https://github.com/direct-phonology/dphon/workflows/docs/badge.svg)](https://direct-phonology.github.io/direct)
-[![codecov](https://codecov.io/gh/direct-phonology/dphon/branch/main/graph/badge.svg?token=uGbgB5UFtk)](https://codecov.io/gh/direct-phonology/direct)
+[![docs](https://github.com/direct-phonology/dphon/workflows/docs/badge.svg)](https://direct-phonology.github.io/dphon)
+[![codecov](https://codecov.io/gh/direct-phonology/dphon/branch/main/graph/badge.svg?token=uGbgB5UFtk)](https://codecov.io/gh/direct-phonology/dphon)
 ![pyup](https://pyup.io/repos/github/direct-phonology/dphon/shield.svg?t=1568910750251)
 [![pypi](https://img.shields.io/pypi/v/dphon.svg?style=flat)](https://pypi.org/project/dphon/)
 ![pyversions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
@@ -80,8 +80,8 @@ the matching algorithm is based on Paul Vierthaler's [`chinesetextreuse`](https:
 first, clone the repository:
 
 ```sh
-$ git clone https://github.com/direct-phonology/direct.git
-$ cd direct
+$ git clone https://github.com/direct-phonology/dphon.git
+$ cd dphon
 ```
 
 then, to create and activate a virtual environment (recommended):

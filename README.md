@@ -64,7 +64,7 @@ matching sequences are determined by a "dictionary" file that represents a parti
 ...
 ```
 
-in version 1.0, `dphon`'s default reconstruction was based on Schuessler 2007[<sup>1</sup>](). since version 2.0, `dphon` uses the Baxter-Sagart 2014 reconstruction[<sup>2</sup>](), with additional work by Gian Duri Rominger (@GDRom).
+in version 1.0, `dphon`'s default reconstruction was based on Schuessler 2007[<sup>1</sup>](#note1), but used a single "dummy" character to represent all the lexemes in a particular sound class. [the dictionary](data/sound_table_v1.json) was compiled by John O'Leary (@valgrinderror) and Gian Duri Rominger (@GDRom). since version 2.0, `dphon` uses [a dictionary](data/sound_table_v2.json) based on the Baxter-Sagart 2014 reconstruction[<sup>2</sup>](#note2), with additional work by Gian Duri Rominger.
 
 the matching algorithm is based on Paul Vierthaler's [`chinesetextreuse`](https://github.com/vierth/chinesetextreuse) project, with some modifications. it uses a [BLAST](https://en.wikipedia.org/wiki/BLAST_(biotechnology))-like strategy to identify initial match candidates, and then extend them via phonetic [edit distance](https://en.wikipedia.org/wiki/Edit_distance) comparison. finally, the results are aligned using a version of the [Smith-Waterman algorithm](https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm) that operates on phonemes. 
 
@@ -147,6 +147,6 @@ if everything is OK, publish the package to PyPI:
 $ twine upload dist/*
 ```
 <hr/>
-<sup>1</sup> Schuessler, Axel (2007), ABC Etymological Dictionary of Old Chinese, Honolulu: University of Hawaii Press, ISBN 978-0-8248-2975-9.
+<sup id="note1">1</sup> Schuessler, Axel (2007), ABC Etymological Dictionary of Old Chinese, Honolulu: University of Hawaii Press, ISBN 978-0-8248-2975-9.
 
-<sup>2</sup> Baxter, William H.; Sagart, Laurent (2014), Old Chinese: A New Reconstruction, Oxford University Press, ISBN 978-0-19-994537-5.
+<sup id="note2">2</sup> Baxter, William H.; Sagart, Laurent (2014), Old Chinese: A New Reconstruction, Oxford University Press, ISBN 978-0-19-994537-5.

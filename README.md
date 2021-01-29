@@ -35,9 +35,7 @@ which would look for phonetically similar passages between `text_a` and `text_b`
 趙蔥及齊將顏聚代李 (text_b 95016–95024)
 ```
 
-the numbers next to the identifiers are _token indices_, and may vary depending on how the text is tokenized – `dphon` currently uses character-based tokenization.
-
-the output will be aligned to make it easier to spot differences between the two sequences. in some cases, matches will span multiple lines in the source text, which will be reflected in the output (line breaks will be represented by the ⏎ character).
+the numbers next to the identifiers are _token indices_, and may vary depending on how the text is tokenized – `dphon` currently uses character-based tokenization. whitespace will be removed, and the output will be aligned to make it easier to spot differences between the two sequences. 
 
 by default, `dphon` only returns matches that display at least one instance of _graphic variation_ – a case where two different graphemes are used in the same place to represent the same sound. if you're interested in all instances of reuse, regardless of graphic variation, you can use the `--all` flag:
 

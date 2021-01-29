@@ -3,6 +3,7 @@
 """Classes for loading document corpora and passing them to an NLP pipeline."""
 
 import logging
+import string
 import jsonlines
 from abc import ABC, abstractmethod
 from collections import OrderedDict
@@ -15,6 +16,11 @@ from rich.progress import track
 # Type for a doc ready to be indexed by spaCy's `nlp.pipe(as_tuples=True)`:
 # (content, metadata) where content is a string and metadata is a dict
 DocInfo_T = Tuple[str, Dict[str, Any]]
+
+# Translation table for text content, used for fast text preprocessing
+# currently converts all whitespace to `None` (i.e. strips it out)
+WS_NONE = {k: None for k in list(string.whitespace)}
+OC_TEXT = str.maketrans(WS_NONE)
 
 
 class CorpusLoader(ABC):
@@ -96,7 +102,7 @@ class PlaintextCorpusLoader(CorpusLoader):
             with file.open(encoding="utf8") as contents:
                 logging.debug(
                     f"loaded doc \"{meta['id']}\" from {file.resolve()}")
-                yield contents.read(), {"id": meta["id"]}
+                yield contents.read().translate(OC_TEXT), {"id": meta["id"]}
 
 
 class JsonLinesCorpusLoader(CorpusLoader):
@@ -131,4 +137,4 @@ class JsonLinesCorpusLoader(CorpusLoader):
                     meta = {k: v for k, v in doc.items() if k != "text"}
                     logging.debug(
                         f"loaded doc \"{doc['id']}\" from {file.resolve()}")
-                    yield doc["text"], meta
+                    yield doc["text"].translate(OC_TEXT), meta

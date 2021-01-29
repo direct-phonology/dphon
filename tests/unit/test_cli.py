@@ -12,6 +12,7 @@ from dphon.cli import __version__ as version
 from dphon.cli import process, run, setup, teardown
 
 # disconnect logging for testing
+logging.captureWarnings(True)
 logging.disable(logging.CRITICAL)
 
 
@@ -33,22 +34,24 @@ class TestCommands(TestCase):
             self.assertEqual(output.getvalue().strip(), version.strip())
 
 
-
+@patch("sys.stdout", new=StringIO())
 class TestOptions(TestCase):
     """Test the various options available when running."""
 
     def setUp(self) -> None:
         """Set up a spaCy pipeline and CLI arguments for testing."""
-        self.nlp = setup()
-
         # default CLI arguments; would be populated by docopt
         self.args: Dict[str, Any] = {
+            "<path>": ["tests/fixtures/laozi/"],  # testing fixture set
             "--min": None,
             "--max": None,
             "--all": False,
             "--format": "txt",
-            "<path>": ["tests/fixtures/laozi/"]  # testing fixture set
+            "--ngram-order": "4",
+            "--threshold": "0.7",
+            "--len-limit": "50",
         }
+        self.nlp = setup(self.args)
 
     def tearDown(self) -> None:
         """Unregister components to prevent name collisions."""

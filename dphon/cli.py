@@ -107,7 +107,7 @@ def run() -> None:
 def setup(args: Dict) -> Language:
     """Set up the spaCy processing pipeline."""
     # get sound table
-    sound_table = get_sound_table_json(Path("./dphon/data/sound_table.json"))
+    sound_table = get_sound_table_json(Path("./dphon/data/sound_table_v2.json"))
 
     # add Doc metadata
     Doc.set_extension("id", default="")

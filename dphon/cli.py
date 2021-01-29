@@ -84,6 +84,9 @@ def run() -> None:
     results = list(graph.matches)
     logging.info(f"{len(results)} total results matching query")
 
+    # sort results by highest total score
+    results = sorted(results, key=lambda m: m.weight, reverse=True)
+
     # set up formatting - colorize for terminal but not for files
     console = Console(theme=DEFAULT_THEME)
     format = SimpleFormatter(gap_char="　")
@@ -93,7 +96,7 @@ def run() -> None:
         outpath = Path(args["--output"])
         with outpath.open(mode="w", encoding="utf8") as file:
             for match in results:
-                file.write(format(match) + "\n")
+                file.write(format(match) + "\n\n")
         logging.info(f"wrote {outpath.resolve()}")
     else:
         for match in results:

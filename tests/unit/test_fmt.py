@@ -71,13 +71,3 @@ class TestSimpleFormatter(TestCase):
 
         # should use gap character in output
         self.assertTrue("a $$$$$$$$ glass tumbler" in output)
-
-    def test_nl_char(self) -> None:
-        """should allow customization of newline character in sequences"""
-        doc3 = self.nlp.make_doc("a\n glass tumbler")
-        match = Match("doc1", "doc3", self.doc1[3:], doc3[:])
-        fmt = SimpleFormatter(nl_char="$")
-        output = fmt(match)
-
-        # should use newline character in output
-        self.assertTrue("a$ glass tumbler" in output)

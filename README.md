@@ -31,11 +31,14 @@ $ dphon text_a.txt text_b.txt
 which would look for phonetically similar passages between `text_a` and `text_b`. the output will be a list of sequences, with an identifier based on the file's name and an indicator of where in the text the sequence occurs:
 
 ```sh
+score 9, weighted 1.0
 趙怱及齊將顏聚代之 (text_a 107505–107512)
 趙蔥及齊將顏聚代李 (text_b 95016–95024)
 ```
 
-the numbers next to the identifiers are _token indices_, and may vary depending on how the text is tokenized – `dphon` currently uses character-based tokenization. whitespace will be removed, and the output will be aligned to make it easier to spot differences between the two sequences. 
+the numbers next to the identifiers are _token indices_, and may vary depending on how the text is tokenized – `dphon` currently uses character-based tokenization. whitespace will be removed, and the output will be aligned to make it easier to spot differences between the two sequences.
+
+the score is an indicator of how many characters in the sequences were a phonetic match, while the weighted score normalizes the score by the length of the match. results are sorted by score, which results in the longest contiguous matches being listed first.
 
 by default, `dphon` only returns matches that display at least one instance of _graphic variation_ – a case where two different graphemes are used in the same place to represent the same sound. if you're interested in all instances of reuse, regardless of graphic variation, you can use the `--all` flag:
 

@@ -20,3 +20,8 @@ class Match(NamedTuple):
     def __len__(self) -> int:
         """Return the length of the longer sequence in the match."""
         return max(len(self.utxt), len(self.vtxt))
+
+    @property
+    def weighted_score(self) -> float:
+        """Match score divided by its length."""
+        return round(self.weight / float(len(self)), 2)

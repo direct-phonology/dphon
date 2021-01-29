@@ -51,6 +51,6 @@ setup(
     },
     project_urls={
         "Source": "https://github.com/direct-phonology/direct",
-        "Tracker": "https://github.com/direct-phonology/direct/issues",
+        "Tracker": "https://github.com/direct-phonology/dphon/issues",
     },
 )

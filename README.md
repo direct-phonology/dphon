@@ -1,8 +1,8 @@
 # dphon
-[![ci](https://github.com/direct-phonology/direct/workflows/ci/badge.svg)](https://github.com/direct-phonology/direct/actions?query=workflow%3Aci)
-[![docs](https://github.com/direct-phonology/direct/workflows/docs/badge.svg)](https://direct-phonology.github.io/direct)
-[![codecov](https://codecov.io/gh/direct-phonology/direct/branch/main/graph/badge.svg?token=uGbgB5UFtk)](https://codecov.io/gh/direct-phonology/direct)
-![pyup](https://pyup.io/repos/github/direct-phonology/direct/shield.svg?t=1568910750251)
+[![ci](https://github.com/direct-phonology/dphon/workflows/ci/badge.svg)](https://github.com/direct-phonology/dphon/actions?query=workflow%3Aci)
+[![docs](https://github.com/direct-phonology/dphon/workflows/docs/badge.svg)](https://direct-phonology.github.io/direct)
+[![codecov](https://codecov.io/gh/direct-phonology/dphon/branch/main/graph/badge.svg?token=uGbgB5UFtk)](https://codecov.io/gh/direct-phonology/direct)
+![pyup](https://pyup.io/repos/github/direct-phonology/dphon/shield.svg?t=1568910750251)
 [![pypi](https://img.shields.io/pypi/v/dphon.svg?style=flat)](https://pypi.org/project/dphon/)
 ![pyversions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
 
@@ -19,6 +19,8 @@ if you're on windows and are seeing incorrectly formatted output in your termina
 ## usage
 
 the main function of `dphon` is to look for instances of text reuse in a corpus of old chinese texts. instead of relying purely on graphemes, it does this by performing grapheme-to-phoneme conversion, and determining possible reuse based on whether passages are likely to have _sounded_ similar (or rhymed) when spoken aloud.
+
+you will need to have files stored locally as utf-8 encoded plain-text (`.txt`) or json-lines (`.jsonl`) format. for the former, one file is assumed to represent one document. for the latter, one file can contain any number of lines, each of which is a document, with required keys `id` (a unique identifier) and `text` (text content) and any number of optional keys. you can obtain a representative corpus of old chinese sourced from the kanseki repository via [`direct-phonology/ect-krp`](https://github.com/direct-phonology/ect-krp).
 
 a simple invocation of `dphon` might look like:
 
@@ -64,7 +66,7 @@ matching sequences are determined by a "dictionary" file that represents a parti
 ...
 ```
 
-in version 1.0, `dphon`'s default reconstruction was based on Schuessler 2007[<sup>1</sup>](#note1), but used a single "dummy" character to represent all the lexemes in a particular sound class. [the dictionary](data/sound_table_v1.json) was compiled by John O'Leary (@valgrinderror) and Gian Duri Rominger (@GDRom). since version 2.0, `dphon` uses [a dictionary](data/sound_table_v2.json) based on the Baxter-Sagart 2014 reconstruction[<sup>2</sup>](#note2), with additional work by Gian Duri Rominger.
+in version 1.0, `dphon`'s default reconstruction was based on Schuessler 2007[<sup>1</sup>](#note1), but used a single "dummy" character to represent all the lexemes in a particular sound class. [the dictionary](dphon/data/sound_table_v1.json) was compiled by John O'Leary (@valgrinderror) and Gian Duri Rominger (@GDRom). since version 2.0, `dphon` uses [a dictionary](dphon/data/sound_table_v2.json) based on the Baxter-Sagart 2014 reconstruction[<sup>2</sup>](#note2), with additional work by Gian Duri Rominger.
 
 the matching algorithm is based on Paul Vierthaler's [`chinesetextreuse`](https://github.com/vierth/chinesetextreuse) project, with some modifications. it uses a [BLAST](https://en.wikipedia.org/wiki/BLAST_(biotechnology))-like strategy to identify initial match candidates, and then extend them via phonetic [edit distance](https://en.wikipedia.org/wiki/Edit_distance) comparison. finally, the results are aligned using a version of the [Smith-Waterman algorithm](https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm) that operates on phonemes. 
 

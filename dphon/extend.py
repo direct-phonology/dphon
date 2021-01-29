@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """Abstract base class and implementations for extending Matches."""
 
+import logging
 from abc import ABC, abstractmethod
 from typing import List
 
@@ -32,9 +33,11 @@ class StringDistanceExtender(Extender):
     len_limit: int      # only score this many tokens at the end of the match
 
     def __init__(self, threshold: float, len_limit: int) -> None:
-        """Create a new LevenshteinExtender."""
+        """Create a new extender."""
         self.threshold = threshold
         self.len_limit = len_limit
+        logging.info(
+            f"using {self.__class__} with threshold={threshold}, len_limit={len_limit}")
 
     @abstractmethod
     def _score(self, left: Span, right: Span, rev: bool = False) -> float:

@@ -54,7 +54,7 @@ class Phonemes():
         # store the sound table in the vocab's Lookups using the attr name
         self.lookups = nlp.vocab.lookups
         self.table = self.lookups.add_table(self.attr, sound_table)
-        logging.info(f"created component \"{self.name}\"")
+        logging.info(f"using {self.__class__} with name={self.name}")
 
     def teardown(self) -> None:
         """Unregister the sound table and attributes to prevent collisions."""
@@ -154,5 +154,5 @@ def get_sound_table_json(path: Path) -> SoundTable_T:
             sound_table[char] = tuple(reading)
 
     # log and return finished table
-    logging.info(f"sound table {path.stem} loaded")
+    logging.info(f"sound table {path.resolve()} loaded")
     return sound_table

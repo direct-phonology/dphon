@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """Classes and types for pairwise match alignment."""
 
+import logging
 from abc import ABC, abstractmethod
 from typing import List, Mapping, Optional, Tuple, Union
 
@@ -34,6 +35,7 @@ class SmithWatermanAligner(Aligner):
 
     def __init__(self, scorer: Scorer_T = None) -> None:
         self.scorer = scorer
+        logging.info(f"using {self.__class__}")
 
     def _get_seqs(self, match: Match) -> Tuple[Seq_T, Seq_T]:
         """Get the two sequences to compare."""

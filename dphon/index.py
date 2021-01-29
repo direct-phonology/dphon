@@ -53,7 +53,7 @@ class Index():
 
         # initialize the index
         self.table = nlp.vocab.lookups.add_table(self.name)
-        logging.info(f"created component \"{self.name}\"")
+        logging.info(f"using {self.__class__} with name={self.name}")
 
     def __call__(self, doc: Doc) -> Doc:
         """Extract values from a doc and index those that pass the filter.

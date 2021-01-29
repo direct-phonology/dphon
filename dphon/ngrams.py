@@ -30,7 +30,7 @@ class Ngrams():
         # store other properties
         self.n = n
         self.name = name if name else self.name
-        logging.info(f"created component \"{self.name}\" with n={self.n}")
+        logging.info(f"using {self.__class__}\" with n={self.n}, name={self.name}")
 
     def __call__(self, doc: Doc) -> Doc:
         """Return the Doc unmodified."""

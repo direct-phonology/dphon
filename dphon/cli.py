@@ -5,20 +5,35 @@
 Usage:
     dphon -h | --help
     dphon --version
-    dphon [options] <path>... 
+    dphon <path>... [options]
  
-Options:
-    -h, --help                   Show this help.
-    -v, --version                Show program version.
-    -a, --all                    Allow matches without graphic variation.
-    -o <file>, --output <file>   Write output to a file.
-    -f <fmt>, --format <fmt>     Set input file type [default: txt].
-    --min <min>                  Limit to matches with total tokens >= min.
-    --max <max>                  Limit to matches with total tokens <= max.
- 
+Global Options:
+    -h, --help                  Show this help text.
+    -v, --version               Show program version.
+    -o <file>, --output <file>  Write output to a file instead of stdout.
+    -f <fmt>, --format <fmt>    Set input file type. Currently, plaintext (.txt) and json-lines (.jsonl)
+                                files are supported. [default: txt]
+
+Matching Options:
+    -n <n>, --ngram-order <n>   Order of n-grams used to seed matches. Higher means decreased execution
+                                time at the expense of total result count. [default: 4]
+    -k <k>, --threshold <k>     Similarity threshold below which matches will not be retained. Higher
+                                means shorter matches and fewer total results. [default: 0.7]
+    -l <l>, --len-limit <l>     Limit on number of tokens to compare to obtain similarity score. Higher
+                                means longer matches at the expense of execution time. [default: 50]
+
+Filtering Options:
+    -a, --all                   Allow matches without graphic variation. By default, only matches
+                                containing at least one token with shared phonemes but differing graphemes 
+                                are shown.
+    --min <min>                 Limit to matches with total tokens >= min. Has no effect if less than
+                                the value for "--ngram-order", above.
+    --max <max>                 Limit to matches with total tokens <= max. Must be equal to or greater
+                                than the value for "--ngram-order", above.
+
 Examples:
-    dphon texts/*.txt --min 8
-    dphon file1.txt file2.txt --output matches.txt
+    dphon texts/*.txt --min 8 --output matches.txt
+    dphon file1.txt file2.txt -n 8 -k 0.8
     dphon docs.jsonl --format jsonl
  
 Help:
@@ -51,19 +66,19 @@ from .ngrams import Ngrams
 from .phonemes import Phonemes, get_sound_table_json
 from .reuse import MatchGraph
 
-# install logging and exception handlers
-logging.basicConfig(level="DEBUG", format="%(message)s",
-                    datefmt="[%X]", handlers=[RichHandler()])
-logging.captureWarnings(True)
-traceback.install()
-
 
 def run() -> None:
     """CLI entrypoint."""
     args = docopt(__doc__, version=__version__)
 
+    # install logging and exception handlers
+    logging.basicConfig(level="INFO", format="%(message)s",
+                        datefmt="[%X]", handlers=[RichHandler()])
+    logging.captureWarnings(True)
+    traceback.install()
+
     # setup pipeline
-    nlp = setup()
+    nlp = setup(args)
 
     # process all texts
     graph = process(nlp, args)
@@ -76,10 +91,11 @@ def run() -> None:
 
     # write to a file if requested; otherwise write to stdout
     if args["--output"]:
-        with open(args["--output"], mode="w", encoding="utf8") as file:
+        outpath = Path(args["--output"])
+        with outpath.open(mode="w", encoding="utf8") as file:
             for match in results:
                 file.write(format(match) + "\n")
-        logging.info(f"wrote {args['--output']}")
+        logging.info(f"wrote {outpath.resolve()}")
     else:
         for match in results:
             console.print((format(match) + "\n"))
@@ -88,7 +104,7 @@ def run() -> None:
     teardown(nlp)
 
 
-def setup() -> Language:
+def setup(args: Dict) -> Language:
     """Set up the spaCy processing pipeline."""
     # get sound table
     sound_table = get_sound_table_json(Path("./dphon/data/sound_table.json"))
@@ -100,7 +116,7 @@ def setup() -> Language:
     nlp = spacy.blank(
         "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
     nlp.add_pipe(Phonemes(nlp, sound_table=sound_table), first=True)
-    nlp.add_pipe(Ngrams(nlp, n=4), after="phonemes")
+    nlp.add_pipe(Ngrams(nlp, n=int(args["--ngram-order"])), after="phonemes")
     nlp.add_pipe(Index(nlp, val_fn=lambda doc: doc._.ngrams,
                        filter_fn=lambda ngram: ngram.text.isalpha(),
                        key_fn=lambda ngram: "".join(ngram._.phonemes)))
@@ -140,7 +156,10 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
         graph.filter(nlp.get_pipe("phonemes").has_variant)
 
     # extend all matches
-    graph.extend(LevenshteinPhoneticExtender(threshold=0.7, len_limit=50))
+    graph.extend(LevenshteinPhoneticExtender(
+        threshold=float(args["--threshold"]),
+        len_limit=int(args["--len-limit"])
+    ))
 
     # align all matches
     graph.align(SmithWatermanPhoneticAligner())

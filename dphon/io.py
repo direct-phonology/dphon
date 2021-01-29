@@ -52,7 +52,7 @@ class CorpusLoader(ABC):
                     total += 1
                     logging.debug(f"found {file.resolve()}, size={size}B")
                 else:
-                    logging.warn(
+                    logging.warning(
                         f"path {file.resolve()} isn't a {self.filetype} file")
 
         # if no valid files were found, warn the user. otherwise report the

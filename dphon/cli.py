@@ -49,7 +49,6 @@ from typing import Dict
 import spacy
 from docopt import docopt
 from rich import traceback
-from rich.progress import track
 from rich.console import Console
 from rich.logging import RichHandler
 from spacy.language import Language
@@ -98,7 +97,7 @@ def run() -> None:
         logging.info(f"wrote {outpath.resolve()}")
     else:
         for match in results:
-            console.print((format(match) + "\n"))
+            console.print((format(match) + "\n"), soft_wrap=False)
 
     # teardown pipeline
     teardown(nlp)

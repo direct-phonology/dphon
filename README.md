@@ -1,6 +1,4 @@
-# DIRECT
-_Digital Intertextual Resonances in Early Chinese Texts_
-
+# dphon
 [![ci](https://github.com/direct-phonology/direct/workflows/ci/badge.svg)](https://github.com/direct-phonology/direct/actions?query=workflow%3Aci)
 [![docs](https://github.com/direct-phonology/direct/workflows/docs/badge.svg)](https://direct-phonology.github.io/direct)
 [![codecov](https://codecov.io/gh/direct-phonology/direct/branch/main/graph/badge.svg?token=uGbgB5UFtk)](https://codecov.io/gh/direct-phonology/direct)
@@ -20,39 +18,34 @@ if you're on windows and are seeing incorrectly formatted output in your termina
 
 ## usage
 
-the basic function of DIRECT is to phonologically compare two early chinese texts. you will need to have the files saved locally in utf-8 encoded plain text (`.txt`) format. to compare two texts:
+the main function of `dphon` is to look for instances of text reuse in a corpus of old chinese texts. instead of relying purely on graphemes, it does this by performing grapheme-to-phoneme conversion, and determining possible reuse based on whether passages are likely to have _sounded_ similar (or rhymed) when spoken aloud.
+
+a simple invocation of `dphon` might look like:
 
 ```sh
-$ dphon text_a.txt text_b.txt # search text b against text a
+$ dphon text_a.txt text_b.txt
 ```
 
-the output will be a list of character sequences in text_a that have rhyming counterparts in text_b, including the texts and line numbers from which the sequences are drawn:
+which would look for phonetically similar passages between `text_a` and `text_b`. the output will be a list of sequences, with an identifier based on the file's name and an indicator of where in the text the sequence occurs:
 
 ```sh
-滋章盜賊多有 (a: 16)    # this sequence of characters from a line 16 matches
-滋彰，盜賊多有 (b: 57)  # this sequence of characters from b line 57
-...
-不可得 (a: 15)         # this sequence from a on line 15 matches two separate 
-不可識 (b: 15)         # locations in b, and both of them are on line 15 in b
-不可識 (b: 15)
-...
-解其忿 (a: 15)         # in this sequence, we see three separate graphic
-解其紛 (b: 4)          # variations for the third character - one on a line 15
-解其分 (b: 56)         # and two from b on lines 4 and 56
+趙怱及齊將顏聚代之 (text_a 107505–107512)
+趙蔥及齊將顏聚代李 (text_b 95016–95024)
 ```
 
-note that the matches ignore non-word characters, including punctuation and numbers.
-this means that matches could span multiple lines, which will be reflected in the output (line breaks will be represented by the ⏎ character).
+the numbers next to the identifiers are _token indices_, and may vary depending on how the text is tokenized – `dphon` currently uses character-based tokenization.
+
+the output will be aligned to make it easier to spot differences between the two sequences. in some cases, matches will span multiple lines in the source text, which will be reflected in the output (line breaks will be represented by the ⏎ character).
+
+by default, `dphon` only returns matches that display at least one instance of _graphic variation_ – a case where two different graphemes are used in the same place to represent the same sound. if you're interested in all instances of reuse, regardless of graphic variation, you can use the `--all` flag:
+
+```sh
+$ dphon text_a.txt text_b.txt --all
+```
 
 you can view the full list of command options with:
 ```sh
 $ dphon --help
-```
-
-by default, all matches are shown, including those where the text is identical. to limit to instances
-where actual graphic variation has occurred, you can use the `--variants-only` flag:
-```sh
-$ dphon text_a.txt text_b.txt --variants-only
 ```
 
 this tool is under active development, and results may vary. to find the version you are running:
@@ -62,9 +55,18 @@ $ dphon --version
 
 ## methodology
 
-matching sequences are determined by a dictionary file that represents a particular reconstruction of old chinese phonology (you can see some examples in the `dphon/data/` folder). these data structures map an input character to an arbitrary sound token ("dummy") that can be matched against other such tokens.
+matching sequences are determined by a "dictionary" file that represents a particular reconstruction of old chinese phonology (you can see some examples in the `dphon/data/` folder). these data structures perform grapheme-to-phoneme conversion, yielding an associated sound for each character:
 
-the core process of DIRECT is to accept plaintext input, tokenize it according to a particular phonological reconstruction, and search for matches amongst the tokenized text. these matches thus represent resonance: sequences that could have rhymed when they were originally read aloud, despite dissimilarity in their written forms.
+```
+"埃": "qˤə"
+"哀": "ʔˤəj"
+"藹": "qˤats"
+...
+```
+
+in version 1.0, `dphon`'s default reconstruction was based on Schuessler 2007[<sup>1</sup>](). since version 2.0, `dphon` uses the Baxter-Sagart 2014 reconstruction[<sup>2</sup>](), with additional work by Gian Duri Rominger (@GDRom).
+
+the matching algorithm is based on Paul Vierthaler's [`chinesetextreuse`](https://github.com/vierth/chinesetextreuse) project, with some modifications. it uses a [BLAST](https://en.wikipedia.org/wiki/BLAST_(biotechnology))-like strategy to identify initial match candidates, and then extend them via phonetic [edit distance](https://en.wikipedia.org/wiki/Edit_distance) comparison. finally, the results are aligned using a version of the [Smith-Waterman algorithm](https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm) that operates on phonemes. 
 
 ## development setup
 
@@ -87,7 +89,6 @@ $ source venv/bin/activate
 install dependencies:
 
 ```sh
-$ pip install -r requirements.txt
 $ pip install -r dev-requirements.txt
 ```
 
@@ -101,13 +102,21 @@ now your changes will be automatically picked up when you run `dphon`.
 
 **pull requests should be made against the `develop` branch.**
 
-## tests
+## code documentation
+code documentation is [available on github pages](https://direct-phonology.github.io/dphon) and is automatically generated with `pdoc3` on pushes to `main`.
 
-unit tests are written with pytest. you can run them with:
+to build documentation locally:
+```sh
+$ pdoc --html --output-dir docs dphon
+```
+
+## tests
+unit tests are written with `unittest`. you can run them with:
 
 ```sh
-$ pytest
+$ python -m unittest
 ```
+
 
 ## releases
 
@@ -137,3 +146,7 @@ if everything is OK, publish the package to PyPI:
 ```sh
 $ twine upload dist/*
 ```
+<hr/>
+<sup>1</sup> Schuessler, Axel (2007), ABC Etymological Dictionary of Old Chinese, Honolulu: University of Hawaii Press, ISBN 978-0-8248-2975-9.
+
+<sup>2</sup> Baxter, William H.; Sagart, Laurent (2014), Old Chinese: A New Reconstruction, Oxford University Press, ISBN 978-0-19-994537-5.

@@ -141,7 +141,6 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
         doc._.id = context["id"]
         graph.add_doc(context["id"], doc)
         logging.debug(f"indexed doc \"{doc._.id}\"")
-    logging.info(f"indexing completed")
 
     # drop all ngrams from index that only occur once
     groups = nlp.get_pipe("index").filter(lambda g: len(g[1]) > 1)

@@ -10,8 +10,9 @@ from collections import OrderedDict
 from glob import glob
 from pathlib import Path
 from typing import Any, Dict, Iterable, Tuple
+import time
 
-from rich.progress import track
+from rich.progress import Progress, BarColumn, TextColumn
 
 # Type for a doc ready to be indexed by spaCy's `nlp.pipe(as_tuples=True)`:
 # (content, metadata) where content is a string and metadata is a dict
@@ -27,6 +28,18 @@ class CorpusLoader(ABC):
     """Abstract base class; implements loading of document corpora."""
 
     filetype: str
+    progress: Progress
+
+    def __init__(self) -> None:
+        """Set up progress tracking."""
+        self.progress = Progress(
+            TextColumn("indexing"),
+            TextColumn("[blue]{task.fields[filename]}"),
+            BarColumn(bar_width=None),
+            "{task.completed}/{task.total}",
+            "{task.percentage:>3.1f}%",
+            transient=True,
+        )
 
     @abstractmethod
     def __call__(self, paths: Iterable[str]) -> Iterable[DocInfo_T]:
@@ -97,12 +110,23 @@ class PlaintextCorpusLoader(CorpusLoader):
                                            key=lambda f: f[1]["size"],
                                            reverse=True))
 
+        # track progress
+        task = self.progress.add_task("index", filename="", total=len(files))
+        start = time.perf_counter()
+
         # open each file and yield contents with metadata as DocInfo_T
-        for file, meta in track(files_by_size.items(), description="loading files"):
-            with file.open(encoding="utf8") as contents:
-                logging.debug(
-                    f"loaded doc \"{meta['id']}\" from {file.resolve()}")
-                yield contents.read().translate(OC_TEXT), {"id": meta["id"]}
+        with self.progress:
+            for file, meta in files_by_size.items():
+                self.progress.update(task, filename=file.name)
+                with file.open(encoding="utf8") as contents:
+                    logging.debug(
+                        f"loaded doc \"{meta['id']}\" from {file.resolve()}")
+                    yield contents.read().translate(OC_TEXT), {"id": meta["id"]}
+                    self.progress.advance(task)
+
+        # report total time elapsed
+        end = time.perf_counter() - start
+        logging.info(f"indexing completed in {end:.1f}s")
 
 
 class JsonLinesCorpusLoader(CorpusLoader):
@@ -128,13 +152,24 @@ class JsonLinesCorpusLoader(CorpusLoader):
             A tuple of (contents, metadata) for each valid document found.
         """
 
+        # track progress & time elapsed
+        files = self._check(paths)
+        task = self.progress.add_task("index", filename="", total=len(files))
+        start = time.perf_counter()
+
         # open each file and yield each line, with all properties except "text"
         # being passed as second element in tuple
-        files = self._check(paths)
-        for file in track(files.keys(), description="loading files"):
-            with jsonlines.open(file) as reader:
-                for doc in reader:
-                    meta = {k: v for k, v in doc.items() if k != "text"}
-                    logging.debug(
-                        f"loaded doc \"{doc['id']}\" from {file.resolve()}")
-                    yield doc["text"].translate(OC_TEXT), meta
+        with self.progress:
+            for file in files.keys():
+                with jsonlines.open(file) as reader:
+                    self.progress.update(task, filename=file.name)
+                    for doc in reader:
+                        meta = {k: v for k, v in doc.items() if k != "text"}
+                        logging.debug(
+                            f"loaded doc \"{doc['id']}\" from {file.resolve()}")
+                        yield doc["text"].translate(OC_TEXT), meta
+                    self.progress.advance(task)
+
+        # report total time elapsed
+        end = time.perf_counter() - start
+        logging.info(f"indexing completed in {end:.1f}s")

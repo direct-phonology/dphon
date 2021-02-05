@@ -43,7 +43,7 @@ the score is an indicator of how many characters in the sequences were a phoneti
 by default, `dphon` only returns matches that display at least one instance of _graphic variation_ – a case where two different graphemes are used in the same place to represent the same sound. if you're interested in all instances of reuse, regardless of graphic variation, you can use the `--all` flag:
 
 ```sh
-$ dphon text_a.txt text_b.txt --all
+$ dphon --all text_a.txt text_b.txt
 ```
 
 you can view the full list of command options with:

@@ -151,7 +151,7 @@ def get_sound_table_json(path: Path) -> SoundTable_T:
             # FIXME just using first reading for now, ignoring multiple
             # NOTE final two entries in current table are source info; ignore
             *reading, _src, _src2 = readings[0]
-            sound_table[char] = tuple(reading)
+            sound_table[char] = tuple(reading)  # type: ignore
 
     # log and return finished table
     logging.info(f"sound table {path.resolve()} loaded")

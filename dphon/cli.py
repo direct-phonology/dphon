@@ -8,28 +8,50 @@ Usage:
     dphon [-v | -vv] [options] <path>... 
  
 Global Options:
-    -h, --help                  Show this help text.
-    --version                   Show program version.
-    -v, -vv                     Increase verbosity of logs sent to stderr.
-    -f <fmt>, --format <fmt>    Set input file type. Currently, plaintext (.txt) and json-lines (.jsonl)
-                                files are supported. [default: txt]
+    -h, --help
+        Show this help text and exit.
+
+    --version
+        Show program version and exit.
+
+    -v, -vv
+        Increase verbosity of logs sent to stderr. Default log level is WARN;
+        -v corresponds to INFO and -vv to DEBUG.
+
+    -f <FMT>, --format <FMT>        [default: txt]
+        Set input file type. Currently, plaintext (.txt) and json-lines (.jsonl)
+        files are supported.
+
+    -c <NUM>, --context <NUM>       [default: 0]
+        Add NUM tokens of context to each side of matches. Context displays with
+        a dimmed appearance if color is supported in the terminal.
 
 Matching Options:
-    -n <n>, --ngram-order <n>   Order of n-grams used to seed matches. Higher means decreased execution
-                                time at the expense of total result count. [default: 4]
-    -k <k>, --threshold <k>     Similarity threshold below which matches will not be retained. Higher
-                                means shorter matches and fewer total results. [default: 0.7]
-    -l <l>, --len-limit <l>     Limit on number of tokens to compare to obtain similarity score. Higher
-                                means longer matches at the expense of execution time. [default: 50]
+    -n <NUM>, --ngram-order <NUM>   [default: 4]
+        Order of n-grams used to seed matches. A higher number will speed up
+        execution time, but smaller matches won't be returned.
+
+    -k <NUM>, --threshold <NUM>     [default: 0.7]
+        Similarity threshold below which matches will not be retained. A higher
+        number will result in fewer matches with less variance.
+
+    -l <NUM>, --len-limit <NUM>     [default: 50]
+        Limit on number of tokens to compare to obtain similarity score. A
+        higher number will slow down execution time but return more matches. 
 
 Filtering Options:
-    -a, --all                   Allow matches without graphic variation. By default, only matches
-                                containing at least one token with shared phonemes but differing graphemes 
-                                are shown.
-    --min <min>                 Limit to matches with total tokens >= min. Has no effect if less than
-                                the value for "--ngram-order", above.
-    --max <max>                 Limit to matches with total tokens <= max. Must be equal to or greater
-                                than the value for "--ngram-order", above.
+    -a, --all
+        Allow matches without graphic variation. By default, only matches
+        containing at least one token with shared phonemes but differing
+        graphemes (a graphic variant) are shown.
+
+    --min <NUM>
+        Limit to matches with total number of tokens >= NUM. Has no effect if
+        less than the value for "--ngram-order".
+
+    --max <NUM>
+        Limit to matches with total number of tokens <= max. Must be equal to 
+        or greater than the value for "--ngram-order".
 
 Examples:
     dphon texts/*.txt --min 8 > matches.txt
@@ -58,7 +80,7 @@ from spacy.tokens import Doc
 
 from . import __version__
 from .align import SmithWatermanPhoneticAligner
-from .console import console, err_console
+from .console import console, err_console, MatchHighlighter
 from .extend import LevenshteinPhoneticExtender
 from .index import Index
 from .io import CorpusLoader, JsonLinesCorpusLoader, PlaintextCorpusLoader
@@ -87,6 +109,10 @@ def run() -> None:
 
     # setup pipeline
     nlp = setup(args)
+
+    # setup match highlighting
+    console.highlighter = MatchHighlighter(g2p=nlp.get_pipe(
+        "phonemes"), context=int(args["--context"]), gap_char="　")
 
     # process all texts
     graph = process(nlp, args)

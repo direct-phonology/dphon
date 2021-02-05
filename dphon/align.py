@@ -102,7 +102,7 @@ class SmithWatermanPhoneticAligner(SmithWatermanAligner):
         # error if phonetic information isn't available
         if not Span.has_extension("phonemes"):
             raise RuntimeError("Phonemes component not available")
-        super().__init__(scorer=scorer)
+        super().__init__(scorer=scorer, gap_char=gap_char)
 
     def _get_seqs(self, match: Match) -> Tuple[Seq_T, Seq_T]:
         """Get the phonemes of the two sequences for comparison."""

@@ -20,7 +20,12 @@ Seq_T = Union[Tuple[str], List[str], str]
 
 
 class Aligner(ABC):
-    """Abstract class; implements pairwise alignment."""
+    """Abstract class; implements pairwise alignment.
+
+    Override to implement __call__ and define gap_char, the character used to
+    represent alignment gaps."""
+
+    gap_char: str
 
     @abstractmethod
     def __call__(self, match: Match) -> Match:
@@ -31,11 +36,13 @@ class Aligner(ABC):
 class SmithWatermanAligner(Aligner):
     """Local alignment with an optional custom scoring matrix."""
 
+    gap_char: str
     scorer: Optional[Scorer_T]
 
-    def __init__(self, scorer: Scorer_T = None) -> None:
+    def __init__(self, scorer: Scorer_T = None, gap_char: str = "-") -> None:
         self.scorer = scorer
-        logging.info(f"using {self.__class__}")
+        self.gap_char = gap_char
+        logging.info(f"using {self.__class__} with gap_char=\"{gap_char}\"")
 
     def _get_seqs(self, match: Match) -> Tuple[Seq_T, Seq_T]:
         """Get the two sequences to compare."""
@@ -60,7 +67,7 @@ class SmithWatermanAligner(Aligner):
         vtxt = v[match.vtxt.start + len(lv):match.vtxt.end - len(rv)]
 
         # use the gaps in the alignment to construct a new sequence of token
-        # texts, inserting a spacer wherever the aligner created one
+        # texts, inserting gap_char wherever the aligner created a gap
         u_ptr = 0
         v_ptr = 0
         au = []
@@ -70,12 +77,12 @@ class SmithWatermanAligner(Aligner):
                 au.append(utxt[u_ptr].text)
                 u_ptr += 1
             else:
-                au.append("-")
+                au.append(self.gap_char)
             if cv[i] != "-":
                 av.append(vtxt[v_ptr].text)
                 v_ptr += 1
             else:
-                av.append("-")
+                av.append(self.gap_char)
 
         # trim back the sequence boundaries further to remove any non-alphanum.
         # tokens from the start and end of both alignment and orig. sequence
@@ -91,7 +98,7 @@ class SmithWatermanAligner(Aligner):
 class SmithWatermanPhoneticAligner(SmithWatermanAligner):
     """Local alignment using phonetic values provided by a Phonemes instance."""
 
-    def __init__(self, scorer: Scorer_T = None) -> None:
+    def __init__(self, scorer: Scorer_T = None, gap_char: str = "-") -> None:
         # error if phonetic information isn't available
         if not Span.has_extension("phonemes"):
             raise RuntimeError("Phonemes component not available")
@@ -102,6 +109,8 @@ class SmithWatermanPhoneticAligner(SmithWatermanAligner):
         # combine the phonemes for each token into a single string; if there's
         # no phonetic content, use the token text in place of the phonemes
         return (
-            ["".join([p or "" for p in t._.phonemes]) or t.text for t in match.utxt],
-            ["".join([p or "" for p in t._.phonemes]) or t.text for t in match.vtxt],
+            ["".join([p or "" for p in t._.phonemes])
+             or t.text for t in match.utxt],
+            ["".join([p or "" for p in t._.phonemes])
+             or t.text for t in match.vtxt],
         )

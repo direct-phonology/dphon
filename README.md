@@ -18,6 +18,7 @@ if you're on windows and are seeing incorrectly formatted output in your termina
 
 ## usage
 
+### basics
 the main function of `dphon` is to look for instances of text reuse in a corpus of old chinese texts. instead of relying purely on graphemes, it does this by performing grapheme-to-phoneme conversion, and determining possible reuse based on whether passages are likely to have _sounded_ similar (or rhymed) when spoken aloud.
 
 you will need to have files stored locally as utf-8 encoded plain-text (`.txt`) or json-lines (`.jsonl`) format. for the former, one file is assumed to represent one document. for the latter, one file can contain any number of lines, each of which is a document, with required keys `id` (a unique identifier) and `text` (text content) and any number of optional keys. you can obtain a representative corpus of old chinese sourced from the kanseki repository via [`direct-phonology/ect-krp`](https://github.com/direct-phonology/ect-krp).
@@ -54,6 +55,31 @@ $ dphon --help
 this tool is under active development, and results may vary. to find the version you are running:
 ```sh
 $ dphon --version
+```
+
+### advanced usage
+by default, `dphon` uses your system's `$PAGER` to display output, since the results can be quite long. on MacOS and Linux, this will likely be `less`, which supports additional options like searching through the output once it's displayed. for more information, see the man page:
+
+```sh
+$ man less
+```
+
+`dphon` can colorize output for nicer display in the terminal if your pager supports it. to enable this behavior on MacOS and Linux, set `LESS=R`:
+
+```sh
+$ export LESS=R
+```
+
+if you want to save the results of the run to a file, you can use redirection, in which case colorization will be automatically disabled:
+
+```sh
+$ dphon files/*.txt > results.txt
+```
+
+alternatively, you can pipe the output of `dphon` to another utility like `sed` for filtering the results further. for example, you could strip out the ideographic space `　` from results to remove the alignments:
+
+```sh
+$ dphon files*.txt | sed 's/　//g'
 ```
 
 ## methodology

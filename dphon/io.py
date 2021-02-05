@@ -10,9 +10,8 @@ from collections import OrderedDict
 from glob import glob
 from pathlib import Path
 from typing import Any, Dict, Iterable, Tuple
-import time
 
-from rich.progress import Progress, BarColumn, TextColumn
+from rich.progress import Progress, BarColumn, TextColumn, SpinnerColumn
 
 # Type for a doc ready to be indexed by spaCy's `nlp.pipe(as_tuples=True)`:
 # (content, metadata) where content is a string and metadata is a dict
@@ -33,11 +32,12 @@ class CorpusLoader(ABC):
     def __init__(self) -> None:
         """Set up progress tracking."""
         self.progress = Progress(
-            TextColumn("indexing"),
-            TextColumn("[blue]{task.fields[filename]}"),
+            "[progress.description]{task.description}",
+            SpinnerColumn(),
+            TextColumn("[progress.description]{task.fields[filename]}"),
             BarColumn(bar_width=None),
             "{task.completed}/{task.total}",
-            "{task.percentage:>3.1f}%",
+            "[progress.percentage]{task.percentage:>3.1f}%",
             transient=True,
         )
 
@@ -111,8 +111,8 @@ class PlaintextCorpusLoader(CorpusLoader):
                                            reverse=True))
 
         # track progress
-        task = self.progress.add_task("index", filename="", total=len(files))
-        start = time.perf_counter()
+        task = self.progress.add_task(
+            "indexing", filename="", total=len(files))
 
         # open each file and yield contents with metadata as DocInfo_T
         with self.progress:
@@ -123,10 +123,6 @@ class PlaintextCorpusLoader(CorpusLoader):
                         f"loaded doc \"{meta['id']}\" from {file.resolve()}")
                     yield contents.read().translate(OC_TEXT), {"id": meta["id"]}
                     self.progress.advance(task)
-
-        # report total time elapsed
-        end = time.perf_counter() - start
-        logging.info(f"indexing completed in {end:.1f}s")
 
 
 class JsonLinesCorpusLoader(CorpusLoader):
@@ -152,10 +148,10 @@ class JsonLinesCorpusLoader(CorpusLoader):
             A tuple of (contents, metadata) for each valid document found.
         """
 
-        # track progress & time elapsed
+        # track progress
         files = self._check(paths)
-        task = self.progress.add_task("index", filename="", total=len(files))
-        start = time.perf_counter()
+        task = self.progress.add_task(
+            "indexing", filename="", total=len(files))
 
         # open each file and yield each line, with all properties except "text"
         # being passed as second element in tuple
@@ -169,7 +165,3 @@ class JsonLinesCorpusLoader(CorpusLoader):
                             f"loaded doc \"{doc['id']}\" from {file.resolve()}")
                         yield doc["text"].translate(OC_TEXT), meta
                     self.progress.advance(task)
-
-        # report total time elapsed
-        end = time.perf_counter() - start
-        logging.info(f"indexing completed in {end:.1f}s")

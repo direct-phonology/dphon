@@ -42,6 +42,7 @@ Help:
 """
 
 import logging
+import time
 from itertools import combinations
 from pathlib import Path
 from typing import Dict
@@ -51,6 +52,7 @@ from docopt import docopt
 from rich import traceback
 from rich.console import Console
 from rich.logging import RichHandler
+from rich.progress import BarColumn, Progress, SpinnerColumn
 from spacy.language import Language
 from spacy.tokens import Doc
 
@@ -92,6 +94,9 @@ def run() -> None:
     format = SimpleFormatter(gap_char="　")
 
     # write to a file if requested; otherwise write to stdout
+    # NOTE should use rich's builtin to do this:
+    # https://rich.readthedocs.io/en/stable/console.html#file-output
+    # will automatically strip colors
     if args["--output"]:
         outpath = Path(args["--output"])
         with outpath.open(mode="w", encoding="utf8") as file:
@@ -99,8 +104,10 @@ def run() -> None:
                 file.write(format(match) + "\n\n")
         logging.info(f"wrote {outpath.resolve()}")
     else:
-        for match in results:
-            console.print((format(match) + "\n"), soft_wrap=False)
+        # NOTE use console.pager(styles=True) for colorized output
+        with console.pager(styles=True):
+            for match in results:
+                console.print((format(match) + "\n"), soft_wrap=False)
 
     # teardown pipeline
     teardown(nlp)
@@ -109,7 +116,8 @@ def run() -> None:
 def setup(args: Dict) -> Language:
     """Set up the spaCy processing pipeline."""
     # get sound table
-    sound_table = get_sound_table_json(Path("./dphon/data/sound_table_v2.json"))
+    sound_table = get_sound_table_json(
+        Path("./dphon/data/sound_table_v2.json"))
 
     # add Doc metadata
     Doc.set_extension("id", default="")
@@ -137,20 +145,41 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
         load_texts = PlaintextCorpusLoader()
 
     # load and index all documents
+    start = time.perf_counter()
     for doc, context in nlp.pipe(load_texts(args["<path>"]), as_tuples=True):
         doc._.id = context["id"]
         graph.add_doc(context["id"], doc)
         logging.debug(f"indexed doc \"{doc._.id}\"")
+    stop = time.perf_counter() - start
+    logging.info(f"indexed {graph.number_of_docs()} docs in {stop:.1f}s")
 
-    # drop all ngrams from index that only occur once
-    groups = nlp.get_pipe("index").filter(lambda g: len(g[1]) > 1)
+    # prune all ngrams from index that only occur once
+    groups = list(nlp.get_pipe("index").filter(lambda g: len(g[1]) > 1))
 
-    # create initial pairwise matches from seed groups; perfect score of 1.0
-    for _seed, locations in groups:
-        for utxt, vtxt in combinations(locations, 2):
-            if utxt.doc != vtxt.doc:  # skip same-doc matches
-                graph.add_match(
-                    Match(utxt.doc._.id, vtxt.doc._.id, utxt, vtxt, 1.0))
+    # create initial pairwise matches from seed groups
+    progress = Progress(
+        "[progress.description]{task.description}",
+        SpinnerColumn(),
+        "[progress.description]{task.fields[seed]}",
+        BarColumn(bar_width=None),
+        "{task.completed}/{task.total}",
+        "[progress.percentage]{task.percentage:>3.1f}%",
+        transient=True,
+    )
+    task = progress.add_task("seeding", seed="", total=len(groups))
+    start = time.perf_counter()
+    with progress:
+        for _seed, locations in groups:
+            logging.debug(
+                f"evaluating seed group \"{locations[0].text}\", size={len(locations)}")
+            progress.update(task, seed=locations[0].text)
+            for utxt, vtxt in combinations(locations, 2):
+                if utxt.doc._.id != vtxt.doc._.id:  # skip same-doc matches
+                    graph.add_match(
+                        Match(utxt.doc._.id, vtxt.doc._.id, utxt, vtxt, 1.0))
+            progress.advance(task)
+    stop = time.perf_counter() - start
+    logging.info(f"seeded {graph.number_of_matches()} matches in {stop:.1f}s")
 
     # limit to seeds with graphic variants if requested
     if not args["--all"]:

@@ -13,6 +13,8 @@ from typing import Any, Dict, Iterable, Tuple
 
 from rich.progress import Progress, BarColumn, TextColumn, SpinnerColumn
 
+from .console import err_console
+
 # Type for a doc ready to be indexed by spaCy's `nlp.pipe(as_tuples=True)`:
 # (content, metadata) where content is a string and metadata is a dict
 DocInfo_T = Tuple[str, Dict[str, Any]]
@@ -38,6 +40,7 @@ class CorpusLoader(ABC):
             BarColumn(bar_width=None),
             "{task.completed}/{task.total}",
             "[progress.percentage]{task.percentage:>3.1f}%",
+            console=err_console,
             transient=True,
         )
 

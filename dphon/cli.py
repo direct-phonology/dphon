@@ -5,12 +5,12 @@
 Usage:
     dphon -h | --help
     dphon --version
-    dphon <path>... [options]
+    dphon [-v | -vv] [options] <path>... 
  
 Global Options:
     -h, --help                  Show this help text.
-    -v, --version               Show program version.
-    -o <file>, --output <file>  Write output to a file instead of stdout.
+    --version                   Show program version.
+    -v, -vv                     Increase verbosity of logs sent to stderr.
     -f <fmt>, --format <fmt>    Set input file type. Currently, plaintext (.txt) and json-lines (.jsonl)
                                 files are supported. [default: txt]
 
@@ -32,7 +32,7 @@ Filtering Options:
                                 than the value for "--ngram-order", above.
 
 Examples:
-    dphon texts/*.txt --min 8 --output matches.txt
+    dphon texts/*.txt --min 8 > matches.txt
     dphon file1.txt file2.txt -n 8 -k 0.8
     dphon docs.jsonl --format jsonl
  
@@ -43,6 +43,7 @@ Help:
 
 import logging
 import time
+import os
 from itertools import combinations
 from pathlib import Path
 from typing import Dict
@@ -50,7 +51,6 @@ from typing import Dict
 import spacy
 from docopt import docopt
 from rich import traceback
-from rich.console import Console
 from rich.logging import RichHandler
 from rich.progress import BarColumn, Progress, SpinnerColumn
 from spacy.language import Language
@@ -58,8 +58,8 @@ from spacy.tokens import Doc
 
 from . import __version__
 from .align import SmithWatermanPhoneticAligner
+from .console import console, err_console
 from .extend import LevenshteinPhoneticExtender
-from .fmt import DEFAULT_THEME, SimpleFormatter
 from .index import Index
 from .io import CorpusLoader, JsonLinesCorpusLoader, PlaintextCorpusLoader
 from .match import Match
@@ -67,14 +67,21 @@ from .ngrams import Ngrams
 from .phonemes import Phonemes, get_sound_table_json
 from .reuse import MatchGraph
 
+# Available log levels: default is WARN, -v is INFO, -vv is DEBUG
+LOG_LEVELS = {
+    0: "WARN",
+    1: "INFO",
+    2: "DEBUG",
+}
+
 
 def run() -> None:
     """CLI entrypoint."""
     args = docopt(__doc__, version=__version__)
 
-    # install logging and exception handlers
-    logging.basicConfig(level="INFO", format="%(message)s",
-                        datefmt="[%X]", handlers=[RichHandler()])
+    # install global logging and exception handlers
+    logging.basicConfig(level=LOG_LEVELS[args["-v"]], format="%(message)s",
+                        datefmt="[%X]", handlers=[RichHandler(console=err_console)])
     logging.captureWarnings(True)
     traceback.install()
 
@@ -89,25 +96,10 @@ def run() -> None:
     # sort results by highest total score
     results = sorted(results, key=lambda m: m.weight, reverse=True)
 
-    # set up formatting - colorize for terminal but not for files
-    console = Console(theme=DEFAULT_THEME)
-    format = SimpleFormatter(gap_char="　")
-
-    # write to a file if requested; otherwise write to stdout
-    # NOTE should use rich's builtin to do this:
-    # https://rich.readthedocs.io/en/stable/console.html#file-output
-    # will automatically strip colors
-    if args["--output"]:
-        outpath = Path(args["--output"])
-        with outpath.open(mode="w", encoding="utf8") as file:
-            for match in results:
-                file.write(format(match) + "\n\n")
-        logging.info(f"wrote {outpath.resolve()}")
-    else:
-        # NOTE use console.pager(styles=True) for colorized output
-        with console.pager(styles=True):
-            for match in results:
-                console.print((format(match) + "\n"), soft_wrap=False)
+    # use system pager by default; colorize if LESS=R
+    with console.pager(styles=os.getenv("LESS", "") == "R"):
+        for match in results:
+            console.print(match)
 
     # teardown pipeline
     teardown(nlp)
@@ -164,6 +156,7 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
         BarColumn(bar_width=None),
         "{task.completed}/{task.total}",
         "[progress.percentage]{task.percentage:>3.1f}%",
+        console=err_console,
         transient=True,
     )
     task = progress.add_task("seeding", seed="", total=len(groups))
@@ -192,7 +185,7 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
     ))
 
     # align all matches
-    graph.align(SmithWatermanPhoneticAligner())
+    graph.align(SmithWatermanPhoneticAligner(gap_char="　"))
 
     # limit via min and max lengths if requested
     if args["--min"]:

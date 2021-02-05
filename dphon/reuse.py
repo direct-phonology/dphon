@@ -12,6 +12,7 @@ from spacy.tokens import Doc
 from .align import Aligner
 from .extend import Extender, extend_matches
 from .match import Match
+from .console import err_console
 
 
 class MatchGraph():
@@ -27,6 +28,7 @@ class MatchGraph():
             BarColumn(bar_width=None),
             "{task.completed}/{task.total}",
             "{task.percentage:>3.1f}%",
+            console=err_console,
             transient=True,
         )
 

@@ -1,14 +1,17 @@
 """Tests for the indexing module."""
 
+import io
 import logging
 from itertools import islice
 from unittest import TestCase
 
 import spacy
+from dphon.console import err_console
 from dphon.index import Index
 
-# disconnect logging for testing
+# disconnect logging and capture stderr output for testing
 logging.disable(logging.CRITICAL)
+err_console.file = io.StringIO()
 
 
 class TestIndex(TestCase):

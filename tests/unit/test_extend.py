@@ -1,9 +1,9 @@
 """Extender unit tests."""
 
+
 from unittest import TestCase
 
 import spacy
-
 from dphon.extend import LevenshteinExtender, extend_matches
 from dphon.match import Match
 

@@ -27,7 +27,7 @@ class Match(NamedTuple):
         su, sv = console.highlighter.format_match(self)     # type: ignore
         yield (f"score {int(self.weight)}, weighted {self.weighted_score}\n"
                f"{su} ({self.u} {self.utxt.start}–{self.utxt.end-1})\n"
-               f"{sv} ({self.v} {self.vtxt.start}–{self.vtxt.end-1})")
+               f"{sv} ({self.v} {self.vtxt.start}–{self.vtxt.end-1})\n")
 
     @property
     def weighted_score(self) -> float:

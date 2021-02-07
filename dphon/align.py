@@ -56,15 +56,16 @@ class SmithWatermanAligner(Aligner):
         and sequence texts calculated for the alignment."""
 
         # compute the alignment and keep non-aligned regions
-        (lu, cu, ru), (lv, cv, rv), score = sw_align(*self._get_seqs(match),
-                                                     self.scorer)
+        (lu, cu, _ru), (lv, cv, _rv), score = sw_align(*self._get_seqs(match),
+                                                       self.scorer)
 
         # use lengths of non-aligned regions to move the sequence boundaries
         # [...] ["A", "B", "C"] [...]
         # ---->                <----
         u, v = match.utxt.doc, match.vtxt.doc
-        utxt = u[match.utxt.start + len(lu):match.utxt.end - len(ru)]
-        vtxt = v[match.vtxt.start + len(lv):match.vtxt.end - len(rv)]
+        us, vs = match.utxt.start + len(lu), match.vtxt.start + len(lv)
+        utxt = u[us:us + len(cu)]
+        vtxt = v[vs:vs + len(cv)]
 
         # use the gaps in the alignment to construct a new sequence of token
         # texts, inserting gap_char wherever the aligner created a gap

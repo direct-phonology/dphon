@@ -1,8 +1,7 @@
 from typing import Tuple, List
 
 from rich.console import Console
-from rich.highlighter import Highlighter
-from rich.text import Text
+from rich.highlighter import RegexHighlighter
 from rich.theme import Theme
 
 from .match import Match
@@ -22,7 +21,7 @@ console = Console(theme=DEFAULT_THEME, soft_wrap=False)
 err_console = Console(theme=DEFAULT_THEME, stderr=True)
 
 
-class MatchHighlighter(Highlighter):
+class MatchHighlighter(RegexHighlighter):
     """Highlighter that adds Rich markup to matches for console rendering."""
 
     context: int
@@ -41,10 +40,6 @@ class MatchHighlighter(Highlighter):
         self.gap_char = gap_char
         self.g2p = g2p
         super().__init__()
-
-    def highlight(self, text: Text) -> None:
-        """Passes the text through unchanged; use format_match() to highlight."""
-        return super().highlight(text)
 
     def format_match(self, match: Match) -> Tuple[str, str]:
         """Return match sequences as Rich format strings, with optional context.

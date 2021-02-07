@@ -37,11 +37,11 @@ score 9, weighted 1.0
 趙蔥及齊將顏聚代李 (text_b 95016–95024)
 ```
 
-the numbers next to the identifiers are _token indices_, and may vary depending on how the text is tokenized – `dphon` currently uses character-based tokenization. whitespace will be removed, and the output will be aligned to make it easier to spot differences between the two sequences.
+the numbers next to the identifiers are _token indices_, and may vary depending on how the text is tokenized – `dphon` currently uses character-based tokenization. whitespace will be removed, and the output will be aligned to make it easier to spot differences between the two sequences. by default, insertions are highlighted in green, and mismatches (differences between the two sequences) are highlighted in yellow.
 
 the score is an indicator of how many characters in the sequences were a phonetic match, while the weighted score normalizes the score by the length of the match. results are sorted by score, which results in the longest contiguous matches being listed first.
 
-by default, `dphon` only returns matches that display at least one instance of _graphic variation_ – a case where two different graphemes are used in the same place to represent the same sound. if you're interested in all instances of reuse, regardless of graphic variation, you can use the `--all` flag:
+by default, `dphon` only returns matches that display at least one instance of _graphic variation_ – a case where two different graphemes are used in the same place to represent the same sound. these cases are highlighted in blue. if you're interested in all instances of reuse, regardless of graphic variation, you can use the `--all` flag:
 
 ```sh
 $ dphon --all text_a.txt text_b.txt

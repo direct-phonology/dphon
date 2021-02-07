@@ -77,10 +77,11 @@ class CorpusLoader(ABC):
                     logging.warning(
                         f"path {file.resolve()} isn't a {self.filetype} file")
 
-        # if no valid files were found, warn the user. otherwise report the
-        # total number of files
+        # if no valid files were found, notify the user and exit. otherwise 
+        # report the total number of files found
         if not total:
-            logging.warning("no valid files found")
+            logging.error("no valid files found")
+            exit(1)
         else:
             logging.debug(f"found {total} total files")
         return files

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""SpaCy pipeline component for converting Token graphemes to phonemes."""
+"""SpaCy pipeline components for converting graphemes to phonemes."""
 
 import json
 import logging
@@ -13,10 +13,6 @@ from spacy.tokens import Doc, Span, Token
 
 from dphon.match import Match
 
-# register the pipeline component factory; see:
-# https://spacy.io/usage/processing-pipelines#custom-components-factories
-Language.factories["phonemes"] = lambda nlp, **cfg: Phonemes(nlp, **cfg)
-
 # private use unicode char that represents phonemes for OOV tokens
 OOV_PHONEMES = "\ue000"
 
@@ -25,44 +21,32 @@ Phonemes_T = Tuple[Optional[str], ...]
 SoundTable_T = Mapping[str, Phonemes_T]
 
 
-class Phonemes():
-    """A spaCy pipeline component that enables converting Tokens to phonemes."""
+class GraphemesToPhonemes:
+    """A spaCy pipeline component that converts graphemes to phonemes."""
 
-    name = "phonemes"   # will appear in spaCy pipeline
-    attr = "phonemes"   # name for getter for phonemes, e.g. doc._.phonemes
     table: Table        # reference to sound table in spaCy lookups
     lookups: Lookups    # reference to all LUTs for language model
 
-    def __init__(self, nlp: Language, sound_table: SoundTable_T, name: str = None, attr: str = None):
+    def __init__(self, nlp: Language, sound_table: SoundTable_T):
         """Initialize the phonemes component."""
-        # store the attr accessor & name that will appear in the pipeline
-        self.name = name if name else self.name
-        self.attr = attr if attr else self.attr
-
         # infer the syllable segmentation and map it to an empty phoneme set
-        self.syllable_parts = len(next(iter(sound_table.values())))
-        self.empty_phonemes = tuple(
-            None for part in range(self.syllable_parts))
+        syllable_parts = len(next(iter(sound_table.values())))
+        self.empty_phonemes = tuple(None for _ in range(syllable_parts))
 
-        # register attribute getters with customizable names; see:
-        # https://spacy.io/usage/processing-pipelines#custom-components-best-practices
-        Doc.set_extension(self.attr, getter=self.get_all_phonemes)
-        Span.set_extension(self.attr, getter=self.get_all_phonemes)
-        Token.set_extension(self.attr, getter=self.get_token_phonemes)
-        Token.set_extension("is_oov", getter=self.is_token_oov)
+        # register extensions on spaCy primitives
+        if not Doc.has_extension("phonemes"):
+            Doc.set_extension("phonemes", getter=self.get_all_phonemes)
+        if not Span.has_extension("phonemes"):
+            Span.set_extension("phonemes", getter=self.get_all_phonemes)
+        if not Token.has_extension("phonemes"):
+            Token.set_extension("phonemes", getter=self.get_token_phonemes)
+        if not Token.has_extension("is_oov"):
+            Token.set_extension("is_oov", getter=self.is_token_oov)
 
-        # store the sound table in the vocab's Lookups using the attr name
+        # store the sound table in the vocab's Lookups
         self.lookups = nlp.vocab.lookups
-        self.table = self.lookups.add_table(self.attr, sound_table)
-        logging.info(f"using {self.__class__} with name={self.name}")
-
-    def teardown(self) -> None:
-        """Unregister the sound table and attributes to prevent collisions."""
-        self.lookups.remove_table(self.attr)
-        Doc.remove_extension(self.attr)
-        Span.remove_extension(self.attr)
-        Token.remove_extension(self.attr)
-        Token.remove_extension("is_oov")
+        self.table = self.lookups.add_table("phonemes", sound_table)
+        logging.info(f"using {self.__class__}")
 
     def __call__(self, doc: Doc) -> Doc:
         """Return the Doc unmodified."""
@@ -74,10 +58,10 @@ class Phonemes():
 
     def has_variant(self, match: Match) -> bool:
         """True if a seed contains a graphic variant.
-        
+
         This is designed to be called on seeds that are of the same length,
         so that the match doesn't need to be aligned for it to work."""
-        
+
         # compare each token pairwise, True if we find a variant, else False
         for i in range(len(match)):
             if self.are_graphic_variants(match.utxt[i], match.vtxt[i]):
@@ -156,3 +140,8 @@ def get_sound_table_json(path: Path) -> SoundTable_T:
     # log and return finished table
     logging.info(f"sound table {path.resolve()} loaded")
     return sound_table
+
+
+@Language.factory("g2p")
+def create_graphemes_to_phonemes(nlp: Language, name: str, sound_table: SoundTable_T) -> GraphemesToPhonemes:
+    return GraphemesToPhonemes(nlp, sound_table)

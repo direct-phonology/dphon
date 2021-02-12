@@ -66,6 +66,7 @@ Help:
 import logging
 import time
 import os
+import pkg_resources
 from itertools import combinations
 from pathlib import Path
 from typing import Dict
@@ -130,8 +131,9 @@ def run() -> None:
 def setup(args: Dict) -> Language:
     """Set up the spaCy processing pipeline."""
     # get sound table
-    sound_table = get_sound_table_json(
-        Path("./dphon/data/sound_table_v2.json"))
+    v2_path = pkg_resources.resource_filename(
+        __package__, "data/sound_table_v2.json")
+    sound_table = get_sound_table_json(Path(v2_path))
 
     # add Doc metadata
     if not Doc.has_extension("id"):

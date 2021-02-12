@@ -1,5 +1,5 @@
 docopt
-spacy
+spacy>=3
 python-levenshtein
 lingpy
 rich

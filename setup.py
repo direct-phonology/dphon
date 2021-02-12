@@ -46,6 +46,11 @@ setup(
         "console_scripts": [
             "dphon=dphon.cli:run",
         ],
+        "spacy_factories": [
+            "ngrams=dphon.ngrams:create_ngrams",
+            "g2p=dphon.g2p:create_graphemes_to_phonemes",
+            "ngram_phonemes_index=dphon.index:create_ngram_phonemes_lookup_index",
+        ]
     },
     project_urls={
         "Source": "https://github.com/direct-phonology/direct",

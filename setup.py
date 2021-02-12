@@ -16,7 +16,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/direct-phonology/dphon",
-    package_data={"dphon": ["data/*.json"]},
+    include_package_data=True,
     author="Nick Budak",
     author_email="nbudak@princeton.edu",
     classifiers=[

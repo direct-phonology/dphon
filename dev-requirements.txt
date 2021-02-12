@@ -5,4 +5,5 @@ coverage
 pylint
 mypy
 pdoc3
+autopep8
 -r requirements.txt

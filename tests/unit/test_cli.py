@@ -42,7 +42,7 @@ class TestOptions(TestCase):
         """Set up a spaCy pipeline and CLI arguments for testing."""
         # default CLI arguments; would be populated by docopt
         self.args: Dict[str, Any] = {
-            "<path>": ["tests/fixtures/laozi/"],  # testing fixture set
+            "<path>": ["tests/fixtures/laozi/*.txt"],  # testing fixture set
             "--min": None,
             "--max": None,
             "--all": False,

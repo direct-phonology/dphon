@@ -82,11 +82,9 @@ from . import __version__
 from .align import SmithWatermanPhoneticAligner
 from .console import console, err_console, MatchHighlighter
 from .extend import LevenshteinPhoneticExtender
-from .index import Index
 from .io import CorpusLoader, JsonLinesCorpusLoader, PlaintextCorpusLoader
 from .match import Match
-from .ngrams import Ngrams
-from .phonemes import Phonemes, get_sound_table_json
+from .g2p import get_sound_table_json
 from .reuse import MatchGraph
 
 # Available log levels: default is WARN, -v is INFO, -vv is DEBUG
@@ -111,8 +109,9 @@ def run() -> None:
     nlp = setup(args)
 
     # setup match highlighting
-    console.highlighter = MatchHighlighter(g2p=nlp.get_pipe(
-        "phonemes"), context=int(args["--context"]), gap_char="　")
+    console.highlighter = MatchHighlighter(g2p=nlp.get_pipe("g2p"),
+                                           context=int(args["--context"]),
+                                           gap_char="　")
 
     # process all texts
     graph = process(nlp, args)
@@ -127,9 +126,6 @@ def run() -> None:
         for match in results:
             console.print(match)
 
-    # teardown pipeline
-    teardown(nlp)
-
 
 def setup(args: Dict) -> Language:
     """Set up the spaCy processing pipeline."""
@@ -138,16 +134,15 @@ def setup(args: Dict) -> Language:
         Path("./dphon/data/sound_table_v2.json"))
 
     # add Doc metadata
-    Doc.set_extension("id", default="")
+    if not Doc.has_extension("id"):
+        Doc.set_extension("id", default="")
 
     # setup spaCy model
     nlp = spacy.blank(
         "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
-    nlp.add_pipe(Phonemes(nlp, sound_table=sound_table), first=True)
-    nlp.add_pipe(Ngrams(nlp, n=int(args["--ngram-order"])), after="phonemes")
-    nlp.add_pipe(Index(nlp, val_fn=lambda doc: doc._.ngrams,
-                       filter_fn=lambda ngram: ngram.text.isalpha(),
-                       key_fn=lambda ngram: "".join(ngram._.phonemes)))
+    nlp.add_pipe("g2p", config={"sound_table": sound_table})
+    nlp.add_pipe("ngrams", config={"n": int(args["--ngram-order"])})
+    nlp.add_pipe("ngram_phonemes_index", name="index")
     logging.info("loaded default spaCy model")
     return nlp
 
@@ -172,7 +167,8 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
     logging.info(f"indexed {graph.number_of_docs()} docs in {stop:.1f}s")
 
     # prune all ngrams from index that only occur once
-    groups = list(nlp.get_pipe("index").filter(lambda g: len(g[1]) > 1))
+    groups = list(nlp.get_pipe("index").filter(
+        lambda g: len(g[1]) > 1))
 
     # create initial pairwise matches from seed groups
     progress = Progress(
@@ -202,7 +198,7 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
 
     # limit to seeds with graphic variants if requested
     if not args["--all"]:
-        graph.filter(nlp.get_pipe("phonemes").has_variant)
+        graph.filter(nlp.get_pipe("g2p").has_variant)
 
     # extend all matches
     graph.extend(LevenshteinPhoneticExtender(
@@ -221,16 +217,6 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
 
     # return completed reuse graph
     return graph
-
-
-def teardown(nlp: Language) -> None:
-    """Unregister spaCy extensions to prevent name collisions."""
-    Doc.remove_extension("id")
-
-    # iterate over all pipeline components and call teardown() if it exists
-    for _name, component in nlp.pipeline:
-        if hasattr(component, "teardown"):
-            component.teardown()
 
 
 if __name__ == "__main__":

@@ -10,7 +10,7 @@ import Levenshtein as Lev
 from spacy.tokens import Span
 
 from .match import Match
-from .phonemes import OOV_PHONEMES
+from .g2p import OOV_PHONEMES
 
 
 class Extender(ABC):

@@ -14,21 +14,13 @@ class TestMatchGraph(TestCase):
 
     maxDiff = None
 
-    @classmethod
-    def setUpClass(cls) -> None:
-        """register spaCy extensions"""
-        Doc.set_extension("id", default="")
-
-    @classmethod
-    def tearDown(cls) -> None:
-        """unregister spaCy extensions to prevent collisions"""
-        Doc.remove_extension("id")
-
     def setUp(self) -> None:
         """create a spaCy pipeline and match graph for testing"""
         self.nlp = spacy.blank(
             "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
         self.G = MatchGraph()
+        if not Doc.has_extension("id"):
+            Doc.set_extension("id", default="")
         # doc1 = self.nlp.make_doc("與朋友交言而有信雖曰未學吾必謂之學矣")
         # doc2 = self.nlp.make_doc("與朋友交言而有信雖曰已學吾必謂之未也")
         # doc3 = self.nlp.make_doc("與朋友交言而有信雖未讀書吾亦謂之學矣")

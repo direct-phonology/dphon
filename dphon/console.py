@@ -5,7 +5,7 @@ from rich.highlighter import RegexHighlighter
 from rich.theme import Theme
 
 from .match import Match
-from .phonemes import Phonemes
+from .g2p import GraphemesToPhonemes
 
 
 # Default color scheme for highlighting matches
@@ -26,9 +26,9 @@ class MatchHighlighter(RegexHighlighter):
 
     context: int
     gap_char: str
-    g2p: Phonemes
+    g2p: GraphemesToPhonemes
 
-    def __init__(self, g2p: Phonemes, context: int = 0, gap_char: str = "-") -> None:
+    def __init__(self, g2p: GraphemesToPhonemes, context: int = 0, gap_char: str = "-") -> None:
         """Create a new highlighter with optional context for each match."""
         # can't have negative context
         if context < 0:

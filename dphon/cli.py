@@ -60,7 +60,7 @@ Examples:
  
 Help:
     For more information on using this tool, visit the Github repository:
-    https://github.com/direct-phonology/direct
+    https://github.com/direct-phonology/dphon
 """
 
 import logging

@@ -17,7 +17,7 @@ DEFAULT_THEME = Theme({
 })
 
 # Consoles for rendering output
-console = Console(theme=DEFAULT_THEME, soft_wrap=False)
+console = Console(theme=DEFAULT_THEME, soft_wrap=True)
 err_console = Console(theme=DEFAULT_THEME, stderr=True)
 
 

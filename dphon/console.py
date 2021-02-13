@@ -80,33 +80,37 @@ class MatchHighlighter(RegexHighlighter):
                 su.append(match.au[i])
                 sv.append(f"[insertion]{match.av[i]}[/insertion]")
                 v_ptr += 1
+                continue
 
             # gap in v: insertion in u
-            elif match.av[i] == self.gap_char:
+            if match.av[i] == self.gap_char:
                 su.append(f"[insertion]{match.au[i]}[/insertion]")
                 sv.append(match.av[i])
                 u_ptr += 1
+                continue
 
             # variants (both u and v)
-            elif self.g2p.are_graphic_variants(match.utxt[u_ptr], match.vtxt[v_ptr]):
+            if self.g2p.are_graphic_variants(match.utxt[u_ptr], match.vtxt[v_ptr]):
                 su.append(f"[variant]{match.au[i]}[/variant]")
                 sv.append(f"[variant]{match.av[i]}[/variant]")
                 u_ptr += 1
                 v_ptr += 1
+                continue
 
-            # mismatch (both u and v)
-            elif match.au[i] != match.av[i]:
-                su.append(f"[mismatch]{match.au[i]}[/mismatch]")
-                sv.append(f"[mismatch]{match.av[i]}[/mismatch]")
-                u_ptr += 1
-                v_ptr += 1
+            # mismatch (both u and v) - only highlight if alphanumeric
+            if match.au[i] != match.av[i]:
+                if match.au[i].isalnum() and match.av[i].isalnum():
+                    su.append(f"[mismatch]{match.au[i]}[/mismatch]")
+                    sv.append(f"[mismatch]{match.av[i]}[/mismatch]")
+                    u_ptr += 1
+                    v_ptr += 1
+                    continue
 
             # equality; nothing to highlight
-            else:
-                su.append(match.au[i])
-                sv.append(match.av[i])
-                u_ptr += 1
-                v_ptr += 1
+            su.append(match.au[i])
+            sv.append(match.av[i])
+            u_ptr += 1
+            v_ptr += 1
 
         return "".join(su), "".join(sv)
 

@@ -25,9 +25,11 @@ class Match(NamedTuple):
     def __rich_console__(self, console: Console, options: ConsoleOptions) -> RenderResult:
         """Format the match for display in console."""
         su, sv = console.highlighter.format_match(self)     # type: ignore
-        yield (f"score {int(self.weight)}, weighted {self.weighted_score}\n"
-               f"{su} ({self.u} {self.utxt.start}–{self.utxt.end-1})\n"
-               f"{sv} ({self.v} {self.vtxt.start}–{self.vtxt.end-1})\n")
+        yield (f"[bold]score[/bold] {int(self.weight)}, "
+               f"[bold]weighted[/bold] {self.weighted_score}\t"
+               f"[white]{self.u}[/white]({self.utxt.start}–{self.utxt.end-1}):"
+               f"[white]{self.v}[/white]({self.vtxt.start}–{self.vtxt.end-1})\n"
+               f"{su}\n{sv}\n")
 
     @property
     def weighted_score(self) -> float:

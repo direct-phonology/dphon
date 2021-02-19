@@ -70,10 +70,10 @@ $ man less
 $ export LESS=R
 ```
 
-if you want to save the results of the run to a file, you can use redirection, in which case colorization will be automatically disabled:
+if you want to save the results of the run to a file, you can use redirection. this is useful when writing structured formats like .csv and .jsonl. you can also write html to preserve colors:
 
 ```sh
-$ dphon files/*.txt > results.txt
+$ dphon -o html files/*.txt > results.html
 ```
 
 alternatively, you can pipe the output of `dphon` to another utility like `sed` for filtering the results further. for example, you could strip out the ideographic space `　` from results to remove the alignments:

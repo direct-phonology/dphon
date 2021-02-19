@@ -18,13 +18,14 @@ Global Options:
         Increase verbosity of logs sent to stderr. Default log level is WARN;
         -v corresponds to INFO and -vv to DEBUG.
 
-    -f <FMT>, --format <FMT>        [default: txt]
-        Set input file type. Currently, plaintext (.txt) and json-lines (.jsonl)
-        files are supported.
+    -i <FMT>, --input-format <FMT>  [default: txt]
+        Set input format. Currently, plaintext (txt) and JSON lines (jsonl) are
+        supported.
 
-    -c <NUM>, --context <NUM>       [default: 0]
-        Add NUM tokens of context to each side of matches. Context displays with
-        a dimmed appearance if color is supported in the terminal.
+    -o <FMT>, --output-format <FMT> [default: txt]
+        Set output format. Currently, plaintext (txt), JSON lines (jsonl),
+        comma-separated values (csv), and html (html) are supported. Note that
+        you still need to redirect to a file in order to save the output.
 
 Matching Options:
     -n <NUM>, --ngram-order <NUM>   [default: 4]
@@ -38,6 +39,10 @@ Matching Options:
     -l <NUM>, --len-limit <NUM>     [default: 50]
         Limit on number of tokens to compare to obtain similarity score. A
         higher number will slow down execution time but return more matches. 
+
+    -c <NUM>, --context <NUM>       [default: 0]
+        Add NUM tokens of context to each side of matches. Context displays with
+        a dimmed appearance if color is supported in the terminal.
 
 Filtering Options:
     -a, --all
@@ -63,14 +68,17 @@ Help:
     https://github.com/direct-phonology/dphon
 """
 
+import csv
 import logging
-import time
 import os
-import pkg_resources
+import sys
+import time
 from itertools import combinations
 from pathlib import Path
 from typing import Dict
 
+import jsonlines
+import pkg_resources
 import spacy
 from docopt import docopt
 from rich import traceback
@@ -81,11 +89,11 @@ from spacy.tokens import Doc
 
 from . import __version__
 from .align import SmithWatermanPhoneticAligner
-from .console import console, err_console, MatchHighlighter
-from .extend import LevenshteinPhoneticExtender
+from .console import MatchHighlighter, console, err_console
 from .corpus import CorpusLoader, JsonLinesCorpusLoader, PlaintextCorpusLoader
-from .match import Match
+from .extend import LevenshteinPhoneticExtender
 from .g2p import get_sound_table_json
+from .match import Match
 from .reuse import MatchGraph
 
 # Available log levels: default is WARN, -v is INFO, -vv is DEBUG
@@ -122,10 +130,28 @@ def run() -> None:
     # sort results by highest total score
     results = sorted(results, key=lambda m: m.weight, reverse=True)
 
-    # use system pager by default; colorize if LESS=R
-    with console.pager(styles=os.getenv("LESS", "") == "R"):
+    # output depending on provided option
+    if args["--output-format"] == "jsonl":
+        with jsonlines.Writer(sys.stdout) as writer:
+            for match in results:
+                writer.write(match.as_dict())
+    elif args["--output-format"] == "csv":
+        fieldnames = Match("", "", "", "").as_dict().keys()
+        writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
+        writer.writeheader()
         for match in results:
-            console.print(match)
+            writer.writerow(match.as_dict())
+    elif args["--output-format"] == "html":
+        console.record = True
+        with console.capture():
+            for match in results:
+                console.print(match)
+        sys.stdout.write(console.export_html())
+    else:
+        # use system pager by default; colorize if LESS=R
+        with console.pager(styles=os.getenv("LESS", "") == "R"):
+            for match in results:
+                console.print(match)
 
 
 def setup(args: Dict) -> Language:
@@ -154,7 +180,7 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
     # set up graph and loader
     graph = MatchGraph()
     load_texts: CorpusLoader
-    if args["--format"] == "jsonl":
+    if args["--input-format"] == "jsonl":
         load_texts = JsonLinesCorpusLoader()
     else:
         load_texts = PlaintextCorpusLoader()
@@ -199,7 +225,8 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
 
     # limit to seeds with graphic variants if requested
     if not args["--all"]:
-        graph.filter(nlp.get_pipe("g2p").has_variant)
+        has_variant = nlp.get_pipe("g2p").has_variant
+        graph.filter(has_variant)
 
     # extend all matches
     graph.extend(LevenshteinPhoneticExtender(

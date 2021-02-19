@@ -42,7 +42,8 @@ Matching Options:
 
     -c <NUM>, --context <NUM>       [default: 0]
         Add NUM tokens of context to each side of matches. Context displays with
-        a dimmed appearance if color is supported in the terminal.
+        a dimmed appearance if color is supported in the terminal. Has no effect
+        if the output format is not plaintext.
 
 Filtering Options:
     -a, --all

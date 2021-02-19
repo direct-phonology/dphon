@@ -3,13 +3,12 @@
 """Classes for loading document corpora and passing them to an NLP pipeline."""
 
 import logging
-import string
 import jsonlines
 from abc import ABC, abstractmethod
 from collections import OrderedDict
 from glob import glob
 from pathlib import Path
-from typing import Any, Dict, Iterable, Tuple
+from typing import Any, Dict, Iterable, Tuple, Union
 
 from rich.progress import Progress, BarColumn, TextColumn, SpinnerColumn
 
@@ -21,10 +20,11 @@ DocInfo_T = Tuple[str, Dict[str, Any]]
 
 # Translation table for text content, used for fast text preprocessing
 # currently converts all whitespace to `None` (i.e. strips it out)
+# and converts some lacunae/missing character markers to fullwidth versions
 ALL_WS = "\t\n\x0b\x0c\r\x1c\x1d\x1e\x1f\x85\xa0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000"
 WS_NONE = {k: None for k in list(ALL_WS)}
 LACUNAE = {"□": "〼", "○": "〇"}
-CONVERT: Dict[str, Any] = {**WS_NONE, **LACUNAE}
+CONVERT: Dict[str, Union[str, None]] = {**WS_NONE, **LACUNAE}
 OC_TEXT = str.maketrans(CONVERT)
 
 

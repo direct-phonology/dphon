@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 """The Match class for encoding text reuse relationships."""
 
-from typing import List, NamedTuple, Tuple
-from rich.console import Console, ConsoleOptions, RenderResult
+from typing import List, NamedTuple, Dict
 
+from rich.console import Console, ConsoleOptions, RenderResult
 from spacy.tokens import Span
 
 
@@ -35,3 +35,20 @@ class Match(NamedTuple):
     def weighted_score(self) -> float:
         """Match score divided by its length."""
         return round(self.weight / float(len(self)), 2)
+
+    def as_dict(self) -> Dict[str, str]:
+        """Match with prettier field names for serialization."""
+        return {
+            "u_id": self.u,
+            "v_id": self.v,
+            "u_text": self.utxt.text,
+            "v_text": self.vtxt.text,
+            "u_text_aligned": "".join(self.au),
+            "v_text_aligned": "".join(self.av),
+            "u_start": self.utxt.start,
+            "u_end": self.utxt.end,
+            "v_start": self.vtxt.start,
+            "v_end": self.vtxt.end,
+            "score": str(self.weight),
+            "weighted_score": str(self.weighted_score),
+        }

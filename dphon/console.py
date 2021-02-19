@@ -75,15 +75,15 @@ class MatchHighlighter(RegexHighlighter):
         v_ptr = 0
         for i in range(len(match)):
 
-            # gap in u: insertion in v
-            if match.au[i] == self.gap_char:
+            # gap in u: insertion in v (if not punctuation)
+            if match.au[i] == self.gap_char and match.av[i].isalnum():
                 su.append(match.au[i])
                 sv.append(f"[insertion]{match.av[i]}[/insertion]")
                 v_ptr += 1
                 continue
 
-            # gap in v: insertion in u
-            if match.av[i] == self.gap_char:
+            # gap in v: insertion in u (if not punctuation)
+            if match.av[i] == self.gap_char  and match.au[i].isalnum():
                 su.append(f"[insertion]{match.au[i]}[/insertion]")
                 sv.append(match.av[i])
                 u_ptr += 1

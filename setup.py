@@ -1,4 +1,4 @@
-"""Packaging settings for DIRECT."""
+"""Packaging settings for dphon."""
 
 import pathlib
 

@@ -83,7 +83,7 @@ from . import __version__
 from .align import SmithWatermanPhoneticAligner
 from .console import console, err_console, MatchHighlighter
 from .extend import LevenshteinPhoneticExtender
-from .io import CorpusLoader, JsonLinesCorpusLoader, PlaintextCorpusLoader
+from .corpus import CorpusLoader, JsonLinesCorpusLoader, PlaintextCorpusLoader
 from .match import Match
 from .g2p import get_sound_table_json
 from .reuse import MatchGraph

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Tests for the input/output module."""
+"""Tests for the corpus module."""
 
 from pathlib import Path
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 from unittest import TestCase, skip
 
-from dphon.io import PlaintextCorpusLoader
+from dphon.corpus import PlaintextCorpusLoader
 
 
 class TestPlaintextCorpusLoader(TestCase):

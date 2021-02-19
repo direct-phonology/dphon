@@ -79,7 +79,7 @@ $ dphon files/*.txt > results.txt
 alternatively, you can pipe the output of `dphon` to another utility like `sed` for filtering the results further. for example, you could strip out the ideographic space `　` from results to remove the alignments:
 
 ```sh
-$ dphon files*.txt | sed 's/　//g'
+$ dphon files/*.txt | sed 's/　//g'
 ```
 
 ## methodology

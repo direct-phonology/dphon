@@ -89,11 +89,12 @@ class TestG2P(TestCase):
     def test_get_all_phonemes(self) -> None:
         """should iterate over all valid phonemes in a span or doc"""
         doc = self.nlp("one two 3 go!")
-        # "go" has no entry and "!" is non-voiced; they won't appear
+        # "go" has no entry and will be marked by OOV_PHONEMES;
+        # "!" is non-voiced and won't appear
         self.assertEqual(list(self.px.get_all_phonemes(doc)), [
-                         "w", "ʌn", "t", "uː", "θ", "riː"])
-        # try running on a span without "one" in it
-        span = doc[1:]
+                         "w", "ʌn", "t", "uː", "θ", "riː", OOV_PHONEMES])
+        # try running on a shorter span - "two 3"
+        span = doc[1:3]
         self.assertEqual(list(self.px.get_all_phonemes(span)),
                          ["t", "uː", "θ", "riː"])
 

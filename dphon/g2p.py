@@ -96,12 +96,12 @@ class GraphemesToPhonemes:
 
         - Skips parts of the syllable that are not used (stored as None).
         - Skips non-voiced tokens, such as punctuation.
-        - Skips tokens with no phonetic entry in the sound table.
+        - Keeps OOV_PHONEMES as an indicator of missing phonetic information.
         """
 
         for token in tokens:
             for phoneme in self.get_token_phonemes(token):
-                if phoneme and phoneme != OOV_PHONEMES:
+                if phoneme:
                     yield phoneme
 
     def get_token_phonemes(self, token: Token) -> Phonemes_T:
@@ -117,7 +117,7 @@ class GraphemesToPhonemes:
         if not token.is_alpha and not token.like_num:
             return self.empty_phonemes
         elif token._.is_oov:
-            # logging.warning(f"no entry for token in sound table: {token.text}")
+            logging.debug(f"no phonemes for token: \"{token.text}\"")
             return (OOV_PHONEMES,)
         else:
             return self.table[token.text]

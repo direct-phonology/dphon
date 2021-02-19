@@ -169,8 +169,7 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
     logging.info(f"indexed {graph.number_of_docs()} docs in {stop:.1f}s")
 
     # prune all ngrams from index that only occur once
-    groups = list(nlp.get_pipe("index").filter(
-        lambda g: len(g[1]) > 1))
+    groups = list(nlp.get_pipe("index").filter(lambda g: len(g[1]) > 1))
 
     # create initial pairwise matches from seed groups
     progress = Progress(

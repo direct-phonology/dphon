@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """SpaCy pipeline components for building indices of arbitrary document data."""
 
+from dphon.g2p import OOV_PHONEMES
 import logging
 from abc import ABC, abstractmethod
 from typing import Callable, Hashable, Iterable, Iterator, List, Tuple, TypeVar, Generic
@@ -118,8 +119,15 @@ class LookupsIndex(Index[Hashable, V], Generic[V]):
 class NgramPhonemesLookupsIndex(LookupsIndex[Span]):
 
     def _get_vals(self, doc: Doc) -> Iterator[Span]:
-        """Iterator over alphabetic ngrams in the doc."""
-        return (ngram for ngram in doc._.ngrams if ngram.text.isalpha)
+        """Iterator over phonetic ngrams in the doc.
+
+        Discards any ngrams containing non-voiced content, and any for which
+        the g2p model did not have phonetic information.
+        """
+
+        for ngram in doc._.ngrams:
+            if ngram.text.isalpha and OOV_PHONEMES not in ngram._.phonemes:
+                yield ngram
 
     def _get_key(self, val: Span) -> str:
         """All phonetic content of an ngram as a string."""

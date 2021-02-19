@@ -126,7 +126,7 @@ class NgramPhonemesLookupsIndex(LookupsIndex[Span]):
         """
 
         for ngram in doc._.ngrams:
-            if ngram.text.isalpha and OOV_PHONEMES not in ngram._.phonemes:
+            if ngram.text.isalpha() and OOV_PHONEMES not in ngram._.phonemes:
                 yield ngram
 
     def _get_key(self, val: Span) -> str:

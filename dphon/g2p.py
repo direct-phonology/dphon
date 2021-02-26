@@ -60,18 +60,25 @@ class GraphemesToPhonemes:
         logging.info(f"using {self.__class__}")
 
     def __call__(self, doc: Doc) -> Doc:
-        """Return `doc` unmodified."""
         return doc
 
     def is_token_oov(self, token: Token) -> bool:
-        """Check if `token` has a phonetic entry in the sound table."""
+        """`True` if `token` has no phonetic entry in the sound table.
+        
+        Args:
+            token: a single `spacy.tokens.Token` to check.
+        """
         return token.text not in self.table
 
     def has_variant(self, match: Match) -> bool:
-        """True if `match` contains a graphic variant.
+        """`True` if `match` contains a graphic variant.
 
         This is designed to be called on matches that are of the same length,
         so that the match doesn't need to be aligned for it to work.
+
+        Args:
+            match: a single `dphon.match.Match`, usually output from the early
+            seed stage, to check.
         """
 
         # compare each token pairwise, True if we find a variant, else False
@@ -81,12 +88,15 @@ class GraphemesToPhonemes:
         return False
 
     def are_graphic_variants(self, *tokens: Token) -> bool:
-        """Check if a set of tokens are graphic variants of the same word.
+        """Check if `tokens` are graphic variants.
 
-        - If any tokens are not in the sound table, returns False.
-        - If any tokens are non-voiced, returns False.
-        - If any tokens have identical text (graphs), returns False.
-        - If any tokens have differing phonemes, returns False.
+        - `False` if any tokens are not in the sound table.
+        - `False` if any tokens are non-voiced.
+        - `False` if any tokens have identical graphemes.
+        - `False` if any tokens have differing phonemes.
+
+        Args:
+            tokens: any number of `spacy.tokens.Token` to compare.
         """
 
         # O(n) implementation: compare all tokens against first one
@@ -104,11 +114,14 @@ class GraphemesToPhonemes:
         return True
 
     def get_all_phonemes(self, tokens: Iterable[Token]) -> Iterator[str]:
-        """Return a flattened iterator over all phonemes in a Span or Doc.
+        """Flattened iterator over all phonemes in `tokens`.
 
         - Skips parts of the syllable that are not used (stored as None).
         - Skips non-voiced tokens, such as punctuation.
         - Keeps OOV_PHONEMES as an indicator of missing phonetic information.
+
+        Args:
+            tokens: iterable of `spacy.tokens.Token` to convert.
         """
 
         for token in tokens:
@@ -121,9 +134,9 @@ class GraphemesToPhonemes:
 
         - If `token` is non-alphanumeric, all elements of the tuple will be None.
         - If `token` is not in the sound table, all elements of the tuple will
-        use a special marker token (OOV_PHONEMES).
+        use a special marker (`OOV_PHONEMES`).
         - If some parts of the syllable are not present, their corresponding
-        elements in the tuple will be None.
+        elements in the tuple will be `None`.
         """
 
         if not token.is_alpha and not token.like_num:

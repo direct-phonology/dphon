@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""SpaCy pipeline components for building indices of arbitrary document data."""
+"""Tools for building indices of document data."""
 
 from dphon.g2p import OOV_PHONEMES
 import logging
@@ -16,10 +16,18 @@ V = TypeVar("V")                    # type for values stored in the index
 
 
 class Index(ABC, Generic[K, V]):
-    """A spaCy pipeline component that indexes arbitrary items via callables."""
+    """Abstract base class that indexes arbitrary document data.
+
+    Subclasses are intended for use as spaCy pipeline components. Docs will be
+    passed through the component unmodified, storing some data in an external
+    index maintained by the component for later use. The particular indexing 
+    strategy is implementation-defined.
+    
+    Args:
+        nlp: a spaCy language model.
+    """
 
     def __init__(self, nlp: Language):
-        """Initialize the index component."""
         logging.info(f"using {self.__class__}")
 
     @abstractmethod
@@ -60,6 +68,19 @@ class Index(ABC, Generic[K, V]):
 
 
 class LookupsIndex(Index[Hashable, V], Generic[V]):
+    """Index using a `spacy.lookups.Table` to store document data.
+
+    Subclasses must implement `_get_vals()` and `_get_keys()` to define how data
+    is to be extracted from documents and indexed. `_get_vals()` returns an
+    iterable of all values from a document that should be indexed, while
+    `_get_keys()` returns the key for a single value.
+
+    Data is indexed as a `spacy.lookups.Table`, which is a subclass of 
+    `collections.OrderedDict` with a bloom filter applied to speed up querying.
+
+    Args:
+        nlp: a spaCy language model.
+    """
 
     _table: Table       # uses spaCy's lookup tables (bloom filtered dict)
     _size: int          # tracker for total number of values in index
@@ -117,6 +138,17 @@ class LookupsIndex(Index[Hashable, V], Generic[V]):
 
 
 class NgramPhonemesLookupsIndex(LookupsIndex[Span]):
+    """Index of phonetic n-grams using a `spacy.lookups.Table`.
+    
+    Each key in the index is the phonetic content of a unique document n-gram as
+    a string. Values stored at this key are `spacy.tokens.Span` objects 
+    representing the document locations where this phonetic content occurred.
+    
+    - Requires an n-gram component (see `dphon.ngrams`) to break document text
+    into n-grams.
+    - Requires a grapheme-to-phoneme model (see `dphon.g2p`) to retrieve phonetic
+    content of n-grams.
+    """
 
     def _get_vals(self, doc: Doc) -> Iterator[Span]:
         """Iterator over phonetic ngrams in the doc.

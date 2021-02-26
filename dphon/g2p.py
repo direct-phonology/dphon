@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""SpaCy pipeline components for converting graphemes to phonemes."""
+"""Tools for converting graphemes to phonemes."""
 
 import json
 import logging
@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Iterable, Iterator, Mapping, Optional, Tuple
 
 from spacy.language import Language
-from spacy.lookups import Lookups, Table
+from spacy.lookups import Table
 from spacy.tokens import Doc, Span, Token
 
 from dphon.match import Match
@@ -22,13 +22,25 @@ SoundTable_T = Mapping[str, Phonemes_T]
 
 
 class GraphemesToPhonemes:
-    """A spaCy pipeline component that converts graphemes to phonemes."""
+    """Grapheme-to-phoneme conversion using a `spacy.lookups.Table`.
 
-    table: Table        # reference to sound table in spaCy lookups
-    lookups: Lookups    # reference to all LUTs for language model
+    Intended for use as a spaCy pipeline component. Docs will be passed through
+    the component unmodified. Registers several extension attributes that can be
+    used elsewhere in a spaCy pipeline:
+    
+    - `Doc._.phonemes`: iterator over all phonemes in a `spacy.tokens.Doc`
+    - `Span._.phonemes`: iterator over all phonemes in a `spacy.tokens.Span`
+    - `Token._.phonemes`: iterator over all phonemes in a `spacy.tokens.Token`
+    - `Token._.is_oov`: check whether a token can be converted to phonemes
+    
+    Args:
+        nlp: a spaCy language model.
+        sound_table: grapheme-to-phoneme conversion table.
+    """
+
+    _table: Table       # uses spaCy's lookup tables (bloom filtered dict)
 
     def __init__(self, nlp: Language, sound_table: SoundTable_T):
-        """Initialize the phonemes component."""
         # infer the syllable segmentation and map it to an empty phoneme set
         syllable_parts = len(next(iter(sound_table.values())))
         self.empty_phonemes = tuple(None for _ in range(syllable_parts))
@@ -44,23 +56,23 @@ class GraphemesToPhonemes:
             Token.set_extension("is_oov", getter=self.is_token_oov)
 
         # store the sound table in the vocab's Lookups
-        self.lookups = nlp.vocab.lookups
-        self.table = self.lookups.add_table("phonemes", sound_table)
+        self.table = nlp.vocab.lookups.add_table("phonemes", sound_table)
         logging.info(f"using {self.__class__}")
 
     def __call__(self, doc: Doc) -> Doc:
-        """Return the Doc unmodified."""
+        """Return `doc` unmodified."""
         return doc
 
     def is_token_oov(self, token: Token) -> bool:
-        """Check if a token has a phonetic entry in the sound table."""
+        """Check if `token` has a phonetic entry in the sound table."""
         return token.text not in self.table
 
     def has_variant(self, match: Match) -> bool:
-        """True if a seed contains a graphic variant.
+        """True if `match` contains a graphic variant.
 
-        This is designed to be called on seeds that are of the same length,
-        so that the match doesn't need to be aligned for it to work."""
+        This is designed to be called on matches that are of the same length,
+        so that the match doesn't need to be aligned for it to work.
+        """
 
         # compare each token pairwise, True if we find a variant, else False
         for i in range(len(match)):
@@ -105,10 +117,10 @@ class GraphemesToPhonemes:
                     yield phoneme
 
     def get_token_phonemes(self, token: Token) -> Phonemes_T:
-        """Return a Token's phonemes as an n-tuple.
+        """Return `token`'s phonemes as an n-tuple.
 
-        - If a Token is non-alphanumeric, all elements of the tuple will be None.
-        - If a Token is not in the sound table, all elements of the tuple will
+        - If `token` is non-alphanumeric, all elements of the tuple will be None.
+        - If `token` is not in the sound table, all elements of the tuple will
         use a special marker token (OOV_PHONEMES).
         - If some parts of the syllable are not present, their corresponding
         elements in the tuple will be None.

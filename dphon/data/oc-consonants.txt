@@ -1,4 +1,4 @@
-Matrix Consonants	p	pʰ	b	m	t	tʰ	d	n	ts	tsʰ	dz	s	l	r	k	kʰ	g	ŋ	kʷ	kʷʰ	gʷ	ŋʷ	ʔ	ʔʷ	q	qʰ	ɢ	qʷ	qʷʰ	ɢʷ	wk	j
+	p	pʰ	b	m	t	tʰ	d	n	ts	tsʰ	dz	s	l	r	k	kʰ	g	ŋ	kʷ	kʷʰ	gʷ	ŋʷ	ʔ	ʔʷ	q	qʰ	ɢ	qʷ	qʷʰ	ɢʷ	wk	j
 p	10	9	8	5	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 pʰ	9	10	7	5	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 b	8	7	10	5	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0

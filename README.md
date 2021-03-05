@@ -95,9 +95,9 @@ matching sequences are determined by a "dictionary" file that represents a parti
 
 for characters with multiple readings, `dphon` currently chooses the first available reading for comparison. more work is planned for version 3.0 to address this shortcoming.
 
-in version 1.0, `dphon`'s default reconstruction was based on Schuessler 2007[<sup>1</sup>](#note1), but used a single "dummy" character to represent all the lexemes in a particular sound class. [the dictionary](dphon/data/sound_table_v1.json) was compiled by John O'Leary ([@valgrinderror](https://github.com/valgrinderror)) and Gian Duri Rominger ([@GDRom](https://github.com/GDRom)). since version 2.0, `dphon` uses [a dictionary](dphon/data/sound_table_v2.json) based on the Baxter-Sagart 2014 reconstruction[<sup>2</sup>](#note2), with additional work by Gian Duri Rominger.
+in version 1.0, `dphon`'s default reconstruction was based on Schuessler 2007[<sup>1</sup>](#note1), but used a single "dummy" character to represent all the lexemes in a rhyming group. [the dictionary](dphon/data/sound_table_v1.json) was compiled by John O'Leary ([@valgrinderror](https://github.com/valgrinderror)) and Gian Duri Rominger ([@GDRom](https://github.com/GDRom)). since version 2.0, `dphon` uses [a dictionary](dphon/data/sound_table_v2.json) based on the Baxter-Sagart 2014 reconstruction[<sup>2</sup>](#note2), with additional work by Rominger.
 
-the matching algorithm is based on Paul Vierthaler's [`chinesetextreuse`](https://github.com/vierth/chinesetextreuse) project, with some modifications. it uses a [BLAST](https://en.wikipedia.org/wiki/BLAST_(biotechnology))-like strategy to identify initial match candidates, and then extend them via phonetic [edit distance](https://en.wikipedia.org/wiki/Edit_distance) comparison. finally, the results are aligned using a version of the [Smith-Waterman algorithm](https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm) that operates on phonemes. 
+the matching algorithm is based on Paul Vierthaler's [`chinesetextreuse`](https://github.com/vierth/chinesetextreuse) project[<sup>3</sup>](#note3), with some modifications. it uses a [BLAST](https://en.wikipedia.org/wiki/BLAST_(biotechnology))-like strategy to identify initial match candidates, and then extend them via phonetic [edit distance](https://en.wikipedia.org/wiki/Edit_distance) comparison. finally, the results are aligned using a version of the [Smith-Waterman algorithm](https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm) that operates on phonemes, powered by the `lingpy` library[<sup>4</sup>](#note4).
 
 ## development setup
 
@@ -178,6 +178,10 @@ if everything is OK, publish the package to PyPI:
 $ twine upload dist/*
 ```
 <hr/>
-<sup id="note1">1</sup> Schuessler, Axel (2007), ABC Etymological Dictionary of Old Chinese, Honolulu: University of Hawaii Press, ISBN 978-0-8248-2975-9.
+<sup id="note1">1</sup> Schuessler, Axel (2007), _ABC Etymological Dictionary of Old Chinese_, Honolulu: University of Hawaii Press, ISBN 978-0-8248-2975-9.
 
-<sup id="note2">2</sup> Baxter, William H.; Sagart, Laurent (2014), Old Chinese: A New Reconstruction, Oxford University Press, ISBN 978-0-19-994537-5.
+<sup id="note2">2</sup> Baxter, William H.; Sagart, Laurent (2014), _Old Chinese: A New Reconstruction_, Oxford University Press, ISBN 978-0-19-994537-5.
+
+<sup id="note3">3</sup> Vierthaler, Paul, and Mees Gelein. “A BLAST-Based, Language-Agnostic Text Reuse Algorithm with a MARKUS Implementation and Sequence Alignment Optimized for Large Chinese Corpora,” April 26, 2019. https://doi.org/10.31235/osf.io/7xpqe.
+
+<sup id="note4">4</sup> List, Johann-Mattis; Greenhill, Simon; Tresoldi, Tiago; and Forkel, Robert (2019): **LingPy. A Python library for historical linguistics**. Version 2.6.5. URL: http://lingpy.org, DOI: https://zenodo.org/badge/latestdoi/5137/lingpy/lingpy. With contributions by Christoph Rzymski, Gereon Kaiping, Steven Moran, Peter Bouda, Johannes Dellert, Taraka Rama, Frank Nagel. Jena: Max Planck Institute for the Science of Human History.

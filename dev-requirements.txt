@@ -1,7 +1,7 @@
 setuptools
 wheel
 twine
-coverage
+coverage==5.5
 pylint
 mypy
 pdoc3

@@ -3,7 +3,7 @@ wheel
 twine
 coverage
 pylint
-mypy
+mypy==0.812
 pdoc3
 autopep8
 -r requirements.txt

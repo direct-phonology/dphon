@@ -1,0 +1,24 @@
+name: docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docs:
+    name: generate docs with pdoc3
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "PYTHON_VERSION=$(cat .python-version)" >> $GITHUB_ENV
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: pip install -r dev-requirements.txt
+      - run: python setup.py develop
+      - run: pdoc --html --output-dir docs dphon
+      - uses: EndBug/add-and-commit@v5
+        with:
+          add: "docs/ --force"
+          message: "Update documentation"

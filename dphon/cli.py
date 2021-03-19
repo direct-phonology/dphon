@@ -33,14 +33,14 @@ Matching Options:
         execution time, but smaller matches won't be returned.
 
     -k <NUM>, --threshold <NUM>     [default: 0.7]
-        Similarity threshold below which matches will not be retained. A higher
+        Discard matches with an overall similarity ratio below NUM. A higher
         number will result in fewer matches with less variance.
 
     -l <NUM>, --len-limit <NUM>     [default: 50]
-        Limit on number of tokens to compare to obtain similarity score. A
+        Compare at most NUM tokens when obtaining the similarity score. A
         higher number will slow down execution time but return more matches. 
 
-    -c <NUM>, --context <NUM>       [default: 0]
+    -c <NUM>, --context <NUM>       [default: 4]
         Add NUM tokens of context to each side of matches. Context displays with
         a dimmed appearance if color is supported in the terminal. Has no effect
         if the output format is not plaintext.
@@ -51,18 +51,18 @@ Filtering Options:
         containing at least one token with shared phonemes but differing
         graphemes (a graphic variant) are shown.
 
-    --min <NUM>
+    --min <NUM>                     [default: 8]
         Limit to matches with total number of tokens >= NUM. Has no effect if
         less than the value for "--ngram-order".
 
-    --max <NUM>
-        Limit to matches with total number of tokens <= max. Must be equal to 
+    --max <NUM>                     [default: 64]
+        Limit to matches with total number of tokens <= NUM. Must be equal to 
         or greater than the value for "--ngram-order".
 
 Examples:
     dphon texts/*.txt --min 8 > matches.txt
-    dphon file1.txt file2.txt -n 8 -k 0.8
-    dphon docs.jsonl --format jsonl
+    dphon file1.txt file2.txt --ngram-order 8 --threshold 0.8
+    dphon docs.jsonl --input-format jsonl --output-format jsonl > matches.jsonl
  
 Help:
     For more information on using this tool, visit the Github repository:

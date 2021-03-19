@@ -1,8 +1,8 @@
-docopt
+docopt==0.6.2
 spacy>=3
 python-levenshtein
 lingpy
 clldutils==2.6.0
 networkx>=2.5
+jsonlines==2.0.0
 rich==9.13.0
-jsonlines

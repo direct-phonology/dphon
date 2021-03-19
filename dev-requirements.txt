@@ -1,5 +1,5 @@
 setuptools
-wheel
+wheel==0.36.2
 twine
 coverage
 pylint

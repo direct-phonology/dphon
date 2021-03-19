@@ -28,6 +28,8 @@ class TestG2P(TestCase):
             "to": ("t", "uː"),
             "too": ("t", "uː"),
         })
+        # force using entire syllable for testing
+        self.px._select = lambda reading: reading   # type: ignore
 
     def test_defaults(self) -> None:
         """should create lookups sound table and register extensions"""

@@ -2,7 +2,7 @@ setuptools
 wheel
 twine
 coverage
-pylint
+pylint==2.7.2
 mypy
 pdoc3
 autopep8

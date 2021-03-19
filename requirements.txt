@@ -1,4 +1,4 @@
-docopt
+docopt==0.6.2
 spacy>=3
 python-levenshtein
 lingpy

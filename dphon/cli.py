@@ -129,7 +129,7 @@ def run() -> None:
     logging.info(f"{len(results)} total results matching query")
 
     # sort results by highest total score
-    results = sorted(results, key=lambda m: m.weight, reverse=True)
+    results = sorted(results, key=lambda m: m.weighted_score, reverse=True)
 
     # output depending on provided option
     if args["--output-format"] == "jsonl":

@@ -36,7 +36,7 @@ setup(
     keywords="old chinese, phonology, linguistics, nlp",
     packages=find_packages(),
     python_requires=">=3.6",
-    install_requires=["docopt", "spacy",
+    install_requires=["docopt", "spacy>=3",
                       "python-levenshtein", "lingpy", "rich", "jsonlines"],
     extras_require={
         "dev": ["check-manifest", "mypy", "pylint"],

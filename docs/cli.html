@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>dphon.cli API documentation</title>
+<meta name="description" content="dphon - a tool for old chinese phonetic analysis …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>dphon.cli</code></h1>
+</header>
+<section id="section-intro">
+<p>dphon - a tool for old chinese phonetic analysis</p>
+<h2 id="usage">Usage</h2>
+<p>dphon -h | &ndash;help
+dphon &ndash;version
+dphon [-v | -vv] [options] <path>&hellip; </p>
+<p>Global Options:
+-h, &ndash;help
+Show this help text and exit.</p>
+<pre><code>--version
+    Show program version and exit.
+
+-v, -vv
+    Increase verbosity of logs sent to stderr. Default log level is WARN;
+    -v corresponds to INFO and -vv to DEBUG.
+
+-i &lt;FMT&gt;, --input-format &lt;FMT&gt;  [default: txt]
+    Set input format. Currently, plaintext (txt) and JSON lines (jsonl) are
+    supported.
+
+-o &lt;FMT&gt;, --output-format &lt;FMT&gt; [default: txt]
+    Set output format. Currently, plaintext (txt), JSON lines (jsonl),
+    comma-separated values (csv), and html (html) are supported. Note that
+    you still need to redirect to a file in order to save the output.
+</code></pre>
+<p>Matching Options:
+-n <NUM>, &ndash;ngram-order <NUM>
+[default: 4]
+Order of n-grams used to seed matches. A higher number will speed up
+execution time, but smaller matches won't be returned.</p>
+<pre><code>-k &lt;NUM&gt;, --threshold &lt;NUM&gt;     [default: 0.7]
+    Discard matches with an overall similarity ratio below NUM. A higher
+    number will result in fewer matches with less variance.
+
+-l &lt;NUM&gt;, --len-limit &lt;NUM&gt;     [default: 50]
+    Compare at most NUM tokens when obtaining the similarity score. A
+    higher number will slow down execution time but return more matches.
+
+-c &lt;NUM&gt;, --context &lt;NUM&gt;       [default: 4]
+    Add NUM tokens of context to each side of matches. Context displays with
+    a dimmed appearance if color is supported in the terminal. Has no effect
+    if the output format is not plaintext.
+</code></pre>
+<p>Filtering Options:
+-a, &ndash;all
+Allow matches without graphic variation. By default, only matches
+containing at least one token with shared phonemes but differing
+graphemes (a graphic variant) are shown.</p>
+<pre><code>--min &lt;NUM&gt;                     [default: 8]
+    Limit to matches with total number of tokens &gt;= NUM. Has no effect if
+    less than the value for "--ngram-order".
+
+--max &lt;NUM&gt;                     [default: 64]
+    Limit to matches with total number of tokens &lt;= NUM. Must be equal to 
+    or greater than the value for "--ngram-order".
+</code></pre>
+<h2 id="examples">Examples</h2>
+<p>dphon texts/*.txt &ndash;min 8 &gt; matches.txt
+dphon file1.txt file2.txt &ndash;ngram-order 8 &ndash;threshold 0.8
+dphon docs.jsonl &ndash;input-format jsonl &ndash;output-format jsonl &gt; matches.jsonl</p>
+<h2 id="help">Help</h2>
+<p>For more information on using this tool, visit the Github repository:
+<a href="https://github.com/direct-phonology/dphon">https://github.com/direct-phonology/dphon</a></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+&#34;&#34;&#34;dphon - a tool for old chinese phonetic analysis
+ 
+Usage:
+    dphon -h | --help
+    dphon --version
+    dphon [-v | -vv] [options] &lt;path&gt;... 
+ 
+Global Options:
+    -h, --help
+        Show this help text and exit.
+
+    --version
+        Show program version and exit.
+
+    -v, -vv
+        Increase verbosity of logs sent to stderr. Default log level is WARN;
+        -v corresponds to INFO and -vv to DEBUG.
+
+    -i &lt;FMT&gt;, --input-format &lt;FMT&gt;  [default: txt]
+        Set input format. Currently, plaintext (txt) and JSON lines (jsonl) are
+        supported.
+
+    -o &lt;FMT&gt;, --output-format &lt;FMT&gt; [default: txt]
+        Set output format. Currently, plaintext (txt), JSON lines (jsonl),
+        comma-separated values (csv), and html (html) are supported. Note that
+        you still need to redirect to a file in order to save the output.
+
+Matching Options:
+    -n &lt;NUM&gt;, --ngram-order &lt;NUM&gt;   [default: 4]
+        Order of n-grams used to seed matches. A higher number will speed up
+        execution time, but smaller matches won&#39;t be returned.
+
+    -k &lt;NUM&gt;, --threshold &lt;NUM&gt;     [default: 0.7]
+        Discard matches with an overall similarity ratio below NUM. A higher
+        number will result in fewer matches with less variance.
+
+    -l &lt;NUM&gt;, --len-limit &lt;NUM&gt;     [default: 50]
+        Compare at most NUM tokens when obtaining the similarity score. A
+        higher number will slow down execution time but return more matches. 
+
+    -c &lt;NUM&gt;, --context &lt;NUM&gt;       [default: 4]
+        Add NUM tokens of context to each side of matches. Context displays with
+        a dimmed appearance if color is supported in the terminal. Has no effect
+        if the output format is not plaintext.
+
+Filtering Options:
+    -a, --all
+        Allow matches without graphic variation. By default, only matches
+        containing at least one token with shared phonemes but differing
+        graphemes (a graphic variant) are shown.
+
+    --min &lt;NUM&gt;                     [default: 8]
+        Limit to matches with total number of tokens &gt;= NUM. Has no effect if
+        less than the value for &#34;--ngram-order&#34;.
+
+    --max &lt;NUM&gt;                     [default: 64]
+        Limit to matches with total number of tokens &lt;= NUM. Must be equal to 
+        or greater than the value for &#34;--ngram-order&#34;.
+
+Examples:
+    dphon texts/*.txt --min 8 &gt; matches.txt
+    dphon file1.txt file2.txt --ngram-order 8 --threshold 0.8
+    dphon docs.jsonl --input-format jsonl --output-format jsonl &gt; matches.jsonl
+ 
+Help:
+    For more information on using this tool, visit the Github repository:
+    https://github.com/direct-phonology/dphon
+&#34;&#34;&#34;
+
+import csv
+import logging
+import os
+import sys
+import time
+from itertools import combinations
+from pathlib import Path
+from typing import Dict
+
+import jsonlines
+import pkg_resources
+import spacy
+from docopt import docopt
+from rich import traceback
+from rich.logging import RichHandler
+from rich.progress import BarColumn, Progress, SpinnerColumn
+from spacy.language import Language
+from spacy.tokens import Doc
+
+from . import __version__
+from .align import SmithWatermanPhoneticAligner
+from .console import MatchHighlighter, console, err_console
+from .corpus import CorpusLoader, JsonLinesCorpusLoader, PlaintextCorpusLoader
+from .extend import LevenshteinPhoneticExtender
+from .g2p import get_sound_table_json
+from .match import Match
+from .reuse import MatchGraph
+
+# Available log levels: default is WARN, -v is INFO, -vv is DEBUG
+LOG_LEVELS = {
+    0: &#34;WARN&#34;,
+    1: &#34;INFO&#34;,
+    2: &#34;DEBUG&#34;,
+}
+
+
+def run() -&gt; None:
+    &#34;&#34;&#34;CLI entrypoint.&#34;&#34;&#34;
+    args = docopt(__doc__, version=__version__)
+
+    # install global logging and exception handlers
+    logging.basicConfig(level=LOG_LEVELS[args[&#34;-v&#34;]], format=&#34;%(message)s&#34;,
+                        datefmt=&#34;[%X]&#34;, handlers=[RichHandler(console=err_console)])
+    logging.captureWarnings(True)
+    traceback.install()
+
+    # setup pipeline
+    nlp = setup(args)
+
+    # setup match highlighting
+    console.highlighter = MatchHighlighter(g2p=nlp.get_pipe(&#34;g2p&#34;),
+                                           context=int(args[&#34;--context&#34;]),
+                                           gap_char=&#34;　&#34;)
+
+    # process all texts
+    graph = process(nlp, args)
+    results = list(graph.matches)
+    logging.info(f&#34;{len(results)} total results matching query&#34;)
+
+    # sort results by highest total score
+    results = sorted(results, key=lambda m: m.weighted_score, reverse=True)
+
+    # output depending on provided option
+    if args[&#34;--output-format&#34;] == &#34;jsonl&#34;:
+        with jsonlines.Writer(sys.stdout) as writer:
+            for match in results:
+                writer.write(match.as_dict())
+    elif args[&#34;--output-format&#34;] == &#34;csv&#34;:
+        fieldnames = Match(&#34;&#34;, &#34;&#34;, &#34;&#34;, &#34;&#34;).as_dict().keys()
+        writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
+        writer.writeheader()
+        for match in results:
+            writer.writerow(match.as_dict())
+    elif args[&#34;--output-format&#34;] == &#34;html&#34;:
+        console.record = True
+        with console.capture():
+            for match in results:
+                console.print(match)
+        sys.stdout.write(console.export_html())
+    else:
+        # use system pager by default; colorize if LESS=R
+        with console.pager(styles=os.getenv(&#34;LESS&#34;, &#34;&#34;) == &#34;R&#34;):
+            for match in results:
+                console.print(match)
+
+
+def setup(args: Dict) -&gt; Language:
+    &#34;&#34;&#34;Set up the spaCy processing pipeline.&#34;&#34;&#34;
+    # get sound table
+    v2_path = pkg_resources.resource_filename(
+        __package__, &#34;data/sound_table_v2.json&#34;)
+    sound_table = get_sound_table_json(Path(v2_path))
+
+    # add Doc metadata
+    if not Doc.has_extension(&#34;id&#34;):
+        Doc.set_extension(&#34;id&#34;, default=&#34;&#34;)
+
+    # setup spaCy model
+    nlp = spacy.blank(
+        &#34;zh&#34;, meta={&#34;tokenizer&#34;: {&#34;config&#34;: {&#34;use_jieba&#34;: False}}})
+    nlp.add_pipe(&#34;g2p&#34;, config={&#34;sound_table&#34;: sound_table})
+    nlp.add_pipe(&#34;ngrams&#34;, config={&#34;n&#34;: int(args[&#34;--ngram-order&#34;])})
+    nlp.add_pipe(&#34;ngram_phonemes_index&#34;, name=&#34;index&#34;)
+    logging.info(&#34;loaded default spaCy model&#34;)
+    return nlp
+
+
+def process(nlp: Language, args: Dict) -&gt; MatchGraph:
+    &#34;&#34;&#34;Run the spaCy processing pipeline.&#34;&#34;&#34;
+    # set up graph and loader
+    graph = MatchGraph()
+    load_texts: CorpusLoader
+    if args[&#34;--input-format&#34;] == &#34;jsonl&#34;:
+        load_texts = JsonLinesCorpusLoader()
+    else:
+        load_texts = PlaintextCorpusLoader()
+
+    # load and index all documents
+    start = time.perf_counter()
+    for doc, context in nlp.pipe(load_texts(args[&#34;&lt;path&gt;&#34;]), as_tuples=True):
+        doc._.id = context[&#34;id&#34;]
+        graph.add_doc(context[&#34;id&#34;], doc)
+        logging.debug(f&#34;indexed doc \&#34;{doc._.id}\&#34;&#34;)
+    stop = time.perf_counter() - start
+    logging.info(f&#34;indexed {graph.number_of_docs()} docs in {stop:.1f}s&#34;)
+
+    # prune all ngrams from index that only occur once
+    groups = list(nlp.get_pipe(&#34;index&#34;).filter(lambda g: len(g[1]) &gt; 1))
+
+    # create initial pairwise matches from seed groups
+    progress = Progress(
+        &#34;[progress.description]{task.description}&#34;,
+        SpinnerColumn(),
+        &#34;[progress.description]{task.fields[seed]}&#34;,
+        BarColumn(bar_width=None),
+        &#34;{task.completed}/{task.total}&#34;,
+        &#34;[progress.percentage]{task.percentage:&gt;3.1f}%&#34;,
+        console=err_console,
+        transient=True,
+    )
+    task = progress.add_task(&#34;seeding&#34;, seed=&#34;&#34;, total=len(groups))
+    start = time.perf_counter()
+    with progress:
+        for _seed, locations in groups:
+            logging.debug(
+                f&#34;evaluating seed group \&#34;{locations[0].text}\&#34;, size={len(locations)}&#34;)
+            progress.update(task, seed=locations[0].text)
+            for utxt, vtxt in combinations(locations, 2):
+                if utxt.doc._.id != vtxt.doc._.id:  # skip same-doc matches
+                    graph.add_match(
+                        Match(utxt.doc._.id, vtxt.doc._.id, utxt, vtxt, 1.0))
+            progress.advance(task)
+    stop = time.perf_counter() - start
+    logging.info(f&#34;seeded {graph.number_of_matches()} matches in {stop:.1f}s&#34;)
+
+    # limit to seeds with graphic variants if requested
+    if not args[&#34;--all&#34;]:
+        has_variant = nlp.get_pipe(&#34;g2p&#34;).has_variant
+        graph.filter(has_variant)
+
+    # extend all matches
+    graph.extend(LevenshteinPhoneticExtender(
+        threshold=float(args[&#34;--threshold&#34;]),
+        len_limit=int(args[&#34;--len-limit&#34;])
+    ))
+
+    # align all matches
+    graph.align(SmithWatermanPhoneticAligner(gap_char=&#34;　&#34;))
+
+    # limit via min and max lengths if requested
+    if args[&#34;--min&#34;]:
+        graph.filter(lambda m: len(m) &gt;= int(args[&#34;--min&#34;]))
+    if args[&#34;--max&#34;]:
+        graph.filter(lambda m: len(m) &lt;= int(args[&#34;--max&#34;]))
+
+    # return completed reuse graph
+    return graph
+
+
+if __name__ == &#34;__main__&#34;:
+    run()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="dphon.cli.process"><code class="name flex">
+<span>def <span class="ident">process</span></span>(<span>nlp: spacy.language.Language, args: Dict) ‑> <a title="dphon.reuse.MatchGraph" href="reuse.html#dphon.reuse.MatchGraph">MatchGraph</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run the spaCy processing pipeline.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process(nlp: Language, args: Dict) -&gt; MatchGraph:
+    &#34;&#34;&#34;Run the spaCy processing pipeline.&#34;&#34;&#34;
+    # set up graph and loader
+    graph = MatchGraph()
+    load_texts: CorpusLoader
+    if args[&#34;--input-format&#34;] == &#34;jsonl&#34;:
+        load_texts = JsonLinesCorpusLoader()
+    else:
+        load_texts = PlaintextCorpusLoader()
+
+    # load and index all documents
+    start = time.perf_counter()
+    for doc, context in nlp.pipe(load_texts(args[&#34;&lt;path&gt;&#34;]), as_tuples=True):
+        doc._.id = context[&#34;id&#34;]
+        graph.add_doc(context[&#34;id&#34;], doc)
+        logging.debug(f&#34;indexed doc \&#34;{doc._.id}\&#34;&#34;)
+    stop = time.perf_counter() - start
+    logging.info(f&#34;indexed {graph.number_of_docs()} docs in {stop:.1f}s&#34;)
+
+    # prune all ngrams from index that only occur once
+    groups = list(nlp.get_pipe(&#34;index&#34;).filter(lambda g: len(g[1]) &gt; 1))
+
+    # create initial pairwise matches from seed groups
+    progress = Progress(
+        &#34;[progress.description]{task.description}&#34;,
+        SpinnerColumn(),
+        &#34;[progress.description]{task.fields[seed]}&#34;,
+        BarColumn(bar_width=None),
+        &#34;{task.completed}/{task.total}&#34;,
+        &#34;[progress.percentage]{task.percentage:&gt;3.1f}%&#34;,
+        console=err_console,
+        transient=True,
+    )
+    task = progress.add_task(&#34;seeding&#34;, seed=&#34;&#34;, total=len(groups))
+    start = time.perf_counter()
+    with progress:
+        for _seed, locations in groups:
+            logging.debug(
+                f&#34;evaluating seed group \&#34;{locations[0].text}\&#34;, size={len(locations)}&#34;)
+            progress.update(task, seed=locations[0].text)
+            for utxt, vtxt in combinations(locations, 2):
+                if utxt.doc._.id != vtxt.doc._.id:  # skip same-doc matches
+                    graph.add_match(
+                        Match(utxt.doc._.id, vtxt.doc._.id, utxt, vtxt, 1.0))
+            progress.advance(task)
+    stop = time.perf_counter() - start
+    logging.info(f&#34;seeded {graph.number_of_matches()} matches in {stop:.1f}s&#34;)
+
+    # limit to seeds with graphic variants if requested
+    if not args[&#34;--all&#34;]:
+        has_variant = nlp.get_pipe(&#34;g2p&#34;).has_variant
+        graph.filter(has_variant)
+
+    # extend all matches
+    graph.extend(LevenshteinPhoneticExtender(
+        threshold=float(args[&#34;--threshold&#34;]),
+        len_limit=int(args[&#34;--len-limit&#34;])
+    ))
+
+    # align all matches
+    graph.align(SmithWatermanPhoneticAligner(gap_char=&#34;　&#34;))
+
+    # limit via min and max lengths if requested
+    if args[&#34;--min&#34;]:
+        graph.filter(lambda m: len(m) &gt;= int(args[&#34;--min&#34;]))
+    if args[&#34;--max&#34;]:
+        graph.filter(lambda m: len(m) &lt;= int(args[&#34;--max&#34;]))
+
+    # return completed reuse graph
+    return graph</code></pre>
+</details>
+</dd>
+<dt id="dphon.cli.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>CLI entrypoint.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run() -&gt; None:
+    &#34;&#34;&#34;CLI entrypoint.&#34;&#34;&#34;
+    args = docopt(__doc__, version=__version__)
+
+    # install global logging and exception handlers
+    logging.basicConfig(level=LOG_LEVELS[args[&#34;-v&#34;]], format=&#34;%(message)s&#34;,
+                        datefmt=&#34;[%X]&#34;, handlers=[RichHandler(console=err_console)])
+    logging.captureWarnings(True)
+    traceback.install()
+
+    # setup pipeline
+    nlp = setup(args)
+
+    # setup match highlighting
+    console.highlighter = MatchHighlighter(g2p=nlp.get_pipe(&#34;g2p&#34;),
+                                           context=int(args[&#34;--context&#34;]),
+                                           gap_char=&#34;　&#34;)
+
+    # process all texts
+    graph = process(nlp, args)
+    results = list(graph.matches)
+    logging.info(f&#34;{len(results)} total results matching query&#34;)
+
+    # sort results by highest total score
+    results = sorted(results, key=lambda m: m.weighted_score, reverse=True)
+
+    # output depending on provided option
+    if args[&#34;--output-format&#34;] == &#34;jsonl&#34;:
+        with jsonlines.Writer(sys.stdout) as writer:
+            for match in results:
+                writer.write(match.as_dict())
+    elif args[&#34;--output-format&#34;] == &#34;csv&#34;:
+        fieldnames = Match(&#34;&#34;, &#34;&#34;, &#34;&#34;, &#34;&#34;).as_dict().keys()
+        writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
+        writer.writeheader()
+        for match in results:
+            writer.writerow(match.as_dict())
+    elif args[&#34;--output-format&#34;] == &#34;html&#34;:
+        console.record = True
+        with console.capture():
+            for match in results:
+                console.print(match)
+        sys.stdout.write(console.export_html())
+    else:
+        # use system pager by default; colorize if LESS=R
+        with console.pager(styles=os.getenv(&#34;LESS&#34;, &#34;&#34;) == &#34;R&#34;):
+            for match in results:
+                console.print(match)</code></pre>
+</details>
+</dd>
+<dt id="dphon.cli.setup"><code class="name flex">
+<span>def <span class="ident">setup</span></span>(<span>args: Dict) ‑> spacy.language.Language</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set up the spaCy processing pipeline.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setup(args: Dict) -&gt; Language:
+    &#34;&#34;&#34;Set up the spaCy processing pipeline.&#34;&#34;&#34;
+    # get sound table
+    v2_path = pkg_resources.resource_filename(
+        __package__, &#34;data/sound_table_v2.json&#34;)
+    sound_table = get_sound_table_json(Path(v2_path))
+
+    # add Doc metadata
+    if not Doc.has_extension(&#34;id&#34;):
+        Doc.set_extension(&#34;id&#34;, default=&#34;&#34;)
+
+    # setup spaCy model
+    nlp = spacy.blank(
+        &#34;zh&#34;, meta={&#34;tokenizer&#34;: {&#34;config&#34;: {&#34;use_jieba&#34;: False}}})
+    nlp.add_pipe(&#34;g2p&#34;, config={&#34;sound_table&#34;: sound_table})
+    nlp.add_pipe(&#34;ngrams&#34;, config={&#34;n&#34;: int(args[&#34;--ngram-order&#34;])})
+    nlp.add_pipe(&#34;ngram_phonemes_index&#34;, name=&#34;index&#34;)
+    logging.info(&#34;loaded default spaCy model&#34;)
+    return nlp</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="dphon" href="index.html">dphon</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="dphon.cli.process" href="#dphon.cli.process">process</a></code></li>
+<li><code><a title="dphon.cli.run" href="#dphon.cli.run">run</a></code></li>
+<li><code><a title="dphon.cli.setup" href="#dphon.cli.setup">setup</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

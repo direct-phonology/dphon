@@ -17,7 +17,8 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
       - run: pip install -r dev-requirements.txt
       - run: python setup.py develop
-      - run: pdoc --html --output-dir docs dphon
+      - run: pdoc --html dphon
+      - run: mkdir docs && mv html/dphon/* docs/
       - uses: EndBug/add-and-commit@v5
         with:
           add: "docs/ --force"

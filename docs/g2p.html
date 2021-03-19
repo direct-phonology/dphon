@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>dphon.g2p API documentation</title>
+<meta name="description" content="Tools for converting graphemes to phonemes." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>dphon.g2p</code></h1>
+</header>
+<section id="section-intro">
+<p>Tools for converting graphemes to phonemes.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+&#34;&#34;&#34;Tools for converting graphemes to phonemes.&#34;&#34;&#34;
+
+import json
+import logging
+from pathlib import Path
+from typing import Iterable, Iterator, Mapping, Optional, Tuple, List
+
+from spacy.language import Language
+from spacy.lookups import Table
+from spacy.tokens import Doc, Span, Token
+
+from dphon.match import Match
+
+# private use unicode char that represents phonemes for OOV tokens
+OOV_PHONEMES = &#34;\ue000&#34;
+
+# types for sound tables: map a string to a tuple of syllable phonemes
+Phonemes_T = Tuple[Optional[str], ...]
+SoundTable_T = Mapping[str, Phonemes_T]
+
+
+class GraphemesToPhonemes:
+    &#34;&#34;&#34;Grapheme-to-phoneme conversion using a `spacy.lookups.Table`.
+
+    Intended for use as a spaCy pipeline component. Docs will be passed through
+    the component unmodified. Registers several extension attributes that can be
+    used elsewhere in a spaCy pipeline:
+    
+    - `Doc._.phonemes`: iterator over all phonemes in a `spacy.tokens.Doc`
+    - `Span._.phonemes`: iterator over all phonemes in a `spacy.tokens.Span`
+    - `Token._.phonemes`: iterator over all phonemes in a `spacy.tokens.Token`
+    - `Token._.is_oov`: check whether a token can be converted to phonemes
+    
+    Args:
+        nlp: a spaCy language model.
+        sound_table: grapheme-to-phoneme conversion table.
+    &#34;&#34;&#34;
+
+    _table: Table       # uses spaCy&#39;s lookup tables (bloom filtered dict)
+
+    def __init__(self, nlp: Language, sound_table: SoundTable_T):
+        # infer the syllable segmentation and map it to an empty phoneme set
+        syllable_parts = len(next(iter(sound_table.values())))
+        self.empty_phonemes = tuple(None for _ in range(syllable_parts))
+
+        # register extensions on spaCy primitives
+        if not Doc.has_extension(&#34;phonemes&#34;):
+            Doc.set_extension(&#34;phonemes&#34;, getter=self.get_all_phonemes)
+        if not Span.has_extension(&#34;phonemes&#34;):
+            Span.set_extension(&#34;phonemes&#34;, getter=self.get_all_phonemes)
+        if not Span.has_extension(&#34;syllables&#34;):
+            Span.set_extension(&#34;syllables&#34;, getter=self._get_syllables)
+        if not Token.has_extension(&#34;phonemes&#34;):
+            Token.set_extension(&#34;phonemes&#34;, getter=self.get_token_phonemes)
+        if not Token.has_extension(&#34;is_oov&#34;):
+            Token.set_extension(&#34;is_oov&#34;, getter=self.is_token_oov)
+
+        # store the sound table in the vocab&#39;s Lookups
+        self.table = nlp.vocab.lookups.add_table(&#34;phonemes&#34;, sound_table)
+        logging.info(f&#34;using {self.__class__}&#34;)
+
+    def __call__(self, doc: Doc) -&gt; Doc:
+        return doc
+
+    def is_token_oov(self, token: Token) -&gt; bool:
+        &#34;&#34;&#34;`True` if `token` has no phonetic entry in the sound table.
+        
+        Args:
+            token: a single `spacy.tokens.Token` to check.
+        &#34;&#34;&#34;
+        return token.text not in self.table
+
+    def has_variant(self, match: Match) -&gt; bool:
+        &#34;&#34;&#34;`True` if `match` contains a graphic variant.
+
+        This is designed to be called on matches that are of the same length,
+        so that the match doesn&#39;t need to be aligned for it to work.
+
+        Args:
+            match: a single `dphon.match.Match`, usually output from the early
+            seed stage, to check.
+        &#34;&#34;&#34;
+
+        # compare each token pairwise, True if we find a variant, else False
+        for i in range(len(match)):
+            if self.are_graphic_variants(match.utxt[i], match.vtxt[i]):
+                return True
+        return False
+
+    def are_graphic_variants(self, *tokens: Token) -&gt; bool:
+        &#34;&#34;&#34;Check if `tokens` are graphic variants.
+
+        - `False` if any tokens are not in the sound table.
+        - `False` if any tokens are non-voiced.
+        - `False` if any tokens have identical graphemes.
+        - `False` if any tokens have differing phonemes.
+
+        Args:
+            tokens: any number of `spacy.tokens.Token` to compare.
+        &#34;&#34;&#34;
+
+        # O(n) implementation: compare all tokens against first one
+        base_text = tokens[0].text
+        base_phon = self.get_token_phonemes(tokens[0])
+        if base_phon == self.empty_phonemes or base_phon == (OOV_PHONEMES,):
+            return False
+        for token in tokens[1:]:
+            phonemes = self.get_token_phonemes(token)
+            if phonemes == self.empty_phonemes or \
+               phonemes == (OOV_PHONEMES,) or \
+               phonemes != base_phon or \
+               token.text == base_text:
+                return False
+        return True
+
+    def get_all_phonemes(self, tokens: Iterable[Token]) -&gt; Iterator[str]:
+        &#34;&#34;&#34;Flattened iterator over all phonemes in `tokens`.
+
+        - Skips parts of the syllable that are not used (stored as None).
+        - Skips non-voiced tokens, such as punctuation.
+        - Keeps OOV_PHONEMES as an indicator of missing phonetic information.
+
+        Args:
+            tokens: iterable of `spacy.tokens.Token` to convert.
+        &#34;&#34;&#34;
+
+        for token in tokens:
+            for phoneme in self.get_token_phonemes(token):
+                if phoneme:
+                    yield phoneme
+
+    def get_token_phonemes(self, token: Token) -&gt; Phonemes_T:
+        &#34;&#34;&#34;Return `token`&#39;s phonemes as an n-tuple.
+
+        - If `token` is non-alphanumeric, all elements of the tuple will be None.
+        - If `token` is not in the sound table, all elements of the tuple will
+        use a special marker (`OOV_PHONEMES`).
+        - If some parts of the syllable are not present, their corresponding
+        elements in the tuple will be `None`.
+        &#34;&#34;&#34;
+
+        if not token.is_alpha and not token.like_num:
+            return self.empty_phonemes
+        elif token._.is_oov:
+            logging.debug(f&#34;no phonemes for token: \&#34;{token.text}\&#34;&#34;)
+            return (OOV_PHONEMES,)
+        else:
+            return self._select(self.table[token.text])
+
+    def _get_token_syllable(self, token: Token) -&gt; str:
+        try:
+            return &#34;&#34;.join(self.table[token.text])
+        except KeyError:
+            return &#34;&#34;
+
+    def _get_syllables(self, tokens: Iterable[Token]) -&gt; List[str]:
+        return [self._get_token_syllable(token) for token in tokens]
+
+    def _select(self, reading: Phonemes_T) -&gt; Phonemes_T:
+        &#34;&#34;&#34;Filter the syllable to only the segments we&#39;re interested in.&#34;&#34;&#34;
+        # NOTE using only initial, nucleus, coda currently
+        initial = reading[3]
+        nucleus = reading[6]
+        coda = reading[7]
+        return (initial, nucleus, coda)
+
+
+def get_sound_table_json(path: Path) -&gt; SoundTable_T:
+    &#34;&#34;&#34;Load a sound table as JSON.&#34;&#34;&#34;
+    sound_table: SoundTable_T = {}
+
+    # open the file and load all readings
+    with open(path, encoding=&#34;utf8&#34;) as file:
+        entries = json.loads(file.read())
+        for char, readings in entries.items():
+
+            # FIXME just using first reading for now, ignoring multiple
+            # NOTE final two entries in current table are source info; ignore
+            *reading, _src, _src2 = readings[0]
+            sound_table[char] = tuple(reading)  # type: ignore
+
+    # log and return finished table
+    logging.info(f&#34;sound table {path.resolve()} loaded&#34;)
+    return sound_table
+
+
+@Language.factory(&#34;g2p&#34;)
+def create_graphemes_to_phonemes(nlp: Language, name: str, sound_table: SoundTable_T) -&gt; GraphemesToPhonemes:
+    return GraphemesToPhonemes(nlp, sound_table)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="dphon.g2p.create_graphemes_to_phonemes"><code class="name flex">
+<span>def <span class="ident">create_graphemes_to_phonemes</span></span>(<span>nlp: spacy.language.Language, name: str, sound_table: Mapping[str, Tuple[Union[str, NoneType], ...]]) ‑> <a title="dphon.g2p.GraphemesToPhonemes" href="#dphon.g2p.GraphemesToPhonemes">GraphemesToPhonemes</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@Language.factory(&#34;g2p&#34;)
+def create_graphemes_to_phonemes(nlp: Language, name: str, sound_table: SoundTable_T) -&gt; GraphemesToPhonemes:
+    return GraphemesToPhonemes(nlp, sound_table)</code></pre>
+</details>
+</dd>
+<dt id="dphon.g2p.get_sound_table_json"><code class="name flex">
+<span>def <span class="ident">get_sound_table_json</span></span>(<span>path: pathlib.Path) ‑> Mapping[str, Tuple[Union[str, NoneType], ...]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Load a sound table as JSON.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_sound_table_json(path: Path) -&gt; SoundTable_T:
+    &#34;&#34;&#34;Load a sound table as JSON.&#34;&#34;&#34;
+    sound_table: SoundTable_T = {}
+
+    # open the file and load all readings
+    with open(path, encoding=&#34;utf8&#34;) as file:
+        entries = json.loads(file.read())
+        for char, readings in entries.items():
+
+            # FIXME just using first reading for now, ignoring multiple
+            # NOTE final two entries in current table are source info; ignore
+            *reading, _src, _src2 = readings[0]
+            sound_table[char] = tuple(reading)  # type: ignore
+
+    # log and return finished table
+    logging.info(f&#34;sound table {path.resolve()} loaded&#34;)
+    return sound_table</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="dphon.g2p.GraphemesToPhonemes"><code class="flex name class">
+<span>class <span class="ident">GraphemesToPhonemes</span></span>
+<span>(</span><span>nlp: spacy.language.Language, sound_table: Mapping[str, Tuple[Union[str, NoneType], ...]])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Grapheme-to-phoneme conversion using a <code>spacy.lookups.Table</code>.</p>
+<p>Intended for use as a spaCy pipeline component. Docs will be passed through
+the component unmodified. Registers several extension attributes that can be
+used elsewhere in a spaCy pipeline:</p>
+<ul>
+<li><code>Doc._.phonemes</code>: iterator over all phonemes in a <code>spacy.tokens.Doc</code></li>
+<li><code>Span._.phonemes</code>: iterator over all phonemes in a <code>spacy.tokens.Span</code></li>
+<li><code>Token._.phonemes</code>: iterator over all phonemes in a <code>spacy.tokens.Token</code></li>
+<li><code>Token._.is_oov</code>: check whether a token can be converted to phonemes</li>
+</ul>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>nlp</code></strong></dt>
+<dd>a spaCy language model.</dd>
+<dt><strong><code>sound_table</code></strong></dt>
+<dd>grapheme-to-phoneme conversion table.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GraphemesToPhonemes:
+    &#34;&#34;&#34;Grapheme-to-phoneme conversion using a `spacy.lookups.Table`.
+
+    Intended for use as a spaCy pipeline component. Docs will be passed through
+    the component unmodified. Registers several extension attributes that can be
+    used elsewhere in a spaCy pipeline:
+    
+    - `Doc._.phonemes`: iterator over all phonemes in a `spacy.tokens.Doc`
+    - `Span._.phonemes`: iterator over all phonemes in a `spacy.tokens.Span`
+    - `Token._.phonemes`: iterator over all phonemes in a `spacy.tokens.Token`
+    - `Token._.is_oov`: check whether a token can be converted to phonemes
+    
+    Args:
+        nlp: a spaCy language model.
+        sound_table: grapheme-to-phoneme conversion table.
+    &#34;&#34;&#34;
+
+    _table: Table       # uses spaCy&#39;s lookup tables (bloom filtered dict)
+
+    def __init__(self, nlp: Language, sound_table: SoundTable_T):
+        # infer the syllable segmentation and map it to an empty phoneme set
+        syllable_parts = len(next(iter(sound_table.values())))
+        self.empty_phonemes = tuple(None for _ in range(syllable_parts))
+
+        # register extensions on spaCy primitives
+        if not Doc.has_extension(&#34;phonemes&#34;):
+            Doc.set_extension(&#34;phonemes&#34;, getter=self.get_all_phonemes)
+        if not Span.has_extension(&#34;phonemes&#34;):
+            Span.set_extension(&#34;phonemes&#34;, getter=self.get_all_phonemes)
+        if not Span.has_extension(&#34;syllables&#34;):
+            Span.set_extension(&#34;syllables&#34;, getter=self._get_syllables)
+        if not Token.has_extension(&#34;phonemes&#34;):
+            Token.set_extension(&#34;phonemes&#34;, getter=self.get_token_phonemes)
+        if not Token.has_extension(&#34;is_oov&#34;):
+            Token.set_extension(&#34;is_oov&#34;, getter=self.is_token_oov)
+
+        # store the sound table in the vocab&#39;s Lookups
+        self.table = nlp.vocab.lookups.add_table(&#34;phonemes&#34;, sound_table)
+        logging.info(f&#34;using {self.__class__}&#34;)
+
+    def __call__(self, doc: Doc) -&gt; Doc:
+        return doc
+
+    def is_token_oov(self, token: Token) -&gt; bool:
+        &#34;&#34;&#34;`True` if `token` has no phonetic entry in the sound table.
+        
+        Args:
+            token: a single `spacy.tokens.Token` to check.
+        &#34;&#34;&#34;
+        return token.text not in self.table
+
+    def has_variant(self, match: Match) -&gt; bool:
+        &#34;&#34;&#34;`True` if `match` contains a graphic variant.
+
+        This is designed to be called on matches that are of the same length,
+        so that the match doesn&#39;t need to be aligned for it to work.
+
+        Args:
+            match: a single `dphon.match.Match`, usually output from the early
+            seed stage, to check.
+        &#34;&#34;&#34;
+
+        # compare each token pairwise, True if we find a variant, else False
+        for i in range(len(match)):
+            if self.are_graphic_variants(match.utxt[i], match.vtxt[i]):
+                return True
+        return False
+
+    def are_graphic_variants(self, *tokens: Token) -&gt; bool:
+        &#34;&#34;&#34;Check if `tokens` are graphic variants.
+
+        - `False` if any tokens are not in the sound table.
+        - `False` if any tokens are non-voiced.
+        - `False` if any tokens have identical graphemes.
+        - `False` if any tokens have differing phonemes.
+
+        Args:
+            tokens: any number of `spacy.tokens.Token` to compare.
+        &#34;&#34;&#34;
+
+        # O(n) implementation: compare all tokens against first one
+        base_text = tokens[0].text
+        base_phon = self.get_token_phonemes(tokens[0])
+        if base_phon == self.empty_phonemes or base_phon == (OOV_PHONEMES,):
+            return False
+        for token in tokens[1:]:
+            phonemes = self.get_token_phonemes(token)
+            if phonemes == self.empty_phonemes or \
+               phonemes == (OOV_PHONEMES,) or \
+               phonemes != base_phon or \
+               token.text == base_text:
+                return False
+        return True
+
+    def get_all_phonemes(self, tokens: Iterable[Token]) -&gt; Iterator[str]:
+        &#34;&#34;&#34;Flattened iterator over all phonemes in `tokens`.
+
+        - Skips parts of the syllable that are not used (stored as None).
+        - Skips non-voiced tokens, such as punctuation.
+        - Keeps OOV_PHONEMES as an indicator of missing phonetic information.
+
+        Args:
+            tokens: iterable of `spacy.tokens.Token` to convert.
+        &#34;&#34;&#34;
+
+        for token in tokens:
+            for phoneme in self.get_token_phonemes(token):
+                if phoneme:
+                    yield phoneme
+
+    def get_token_phonemes(self, token: Token) -&gt; Phonemes_T:
+        &#34;&#34;&#34;Return `token`&#39;s phonemes as an n-tuple.
+
+        - If `token` is non-alphanumeric, all elements of the tuple will be None.
+        - If `token` is not in the sound table, all elements of the tuple will
+        use a special marker (`OOV_PHONEMES`).
+        - If some parts of the syllable are not present, their corresponding
+        elements in the tuple will be `None`.
+        &#34;&#34;&#34;
+
+        if not token.is_alpha and not token.like_num:
+            return self.empty_phonemes
+        elif token._.is_oov:
+            logging.debug(f&#34;no phonemes for token: \&#34;{token.text}\&#34;&#34;)
+            return (OOV_PHONEMES,)
+        else:
+            return self._select(self.table[token.text])
+
+    def _get_token_syllable(self, token: Token) -&gt; str:
+        try:
+            return &#34;&#34;.join(self.table[token.text])
+        except KeyError:
+            return &#34;&#34;
+
+    def _get_syllables(self, tokens: Iterable[Token]) -&gt; List[str]:
+        return [self._get_token_syllable(token) for token in tokens]
+
+    def _select(self, reading: Phonemes_T) -&gt; Phonemes_T:
+        &#34;&#34;&#34;Filter the syllable to only the segments we&#39;re interested in.&#34;&#34;&#34;
+        # NOTE using only initial, nucleus, coda currently
+        initial = reading[3]
+        nucleus = reading[6]
+        coda = reading[7]
+        return (initial, nucleus, coda)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="dphon.g2p.GraphemesToPhonemes.are_graphic_variants"><code class="name flex">
+<span>def <span class="ident">are_graphic_variants</span></span>(<span>self, *tokens: spacy.tokens.token.Token) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Check if <code>tokens</code> are graphic variants.</p>
+<ul>
+<li><code>False</code> if any tokens are not in the sound table.</li>
+<li><code>False</code> if any tokens are non-voiced.</li>
+<li><code>False</code> if any tokens have identical graphemes.</li>
+<li><code>False</code> if any tokens have differing phonemes.</li>
+</ul>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>tokens</code></strong></dt>
+<dd>any number of <code>spacy.tokens.Token</code> to compare.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def are_graphic_variants(self, *tokens: Token) -&gt; bool:
+    &#34;&#34;&#34;Check if `tokens` are graphic variants.
+
+    - `False` if any tokens are not in the sound table.
+    - `False` if any tokens are non-voiced.
+    - `False` if any tokens have identical graphemes.
+    - `False` if any tokens have differing phonemes.
+
+    Args:
+        tokens: any number of `spacy.tokens.Token` to compare.
+    &#34;&#34;&#34;
+
+    # O(n) implementation: compare all tokens against first one
+    base_text = tokens[0].text
+    base_phon = self.get_token_phonemes(tokens[0])
+    if base_phon == self.empty_phonemes or base_phon == (OOV_PHONEMES,):
+        return False
+    for token in tokens[1:]:
+        phonemes = self.get_token_phonemes(token)
+        if phonemes == self.empty_phonemes or \
+           phonemes == (OOV_PHONEMES,) or \
+           phonemes != base_phon or \
+           token.text == base_text:
+            return False
+    return True</code></pre>
+</details>
+</dd>
+<dt id="dphon.g2p.GraphemesToPhonemes.get_all_phonemes"><code class="name flex">
+<span>def <span class="ident">get_all_phonemes</span></span>(<span>self, tokens: Iterable[spacy.tokens.token.Token]) ‑> Iterator[str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Flattened iterator over all phonemes in <code>tokens</code>.</p>
+<ul>
+<li>Skips parts of the syllable that are not used (stored as None).</li>
+<li>Skips non-voiced tokens, such as punctuation.</li>
+<li>Keeps OOV_PHONEMES as an indicator of missing phonetic information.</li>
+</ul>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>tokens</code></strong></dt>
+<dd>iterable of <code>spacy.tokens.Token</code> to convert.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_all_phonemes(self, tokens: Iterable[Token]) -&gt; Iterator[str]:
+    &#34;&#34;&#34;Flattened iterator over all phonemes in `tokens`.
+
+    - Skips parts of the syllable that are not used (stored as None).
+    - Skips non-voiced tokens, such as punctuation.
+    - Keeps OOV_PHONEMES as an indicator of missing phonetic information.
+
+    Args:
+        tokens: iterable of `spacy.tokens.Token` to convert.
+    &#34;&#34;&#34;
+
+    for token in tokens:
+        for phoneme in self.get_token_phonemes(token):
+            if phoneme:
+                yield phoneme</code></pre>
+</details>
+</dd>
+<dt id="dphon.g2p.GraphemesToPhonemes.get_token_phonemes"><code class="name flex">
+<span>def <span class="ident">get_token_phonemes</span></span>(<span>self, token: spacy.tokens.token.Token) ‑> Tuple[Union[str, NoneType], ...]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return <code>token</code>'s phonemes as an n-tuple.</p>
+<ul>
+<li>If <code>token</code> is non-alphanumeric, all elements of the tuple will be None.</li>
+<li>If <code>token</code> is not in the sound table, all elements of the tuple will
+use a special marker (<code>OOV_PHONEMES</code>).</li>
+<li>If some parts of the syllable are not present, their corresponding
+elements in the tuple will be <code>None</code>.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_token_phonemes(self, token: Token) -&gt; Phonemes_T:
+    &#34;&#34;&#34;Return `token`&#39;s phonemes as an n-tuple.
+
+    - If `token` is non-alphanumeric, all elements of the tuple will be None.
+    - If `token` is not in the sound table, all elements of the tuple will
+    use a special marker (`OOV_PHONEMES`).
+    - If some parts of the syllable are not present, their corresponding
+    elements in the tuple will be `None`.
+    &#34;&#34;&#34;
+
+    if not token.is_alpha and not token.like_num:
+        return self.empty_phonemes
+    elif token._.is_oov:
+        logging.debug(f&#34;no phonemes for token: \&#34;{token.text}\&#34;&#34;)
+        return (OOV_PHONEMES,)
+    else:
+        return self._select(self.table[token.text])</code></pre>
+</details>
+</dd>
+<dt id="dphon.g2p.GraphemesToPhonemes.has_variant"><code class="name flex">
+<span>def <span class="ident">has_variant</span></span>(<span>self, match: <a title="dphon.match.Match" href="match.html#dphon.match.Match">Match</a>) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p><code>True</code> if <code>match</code> contains a graphic variant.</p>
+<p>This is designed to be called on matches that are of the same length,
+so that the match doesn't need to be aligned for it to work.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>match</code></strong></dt>
+<dd>a single <code><a title="dphon.match.Match" href="match.html#dphon.match.Match">Match</a></code>, usually output from the early</dd>
+</dl>
+<p>seed stage, to check.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def has_variant(self, match: Match) -&gt; bool:
+    &#34;&#34;&#34;`True` if `match` contains a graphic variant.
+
+    This is designed to be called on matches that are of the same length,
+    so that the match doesn&#39;t need to be aligned for it to work.
+
+    Args:
+        match: a single `dphon.match.Match`, usually output from the early
+        seed stage, to check.
+    &#34;&#34;&#34;
+
+    # compare each token pairwise, True if we find a variant, else False
+    for i in range(len(match)):
+        if self.are_graphic_variants(match.utxt[i], match.vtxt[i]):
+            return True
+    return False</code></pre>
+</details>
+</dd>
+<dt id="dphon.g2p.GraphemesToPhonemes.is_token_oov"><code class="name flex">
+<span>def <span class="ident">is_token_oov</span></span>(<span>self, token: spacy.tokens.token.Token) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p><code>True</code> if <code>token</code> has no phonetic entry in the sound table.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>token</code></strong></dt>
+<dd>a single <code>spacy.tokens.Token</code> to check.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_token_oov(self, token: Token) -&gt; bool:
+    &#34;&#34;&#34;`True` if `token` has no phonetic entry in the sound table.
+    
+    Args:
+        token: a single `spacy.tokens.Token` to check.
+    &#34;&#34;&#34;
+    return token.text not in self.table</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="dphon" href="index.html">dphon</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="dphon.g2p.create_graphemes_to_phonemes" href="#dphon.g2p.create_graphemes_to_phonemes">create_graphemes_to_phonemes</a></code></li>
+<li><code><a title="dphon.g2p.get_sound_table_json" href="#dphon.g2p.get_sound_table_json">get_sound_table_json</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="dphon.g2p.GraphemesToPhonemes" href="#dphon.g2p.GraphemesToPhonemes">GraphemesToPhonemes</a></code></h4>
+<ul class="">
+<li><code><a title="dphon.g2p.GraphemesToPhonemes.are_graphic_variants" href="#dphon.g2p.GraphemesToPhonemes.are_graphic_variants">are_graphic_variants</a></code></li>
+<li><code><a title="dphon.g2p.GraphemesToPhonemes.get_all_phonemes" href="#dphon.g2p.GraphemesToPhonemes.get_all_phonemes">get_all_phonemes</a></code></li>
+<li><code><a title="dphon.g2p.GraphemesToPhonemes.get_token_phonemes" href="#dphon.g2p.GraphemesToPhonemes.get_token_phonemes">get_token_phonemes</a></code></li>
+<li><code><a title="dphon.g2p.GraphemesToPhonemes.has_variant" href="#dphon.g2p.GraphemesToPhonemes.has_variant">has_variant</a></code></li>
+<li><code><a title="dphon.g2p.GraphemesToPhonemes.is_token_oov" href="#dphon.g2p.GraphemesToPhonemes.is_token_oov">is_token_oov</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

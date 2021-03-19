@@ -1,9 +1,9 @@
-setuptools
+setuptools==54.1.2
 wheel
-twine
+twine==3.4.1
 coverage
-pylint
 mypy==0.812
+pylint==2.7.2
 pdoc3
-autopep8
+autopep8==1.5.6
 -r requirements.txt

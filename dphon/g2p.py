@@ -5,7 +5,7 @@
 import json
 import logging
 from pathlib import Path
-from typing import Iterable, Iterator, Mapping, Optional, Tuple
+from typing import Iterable, Iterator, Mapping, Optional, Tuple, List
 
 from spacy.language import Language
 from spacy.lookups import Table
@@ -50,6 +50,8 @@ class GraphemesToPhonemes:
             Doc.set_extension("phonemes", getter=self.get_all_phonemes)
         if not Span.has_extension("phonemes"):
             Span.set_extension("phonemes", getter=self.get_all_phonemes)
+        if not Span.has_extension("syllables"):
+            Span.set_extension("syllables", getter=self._get_syllables)
         if not Token.has_extension("phonemes"):
             Token.set_extension("phonemes", getter=self.get_token_phonemes)
         if not Token.has_extension("is_oov"):
@@ -145,7 +147,24 @@ class GraphemesToPhonemes:
             logging.debug(f"no phonemes for token: \"{token.text}\"")
             return (OOV_PHONEMES,)
         else:
-            return self.table[token.text]
+            return self._select(self.table[token.text])
+
+    def _get_token_syllable(self, token: Token) -> str:
+        try:
+            return "".join(self.table[token.text])
+        except KeyError:
+            return ""
+
+    def _get_syllables(self, tokens: Iterable[Token]) -> List[str]:
+        return [self._get_token_syllable(token) for token in tokens]
+
+    def _select(self, reading: Phonemes_T) -> Phonemes_T:
+        """Filter the syllable to only the segments we're interested in."""
+        # NOTE using only initial, nucleus, coda currently
+        initial = reading[3]
+        nucleus = reading[6]
+        coda = reading[7]
+        return (initial, nucleus, coda)
 
 
 def get_sound_table_json(path: Path) -> SoundTable_T:

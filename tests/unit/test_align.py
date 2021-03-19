@@ -39,7 +39,7 @@ class TestSmithWatermanAligner(TestCase):
         aligned = self.align(match)
         self.assertEqual(aligned.au, list(u.text))
         self.assertEqual(aligned.av, list(v.text))
-        self.assertEqual(aligned.weight, 8.0)
+        self.assertEqual(aligned.weight, 1.0)
 
     def test_trim(self) -> None:
         """Matches with a trailing portion that doesn't match should be trimmed.
@@ -115,4 +115,4 @@ class TestSmithWatermanAligner(TestCase):
         aligned = self.align(match)
         self.assertEqual(aligned.au, list("CABACABACABA"))
         self.assertEqual(aligned.av, list("CBBBCBBBCBBB"))
-        self.assertEqual(aligned.weight, 12.0)
+        self.assertEqual(aligned.weight, 1.0)

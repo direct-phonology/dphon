@@ -57,7 +57,7 @@ class SmithWatermanAligner(Aligner):
 
         # compute the alignment and keep non-aligned regions
         (lu, cu, _ru), (lv, cv, _rv), score = sw_align(*self._get_seqs(match),
-                                                       self.scorer)
+                                                        self.scorer)
 
         # use lengths of non-aligned regions to move the sequence boundaries
         # [...] ["A", "B", "C"] [...]
@@ -92,8 +92,11 @@ class SmithWatermanAligner(Aligner):
         while not au[0].isalnum() or not av[0].isalnum():
             utxt, vtxt, au, av = utxt[1:], vtxt[1:], au[1:], av[1:]
 
+        # normalize score to length; 1.0 is perfect
+        norm_score = float(score) / max(len(au), len(av))
+
         # create a new match with alignment info and adjusted boundaries
-        return Match(match.u, match.v, utxt, vtxt, score, au, av)
+        return Match(match.u, match.v, utxt, vtxt, norm_score, au, av)
 
 
 class SmithWatermanPhoneticAligner(SmithWatermanAligner):

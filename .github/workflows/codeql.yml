@@ -1,0 +1,17 @@
+name: codeql
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  analyze:
+    name: analyze with codeql
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: github/codeql-action/init@v1
+      - uses: github/codeql-action/analyze@v1
+

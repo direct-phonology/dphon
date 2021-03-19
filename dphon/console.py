@@ -13,7 +13,7 @@ DEFAULT_THEME = Theme({
     "context": "dim",
     "variant": "blue",
     "insertion": "green",
-    "mismatch": "yellow"
+    "mismatch": "red"
 })
 
 # Consoles for rendering output
@@ -128,3 +128,10 @@ class MatchHighlighter(RegexHighlighter):
         cvl = f"[context]{v[vtxt.start-self.context:vtxt.start]}[/context]"
         cvr = f"[context]{v[vtxt.end:vtxt.end+self.context]}[/context]"
         return (cul, cur, cvl, cvr)
+
+    def transcription(self, match: Match) -> Tuple[str, str]:
+        """Get the phonemic transcription for the match for display."""
+        return (
+            "*" + " ".join(match.utxt._.syllables),
+            "*" + " ".join(match.vtxt._.syllables)
+        )

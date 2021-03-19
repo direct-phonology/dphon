@@ -1,6 +1,6 @@
 docopt
 spacy>=3
-python-levenshtein
+python-levenshtein==0.12.2
 lingpy
 clldutils==2.6.0
 networkx>=2.5

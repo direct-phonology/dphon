@@ -6,7 +6,6 @@ from unittest import TestCase
 from typing import Iterator
 
 import spacy
-from spacy import Language
 from spacy.tokens import Doc, Token
 from dphon.console import err_console
 from dphon.index import LookupsIndex, NgramPhonemesLookupsIndex

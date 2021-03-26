@@ -5,6 +5,7 @@
 ![pyup](https://pyup.io/repos/github/direct-phonology/dphon/shield.svg?t=1568910750251)
 [![pypi](https://img.shields.io/pypi/v/dphon.svg?style=flat)](https://pypi.org/project/dphon/)
 ![pyversions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
+[![zenodo](https://zenodo.org/badge/DOI/10.5281/zenodo.4641277.svg)](https://zenodo.org/record/4641277)
 
 ## installation
 

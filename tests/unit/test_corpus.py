@@ -39,7 +39,7 @@ class TestPlaintextCorpusLoader(TestCase):
         path = "tests/fixtures/laozi/tiny.txt"
         docs = list(self.load([path]))
         self.assertEqual(docs[0][1], {"id": "tiny"})
-        with open(path) as file:
+        with open(path, encoding="utf8") as file:
             self.assertEqual(docs[0][0], file.read())
 
     def test_glob(self) -> None:

@@ -37,6 +37,7 @@ jobs:
 
   coverage:
     name: upload test coverage to codecov
+    if: success() && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

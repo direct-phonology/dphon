@@ -3,9 +3,13 @@ name: codeql
 on:
   push:
     branches: [main, develop]
+    paths:
+    - "**.py"
   pull_request:
     branches: [main, develop]
-
+    paths:
+    - "**.py"
+    
 jobs:
   analyze:
     name: analyze with codeql

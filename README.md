@@ -5,6 +5,7 @@
 ![pyup](https://pyup.io/repos/github/direct-phonology/dphon/shield.svg?t=1568910750251)
 [![pypi](https://img.shields.io/pypi/v/dphon.svg?style=flat)](https://pypi.org/project/dphon/)
 ![pyversions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
+[![zenodo](https://zenodo.org/badge/DOI/10.5281/zenodo.4641277.svg)](https://zenodo.org/record/4641277)
 
 ## installation
 
@@ -33,14 +34,14 @@ which would look for phonetically similar passages between `text_a` and `text_b`
 
 ```sh
 1.  text_a (2208–2216)：
-    夏后啟曰以為可為故為之為之天下弗能                                                                                                                        
-    *ləʔ ɢʷraj kʰˤajʔ ɢʷraj kˤaʔs ɢʷraj tə ɢʷraj tə                                                                                                           
+    夏后啟曰以為可為故為之為之天下弗能
+    *ləʔ ɢʷraj kʰˤajʔ ɢʷraj kˤaʔs ɢʷraj tə ɢʷraj tə
 2.  text_b (3340–3348)：
-    不可弗爲以爲可　故爲之爲之繇其道物                                                                                                                        
-    *ləʔ ɢʷraj kʰˤajʔ kˤaʔs ɢʷraj tə ɢʷraj tə pit 
+    不可弗爲以爲可　故爲之爲之繇其道物
+    *ləʔ ɢʷraj kʰˤajʔ kˤaʔs ɢʷraj tə ɢʷraj tə pit
 ```
 
-the numbers next to the identifiers are _token indices_, and may vary depending on how the text is tokenized – `dphon` currently uses character-based tokenization. whitespace will be removed, and the output will be aligned to make it easier to spot differences between the two sequences. by default, insertions are highlighted in green, and mismatches (differences between the two sequences) are highlighted in red. additional (non-matching) context added to either side of match sequences is displayed using a dimmed color.
+the numbers next to the identifiers are _token indices_, and may vary depending on how the text is tokenized – `dphon` currently uses character-based tokenization. whitespace will be removed, and the output will be aligned to make it easier to spot differences between the two sequences. by default, insertions are highlighted in green, and mismatches (differences between the two sequences) are highlighted in red. additional (non-matching) context added to either side of match sequences is displayed using a dimmed color (see "advanced usage" below for more information on colorization).
 
 matches are sorted by the ratio of their phomenic similarity to their graphic similarity – in other words, matches between texts that sound highly similar but were written very differently will be at the top of the list. 
 
@@ -96,7 +97,7 @@ matching sequences are determined by a "dictionary" file that represents a parti
 ...
 ```
 
-for characters with multiple readings, `dphon` currently chooses the first available reading for comparison. more work is planned for version 3.0 to address this shortcoming.
+if two characters have the same phonemes, they're treated as a match. for characters with multiple readings, `dphon` currently chooses the first available reading for comparison. more work is planned for version 3.0 to address this shortcoming.
 
 in version 1.0, `dphon`'s default reconstruction was based on Schuessler 2007[<sup>1</sup>](#note1), but used a single "dummy" character to represent all the lexemes in a rhyming group. [the dictionary](dphon/data/sound_table_v1.json) was compiled by John O'Leary ([@valgrinderror](https://github.com/valgrinderror)) and Gian Duri Rominger ([@GDRom](https://github.com/GDRom)). since version 2.0, `dphon` uses [a dictionary](dphon/data/sound_table_v2.json) based on the Baxter-Sagart 2014 reconstruction[<sup>2</sup>](#note2), with additional work by Rominger.
 

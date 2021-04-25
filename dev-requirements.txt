@@ -4,7 +4,7 @@ twine==3.4.1
 setuptools==56.0.0
 mypy==0.812
 coverage==5.5
-pylint==2.7.4
+pylint==2.8.1
 pdoc3
 autopep8==1.5.6
 -r requirements.txt

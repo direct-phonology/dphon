@@ -15,7 +15,7 @@ from .match import Match
 from .console import err_console
 
 
-class MatchGraph():
+class MatchGraph:
 
     _G: MultiGraph
 
@@ -70,7 +70,8 @@ class MatchGraph():
         """Extend all matches in the graph using a provided strategy."""
         # track progress
         task = self.progress.add_task(
-            "extending", u="", v="", total=self.number_of_matches())
+            "extending", u="", v="", total=self.number_of_matches()
+        )
 
         # create a new graph without matches and add each extended match to it
         G = create_empty_copy(self._G)
@@ -81,8 +82,7 @@ class MatchGraph():
                     self.progress.update(task, u=u, v=v)
                     matches = [Match(**data) for data in edges.values()]
                     extended = extend_matches(matches, extender)
-                    G.add_edges_from([(m.u, m.v, m._asdict())
-                                      for m in extended])
+                    G.add_edges_from([(m.u, m.v, m._asdict()) for m in extended])
                     self.progress.update(task, advance=len(edges))
         self._G = G
         self.progress.remove_task(task)
@@ -91,7 +91,8 @@ class MatchGraph():
         """Align all matches in the graph using a provided strategy."""
         # track progress
         task = self.progress.add_task(
-            "aligning", u="", v="", total=self.number_of_matches())
+            "aligning", u="", v="", total=self.number_of_matches()
+        )
 
         # create a new graph without matches and add each aligned match to it
         G = create_empty_copy(self._G)
@@ -102,8 +103,7 @@ class MatchGraph():
                     self.progress.update(task, u=u, v=v)
                     matches = [Match(**data) for data in edges.values()]
                     aligned = [align(match) for match in matches]
-                    G.add_edges_from([(m.u, m.v, m._asdict())
-                                      for m in aligned])
+                    G.add_edges_from([(m.u, m.v, m._asdict()) for m in aligned])
                     self.progress.update(task, advance=len(edges))
         self._G = G
         self.progress.remove_task(task)

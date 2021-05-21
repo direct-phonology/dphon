@@ -11,8 +11,8 @@ from spacy.language import Language
 from spacy.tokens import Doc, Span
 from spacy.lookups import Table
 
-K = TypeVar("K")                    # type for keys stored in the index
-V = TypeVar("V")                    # type for values stored in the index
+K = TypeVar("K")  # type for keys stored in the index
+V = TypeVar("V")  # type for values stored in the index
 
 
 class Index(ABC, Generic[K, V]):
@@ -20,9 +20,9 @@ class Index(ABC, Generic[K, V]):
 
     Subclasses are intended for use as spaCy pipeline components. Docs will be
     passed through the component unmodified, storing some data in an external
-    index maintained by the component for later use. The particular indexing 
+    index maintained by the component for later use. The particular indexing
     strategy is implementation-defined.
-    
+
     Args:
         nlp: a spaCy language model.
     """
@@ -51,7 +51,9 @@ class Index(ABC, Generic[K, V]):
         raise NotImplementedError
 
     @abstractmethod
-    def filter(self, fn: Callable[[Tuple[K, List[V]]], bool]) -> Iterator[Tuple[K, List[V]]]:
+    def filter(
+        self, fn: Callable[[Tuple[K, List[V]]], bool]
+    ) -> Iterator[Tuple[K, List[V]]]:
         """Return a (k, v) iterator over all entries which match a predicate."""
         raise NotImplementedError
 
@@ -75,15 +77,15 @@ class LookupsIndex(Index[Hashable, V], Generic[V]):
     iterable of all values from a document that should be indexed, while
     `_get_keys()` returns the key for a single value.
 
-    Data is indexed as a `spacy.lookups.Table`, which is a subclass of 
+    Data is indexed as a `spacy.lookups.Table`, which is a subclass of
     `collections.OrderedDict` with a bloom filter applied to speed up querying.
 
     Args:
         nlp: a spaCy language model.
     """
 
-    _table: Table       # uses spaCy's lookup tables (bloom filtered dict)
-    _size: int          # tracker for total number of values in index
+    _table: Table  # uses spaCy's lookup tables (bloom filtered dict)
+    _size: int  # tracker for total number of values in index
 
     def __init__(self, nlp: Language) -> None:
         self._table = nlp.vocab.lookups.add_table("index")
@@ -127,7 +129,9 @@ class LookupsIndex(Index[Hashable, V], Generic[V]):
         """Get the key to index a particular value."""
         raise NotImplementedError
 
-    def filter(self, fn: Callable[[Tuple[K, List[V]]], bool]) -> Iterator[Tuple[K, List[V]]]:
+    def filter(
+        self, fn: Callable[[Tuple[K, List[V]]], bool]
+    ) -> Iterator[Tuple[K, List[V]]]:
         """Return a (k, v) iterator over all entries which match a predicate."""
         return (entry for entry in iter(self) if fn(entry))
 
@@ -139,11 +143,11 @@ class LookupsIndex(Index[Hashable, V], Generic[V]):
 
 class NgramPhonemesLookupsIndex(LookupsIndex[Span]):
     """Index of phonetic n-grams using a `spacy.lookups.Table`.
-    
+
     Each key in the index is the phonetic content of a unique document n-gram as
-    a string. Values stored at this key are `spacy.tokens.Span` objects 
+    a string. Values stored at this key are `spacy.tokens.Span` objects
     representing the document locations where this phonetic content occurred.
-    
+
     - Requires an n-gram component (see `dphon.ngrams`) to break document text
     into n-grams.
     - Requires a grapheme-to-phoneme model (see `dphon.g2p`) to retrieve phonetic
@@ -167,5 +171,7 @@ class NgramPhonemesLookupsIndex(LookupsIndex[Span]):
 
 
 @Language.factory("ngram_phonemes_index")
-def create_ngram_phonemes_lookup_index(nlp: Language, name: str) -> NgramPhonemesLookupsIndex:
+def create_ngram_phonemes_lookup_index(
+    nlp: Language, name: str
+) -> NgramPhonemesLookupsIndex:
     return NgramPhonemesLookupsIndex(nlp)

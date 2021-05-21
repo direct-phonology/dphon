@@ -110,8 +110,12 @@ def run() -> None:
     args = docopt(__doc__, version=__version__)
 
     # install global logging and exception handlers
-    logging.basicConfig(level=LOG_LEVELS[args["-v"]], format="%(message)s",
-                        datefmt="[%X]", handlers=[RichHandler(console=err_console)])
+    logging.basicConfig(
+        level=LOG_LEVELS[args["-v"]],
+        format="%(message)s",
+        datefmt="[%X]",
+        handlers=[RichHandler(console=err_console)],
+    )
     logging.captureWarnings(True)
     traceback.install()
 
@@ -119,9 +123,9 @@ def run() -> None:
     nlp = setup(args)
 
     # setup match highlighting
-    console.highlighter = MatchHighlighter(g2p=nlp.get_pipe("g2p"),
-                                           context=int(args["--context"]),
-                                           gap_char="　")
+    console.highlighter = MatchHighlighter(
+        g2p=nlp.get_pipe("g2p"), context=int(args["--context"]), gap_char="　"
+    )
 
     # process all texts
     graph = process(nlp, args)
@@ -158,8 +162,7 @@ def run() -> None:
 def setup(args: Dict) -> Language:
     """Set up the spaCy processing pipeline."""
     # get sound table
-    v2_path = pkg_resources.resource_filename(
-        __package__, "data/sound_table_v2.json")
+    v2_path = pkg_resources.resource_filename(__package__, "data/sound_table_v2.json")
     sound_table = get_sound_table_json(Path(v2_path))
 
     # add Doc metadata
@@ -167,8 +170,7 @@ def setup(args: Dict) -> Language:
         Doc.set_extension("id", default="")
 
     # setup spaCy model
-    nlp = spacy.blank(
-        "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
+    nlp = spacy.blank("zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
     nlp.add_pipe("g2p", config={"sound_table": sound_table})
     nlp.add_pipe("ngrams", config={"n": int(args["--ngram-order"])})
     nlp.add_pipe("ngram_phonemes_index", name="index")
@@ -191,7 +193,7 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
     for doc, context in nlp.pipe(load_texts(args["<path>"]), as_tuples=True):
         doc._.id = context["id"]
         graph.add_doc(context["id"], doc)
-        logging.debug(f"indexed doc \"{doc._.id}\"")
+        logging.debug(f'indexed doc "{doc._.id}"')
     stop = time.perf_counter() - start
     logging.info(f"indexed {graph.number_of_docs()} docs in {stop:.1f}s")
 
@@ -214,12 +216,14 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
     with progress:
         for _seed, locations in groups:
             logging.debug(
-                f"evaluating seed group \"{locations[0].text}\", size={len(locations)}")
+                f'evaluating seed group "{locations[0].text}", size={len(locations)}'
+            )
             progress.update(task, seed=locations[0].text)
             for utxt, vtxt in combinations(locations, 2):
                 if utxt.doc._.id != vtxt.doc._.id:  # skip same-doc matches
                     graph.add_match(
-                        Match(utxt.doc._.id, vtxt.doc._.id, utxt, vtxt, 1.0))
+                        Match(utxt.doc._.id, vtxt.doc._.id, utxt, vtxt, 1.0)
+                    )
             progress.advance(task)
     stop = time.perf_counter() - start
     logging.info(f"seeded {graph.number_of_matches()} matches in {stop:.1f}s")
@@ -230,10 +234,11 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
         graph.filter(has_variant)
 
     # extend all matches
-    graph.extend(LevenshteinPhoneticExtender(
-        threshold=float(args["--threshold"]),
-        len_limit=int(args["--len-limit"])
-    ))
+    graph.extend(
+        LevenshteinPhoneticExtender(
+            threshold=float(args["--threshold"]), len_limit=int(args["--len-limit"])
+        )
+    )
 
     # align all matches
     graph.align(SmithWatermanPhoneticAligner(gap_char="　"))

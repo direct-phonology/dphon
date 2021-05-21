@@ -13,6 +13,7 @@ from spacy.tokens import Span
 
 class Match(NamedTuple):
     """A match is a pair of similar textual sequences in two documents."""
+
     u: str
     v: str
     utxt: Span
@@ -25,11 +26,13 @@ class Match(NamedTuple):
         """Length of the longer sequence in the match."""
         return max(len(self.utxt), len(self.vtxt))
 
-    def __rich_console__(self, console: Console, options: ConsoleOptions) -> RenderResult:
+    def __rich_console__(
+        self, console: Console, options: ConsoleOptions
+    ) -> RenderResult:
         """Format the match for display in console."""
         # get colorized match text and transcription
-        su, sv = console.highlighter.format_match(self)     # type: ignore
-        pu, pv = console.highlighter.transcription(self)    # type: ignore
+        su, sv = console.highlighter.format_match(self)  # type: ignore
+        pu, pv = console.highlighter.transcription(self)  # type: ignore
 
         # add left-padding to align with match numbers, and bottom-padding
         # so that there's a space between matches in output
@@ -39,9 +42,11 @@ class Match(NamedTuple):
         # return everything as an iterable of renderables
         return (
             f"1.  [white]{self.u}[/white] ({self.utxt.start}–{self.utxt.end-1})：",
-            su, pu,
+            su,
+            pu,
             f"2.  [white]{self.v}[/white] ({self.vtxt.start}–{self.vtxt.end-1})：",
-            sv, pv,
+            sv,
+            pv,
         )
 
     @property

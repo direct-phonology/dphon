@@ -27,18 +27,18 @@ class GraphemesToPhonemes:
     Intended for use as a spaCy pipeline component. Docs will be passed through
     the component unmodified. Registers several extension attributes that can be
     used elsewhere in a spaCy pipeline:
-    
+
     - `Doc._.phonemes`: iterator over all phonemes in a `spacy.tokens.Doc`
     - `Span._.phonemes`: iterator over all phonemes in a `spacy.tokens.Span`
     - `Token._.phonemes`: iterator over all phonemes in a `spacy.tokens.Token`
     - `Token._.is_oov`: check whether a token can be converted to phonemes
-    
+
     Args:
         nlp: a spaCy language model.
         sound_table: grapheme-to-phoneme conversion table.
     """
 
-    _table: Table       # uses spaCy's lookup tables (bloom filtered dict)
+    _table: Table  # uses spaCy's lookup tables (bloom filtered dict)
 
     def __init__(self, nlp: Language, sound_table: SoundTable_T):
         # infer the syllable segmentation and map it to an empty phoneme set
@@ -66,7 +66,7 @@ class GraphemesToPhonemes:
 
     def is_token_oov(self, token: Token) -> bool:
         """`True` if `token` has no phonetic entry in the sound table.
-        
+
         Args:
             token: a single `spacy.tokens.Token` to check.
         """
@@ -108,10 +108,12 @@ class GraphemesToPhonemes:
             return False
         for token in tokens[1:]:
             phonemes = self.get_token_phonemes(token)
-            if phonemes == self.empty_phonemes or \
-               phonemes == (OOV_PHONEMES,) or \
-               phonemes != base_phon or \
-               token.text == base_text:
+            if (
+                phonemes == self.empty_phonemes
+                or phonemes == (OOV_PHONEMES,)
+                or phonemes != base_phon
+                or token.text == base_text
+            ):
                 return False
         return True
 
@@ -144,7 +146,7 @@ class GraphemesToPhonemes:
         if not token.is_alpha and not token.like_num:
             return self.empty_phonemes
         elif token._.is_oov:
-            logging.debug(f"no phonemes for token: \"{token.text}\"")
+            logging.debug(f'no phonemes for token: "{token.text}"')
             return (OOV_PHONEMES,)
         else:
             return self._select(self.table[token.text])
@@ -187,5 +189,7 @@ def get_sound_table_json(path: Path) -> SoundTable_T:
 
 
 @Language.factory("g2p")
-def create_graphemes_to_phonemes(nlp: Language, name: str, sound_table: SoundTable_T) -> GraphemesToPhonemes:
+def create_graphemes_to_phonemes(
+    nlp: Language, name: str, sound_table: SoundTable_T
+) -> GraphemesToPhonemes:
     return GraphemesToPhonemes(nlp, sound_table)

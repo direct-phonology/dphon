@@ -54,7 +54,7 @@ class CorpusLoader(ABC):
         Output is a single tuple of (contents, metadata) where "contents" is the
         contents of the file as a string and "metadata" is an arbitrary dict.
 
-        One tuple per doc should be returned for consumption by spaCy's 
+        One tuple per doc should be returned for consumption by spaCy's
         `nlp.pipe(as_tuples=True)`.
         """
         raise NotImplementedError
@@ -78,7 +78,8 @@ class CorpusLoader(ABC):
                     logging.debug(f"found {file.resolve()}, size={size}B")
                 else:
                     logging.warning(
-                        f"path {file.resolve()} isn't a {self.filetype} file")
+                        f"path {file.resolve()} isn't a {self.filetype} file"
+                    )
 
         # if no valid files were found, notify the user and exit. otherwise
         # report the total number of files found
@@ -113,21 +114,19 @@ class PlaintextCorpusLoader(CorpusLoader):
 
         # sort files by size, largest first, to speed up processing by spaCy
         files = self._check(paths)
-        files_by_size = OrderedDict(sorted(files.items(),
-                                           key=lambda f: f[1]["size"],
-                                           reverse=True))
+        files_by_size = OrderedDict(
+            sorted(files.items(), key=lambda f: f[1]["size"], reverse=True)
+        )
 
         # track progress
-        task = self.progress.add_task(
-            "indexing", filename="", total=len(files))
+        task = self.progress.add_task("indexing", filename="", total=len(files))
 
         # open each file and yield contents with metadata as DocInfo_T
         with self.progress:
             for file, meta in files_by_size.items():
                 self.progress.update(task, filename=file.name)
                 with file.open(encoding="utf8") as contents:
-                    logging.debug(
-                        f"loaded doc \"{meta['id']}\" from {file.resolve()}")
+                    logging.debug(f"loaded doc \"{meta['id']}\" from {file.resolve()}")
                     yield contents.read().translate(OC_TEXT), {"id": meta["id"]}
                     self.progress.advance(task)
 
@@ -157,8 +156,7 @@ class JsonLinesCorpusLoader(CorpusLoader):
 
         # track progress
         files = self._check(paths)
-        task = self.progress.add_task(
-            "indexing", filename="", total=len(files))
+        task = self.progress.add_task("indexing", filename="", total=len(files))
 
         # open each file and yield each line, with all properties except "text"
         # being passed as second element in tuple
@@ -169,6 +167,7 @@ class JsonLinesCorpusLoader(CorpusLoader):
                     for doc in reader:
                         meta = {k: v for k, v in doc.items() if k != "text"}
                         logging.debug(
-                            f"loaded doc \"{doc['id']}\" from {file.resolve()}")
+                            f"loaded doc \"{doc['id']}\" from {file.resolve()}"
+                        )
                         yield doc["text"].translate(OC_TEXT), meta
                     self.progress.advance(task)

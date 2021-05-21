@@ -9,12 +9,9 @@ from .g2p import GraphemesToPhonemes
 
 
 # Default color scheme for highlighting matches
-DEFAULT_THEME = Theme({
-    "context": "dim",
-    "variant": "blue",
-    "insertion": "green",
-    "mismatch": "red"
-})
+DEFAULT_THEME = Theme(
+    {"context": "dim", "variant": "blue", "insertion": "green", "mismatch": "red"}
+)
 
 # Consoles for rendering output
 console = Console(theme=DEFAULT_THEME, soft_wrap=True)
@@ -28,12 +25,13 @@ class MatchHighlighter(RegexHighlighter):
     gap_char: str
     g2p: GraphemesToPhonemes
 
-    def __init__(self, g2p: GraphemesToPhonemes, context: int = 0, gap_char: str = "-") -> None:
+    def __init__(
+        self, g2p: GraphemesToPhonemes, context: int = 0, gap_char: str = "-"
+    ) -> None:
         """Create a new highlighter with optional context for each match."""
         # can't have negative context
         if context < 0:
-            raise ValueError(
-                f"{self.__class__} context must be greater than 0")
+            raise ValueError(f"{self.__class__} context must be greater than 0")
 
         # store parameters
         self.context = context
@@ -44,7 +42,7 @@ class MatchHighlighter(RegexHighlighter):
     def format_match(self, match: Match) -> Tuple[str, str]:
         """Return match sequences as Rich format strings, with optional context.
 
-        Adds markup for highlighting insertions, mismatches, etc. If context is 
+        Adds markup for highlighting insertions, mismatches, etc. If context is
         set, also adds highlighted context to either end of the match.
         """
 
@@ -83,7 +81,7 @@ class MatchHighlighter(RegexHighlighter):
                 continue
 
             # gap in v: insertion in u (if not punctuation)
-            if match.av[i] == self.gap_char  and match.au[i].isalnum():
+            if match.av[i] == self.gap_char and match.au[i].isalnum():
                 su.append(f"[insertion]{match.au[i]}[/insertion]")
                 sv.append(match.av[i])
                 u_ptr += 1
@@ -133,5 +131,5 @@ class MatchHighlighter(RegexHighlighter):
         """Get the phonemic transcription for the match for display."""
         return (
             "*" + " ".join(match.utxt._.syllables),
-            "*" + " ".join(match.vtxt._.syllables)
+            "*" + " ".join(match.vtxt._.syllables),
         )

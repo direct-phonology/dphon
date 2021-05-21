@@ -42,7 +42,7 @@ class SmithWatermanAligner(Aligner):
     def __init__(self, scorer: Scorer_T = None, gap_char: str = "-") -> None:
         self.scorer = scorer
         self.gap_char = gap_char
-        logging.info(f"using {self.__class__} with gap_char=\"{gap_char}\"")
+        logging.info(f'using {self.__class__} with gap_char="{gap_char}"')
 
     def _get_seqs(self, match: Match) -> Tuple[Seq_T, Seq_T]:
         """Get the two sequences to compare."""
@@ -56,16 +56,17 @@ class SmithWatermanAligner(Aligner):
         and sequence texts calculated for the alignment."""
 
         # compute the alignment and keep non-aligned regions
-        (lu, cu, _ru), (lv, cv, _rv), score = sw_align(*self._get_seqs(match),
-                                                        self.scorer)
+        (lu, cu, _ru), (lv, cv, _rv), score = sw_align(
+            *self._get_seqs(match), self.scorer
+        )
 
         # use lengths of non-aligned regions to move the sequence boundaries
         # [...] ["A", "B", "C"] [...]
         # ---->                <----
         u, v = match.utxt.doc, match.vtxt.doc
         us, vs = match.utxt.start + len(lu), match.vtxt.start + len(lv)
-        utxt = u[us:us + len(cu)]
-        vtxt = v[vs:vs + len(cv)]
+        utxt = u[us : us + len(cu)]
+        vtxt = v[vs : vs + len(cv)]
 
         # use the gaps in the alignment to construct a new sequence of token
         # texts, inserting gap_char wherever the aligner created a gap
@@ -113,8 +114,6 @@ class SmithWatermanPhoneticAligner(SmithWatermanAligner):
         # combine the phonemes for each token into a single string; if there's
         # no phonetic content, use the token text in place of the phonemes
         return (
-            ["".join([p or "" for p in t._.phonemes])
-             or t.text for t in match.utxt],
-            ["".join([p or "" for p in t._.phonemes])
-             or t.text for t in match.vtxt],
+            ["".join([p or "" for p in t._.phonemes]) or t.text for t in match.utxt],
+            ["".join([p or "" for p in t._.phonemes]) or t.text for t in match.vtxt],
         )

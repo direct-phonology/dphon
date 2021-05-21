@@ -29,15 +29,16 @@ class StringDistanceExtender(Extender):
     distance measure, e.g. Levenshtein ratio.
     """
 
-    threshold: float    # if the score falls below this, match gets cut off
-    len_limit: int      # only score this many tokens at the end of the match
+    threshold: float  # if the score falls below this, match gets cut off
+    len_limit: int  # only score this many tokens at the end of the match
 
     def __init__(self, threshold: float, len_limit: int) -> None:
         """Create a new extender."""
         self.threshold = threshold
         self.len_limit = len_limit
         logging.info(
-            f"using {self.__class__} with threshold={threshold}, len_limit={len_limit}")
+            f"using {self.__class__} with threshold={threshold}, len_limit={len_limit}"
+        )
 
     @abstractmethod
     def _score(self, left: Span, right: Span, rev: bool = False) -> float:
@@ -53,14 +54,14 @@ class StringDistanceExtender(Extender):
         """Return a copy of a match extended in the forward direction."""
         trail = 0
         score = self._score(match.utxt, match.vtxt)
-        utxt = match.utxt.doc[match.utxt.start:match.utxt.end]
-        vtxt = match.vtxt.doc[match.vtxt.start:match.vtxt.end]
+        utxt = match.utxt.doc[match.utxt.start : match.utxt.end]
+        vtxt = match.vtxt.doc[match.vtxt.start : match.vtxt.end]
         ulen, vlen = len(match.utxt.doc), len(match.vtxt.doc)
 
         # extend while score is above threshold and we aren't at the end
         while score >= self.threshold and utxt.end < ulen and vtxt.end < vlen:
-            utxt = utxt.doc[utxt.start:utxt.end + 1]
-            vtxt = vtxt.doc[vtxt.start:vtxt.end + 1]
+            utxt = utxt.doc[utxt.start : utxt.end + 1]
+            vtxt = vtxt.doc[vtxt.start : vtxt.end + 1]
 
             # track the last score increase and how far we've gone past it
             new_score = self._score(utxt, vtxt)
@@ -68,20 +69,24 @@ class StringDistanceExtender(Extender):
             score = new_score
 
         # return match trimmed back to last increasing score
-        return Match(match.u, match.v, utxt.doc[utxt.start:utxt.end - trail],
-                     vtxt.doc[vtxt.start:vtxt.end - trail])
+        return Match(
+            match.u,
+            match.v,
+            utxt.doc[utxt.start : utxt.end - trail],
+            vtxt.doc[vtxt.start : vtxt.end - trail],
+        )
 
     def _extend_rev(self, match: Match) -> Match:
         """Return a copy of a match extended in the reverse direction."""
         trail = 0
         score = self._score(match.utxt, match.vtxt, rev=True)
-        utxt = match.utxt.doc[match.utxt.start:match.utxt.end]
-        vtxt = match.vtxt.doc[match.vtxt.start:match.vtxt.end]
+        utxt = match.utxt.doc[match.utxt.start : match.utxt.end]
+        vtxt = match.vtxt.doc[match.vtxt.start : match.vtxt.end]
 
         # extend while score is above threshold and we aren't at the start
         while score >= self.threshold and utxt.start > 0 and vtxt.start > 0:
-            utxt = utxt.doc[(utxt.start-1):utxt.end]
-            vtxt = vtxt.doc[(vtxt.start-1):vtxt.end]
+            utxt = utxt.doc[(utxt.start - 1) : utxt.end]
+            vtxt = vtxt.doc[(vtxt.start - 1) : vtxt.end]
 
             # track the last score increase and how far we've gone past it
             new_score = self._score(utxt, vtxt, rev=True)
@@ -89,8 +94,12 @@ class StringDistanceExtender(Extender):
             score = new_score
 
         # return match trimmed back to last increasing score
-        return Match(match.u, match.v, utxt.doc[utxt.start + trail:utxt.end],
-                     vtxt.doc[vtxt.start + trail:vtxt.end])
+        return Match(
+            match.u,
+            match.v,
+            utxt.doc[utxt.start + trail : utxt.end],
+            vtxt.doc[vtxt.start + trail : vtxt.end],
+        )
 
     def __call__(self, match: Match) -> Match:
         """Extend a match using Levenshtein ratio comparison.
@@ -100,8 +109,8 @@ class StringDistanceExtender(Extender):
 
         ex_fwd = self._extend_fwd(match)
         ex_rev = self._extend_rev(match)
-        utxt = match.utxt.doc[ex_rev.utxt.start:ex_fwd.utxt.end]
-        vtxt = match.vtxt.doc[ex_rev.vtxt.start:ex_fwd.vtxt.end]
+        utxt = match.utxt.doc[ex_rev.utxt.start : ex_fwd.utxt.end]
+        vtxt = match.vtxt.doc[ex_rev.vtxt.start : ex_fwd.vtxt.end]
         score = self._score(utxt, vtxt)
         return Match(match.u, match.v, utxt, vtxt, score)
 
@@ -113,15 +122,9 @@ class LevenshteinExtender(StringDistanceExtender):
         """Compute the Levenshtein ratio of the match sequences."""
 
         if rev:
-            return Lev.ratio(
-                utxt.text[:self.len_limit],
-                vtxt.text[:self.len_limit]
-            )
+            return Lev.ratio(utxt.text[: self.len_limit], vtxt.text[: self.len_limit])
         else:
-            return Lev.ratio(
-                utxt.text[-self.len_limit:],
-                vtxt.text[-self.len_limit:]
-            )
+            return Lev.ratio(utxt.text[-self.len_limit :], vtxt.text[-self.len_limit :])
 
 
 class LevenshteinPhoneticExtender(StringDistanceExtender):
@@ -141,9 +144,9 @@ class LevenshteinPhoneticExtender(StringDistanceExtender):
 
         # score in the provided direction
         if rev:
-            return Lev.ratio(text1[:self.len_limit], text2[:self.len_limit])
+            return Lev.ratio(text1[: self.len_limit], text2[: self.len_limit])
         else:
-            return Lev.ratio(text1[-self.len_limit:], text2[-self.len_limit:])
+            return Lev.ratio(text1[-self.len_limit :], text2[-self.len_limit :])
 
 
 def extend_matches(matches: List[Match], extend: Extender) -> List[Match]:
@@ -171,9 +174,11 @@ def extend_matches(matches: List[Match], extend: Extender) -> List[Match]:
             for match in working:
                 # if match is fully internal to one in the working area, skip
                 # it, as we no longer need it
-                if current.vtxt.start >= match.vtxt.start and \
-                   current.vtxt.start <= match.vtxt.end and \
-                   current.vtxt.end <= match.vtxt.end:
+                if (
+                    current.vtxt.start >= match.vtxt.start
+                    and current.vtxt.start <= match.vtxt.end
+                    and current.vtxt.end <= match.vtxt.end
+                ):
                     skip = True
                     break
             # if match hits new location in V, extend it and add it to

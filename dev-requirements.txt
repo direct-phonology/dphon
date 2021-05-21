@@ -1,9 +1,6 @@
-autopep8==2.0.4
-coverage
-mypy==1.5.0
-pdoc3==0.10.0
-pylint==2.17.5
-setuptools==68.1.2
-twine==4.0.2
-wheel==0.41.2
 -r requirements.txt
+coverage
+wheel
+twine
+setuptools
+pdoc3

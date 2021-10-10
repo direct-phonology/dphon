@@ -1,10 +1,10 @@
-coverage==5.5
+coverage==6.0.1
 wheel==0.37.0
 twine==3.4.2
-setuptools==57.5.0
+setuptools==58.2.0
 mypy==0.910
-coverage==5.5
+coverage==6.0.1
 pylint==2.11.1
-pdoc3
+pdoc3==0.10.0
 autopep8==1.5.7
 -r requirements.txt

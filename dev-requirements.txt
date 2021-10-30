@@ -1,9 +1,9 @@
-coverage==6.0.1
+coverage==6.1
 wheel==0.37.0
 twine==3.4.2
 setuptools==58.2.0
 mypy==0.910
-coverage==6.0.1
+coverage==6.1
 pylint==2.10.2
 pdoc3==0.10.0
 autopep8==1.5.7

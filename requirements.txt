@@ -4,5 +4,5 @@ python-levenshtein==0.12.2
 lingpy==2.6.8
 clldutils==3.9.0
 networkx>=2.5
-jsonlines==2.0.0
+jsonlines==3.0.0
 rich==10.12.0

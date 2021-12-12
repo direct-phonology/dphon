@@ -5,4 +5,4 @@ lingpy==2.6.9
 clldutils==3.9.0
 networkx>=2.5
 jsonlines==3.0.0
-rich==10.12.0
+rich==10.16.0

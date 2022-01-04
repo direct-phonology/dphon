@@ -31,7 +31,7 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
-      - run: pip install -r dev-requirements.txt
+      - run: pip install -r ci-requirements.txt
       - run: python setup.py develop
       - run: python -m unittest
 
@@ -50,7 +50,7 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
-      - run: pip install -r dev-requirements.txt
+      - run: pip install -r ci-requirements.txt
       - run: python setup.py develop
       - run: coverage run -m unittest
       - uses: codecov/codecov-action@v1

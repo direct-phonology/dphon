@@ -1,0 +1,2 @@
+coverage
+-r requirements.txt

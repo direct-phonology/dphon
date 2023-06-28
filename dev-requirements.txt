@@ -1,7 +1,7 @@
 autopep8
 coverage
 mypy
-pdoc3
+pdoc3==0.10.0
 pylint
 setuptools
 twine

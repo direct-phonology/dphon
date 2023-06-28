@@ -1,5 +1,5 @@
 autopep8
-coverage
+coverage==7.2.7
 mypy
 pdoc3
 pylint

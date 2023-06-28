@@ -1,2 +1,2 @@
-coverage
+coverage==7.2.7
 -r requirements.txt

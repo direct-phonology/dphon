@@ -3,7 +3,7 @@ coverage
 mypy
 pdoc3
 pylint
-setuptools
+setuptools==68.0.0
 twine
 wheel
 -r requirements.txt

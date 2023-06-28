@@ -5,5 +5,5 @@ pdoc3
 pylint
 setuptools
 twine
-wheel
+wheel==0.40.0
 -r requirements.txt

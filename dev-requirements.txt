@@ -4,6 +4,6 @@ mypy
 pdoc3
 pylint
 setuptools
-twine
+twine==4.0.2
 wheel
 -r requirements.txt

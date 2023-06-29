@@ -105,7 +105,7 @@ the matching algorithm is based on Paul Vierthaler's [`chinesetextreuse`](https:
 
 ## development setup
 
-**python >=3.6 is required**. 
+**python >=3.7 is required**. 
 
 first, clone the repository:
 

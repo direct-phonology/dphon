@@ -25,7 +25,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Natural Language :: Chinese (Traditional)",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3",
@@ -35,7 +34,7 @@ setup(
     ],
     keywords="old chinese, phonology, linguistics, nlp",
     packages=find_packages(),
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     install_requires=["docopt", "spacy>=3",
                       "python-levenshtein", "lingpy", "rich", "jsonlines"],
     extras_require={

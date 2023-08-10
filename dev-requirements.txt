@@ -1,6 +1,6 @@
 autopep8
 coverage
-mypy
+mypy==1.5.0
 pdoc3
 pylint
 setuptools

@@ -1,6 +1,5 @@
 # dphon
 [![ci](https://github.com/direct-phonology/dphon/workflows/ci/badge.svg)](https://github.com/direct-phonology/dphon/actions?query=workflow%3Aci)
-[![docs](https://github.com/direct-phonology/dphon/workflows/docs/badge.svg)](https://direct-phonology.github.io/dphon)
 [![codecov](https://codecov.io/gh/direct-phonology/dphon/branch/main/graph/badge.svg?token=uGbgB5UFtk)](https://codecov.io/gh/direct-phonology/dphon)
 [![pypi](https://img.shields.io/pypi/v/dphon.svg?style=flat)](https://pypi.org/project/dphon/)
 ![pyversions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
@@ -138,9 +137,9 @@ now your changes will be automatically picked up when you run `dphon`.
 
 pull requests can be made against `main`.
 ## code documentation
-code documentation is [available on github pages](https://direct-phonology.github.io/dphon) and is automatically generated with `pdoc3` on pushes to `main`.
+code documentation is [available on github pages](https://direct-phonology.github.io/dphon) and is generated with `pdoc3`.
 
-to build documentation locally:
+to build the docs:
 ```sh
 $ pdoc --html --output-dir docs dphon
 ```

@@ -2,5 +2,5 @@
 coverage
 wheel
 twine
-setuptools
+setuptools==68.1.2
 pdoc3

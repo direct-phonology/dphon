@@ -153,32 +153,10 @@ $ python -m unittest
 
 ## releases
 
+the package is built and published to pyPI automatically using `twine` when using GitHub's release functionality.
+
 **make sure the version number in `dphon/__init__.py` is correct!**
 
-if there are any built files in `dist/` from older releases, remove them before
-you start this process:
-
-```sh
-$ rm dist/*
-```
-
-to build a source archive and distribution for a release:
-
-```sh
-$ python setup.py sdist bdist_wheel
-```
-
-to publish the release on [test PyPI](https://test.pypi.org/) (useful for making sure everything worked):
-
-```sh
-$ twine upload --repository-url https://test.pypi.org/legacy/ dist/*
-```
-
-if everything is OK, publish the package to PyPI:
-
-```sh
-$ twine upload dist/*
-```
 <hr/>
 <sup id="note1">1</sup> Schuessler, Axel (2007), _ABC Etymological Dictionary of Old Chinese_, Honolulu: University of Hawaii Press, ISBN 978-0-8248-2975-9.
 

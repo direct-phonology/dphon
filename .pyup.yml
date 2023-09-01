@@ -1,8 +1,0 @@
-requirements:
-- requirements.txt:
-  update: insecure
-  pin: True
-- dev-requirements.txt:
-  update: False
-- ci-requirements.txt:
-  update: False

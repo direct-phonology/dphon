@@ -136,8 +136,7 @@ $ pip install -e .
 
 now your changes will be automatically picked up when you run `dphon`.
 
-**pull requests should be made against the `develop` branch.**
-
+pull requests can be made against `main`.
 ## code documentation
 code documentation is [available on github pages](https://direct-phonology.github.io/dphon) and is automatically generated with `pdoc3` on pushes to `main`.
 

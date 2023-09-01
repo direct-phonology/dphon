@@ -1,6 +1,6 @@
 -r requirements.txt
 coverage
-wheel
+wheel==0.41.2
 twine
 setuptools
 pdoc3

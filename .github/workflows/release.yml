@@ -14,7 +14,7 @@ jobs:
         with:
           python-version: 3.8
       - run: pip install -r dev-requirements.txt
-      - run: python setup.py sdist bdist_wheel
+      - run: python -m build
       - run: twine upload dist/*
         env:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}

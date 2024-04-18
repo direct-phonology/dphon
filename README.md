@@ -1,4 +1,5 @@
 # dphon
+
 [![ci](https://github.com/direct-phonology/dphon/workflows/ci/badge.svg)](https://github.com/direct-phonology/dphon/actions?query=workflow%3Aci)
 [![codecov](https://codecov.io/gh/direct-phonology/dphon/branch/main/graph/badge.svg?token=uGbgB5UFtk)](https://codecov.io/gh/direct-phonology/dphon)
 ![pyversions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
@@ -19,6 +20,7 @@ if you're on windows and are seeing incorrectly formatted output in your termina
 ## usage
 
 ### basics
+
 the main function of `dphon` is to look for instances of text reuse in a corpus of old chinese texts. instead of relying purely on graphemes, it does this by performing grapheme-to-phoneme conversion, and determining possible reuse based on whether passages are likely to have _sounded_ similar (or rhymed) when spoken aloud.
 
 you will need to have files stored locally as utf-8 encoded plain-text (`.txt`) or json-lines (`.jsonl`) format. for the former, one file is assumed to represent one document. for the latter, one file can contain any number of lines, each of which is a document, with required keys `id` (a unique identifier) and `text` (text content) and any number of optional keys. you can obtain a representative corpus of old chinese sourced from the kanseki repository via [`direct-phonology/ect-krp`](https://github.com/direct-phonology/ect-krp).
@@ -42,7 +44,7 @@ which would look for phonetically similar passages between `text_a` and `text_b`
 
 the numbers next to the identifiers are _token indices_, and may vary depending on how the text is tokenized – `dphon` currently uses character-based tokenization. whitespace will be removed, and the output will be aligned to make it easier to spot differences between the two sequences. by default, insertions are highlighted in green, and mismatches (differences between the two sequences) are highlighted in red. additional (non-matching) context added to either side of match sequences is displayed using a dimmed color (see "advanced usage" below for more information on colorization).
 
-matches are sorted by the ratio of their phomenic similarity to their graphic similarity – in other words, matches between texts that sound highly similar but were written very differently will be at the top of the list. 
+matches are sorted by the ratio of their phomenic similarity to their graphic similarity – in other words, matches between texts that sound highly similar but were written very differently will be at the top of the list.
 
 by default, `dphon` only returns matches that display at least one instance of _graphic variation_ – a case where two different graphemes are used in the same place to represent the same sound. these cases are highlighted in blue. if you're interested in all instances of reuse, regardless of graphic variation, you can use the `--all` flag:
 
@@ -51,16 +53,19 @@ $ dphon --all text_a.txt text_b.txt
 ```
 
 you can view the full list of command options with:
+
 ```sh
 $ dphon --help
 ```
 
 this tool is under active development, and results may vary. to find the version you are running:
+
 ```sh
 $ dphon --version
 ```
 
 ### advanced usage
+
 by default, `dphon` uses your system's `$PAGER` to display output, since the results can be quite long. on MacOS and Linux, this will likely be `less`, which supports additional options like searching through the output once it's displayed. for more information, see the man page:
 
 ```sh
@@ -100,7 +105,7 @@ if two characters have the same phonemes, they're treated as a match. for charac
 
 in version 1.0, `dphon`'s default reconstruction was based on Schuessler 2007[<sup>1</sup>](#note1), but used a single "dummy" character to represent all the lexemes in a rhyming group. [the dictionary](dphon/data/sound_table_v1.json) was compiled by John O'Leary ([@valgrinderror](https://github.com/valgrinderror)) and Gian Duri Rominger ([@GDRom](https://github.com/GDRom)). since version 2.0, `dphon` uses [a dictionary](dphon/data/sound_table_v2.json) based on the Baxter-Sagart 2014 reconstruction[<sup>2</sup>](#note2), with additional work by Rominger.
 
-the matching algorithm is based on Paul Vierthaler's [`chinesetextreuse`](https://github.com/vierth/chinesetextreuse) project[<sup>3</sup>](#note3), with some modifications. it uses a [BLAST](https://en.wikipedia.org/wiki/BLAST_(biotechnology))-like strategy to identify initial match candidates, and then extend them via phonetic [edit distance](https://en.wikipedia.org/wiki/Edit_distance) comparison. finally, the results are aligned using a version of the [Smith-Waterman algorithm](https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm) that operates on phonemes, powered by the `lingpy` library[<sup>4</sup>](#note4).
+the matching algorithm is based on Paul Vierthaler's [`chinesetextreuse`](https://github.com/vierth/chinesetextreuse) project[<sup>3</sup>](#note3), with some modifications. it uses a [BLAST](<https://en.wikipedia.org/wiki/BLAST_(biotechnology)>)-like strategy to identify initial match candidates, and then extend them via phonetic [edit distance](https://en.wikipedia.org/wiki/Edit_distance) comparison. finally, the results are aligned using a version of the [Smith-Waterman algorithm](https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm) that operates on phonemes, powered by the `lingpy` library[<sup>4</sup>](#note4).
 
 ## development setup
 
@@ -133,21 +138,24 @@ $ pip install -e .
 now your changes will be automatically picked up when you run `dphon`.
 
 pull requests can be made against `main`.
+
 ## code documentation
+
 code documentation is [available on github pages](https://direct-phonology.github.io/dphon) and is generated with `pdoc3`.
 
 to build the docs:
+
 ```sh
 $ pdoc --html --output-dir docs dphon
 ```
 
 ## tests
+
 unit tests are written with `unittest`. you can run them with:
 
 ```sh
 $ python -m unittest
 ```
-
 
 ## releases
 

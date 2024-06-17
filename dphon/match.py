@@ -3,7 +3,7 @@
 """The Match class for encoding text reuse relationships."""
 
 import math
-from typing import Dict, List, NamedTuple
+from typing import Dict, List, NamedTuple, Tuple
 
 import Levenshtein as Lev
 from rich.padding import Padding
@@ -32,7 +32,7 @@ class Match(NamedTuple):
         """Format the match for display in console."""
         # get colorized match text and transcription
         su, sv = console.highlighter.format_match(self)  # type: ignore
-        pu, pv = console.highlighter.transcription(self)  # type: ignore
+        pu, pv = self.transcription
 
         # add left-padding to align with match numbers, and bottom-padding
         # so that there's a space between matches in output
@@ -50,15 +50,54 @@ class Match(NamedTuple):
         )
 
     @property
+    def u_transcription(self) -> str:
+        return "*" + " ".join(self.utxt._.syllables)
+
+    @property
+    def v_transcription(self) -> str:
+        return "*" + " ".join(self.vtxt._.syllables)
+
+    @property
     def weighted_score(self) -> float:
         """Ratio of phonemic similarity to graphic similarity."""
         try:
-            return self.weight / Lev.seqratio(self.au, self.av)
+            return self.phonetic_similarity() / self.graphic_similarity()
         except ZeroDivisionError:
             return math.inf
 
+    @property
+    def transcription(self) -> Tuple[str, str]:
+        """Return the phonemic transcription of the match."""
+        return (self.u_transcription, self.v_transcription)
+
+    def graphic_similarity(self) -> float:
+        """Levenshtein ratio of the aligned sequences."""
+        return Lev.seqratio(self.au, self.av)
+
+    def phonetic_similarity(self) -> float:
+        """Similarity score of the phonetic content of the sequences."""
+        return self.weight
+
+    def context(self, chars: int) -> Tuple[str, str, str, str]:
+        """Return up to `chars` characters of context around the match.
+
+        Return value is a tuple of four strings:
+        - left context of u
+        - right context of u
+        - left context of v
+        - right context of v
+        """
+        u, v = self.utxt.doc, self.vtxt.doc
+        u_start, u_end = self.utxt.start, self.utxt.end
+        v_start, v_end = self.vtxt.start, self.vtxt.end
+        u_context_left = u[max(u_start - chars, 0) : u_start]
+        v_context_left = v[max(v_start - chars, 0) : v_start]
+        u_context_right = u[u_end : min(u_end + chars, len(u))]
+        v_context_right = v[v_end : min(v_end + chars, len(v))]
+        return (u_context_left, u_context_right, v_context_left, v_context_right)
+
     def as_dict(self) -> Dict[str, str]:
-        """Match with prettier field names for serialization."""
+        """Dict form for structured output formats."""
         return {
             "u_id": self.u,
             "v_id": self.v,
@@ -66,10 +105,12 @@ class Match(NamedTuple):
             "v_text": self.vtxt.text,
             "u_text_aligned": "".join(self.au),
             "v_text_aligned": "".join(self.av),
+            "u_transcription": self.u_transcription,
+            "v_transcription": self.v_transcription,
             "u_start": self.utxt.start,
             "u_end": self.utxt.end,
             "v_start": self.vtxt.start,
             "v_end": self.vtxt.end,
-            "score": str(self.weight),
-            "weighted_score": str(self.weighted_score),
+            "phonetic_similarity": self.phonetic_similarity(),
+            "graphic_similarity": self.graphic_similarity(),
         }

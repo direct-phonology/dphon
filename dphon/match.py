@@ -3,11 +3,10 @@
 """The Match class for encoding text reuse relationships."""
 
 import math
-from typing import Dict, List, NamedTuple
+from typing import Dict, List, NamedTuple, Tuple
 
 import Levenshtein as Lev
 from rich.console import Console, ConsoleOptions, RenderResult
-from rich.padding import Padding
 from rich.table import Table
 from spacy.tokens import Span
 
@@ -73,6 +72,14 @@ class Match(NamedTuple):
         return self.weight
 
     @property
+    def u_transcription(self) -> str:
+        return "*" + " ".join(self.utxt._.syllables)
+
+    @property
+    def v_transcription(self) -> str:
+        return "*" + " ".join(self.vtxt._.syllables)
+
+    @property
     def weighted_score(self) -> float:
         """Ratio of phonemic similarity to graphic similarity."""
         try:
@@ -81,7 +88,7 @@ class Match(NamedTuple):
             return math.inf
 
     def as_dict(self) -> Dict[str, str]:
-        """Match with prettier field names for serialization."""
+        """Dict form for structured output formats."""
         return {
             "u_id": self.u,
             "v_id": self.v,
@@ -89,6 +96,8 @@ class Match(NamedTuple):
             "v_text": self.vtxt.text,
             "u_text_aligned": "".join(self.au),
             "v_text_aligned": "".join(self.av),
+            "u_transcription": self.u_transcription,
+            "v_transcription": self.v_transcription,
             "u_start": self.utxt.start,
             "u_end": self.utxt.end,
             "v_start": self.vtxt.start,

@@ -141,7 +141,7 @@ def run() -> None:
             for match in results:
                 writer.write(match.as_dict())
     elif args["--output-format"] == "csv":
-        fieldnames = Match("", "", "", "").as_dict().keys()
+        fieldnames = results[0].as_dict().keys()
         writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
         writer.writeheader()
         for match in results:

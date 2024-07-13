@@ -148,17 +148,16 @@ def run() -> None:
     elif args["--output-format"] == "html":
         console.record = True
         with console.capture():
-            for match in results:
-                console.print(match)
+            for doc in graph.docs:
+                for group in doc._.groups:
+                    console.print(group)
         sys.stdout.write(console.export_html())
     else:
         # use system pager by default; colorize if LESS=R
         with console.pager(styles=os.getenv("LESS", "") == "R"):
             for doc in graph.docs:
                 for group in doc._.groups:
-                    console.print(group, "\n")
-            # for match in results:
-            #     console.print(match)
+                    console.print(group)
 
 
 def setup(args: Dict) -> Language:

@@ -9,6 +9,7 @@ from typing import Callable, Iterable, Iterator
 from networkx import MultiGraph, create_empty_copy
 from rich.console import Console, ConsoleOptions, RenderResult
 from rich.progress import BarColumn, Progress, SpinnerColumn
+from rich.table import Table
 from spacy.tokens import Doc, Span
 
 from .align import Aligner
@@ -35,29 +36,32 @@ class MatchGroup:
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         """Format the group for display in console."""
-        render_results = []
+        table = Table(title=self.anchor_span.text, title_justify="left", show_header=False)
+        table.add_column("doc", no_wrap=True)
+        table.add_column("text")
+        table.add_column("transcription")
 
         # render the "anchor" span first (i.e., the span that all matches share)
-        render_results += [
-            f"[bold]{self.doc._.id}[/bold] ({self.start}–{self.end-1})：",
+        table.add_row(
+            f"{self.doc._.id} ({self.start}–{self.end-1})",
             console.highlighter.format_span(self.anchor_span),
             console.highlighter.transcribe_span(self.anchor_span),
-        ]
+        )
 
         # render the non-anchor spans from each match in the group
-        for i, match in enumerate(self.matches):
+        for match in self.matches:
             span = self.non_anchor_span(match)
             alignment = self.non_anchor_alignment(match)
             anchor_alignment = self.anchor_alignment(match)
-            render_results += [
-                f"{i + 1}. {span.doc._.id} ({span.start}–{span.end-1})：",
+            table.add_row(
+                f"{span.doc._.id} ({span.start}–{span.end-1})",
                 console.highlighter.format_span(
                     span, self.anchor_span, alignment, anchor_alignment
                 ),
                 console.highlighter.transcribe_span(span),
-            ]
+            )
 
-        return render_results
+        return [table]
 
     @cached_property
     def anchor_span(self) -> Span:

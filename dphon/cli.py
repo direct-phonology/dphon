@@ -42,8 +42,7 @@ Matching Options:
 
     -c <NUM>, --context <NUM>       [default: 4]
         Add NUM tokens of context to each side of matches. Context displays with
-        a dimmed appearance if color is supported in the terminal. Has no effect
-        if the output format is not plaintext.
+        a dimmed appearance if color is supported in the terminal.
 
 Filtering Options:
     -a, --all
@@ -200,7 +199,7 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
         graph.add_doc(doc)
         logging.debug(f'indexed doc "{doc._.id}"')
     stop = time.perf_counter() - start
-    logging.info(f"indexed {graph.number_of_docs()} docs in {stop:.1f}s")
+    logging.info(f"indexed {graph.number_of_docs} docs in {stop:.1f}s")
 
     # prune all ngrams from index that only occur once
     groups = list(nlp.get_pipe("index").filter(lambda g: len(g[1]) > 1))
@@ -231,7 +230,7 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
                     )
             progress.advance(task)
     stop = time.perf_counter() - start
-    logging.info(f"seeded {graph.number_of_matches()} matches in {stop:.1f}s")
+    logging.info(f"seeded {graph.number_of_matches} matches in {stop:.1f}s")
 
     # limit to seeds with graphic variants if requested
     if not args["--all"]:
@@ -248,14 +247,14 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
     # align all matches
     graph.align(SmithWatermanPhoneticAligner(gap_char="　"))
 
-    # group all matches
-    graph.group()
-
     # limit via min and max lengths if requested
     if args["--min"]:
         graph.filter(lambda m: len(m) >= int(args["--min"]))
     if args["--max"]:
         graph.filter(lambda m: len(m) <= int(args["--max"]))
+
+    # group all matches
+    graph.group()
 
     # return completed reuse graph
     return graph

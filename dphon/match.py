@@ -8,7 +8,7 @@ from typing import Dict, List, NamedTuple
 import Levenshtein as Lev
 from rich.console import Console, ConsoleOptions, RenderResult
 from rich.padding import Padding
-from spacy.tokens import Doc, Span
+from spacy.tokens import Span
 
 
 class Match(NamedTuple):

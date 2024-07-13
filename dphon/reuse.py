@@ -115,10 +115,12 @@ class MatchGraph:
         """Iterator over all docs in the graph."""
         return (doc for _label, doc in self._G.nodes(data="doc"))
 
+    @property
     def number_of_matches(self) -> int:
         """Total number of matches in the graph."""
         return self._G.number_of_edges()
 
+    @property
     def number_of_docs(self) -> int:
         """Total number of documents in the graph."""
         return self._G.number_of_nodes()
@@ -147,7 +149,7 @@ class MatchGraph:
         """Extend all matches in the graph using a provided strategy."""
         # track progress
         task = self.progress.add_task(
-            "extending", u="", v="", total=self.number_of_matches()
+            "extending", u="", v="", total=self.number_of_matches
         )
 
         # create a new graph without matches and add each extended match to it
@@ -168,7 +170,7 @@ class MatchGraph:
         """Align all matches in the graph using a provided strategy."""
         # track progress
         task = self.progress.add_task(
-            "aligning", u="", v="", total=self.number_of_matches()
+            "aligning", u="", v="", total=self.number_of_matches
         )
 
         # create a new graph without matches and add each aligned match to it
@@ -189,7 +191,7 @@ class MatchGraph:
         """Group all matches in the graph by their shared spans."""
         # track progress
         task = self.progress.add_task(
-            "grouping", u="", v="", total=self.number_of_matches()
+            "grouping", u="", v="", total=self.number_of_matches
         )
 
         # iterate through each document and group all matches that target it

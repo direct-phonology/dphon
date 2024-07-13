@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """dphon - a tool for old chinese phonetic analysis
- 
+
 Usage:
     dphon -h | --help
     dphon --version
-    dphon [-v | -vv] [options] <path>... 
- 
+    dphon [-v | -vv] [options] <path>...
+
 Global Options:
     -h, --help
         Show this help text and exit.
@@ -38,7 +38,7 @@ Matching Options:
 
     -l <NUM>, --len-limit <NUM>     [default: 50]
         Compare at most NUM tokens when obtaining the similarity score. A
-        higher number will slow down execution time but return more matches. 
+        higher number will slow down execution time but return more matches.
 
     -c <NUM>, --context <NUM>       [default: 4]
         Add NUM tokens of context to each side of matches. Context displays with
@@ -56,14 +56,14 @@ Filtering Options:
         less than the value for "--ngram-order".
 
     --max <NUM>                     [default: 64]
-        Limit to matches with total number of tokens <= NUM. Must be equal to 
+        Limit to matches with total number of tokens <= NUM. Must be equal to
         or greater than the value for "--ngram-order".
 
 Examples:
     dphon texts/*.txt --min 8 > matches.txt
     dphon file1.txt file2.txt --ngram-order 8 --threshold 0.8
     dphon docs.jsonl --input-format jsonl --output-format jsonl > matches.jsonl
- 
+
 Help:
     For more information on using this tool, visit the Github repository:
     https://github.com/direct-phonology/dphon
@@ -155,8 +155,11 @@ def run() -> None:
     else:
         # use system pager by default; colorize if LESS=R
         with console.pager(styles=os.getenv("LESS", "") == "R"):
-            for match in results:
-                console.print(match)
+            for doc in graph.docs:
+                for group in doc._.groups:
+                    console.print(group, "\n")
+            # for match in results:
+            #     console.print(match)
 
 
 def setup(args: Dict) -> Language:
@@ -168,6 +171,8 @@ def setup(args: Dict) -> Language:
     # add Doc metadata
     if not Doc.has_extension("id"):
         Doc.set_extension("id", default="")
+    if not Doc.has_extension("groups"):
+        Doc.set_extension("groups", default=[])
 
     # setup spaCy model
     nlp = spacy.blank("zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
@@ -192,7 +197,7 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
     start = time.perf_counter()
     for doc, context in nlp.pipe(load_texts(args["<path>"]), as_tuples=True):
         doc._.id = context["id"]
-        graph.add_doc(context["id"], doc)
+        graph.add_doc(doc)
         logging.debug(f'indexed doc "{doc._.id}"')
     stop = time.perf_counter() - start
     logging.info(f"indexed {graph.number_of_docs()} docs in {stop:.1f}s")
@@ -242,6 +247,9 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
 
     # align all matches
     graph.align(SmithWatermanPhoneticAligner(gap_char="　"))
+
+    # group all matches
+    graph.group()
 
     # limit via min and max lengths if requested
     if args["--min"]:

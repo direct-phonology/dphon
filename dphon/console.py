@@ -1,12 +1,12 @@
-from typing import Tuple, List
+from typing import List, Tuple
 
 from rich.console import Console
 from rich.highlighter import RegexHighlighter
 from rich.theme import Theme
+from spacy.tokens import Span
 
-from .match import Match
 from .g2p import GraphemesToPhonemes
-
+from .match import Match
 
 # Default color scheme for highlighting matches
 DEFAULT_THEME = Theme(
@@ -45,91 +45,99 @@ class MatchHighlighter(RegexHighlighter):
         Adds markup for highlighting insertions, mismatches, etc. If context is
         set, also adds highlighted context to either end of the match.
         """
+        return (
+            self.format_span(match.utxt, match.vtxt, match.au, match.av),
+            self.format_span(match.vtxt, match.utxt, match.av, match.au),
+        )
 
-        su, sv = self._mark(match)
+    def transcribe_match(self, match: Match) -> Tuple[str, str]:
+        """Render a phonemic transcription for a Match."""
+        return (self.transcribe_span(match.utxt), self.transcribe_span(match.vtxt))
+
+    def format_span(
+        self,
+        span: Span,
+        other: Span = None,
+        alignment: str = None,
+        other_alignment: str = None,
+    ) -> str:
+        """Return a Span as a Rich format string, with optional context.
+
+        Adds markup for highlighting insertions, mismatches, etc. if a second
+        reference Span is provided. If context is set, also adds highlighted
+        context to either end of the match.
+        """
+        highlighted_span = self._mark_span(span, alignment, other, other_alignment)
         if self.context > 0:
-            cul, cur, cvl, cvr = self._add_context(match)
-            su = cul + su + cur
-            sv = cvl + sv + cvr
-        return su, sv
+            context_left, context_right = self._add_span_context(span)
+            formatted_span = context_left + highlighted_span + context_right
+        return formatted_span
 
-    def _mark(self, match: Match) -> Tuple[str, str]:
-        """Mark up the match for colorization with a theme.
+    def transcribe_span(self, span: Span) -> str:
+        """Render a phonemic transcription for a Span."""
+        return "*" + " ".join(span._.syllables)
 
-        - Adds markup for insertions (tokens in one sequence but not another).
+    def _mark_span(
+        self, span: Span, alignment: str, other: Span, other_alignment: str
+    ) -> str:
+        """Mark up a Span for colorization with a theme, in relation to another Span.
+
+        - Adds markup for insertions (tokens in one Span but not another).
         - Adds markup for mismatches (differing tokens in the same position).
         - Adds markup for graphic variants (mismatches with same phonemes).
         """
-
-        # if no alignment, just convert to strings because we can't highlight
-        if not match.au or not match.av:
-            return match.utxt.text, match.vtxt.text
+        # if no alignment, just return the text because we can't highlight
+        if not alignment or not other or not other_alignment:
+            return span.text
 
         # o(N) implementation: step through each sequence adding markup
-        # TODO convert to a DFA so there's less markup repetition
-        su: List[str] = []
-        sv: List[str] = []
-        u_ptr = 0
-        v_ptr = 0
-        for i in range(len(match)):
-
+        # TODO convert to a DFA so there's less markup repetition?
+        marked_span: List[str] = []
+        span_ptr = 0
+        other_ptr = 0
+        for i in range(len(span)):
             # gap in u: insertion in v (if not punctuation)
-            if match.au[i] == self.gap_char and match.av[i].isalnum():
-                su.append(match.au[i])
-                sv.append(f"[insertion]{match.av[i]}[/insertion]")
-                v_ptr += 1
+            if alignment[i] == self.gap_char and other_alignment[i].isalnum():
+                marked_span.append(alignment[i])
+                other_ptr += 1
                 continue
 
             # gap in v: insertion in u (if not punctuation)
-            if match.av[i] == self.gap_char and match.au[i].isalnum():
-                su.append(f"[insertion]{match.au[i]}[/insertion]")
-                sv.append(match.av[i])
-                u_ptr += 1
+            if other_alignment[i] == self.gap_char and alignment[i].isalnum():
+                marked_span.append(f"[insertion]{alignment[i]}[/insertion]")
+                span_ptr += 1
                 continue
 
             # variants (both u and v)
-            if self.g2p.are_graphic_variants(match.utxt[u_ptr], match.vtxt[v_ptr]):
-                su.append(f"[variant]{match.au[i]}[/variant]")
-                sv.append(f"[variant]{match.av[i]}[/variant]")
-                u_ptr += 1
-                v_ptr += 1
+            if self.g2p.are_graphic_variants(span[span_ptr], other[other_ptr]):
+                marked_span.append(f"[variant]{alignment[i]}[/variant]")
+                span_ptr += 1
+                other_ptr += 1
                 continue
 
             # mismatch (both u and v) - only highlight if alphanumeric
-            if match.au[i] != match.av[i]:
-                if match.au[i].isalnum() and match.av[i].isalnum():
-                    su.append(f"[mismatch]{match.au[i]}[/mismatch]")
-                    sv.append(f"[mismatch]{match.av[i]}[/mismatch]")
-                    u_ptr += 1
-                    v_ptr += 1
+            if alignment[i] != other_alignment[i]:
+                if alignment[i].isalnum() and other_alignment[i].isalnum():
+                    marked_span.append(f"[mismatch]{alignment[i]}[/mismatch]")
+                    span_ptr += 1
+                    other_ptr += 1
                     continue
 
             # equality; nothing to highlight
-            su.append(match.au[i])
-            sv.append(match.av[i])
-            u_ptr += 1
-            v_ptr += 1
+            marked_span.append(alignment[i])
+            span_ptr += 1
+            other_ptr += 1
 
-        return "".join(su), "".join(sv)
+        return "".join(marked_span)
 
-    def _add_context(self, match: Match) -> Tuple[str, str, str, str]:
-        """Add context to either side of the match sequences.
+    def _add_span_context(self, span: Span) -> Tuple[str, str]:
+        """Add context to either side of the Span.
 
         Context coloration can be changed by the default theme; a dim appearance
         is used in terminals.
         """
-
-        utxt, vtxt = match.utxt, match.vtxt
-        u, v = utxt.doc, vtxt.doc
-        cul = f"[context]{u[utxt.start-self.context:utxt.start]}[/context]"
-        cur = f"[context]{u[utxt.end:utxt.end+self.context]}[/context]"
-        cvl = f"[context]{v[vtxt.start-self.context:vtxt.start]}[/context]"
-        cvr = f"[context]{v[vtxt.end:vtxt.end+self.context]}[/context]"
-        return (cul, cur, cvl, cvr)
-
-    def transcription(self, match: Match) -> Tuple[str, str]:
-        """Get the phonemic transcription for the match for display."""
-        return (
-            "*" + " ".join(match.utxt._.syllables),
-            "*" + " ".join(match.vtxt._.syllables),
+        context_left = (
+            f"[context]{span.doc[span.start-self.context:span.start]}[/context]"
         )
+        context_right = f"[context]{span.doc[span.end:span.end+self.context]}[/context]"
+        return context_left, context_right

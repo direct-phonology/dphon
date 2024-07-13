@@ -6,9 +6,9 @@ import math
 from typing import Dict, List, NamedTuple
 
 import Levenshtein as Lev
-from rich.padding import Padding
 from rich.console import Console, ConsoleOptions, RenderResult
-from spacy.tokens import Span
+from rich.padding import Padding
+from spacy.tokens import Doc, Span
 
 
 class Match(NamedTuple):

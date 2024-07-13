@@ -136,8 +136,9 @@ class MatchHighlighter(RegexHighlighter):
         Context coloration can be changed by the default theme; a dim appearance
         is used in terminals.
         """
-        context_left = (
-            f"[context]{span.doc[span.start-self.context:span.start]}[/context]"
+        context_left = span.doc[span.start - self.context : span.start]
+        context_right = span.doc[span.end : span.end + self.context]
+        return (
+            f"[context]{context_left.text.rjust(self.context, "　")}[/context]",
+            f"[context]{context_right.text.ljust(self.context, "　")}[/context]",
         )
-        context_right = f"[context]{span.doc[span.end:span.end+self.context]}[/context]"
-        return context_left, context_right

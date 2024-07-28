@@ -8,6 +8,7 @@ from typing import Dict, List, NamedTuple
 import Levenshtein as Lev
 from rich.console import Console, ConsoleOptions, RenderResult
 from rich.padding import Padding
+from rich.table import Table
 from spacy.tokens import Span
 
 
@@ -30,24 +31,31 @@ class Match(NamedTuple):
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         """Format the match for display in console."""
+        table = Table(show_header=False, box=None)
+        table.add_column("doc")
+        table.add_column("bounds")
+        table.add_column("text")
+        table.add_column("transcription")
+
         # get colorized match text and transcription
-        su, sv = console.highlighter.format_match(self)  # type: ignore
-        pu, pv = console.highlighter.transcription(self)  # type: ignore
+        su, sv = console.highlighter.format_match(self)
+        pu, pv = console.highlighter.transcribe_match(self)
 
-        # add left-padding to align with match numbers, and bottom-padding
-        # so that there's a space between matches in output
-        su, sv, pu = map(lambda t: Padding(t, (0, 0, 0, 4)), (su, sv, pu))
-        pv = Padding(pv, (0, 0, 1, 4))
+        # add rows for each document
+        table.add_row(self.u, f"{self.utxt.start}-{self.utxt.end-1}", su, pu)
+        table.add_row(self.v, f"{self.vtxt.start}-{self.vtxt.end-1}", sv, pv)
 
-        # return everything as an iterable of renderables
-        return (
-            f"1.  [white]{self.u}[/white] ({self.utxt.start}–{self.utxt.end-1})：",
-            su,
-            pu,
-            f"2.  [white]{self.v}[/white] ({self.vtxt.start}–{self.vtxt.end-1})：",
-            sv,
-            pv,
-        )
+        return [table]
+
+    @property
+    def graphic_similarity(self) -> float:
+        """Levenshtein ratio of the aligned sequences."""
+        return Lev.seqratio(self.au, self.av)
+
+    @property
+    def phonetic_similarity(self) -> float:
+        """Similarity score of the phonetic content of the sequences."""
+        return self.weight
 
     @property
     def weighted_score(self) -> float:

@@ -50,16 +50,37 @@ Filtering Options:
         containing at least one token with shared phonemes but differing
         graphemes (a graphic variant) are shown.
 
-    --min <NUM>                     [default: 8]
+    --min-length <NUM>               [default: 8]
         Limit to matches with total number of tokens >= NUM. Has no effect if
         less than the value for "--ngram-order".
 
-    --max <NUM>                     [default: 64]
+    --max-length <NUM>               [default: 64]
         Limit to matches with total number of tokens <= NUM. Must be equal to
         or greater than the value for "--ngram-order".
 
+    --min-graphic-similarity <NUM>   [default: 0]
+        Limit to matches with a graphic similarity ratio >= NUM. The default is
+        to allow matches with no graphic similarity at all (0).
+
+    --max-graphic-similarity <NUM>   [default: 0.9]
+        Limit to matches with a graphic similarity ratio <= NUM. The default is
+        to exclude matches that are almost graphically identical (0.9).
+
+    --min-phonetic-similarity <NUM>  [default: 0.7]
+        Limit to matches with a phonetic similarity ratio >= NUM. The default is
+        to allow matches with some phonetic variance (0.7).
+
+    --max-phonetic-similarity <NUM>  [default: 1]
+        Limit to matches with a phonetic similarity ratio <= NUM. The default is
+        to allow matches that are phonetically identical (1).
+
+Display options:
+    -g, --group                [default: False]
+        Group matches by shared text. By default, matches are displayed as
+        individual pairs of similar sequences.
+
 Examples:
-    dphon texts/*.txt --min 8 > matches.txt
+    dphon texts/*.txt > matches.txt
     dphon file1.txt file2.txt --ngram-order 8 --threshold 0.8
     dphon docs.jsonl --input-format jsonl --output-format jsonl > matches.jsonl
 
@@ -246,11 +267,27 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
     # align all matches
     graph.align(SmithWatermanPhoneticAligner(gap_char="　"))
 
-    # limit via min and max lengths if requested
-    if args["--min"]:
-        graph.filter(lambda m: len(m) >= int(args["--min"]))
-    if args["--max"]:
-        graph.filter(lambda m: len(m) <= int(args["--max"]))
+    # filter if requested
+    if args["--min-length"]:
+        graph.filter(lambda m: len(m) >= int(args["--min-length"]))
+    if args["--max-length"]:
+        graph.filter(lambda m: len(m) <= int(args["--max-length"]))
+    if args["--min-graphic-similarity"]:
+        graph.filter(
+            lambda m: m.graphic_similarity >= float(args["--min-graphic-similarity"])
+        )
+    if args["--max-graphic-similarity"]:
+        graph.filter(
+            lambda m: m.graphic_similarity <= float(args["--max-graphic-similarity"])
+        )
+    if args["--min-phonetic-similarity"]:
+        graph.filter(
+            lambda m: m.phonetic_similarity >= float(args["--min-phonetic-similarity"])
+        )
+    if args["--max-phonetic-similarity"]:
+        graph.filter(
+            lambda m: m.phonetic_similarity <= float(args["--max-phonetic-similarity"])
+        )
 
     # group all matches
     graph.group()

@@ -61,7 +61,7 @@ class Match(NamedTuple):
     def weighted_score(self) -> float:
         """Ratio of phonemic similarity to graphic similarity."""
         try:
-            return self.weight / Lev.seqratio(self.au, self.av)
+            return self.phonetic_similarity / self.graphic_similarity
         except ZeroDivisionError:
             return math.inf
 
@@ -78,6 +78,6 @@ class Match(NamedTuple):
             "u_end": self.utxt.end,
             "v_start": self.vtxt.start,
             "v_end": self.vtxt.end,
-            "score": str(self.weight),
-            "weighted_score": str(self.weighted_score),
+            "phonetic_similarity": self.phonetic_similarity,
+            "graphic_similarity": self.graphic_similarity,
         }

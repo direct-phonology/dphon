@@ -36,10 +36,17 @@ class MatchGroup:
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         """Format the group for display in console."""
-        table = Table(title=self.anchor_span.text, title_justify="left", show_header=False)
+        table = Table(
+            title=self.anchor_span.text,
+            title_justify="left",
+            show_header=False,
+            box=None,
+        )
         table.add_column("doc", no_wrap=True)
         table.add_column("text")
         table.add_column("transcription")
+
+        # TODO: fix padding here
 
         # render the "anchor" span first (i.e., the span that all matches share)
         table.add_row(
@@ -222,9 +229,9 @@ class MatchGraph:
 # helper for getting bounds of a match in a given document
 def _bounds_in(doc):
     def _bounds(match):
-        if match.utxt.doc == doc:
+        if match.u == doc._.id:
             return match.utxt.start, match.utxt.end
-        if match.vtxt.doc == doc:
+        if match.v == doc._.id:
             return match.vtxt.start, match.vtxt.end
         raise ValueError("Match does not belong to document.", match, doc)
 

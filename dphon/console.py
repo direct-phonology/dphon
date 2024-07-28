@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from typing import List, Tuple
 
 from rich.console import Console
@@ -98,7 +100,6 @@ class MatchHighlighter(RegexHighlighter):
         for i in range(len(span)):
             # gap in u: insertion in v (if not punctuation)
             if alignment[i] == self.gap_char and other_alignment[i].isalnum():
-                marked_span.append(alignment[i])
                 other_ptr += 1
                 continue
 

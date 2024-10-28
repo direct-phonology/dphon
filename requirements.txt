@@ -4,4 +4,4 @@ docopt==0.6.2
 Levenshtein==0.25.1
 networkx>=2.5
 jsonlines==4.0.0
-rich==13.8.1
+rich==13.9.3

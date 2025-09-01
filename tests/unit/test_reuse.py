@@ -1,7 +1,7 @@
 """Tests for the text reuse module."""
 
 import logging
-from unittest import TestCase, skip
+from unittest import TestCase
 
 import spacy
 from spacy.tokens import Doc
@@ -27,8 +27,6 @@ class TestMatchGraph(TestCase):
         )
         if not Doc.has_extension("id"):
             Doc.set_extension("id", default="")
-        if not Doc.has_extension("groups"):
-            Doc.set_extension("groups", default=[])
 
     def test_extend(self) -> None:
         """extend should reduce graph to maximal matches only"""
@@ -127,10 +125,28 @@ class TestMatchGraph(TestCase):
             ]
         )
         G.group()
-        self.assertEqual(len(doc1._.groups), 1)
-        self.assertEqual(len(doc2._.groups), 1)
-        self.assertEqual(len(doc3._.groups), 1)
-        group = doc1._.groups[0]
-        self.assertEqual(group.start, 0)
-        self.assertEqual(group.end, 8)
-        self.assertEqual(len(group), 2)
+        self.assertEqual(len(G.groups), 1, "should have 1 group")
+        self.assertEqual(len(G.groups[0]), 3, "should have 3 matches in the group")
+
+    def test_group_uniqueness(self) -> None:
+        """match groups should be unique"""
+        doc1 = self.nlp.make_doc("abcd12z34abcd")
+        doc2 = self.nlp.make_doc("12y34abcdabcd")
+        doc3 = self.nlp.make_doc("123456789")
+        doc1._.id = "1"
+        doc2._.id = "2"
+        doc3._.id = "3"
+        G = MatchGraph()
+        G.add_docs([doc1, doc2, doc3])
+        G.add_matches(
+            [
+                Match("1", "2", doc1[4:13], doc2[0:9]),  # 12z34abcd - 12y34abcd
+                Match("1", "2", doc1[0:4], doc2[9:13]),  # abcd - abcd
+                Match("2", "1", doc2[0:5], doc1[4:9]),  # 12y34 - 12z34
+                Match("3", "1", doc3[0:4], doc1[4:9]),  # 1234 - 12z34
+                Match("2", "3", doc2[0:5], doc3[0:4]),  # 12y34 - 1234
+            ]
+        )
+        G.group()
+        self.assertEqual(len(G.groups), 3, "should have 3 groups")
+        self.assertEqual({ len(g) for g in G.groups }, { 3, 1 }, "should have a group of 3 and two groups of 1")

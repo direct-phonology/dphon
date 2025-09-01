@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 import spacy
+
 from dphon.match import Match
 
 
@@ -44,3 +45,7 @@ class TestMatch(TestCase):
         # pre-copied spans should also be equal
         m3 = Match("doc1", "doc2", self.doc1[4:6], self.doc2[2:4])
         self.assertEqual(m1, m3)
+
+        # u -> v should be equal to v -> u
+        m4 = Match("doc2", "doc1", vtxt, utxt)
+        self.assertEqual(m1, m4)

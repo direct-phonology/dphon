@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 """Classes for analyzing text reuse."""
 
+from collections import defaultdict
 from functools import cached_property
-from itertools import combinations, groupby
-from typing import Callable, Iterable, Iterator
+from itertools import combinations
+from typing import Callable, Iterable, Iterator, List
 
-from networkx import MultiGraph, create_empty_copy
+from networkx import Graph, MultiGraph, connected_components, create_empty_copy
 from rich.console import Console, ConsoleOptions, RenderResult
 from rich.progress import BarColumn, Progress, SpinnerColumn
 from rich.table import Table
@@ -19,51 +20,68 @@ from .match import Match
 
 
 class MatchGroup:
-    """A group of matches with common bounds in a single document."""
+    """A group of matches across several documents."""
 
-    def __init__(
-        self, doc: Doc, start: int, end: int, matches: Iterable[Match]
-    ) -> None:
-        self.doc = doc
-        self.start = start
-        self.end = end
-        self.matches = list(matches)
+    def __init__(self, matches: Iterable[Match]) -> None:
+        self.matches = list(sorted(set(matches)))
+        if not self.matches:
+            raise ValueError("Group must contain at least one match.", self)
+        
+        # Create internal list of spans and presort by aligned text
+        self.spans = set()
+        for match in self.matches:
+            self.spans.add((match.utxt, "".join(match.au)))
+            self.spans.add((match.vtxt, "".join(match.av)))
+        self.spans = list(sorted(self.spans, key=lambda x: x[1]))
+
+        # Select the "anchor" span which identifies the group
+        self.anchor_span, self.anchor_alignment = self.spans[0]
+        self.doc = self.anchor_span.doc
+        self.start = self.anchor_span.start
+        self.end = self.anchor_span.end
+
+    def __key(self) -> tuple:
+        return tuple(self.matches)
+
+    def __hash__(self) -> int:
+        return hash(self.__key())
+
+    def __eq__(self, value: object) -> bool:
+        if isinstance(value, MatchGroup):
+            return self.matches == value.matches
+        raise NotImplementedError
 
     def __len__(self) -> int:
         return len(self.matches)
+
+    def __repr__(self) -> str:
+        return f"<MatchGroup ({len(self)} matches)>"
 
     def __rich_console__(
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         """Format the group for display in console."""
-        table = Table(
-            title=self.anchor_span.text,
-            title_justify="left",
-            show_header=False,
-            box=None,
-        )
+        table = Table(show_header=False, box=None)
         table.add_column("doc", no_wrap=True)
+        table.add_column("bounds")
         table.add_column("text")
         table.add_column("transcription")
 
-        # TODO: fix padding here
-
-        # render the "anchor" span first (i.e., the span that all matches share)
+        # render the "anchor" span first
         table.add_row(
-            f"{self.doc._.id} ({self.start}–{self.end-1})",
+            self.doc._.id,
+            f"{self.start}–{self.end-1}",
             console.highlighter.format_span(self.anchor_span),
             console.highlighter.transcribe_span(self.anchor_span),
         )
 
-        # render the non-anchor spans from each match in the group
-        for match in self.matches:
-            span = self.non_anchor_span(match)
-            alignment = self.non_anchor_alignment(match)
-            anchor_alignment = self.anchor_alignment(match)
+        # render the non-anchor spans relative to the anchor
+        for span, alignment in self.spans[1:]:
             table.add_row(
-                f"{span.doc._.id} ({span.start}–{span.end-1})",
+                span.doc._.id,
+                f"{span.start}–{span.end-1}",
                 console.highlighter.format_span(
-                    span, self.anchor_span, alignment, anchor_alignment
+                    span, self.anchor_span, alignment, self.anchor_alignment
                 ),
                 console.highlighter.transcribe_span(span),
             )
@@ -75,29 +93,20 @@ class MatchGroup:
         """Get the anchor span for the group."""
         return self.doc[self.start : self.end]
 
-    def anchor_alignment(self, match: Match) -> str:
-        """Get the anchor alignment for a given match."""
-        if match.u == self.doc._.id:
-            return match.au
-        if match.v == self.doc._.id:
-            return match.av
-        raise ValueError("Match does not belong to document.", match, self.doc)
+    @cached_property
+    def graphic_similarity(self) -> float:
+        """Average of graphic similarities for all matches in the group."""
+        return sum(m.graphic_similarity for m in self.matches) / len(self.matches)
 
-    def non_anchor_span(self, match: Match) -> Span:
-        """Get the non-anchor span for a given match."""
-        if match.u == self.doc._.id:
-            return match.vtxt
-        if match.v == self.doc._.id:
-            return match.utxt
-        raise ValueError("Match does not belong to document.", match, self.doc)
+    @cached_property
+    def phonetic_similarity(self) -> float:
+        """Average of phonetic similarities for all matches in the group."""
+        return sum(m.phonetic_similarity for m in self.matches) / len(self.matches)
 
-    def non_anchor_alignment(self, match: Match) -> str:
-        """Get the non-anchor alignment for a given match."""
-        if match.u == self.doc._.id:
-            return match.av
-        if match.v == self.doc._.id:
-            return match.au
-        raise ValueError("Match does not belong to document.", match, self.doc)
+    @cached_property
+    def weighted_score(self) -> float:
+        """Average of weighted scores for all matches in the group."""
+        return sum(m.weighted_score for m in self.matches) / len(self.matches)
 
 
 class MatchGraph:
@@ -105,6 +114,7 @@ class MatchGraph:
 
     def __init__(self) -> None:
         self._G = MultiGraph()
+        self.groups: List[MatchGroup] = []
         self.progress = Progress(
             "[progress.description]{task.description}",
             SpinnerColumn(),
@@ -204,19 +214,39 @@ class MatchGraph:
         task = self.progress.add_task(
             "grouping", u="", v="", total=self.number_of_matches
         )
+        groups = set()
 
-        # iterate through each document and group all matches that target it
-        with self.progress:
-            for doc in self.docs:
-                self.progress.update(task, u=doc)
-                edges = self._G.edges(doc._.id, data=True)
-                matches = [Match(**data) for _u, _v, data in edges]
-                for span, group in groupby(
-                    sorted(matches, key=_bounds_in(doc)), key=_bounds_in(doc)
-                ):
-                    doc._.groups.append(MatchGroup(doc, span[0], span[1], group))
-                self.progress.update(task, advance=len(edges))
-        self.progress.remove_task(task)
+        # create a map of match bounds to matches containing those bounds
+        bounds_to_matches = defaultdict(set)
+        for match in self.matches:
+            u_key = (match.u, match.utxt.start, match.utxt.end)
+            v_key = (match.v, match.vtxt.start, match.vtxt.end)
+            bounds_to_matches[u_key].add(match)
+            bounds_to_matches[v_key].add(match)
+            self.progress.update(task, advance=1)
+
+        # matches that don't share bounds become their own groups; for the
+        # others, group matches that share bounds together
+        grouped_matches = []
+        for match_set in bounds_to_matches.values():
+            if len(match_set) == 1:
+                groups.add(MatchGroup(match_set))
+            else:
+                grouped_matches.append(match_set)
+
+        # create a new undirected graph where nodes are matches and an edge
+        # indicates that two matches share a span (i.e., are in the same group)
+        G = Graph()
+        for match_set in grouped_matches:
+            for u, v in combinations(match_set, 2):
+                G.add_edge(u, v)
+
+        # groups are connected components in the new graph
+        for group in connected_components(G):
+            groups.add(MatchGroup(group))
+
+        # store the groups at the top level
+        self.groups = list(groups)
 
     def filter(self, predicate: Callable[[Match], bool]) -> None:
         """Filter all matches in the graph using a provided predicate."""
@@ -224,15 +254,3 @@ class MatchGraph:
         filtered = filter(predicate, self.matches)
         G.add_edges_from([(m.u, m.v, m._asdict()) for m in filtered])
         self._G = G
-
-
-# helper for getting bounds of a match in a given document
-def _bounds_in(doc):
-    def _bounds(match):
-        if match.u == doc._.id:
-            return match.utxt.start, match.utxt.end
-        if match.v == doc._.id:
-            return match.vtxt.start, match.vtxt.end
-        raise ValueError("Match does not belong to document.", match, doc)
-
-    return _bounds

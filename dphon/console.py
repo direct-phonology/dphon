@@ -93,7 +93,6 @@ class MatchHighlighter(RegexHighlighter):
             return span.text
 
         # o(N) implementation: step through each sequence adding markup
-        # TODO convert to a DFA so there's less markup repetition?
         marked_span: List[str] = []
         span_ptr = 0
         other_ptr = 0

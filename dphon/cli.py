@@ -81,7 +81,7 @@ Display options:
 
 Examples:
     dphon texts/*.txt > matches.txt
-    dphon file1.txt file2.txt --ngram-order 8 --threshold 0.8
+    dphon file1.txt file2.txt --ngram-order 8 --threshold 0.8 --group
     dphon docs.jsonl --input-format jsonl --output-format jsonl > matches.jsonl
 
 Help:
@@ -151,6 +151,7 @@ def run() -> None:
     graph = process(nlp, args)
 
     # check if we're outputting to a file and find out the format
+    output_format = None
     if args["--output-file"]:
         output_path = Path(args["--output-file"])
         output_format = output_path.suffix.lstrip(".").lower()
@@ -160,6 +161,7 @@ def run() -> None:
     # if requested output match groups, otherwise output matches
     results: List[MatchGroup] | List[Match] = []
     if args["--group"]:
+        graph.group()
         results = graph.groups
     else:
         results = list(graph.matches)
@@ -199,8 +201,6 @@ def setup(args: Dict) -> Language:
     # add Doc metadata
     if not Doc.has_extension("id"):
         Doc.set_extension("id", default="")
-    if not Doc.has_extension("groups"):
-        Doc.set_extension("groups", default=[])
 
     # setup spaCy model
     nlp = spacy.blank("zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
@@ -297,9 +297,6 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
         graph.filter(
             lambda m: m.phonetic_similarity <= float(args["--max-phonetic-similarity"])
         )
-
-    # group all matches
-    graph.group()
 
     # return completed reuse graph
     return graph

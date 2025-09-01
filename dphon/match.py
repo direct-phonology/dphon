@@ -23,6 +23,21 @@ class Match(NamedTuple):
     au: List[str] = []
     av: List[str] = []
 
+    def __key(self) -> tuple:
+        return (
+            *sorted((self.u, self.v)),
+            *sorted((self.utxt.text, self.vtxt.text)),
+        )
+
+    def __hash__(self) -> int:
+        return hash(self.__key())
+
+    def __eq__(self, value: object) -> bool:
+        """Matches are equal if they have the same text in the same documents."""
+        if isinstance(value, Match):
+            return self.__key() == value.__key()
+        return NotImplemented
+
     def __len__(self) -> int:
         """Length of the longer sequence in the match."""
         return max(len(self.utxt), len(self.vtxt))
@@ -32,7 +47,7 @@ class Match(NamedTuple):
     ) -> RenderResult:
         """Format the match for display in console."""
         table = Table(show_header=False, box=None)
-        table.add_column("doc")
+        table.add_column("doc", no_wrap=True)
         table.add_column("bounds")
         table.add_column("text")
         table.add_column("transcription")

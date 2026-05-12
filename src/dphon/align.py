@@ -65,8 +65,8 @@ class SmithWatermanAligner(Aligner):
         # ---->                <----
         u, v = match.utxt.doc, match.vtxt.doc
         us, vs = match.utxt.start + len(lu), match.vtxt.start + len(lv)
-        utxt = u[us : us + len(cu)]
-        vtxt = v[vs : vs + len(cv)]
+        utxt = u[us : us + sum(1 for c in cu if c != "-")]
+        vtxt = v[vs : vs + sum(1 for c in cv if c != "-")]
 
         # use the gaps in the alignment to construct a new sequence of token
         # texts, inserting gap_char wherever the aligner created a gap
@@ -88,9 +88,9 @@ class SmithWatermanAligner(Aligner):
 
         # trim back the sequence boundaries further to remove any non-alphanum.
         # tokens from the start and end of both alignment and orig. sequence
-        while not au[-1].isalnum() or not av[-1].isalnum():
+        while (not au[-1].isalnum() and au[-1] != self.gap_char) or (not av[-1].isalnum() and av[-1] != self.gap_char):
             utxt, vtxt, au, av = utxt[:-1], vtxt[:-1], au[:-1], av[:-1]
-        while not au[0].isalnum() or not av[0].isalnum():
+        while (not au[0].isalnum() and au[0] != self.gap_char) or (not av[0].isalnum() and av[0] != self.gap_char):
             utxt, vtxt, au, av = utxt[1:], vtxt[1:], au[1:], av[1:]
 
         # normalize score to length; 1.0 is perfect

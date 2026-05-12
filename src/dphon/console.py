@@ -96,7 +96,7 @@ class MatchHighlighter(RegexHighlighter):
         marked_span: List[str] = []
         span_ptr = 0
         other_ptr = 0
-        for i in range(len(span)):
+        for i in range(len(alignment)):
             # gap in u: insertion in v (if not punctuation)
             if alignment[i] == self.gap_char and other_alignment[i].isalnum():
                 other_ptr += 1
@@ -108,6 +108,13 @@ class MatchHighlighter(RegexHighlighter):
                 span_ptr += 1
                 continue
 
+            # if either pointer is out of bounds, just append the character
+            if span_ptr >= len(span) or other_ptr >= len(other):
+                marked_span.append(alignment[i])
+                span_ptr += 1
+                other_ptr += 1
+                continue
+            
             # variants (both u and v)
             if self.g2p.are_graphic_variants(span[span_ptr], other[other_ptr]):
                 marked_span.append(f"[variant]{alignment[i]}[/variant]")

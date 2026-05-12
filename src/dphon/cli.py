@@ -79,6 +79,10 @@ Display options:
         Group matches by shared text. By default, matches are displayed as
         individual pairs of similar sequences.
 
+    --transcribe-context       [default: False]
+        Include phonemic transcription for context tokens as well as matched
+        tokens.
+
 Examples:
     dphon texts/*.txt > matches.txt
     dphon file1.txt file2.txt --ngram-order 8 --threshold 0.8 --group
@@ -144,7 +148,10 @@ def run() -> None:
 
     # setup match highlighting
     console.highlighter = MatchHighlighter(
-        g2p=nlp.get_pipe("g2p"), context=int(args["--context"]), gap_char="　"
+        g2p=nlp.get_pipe("g2p"),
+        context=int(args["--context"]),
+        gap_char="　",
+        transcribe_context=args["--transcribe-context"],
     )
 
     # process all texts

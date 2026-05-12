@@ -28,7 +28,7 @@ class MatchHighlighter(RegexHighlighter):
     g2p: GraphemesToPhonemes
 
     def __init__(
-        self, g2p: GraphemesToPhonemes, context: int = 0, gap_char: str = "-"
+        self, g2p: GraphemesToPhonemes, context: int = 0, gap_char: str = "-", transcribe_context: bool = False
     ) -> None:
         """Create a new highlighter with optional context for each match."""
         # can't have negative context
@@ -38,6 +38,7 @@ class MatchHighlighter(RegexHighlighter):
         # store parameters
         self.context = context
         self.gap_char = gap_char
+        self.transcribe_context = transcribe_context
         self.g2p = g2p
         super().__init__()
 
@@ -53,8 +54,44 @@ class MatchHighlighter(RegexHighlighter):
         )
 
     def transcribe_match(self, match: Match) -> Tuple[str, str]:
-        """Render a phonemic transcription for a Match."""
-        return (self.transcribe_span(match.utxt), self.transcribe_span(match.vtxt))
+        """Render a phonemic transcription for a Match"""
+        if self.transcribe_context:
+            return (
+                self.transcribe_span_with_context(match.utxt),
+                self.transcribe_span_with_context(match.vtxt),
+            )
+        else:
+            return (self.transcribe_span(match.utxt), self.transcribe_span(match.vtxt))
+        
+    def transcribe_span_with_context(self, span: Span) -> str:
+        """Render a phonemic transcription for a Span, including context."""
+        parts = []
+
+        if self.context > 0:
+            ctx_left = span.doc[max(0, span.start - self.context) : span.start]
+            if len(ctx_left) > 0:
+                left_syls = " ".join(s for s in ctx_left._.syllables if s)
+                if left_syls:
+                    parts.append(f"[context]{left_syls}[/context]")
+
+        match_syls = " ".join(span._.syllables)
+        parts.append(match_syls)
+
+        if self.context > 0:
+            ctx_right = span.doc[span.end : span.end + self.context]
+            if len(ctx_right) > 0:
+                right_syls = " ".join(s for s in ctx_right._.syllables if s)
+                if right_syls:
+                    parts.append(f"[context]{right_syls}[/context]")
+
+        # ensure the "*" denoting transcription is placed correctly
+        transcription = " ".join(parts).strip()
+        if transcription.startswith("[context]"):
+            transcription = "[context]*" + transcription[len("[context]"):]
+        else:
+            transcription = "*" + transcription
+
+        return transcription
 
     def format_span(
         self,

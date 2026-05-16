@@ -26,7 +26,7 @@ class MatchGroup:
         self.matches = list(sorted(set(matches)))
         if not self.matches:
             raise ValueError("Group must contain at least one match.", self)
-        
+
         # Create internal list of spans and presort by aligned text
         self.spans = set()
         for match in self.matches:
@@ -70,7 +70,7 @@ class MatchGroup:
         # render the "anchor" span first
         table.add_row(
             self.doc._.id,
-            f"{self.start}–{self.end-1}",
+            f"{self.start}–{self.end - 1}",
             console.highlighter.format_span(self.anchor_span),
             console.highlighter.transcribe_span(self.anchor_span),
         )
@@ -79,7 +79,7 @@ class MatchGroup:
         for span, alignment in self.spans[1:]:
             table.add_row(
                 span.doc._.id,
-                f"{span.start}–{span.end-1}",
+                f"{span.start}–{span.end - 1}",
                 console.highlighter.format_span(
                     span, self.anchor_span, alignment, self.anchor_alignment
                 ),

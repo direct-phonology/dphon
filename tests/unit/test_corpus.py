@@ -29,8 +29,9 @@ class TestPlaintextCorpusLoader(TestCase):
         # re-enable logging so we can check it in the test
         logging.disable(logging.INFO)
         with self.assertLogs(level="WARNING"):
-            for _ in self.load(["tests/unit/test_corpus.py",
-                                "tests/fixtures/laozi/laozi.txt"]):
+            for _ in self.load(
+                ["tests/unit/test_corpus.py", "tests/fixtures/laozi/laozi.txt"]
+            ):
                 pass
 
     def test_single_file(self) -> None:
@@ -54,8 +55,11 @@ class TestPlaintextCorpusLoader(TestCase):
 
     def test_file_and_glob(self) -> None:
         """should allow combination of files and globs"""
-        docs = list(self.load(["tests/fixtures/laozi/*laozi.txt",
-                               "tests/fixtures/laozi/tiny.txt"]))
+        docs = list(
+            self.load(
+                ["tests/fixtures/laozi/*laozi.txt", "tests/fixtures/laozi/tiny.txt"]
+            )
+        )
         self.assertEqual(len(docs), 4)
         doc_ids = [doc[1]["id"] for doc in docs]
         self.assertIn("gd_laozi", doc_ids)

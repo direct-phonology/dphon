@@ -65,8 +65,7 @@ class TestLookupsIndex(TestCase):
         # when iterating, token texts will be Lexeme objects
         entries = list(iter(self.idx))
         self.assertEqual(entries[0], (self.nlp.vocab["To"], [self.doc[0]]))
-        self.assertEqual(entries[1], (self.nlp.vocab["be"], [
-                         self.doc[1], self.doc[5]]))
+        self.assertEqual(entries[1], (self.nlp.vocab["be"], [self.doc[1], self.doc[5]]))
 
     def test_filter(self) -> None:
         """should iterate through entries in index that match predicate"""

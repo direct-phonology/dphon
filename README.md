@@ -1,10 +1,9 @@
 # dphon
 
 [![ci](https://github.com/direct-phonology/dphon/workflows/ci/badge.svg)](https://github.com/direct-phonology/dphon/actions?query=workflow%3Aci)
-![pyversions](https://img.shields.io/pypi/pyversions/dphon.svg?style=flat)
 [![zenodo](https://zenodo.org/badge/DOI/10.5281/zenodo.4641277.svg)](https://zenodo.org/record/4641277)
 [![spaCy](https://img.shields.io/static/v1?label=made%20with%20%E2%9D%A4%20and&message=spaCy&color=09a3d5)](https://spacy.io)
-[![code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 ## installation
 

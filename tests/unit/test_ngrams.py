@@ -25,29 +25,33 @@ class TestNgrams(TestCase):
         ngrams = Ngrams(self.nlp, n=1)
         doc = self.nlp("It was a dark and stormy night")
         results = [str(ngram) for ngram in ngrams.get_doc_ngrams(doc)]
-        self.assertEqual(results, [
-            "It", "was", "a", "dark", "and", "stormy", "night"
-        ])
+        self.assertEqual(results, ["It", "was", "a", "dark", "and", "stormy", "night"])
 
     def test_bigrams(self) -> None:
         """should create 2-token n-grams successfully"""
         ngrams = Ngrams(self.nlp, n=2)
         doc = self.nlp("It was a dark and stormy night")
         results = [str(ngram) for ngram in ngrams.get_doc_ngrams(doc)]
-        self.assertEqual(results, [
-            "It was", "was a", "a dark", "dark and", "and stormy",
-            "stormy night"
-        ])
+        self.assertEqual(
+            results,
+            ["It was", "was a", "a dark", "dark and", "and stormy", "stormy night"],
+        )
 
     def test_trigrams(self) -> None:
         """should create 3-token n-grams successfully"""
         ngrams = Ngrams(self.nlp, n=3)
         doc = self.nlp("It was a dark and stormy night")
         results = [str(ngram) for ngram in ngrams.get_doc_ngrams(doc)]
-        self.assertEqual(results, [
-            "It was a", "was a dark", "a dark and", "dark and stormy",
-            "and stormy night"
-        ])
+        self.assertEqual(
+            results,
+            [
+                "It was a",
+                "was a dark",
+                "a dark and",
+                "dark and stormy",
+                "and stormy night",
+            ],
+        )
 
     def test_empty_doc(self) -> None:
         """should handle an empty doc"""

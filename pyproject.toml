@@ -22,7 +22,7 @@ authors = [
 dependencies = [
   "docopt==0.6.2",
   "jsonlines==4.0.0",
-  "levenshtein==0.27.1",
+  "levenshtein==0.27.3",
   "lingpy==2.6.14",
   "networkx>=2.5",
   "rich==15.0.0",

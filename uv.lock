@@ -449,7 +449,7 @@ requires-dist = [
     { name = "docopt", specifier = "==0.6.2" },
     { name = "jsonlines", specifier = "==4.0.0" },
     { name = "levenshtein", specifier = "==0.27.1" },
-    { name = "lingpy", specifier = "==2.6.13" },
+    { name = "lingpy", specifier = "==2.6.14" },
     { name = "networkx", specifier = ">=2.5" },
     { name = "rich", specifier = "==14.1.0" },
     { name = "spacy", specifier = ">=3" },
@@ -629,7 +629,7 @@ wheels = [
 
 [[package]]
 name = "lingpy"
-version = "2.6.13"
+version = "2.6.14"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "appdirs" },
@@ -641,9 +641,9 @@ dependencies = [
     { name = "pycldf" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a0/82/783d435ddb7135fed945740a4ea3331519411a496c9fb3970880bb49070d/lingpy-2.6.13.tar.gz", hash = "sha256:a4a3504b6d824d658f3e7b4ae67cd6aebdd645b0ee711fa010c1b68378f93373", size = 555100, upload-time = "2023-12-14T06:17:32.022Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/03/27/6bb8e42440a663ec8633c608095f005a63c4ee5757f59298ed51222d35fe/lingpy-2.6.14.tar.gz", hash = "sha256:b87c36516ecbb323601e4b357091816e4226c61283a78c28ccde55026d4aef3a", size = 554964, upload-time = "2026-04-15T07:46:28.017Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7f/f3/d69a48cdb41add60444d34ca302db28b8f8dde67ae18a4e24af9787f2331/lingpy-2.6.13-py2.py3-none-any.whl", hash = "sha256:d582f6b3ca4e41299fa6caee8f1e4b41da31219c079dfe8d7e19302b2573ab72", size = 602420, upload-time = "2023-12-14T06:17:28.63Z" },
+    { url = "https://files.pythonhosted.org/packages/79/3c/59d7a1fc86842d2aec61384968930671dfe35477327d2cdd21e0b4f3b706/lingpy-2.6.14-py2.py3-none-any.whl", hash = "sha256:64a00621dc66426ffae72fe295fcf30d06a46bd125809b9ebc49aaca535b8af5", size = 601830, upload-time = "2026-04-15T07:46:23.594Z" },
 ]
 
 [[package]]

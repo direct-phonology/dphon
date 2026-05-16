@@ -23,7 +23,7 @@ dependencies = [
   "docopt==0.6.2",
   "jsonlines==4.0.0",
   "levenshtein==0.27.1",
-  "lingpy==2.6.13",
+  "lingpy==2.6.14",
   "networkx>=2.5",
   "rich==14.1.0",
   "spacy>=3",

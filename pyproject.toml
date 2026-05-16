@@ -1,6 +1,6 @@
 [project]
 name = "dphon"
-version = "2.1.0"
+version = "2.2.0"
 description = "Tools and algorithms for phonology-aware Early Chinese NLP."
 readme = "README.md"
 requires-python = ">=3.12.2"

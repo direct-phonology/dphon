@@ -41,3 +41,10 @@ dev = [
 Repository = "https://github.com/direct-phonology/dphon"
 Issues = "https://github.com/direct-phonology/dphon/issues"
 Documentation = "https://direct-phonology.github.io/dphon/"
+
+[build-system]
+requires = ["uv_build>=0.11.14,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+data = { data = "data" }

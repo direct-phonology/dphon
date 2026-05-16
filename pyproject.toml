@@ -1,12 +1,9 @@
-[build-system]
-requires = ["setuptools>=42", "wheel"]
-build-backend = "setuptools.build_meta" 
-
 [project]
 name = "dphon"
-readme = "README.md"
+version = "2.1.0"
 description = "Tools and algorithms for phonology-aware Early Chinese NLP."
-dynamic = ["version"]
+readme = "README.md"
+requires-python = ">=3.12.2"
 license = { file = "LICENSE" }
 keywords = ["old chinese", "early chinese", "phonology", "linguistics", "nlp"]
 classifiers = [
@@ -15,47 +12,31 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Natural Language :: Chinese (Traditional)",
   "Operating System :: OS Independent",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3 :: Only",
   "Topic :: Text Processing :: Linguistic",
   "Topic :: Utilities",
-]
-dependencies = [
-  "docopt",
-  "spacy>=3",
-  "Levenshtein",
-  "lingpy",
-  "rich",
-  "jsonlines",
 ]
 authors = [
   { name = "Nick Budak", email = "budak@stanford.edu" },
   { name = "Gian Duri Rominger", email = "gromin@uw.edu" },
 ]
-requires-python = ">=3.8"
+dependencies = [
+  "docopt==0.6.2",
+  "jsonlines==4.0.0",
+  "levenshtein==0.27.1",
+  "lingpy==2.6.13",
+  "networkx>=2.5",
+  "rich==14.1.0",
+  "spacy>=3",
+]
+
+[dependency-groups]
+dev = [
+  "coverage>=7.14.0",
+  "pdoc3>=0.11.6",
+  "ruff>=0.15.13",
+]
 
 [project.urls]
 Repository = "https://github.com/direct-phonology/dphon"
 Issues = "https://github.com/direct-phonology/dphon/issues"
 Documentation = "https://direct-phonology.github.io/dphon/"
-
-[project.optional-dependencies]
-dev = ["check-manifest", "mypy", "pylint"]
-test = ["coverage"]
-
-[project.entry-points.console_scripts]
-dphon = "dphon.cli:run"
-
-[project.entry-points.spacy_factories]
-ngrams = "dphon.ngrams:create_ngrams"
-g2p = "dphon.g2p:create_graphemes_to_phonemes"
-ngram_phonemes_index = "dphon.index:create_ngram_phonemes_lookup_index"
-
-[tool.setuptools]
-packages = ["dphon"]
-
-[tool.setuptools.dynamic]
-version = { attr = "dphon.__version__" }

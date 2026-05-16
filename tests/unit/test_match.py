@@ -8,7 +8,7 @@ from dphon.match import Match
 class TestMatch(TestCase):
     """Test the Match class."""
 
-    maxDiff = None   # don't limit length of diff output for failures
+    maxDiff = None  # don't limit length of diff output for failures
 
     def setUp(self) -> None:
         """Create example Docs to test with."""
@@ -21,13 +21,13 @@ class TestMatch(TestCase):
         doc1 = self.nlp.make_doc("A B C D A B C D E F G H")
         doc2 = self.nlp.make_doc("Z Z G H Z Z C D Z Z Z Z")
         doc3 = self.nlp.make_doc("E F X X A B C D X X X X")
-        m1 = Match("doc1", "doc3", doc1[8:10], doc3[0:2])   # 1:EF :: 3:EF
-        m2 = Match("doc1", "doc3", doc1[0:4], doc3[4:9])    # 1:ABCD :: 3:ABCD
+        m1 = Match("doc1", "doc3", doc1[8:10], doc3[0:2])  # 1:EF :: 3:EF
+        m2 = Match("doc1", "doc3", doc1[0:4], doc3[4:9])  # 1:ABCD :: 3:ABCD
         m3 = Match("doc1", "doc2", doc1[10:12], doc2[0:2])  # 1:GH :: 2:GH
-        m4 = Match("doc1", "doc3", doc1[4:9], doc3[4:9])    # 1:ABCD :: 3:ABCD
-        m5 = Match("doc1", "doc2", doc1[2:4], doc2[6:8])    # 1:CD :: 2:CD
-        m6 = Match("doc1", "doc2", doc1[7:9], doc2[6:8])    # 1:CD :: 2:CD
-        m7 = Match("doc2", "doc3", doc2[6:8], doc3[6:8])    # 2:CD :: 3:CD
+        m4 = Match("doc1", "doc3", doc1[4:9], doc3[4:9])  # 1:ABCD :: 3:ABCD
+        m5 = Match("doc1", "doc2", doc1[2:4], doc2[6:8])  # 1:CD :: 2:CD
+        m6 = Match("doc1", "doc2", doc1[7:9], doc2[6:8])  # 1:CD :: 2:CD
+        m7 = Match("doc2", "doc3", doc2[6:8], doc3[6:8])  # 2:CD :: 3:CD
         m_unsorted = [m1, m2, m3, m4, m5, m6, m7]
         m_sorted = list(sorted(m_unsorted))
         self.assertEqual(m_sorted, [m5, m6, m3, m2, m4, m1, m7])

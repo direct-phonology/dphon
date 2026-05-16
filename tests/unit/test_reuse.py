@@ -149,4 +149,8 @@ class TestMatchGraph(TestCase):
         )
         G.group()
         self.assertEqual(len(G.groups), 3, "should have 3 groups")
-        self.assertEqual({ len(g) for g in G.groups }, { 3, 1 }, "should have a group of 3 and two groups of 1")
+        self.assertEqual(
+            {len(g) for g in G.groups},
+            {3, 1},
+            "should have a group of 3 and two groups of 1",
+        )

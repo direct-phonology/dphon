@@ -177,7 +177,6 @@ def get_sound_table_json(path: Traversable) -> SoundTable_T:
     with path.open(encoding="utf8") as file:
         entries = json.loads(file.read())
         for char, readings in entries.items():
-
             # FIXME just using first reading for now, ignoring multiple
             # NOTE final two entries in current table are source info; ignore
             *reading, _src, _src2 = readings[0]

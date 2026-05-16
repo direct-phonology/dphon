@@ -126,7 +126,7 @@ class PlaintextCorpusLoader(CorpusLoader):
             for file, meta in files_by_size.items():
                 self.progress.update(task, filename=file.name)
                 with file.open(encoding="utf8") as contents:
-                    logging.debug(f"loaded doc \"{meta['id']}\" from {file.resolve()}")
+                    logging.debug(f'loaded doc "{meta["id"]}" from {file.resolve()}')
                     yield contents.read().translate(OC_TEXT), {"id": meta["id"]}
                     self.progress.advance(task)
 
@@ -166,8 +166,6 @@ class JsonLinesCorpusLoader(CorpusLoader):
                     self.progress.update(task, filename=file.name)
                     for doc in reader:
                         meta = {k: v for k, v in doc.items() if k != "text"}
-                        logging.debug(
-                            f"loaded doc \"{doc['id']}\" from {file.resolve()}"
-                        )
+                        logging.debug(f'loaded doc "{doc["id"]}" from {file.resolve()}')
                         yield doc["text"].translate(OC_TEXT), meta
                     self.progress.advance(task)

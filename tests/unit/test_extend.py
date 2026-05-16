@@ -1,6 +1,5 @@
 """Extender unit tests."""
 
-
 from unittest import TestCase
 
 import spacy
@@ -14,7 +13,8 @@ class TestLevenshteinExtender(TestCase):
     def setUp(self) -> None:
         """Create a blank spaCy model and extender to test with."""
         self.nlp = spacy.blank(
-            "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
+            "zh", meta={"tokenizer": {"config": {"use_jieba": False}}}
+        )
         self.extend = LevenshteinExtender(threshold=0.75, len_limit=100)
 
     def test_no_extension(self) -> None:
@@ -131,12 +131,18 @@ class TestLevenshteinExtender(TestCase):
         - https://ctext.org/text.pl?node=384985&if=en&filter=430524"""
 
         # create mock documents
-        u = self.nlp.make_doc((
-            "由也千乘之國可使治其賦也不知其仁也求也何如子曰求也千室之邑百乘之家可使為之宰也不"
-            "知其仁也赤也何如子曰赤也束帶立於朝可使與賓客言也"))
-        v = self.nlp.make_doc((
-            "由也千乘之國可使治其賦也求也千室之邑百乘之家可使為之宰赤也束帶立於朝可使與賓客言"
-            "也又曰子謂子產有君子之道四焉其行己也恭其事上也敬"))
+        u = self.nlp.make_doc(
+            (
+                "由也千乘之國可使治其賦也不知其仁也求也何如子曰求也千室之邑百乘之家可使為之宰也不"
+                "知其仁也赤也何如子曰赤也束帶立於朝可使與賓客言也"
+            )
+        )
+        v = self.nlp.make_doc(
+            (
+                "由也千乘之國可使治其賦也求也千室之邑百乘之家可使為之宰赤也束帶立於朝可使與賓客言"
+                "也又曰子謂子產有君子之道四焉其行己也恭其事上也敬"
+            )
+        )
 
         # create a match and extend it; lower threshold and len_limit
         match = Match("analects", "taipingyulan", u[0:4], v[0:4])
@@ -156,7 +162,8 @@ class TestExtendMatches(TestCase):
     def setUp(self) -> None:
         """Create a blank spaCy model and extender to test with."""
         self.nlp = spacy.blank(
-            "zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
+            "zh", meta={"tokenizer": {"config": {"use_jieba": False}}}
+        )
         self.extend = LevenshteinExtender(threshold=0.75, len_limit=100)
 
     def test_no_extension(self) -> None:
@@ -191,7 +198,7 @@ class TestExtendMatches(TestCase):
         # create matches and extend them
         matches = [
             Match("analects", "yiwen-leiju", u[0:4], v[0:4]),
-            Match("analects", "yiwen-leiju", u[1:5], v[1:5])
+            Match("analects", "yiwen-leiju", u[1:5], v[1:5]),
         ]
         results = extend_matches(matches, self.extend)
 
@@ -210,9 +217,9 @@ class TestExtendMatches(TestCase):
         matches = [
             Match("u", "v", u[8:10], v[13:15]),
             Match("u", "v", u[9:11], v[14:16]),
-            Match("u", "v", u[10:12], v[1:3]),   # matches twice in v
+            Match("u", "v", u[10:12], v[1:3]),  # matches twice in v
             Match("u", "v", u[10:12], v[15:17]),
-            Match("u", "v", u[11:13], v[2:4]),   # both should be extended
+            Match("u", "v", u[11:13], v[2:4]),  # both should be extended
             Match("u", "v", u[11:13], v[16:18]),
         ]
         results = extend_matches(matches, self.extend)
@@ -234,7 +241,7 @@ class TestExtendMatches(TestCase):
         matches = [
             Match("u", "v", u[1:3], v[1:3]),
             Match("u", "v", u[2:4], v[2:4]),
-            Match("u", "v", u[2:4], v[12:14]),       # matches twice in v
+            Match("u", "v", u[2:4], v[12:14]),  # matches twice in v
             Match("u", "v", u[3:6], v[3:6]),
             Match("u", "v", u[4:7], v[4:7]),
             Match("u", "v", u[6:8], v[6:8]),
@@ -242,7 +249,7 @@ class TestExtendMatches(TestCase):
             Match("u", "v", u[8:11], v[8:11]),
             Match("u", "v", u[9:12], v[9:12]),
             Match("u", "v", u[11:13], v[11:13]),
-            Match("u", "v", u[12:14], v[2:4]),      # reverse of earlier match
+            Match("u", "v", u[12:14], v[2:4]),  # reverse of earlier match
             Match("u", "v", u[12:14], v[12:14]),
         ]
         results = extend_matches(matches, self.extend)
@@ -262,7 +269,7 @@ class TestExtendMatches(TestCase):
         matches = [
             Match("mwd_laozi", "laozi", u[3:6], v[3:6]),
             Match("mwd_laozi", "laozi", u[12:15], v[12:15]),
-            Match("mwd_laozi", "laozi", u[20:23], v[20:23])
+            Match("mwd_laozi", "laozi", u[20:23], v[20:23]),
         ]
         results = extend_matches(matches, self.extend)
 
@@ -274,12 +281,20 @@ class TestExtendMatches(TestCase):
     def test_aggregation(self) -> None:
         """many consecutive small matches should be aggregated"""
         # create mock documents
-        u = self.nlp.make_doc(("視素保樸，少私寡欲。江海所以為百谷王，以其能為百谷下，"
-                               "是以能為百谷王。聖人之在民前也，以身後之；其在民上也，"
-                               "以言下之。"))
-        v = self.nlp.make_doc(("與物反矣，然後乃至大順江海所以能為百谷王者，以其善下之，"
-                               "故能為百谷王。是以聖人欲上民，必以言下之；欲先民，必以身"
-                               "後之。"))
+        u = self.nlp.make_doc(
+            (
+                "視素保樸，少私寡欲。江海所以為百谷王，以其能為百谷下，"
+                "是以能為百谷王。聖人之在民前也，以身後之；其在民上也，"
+                "以言下之。"
+            )
+        )
+        v = self.nlp.make_doc(
+            (
+                "與物反矣，然後乃至大順江海所以能為百谷王者，以其善下之，"
+                "故能為百谷王。是以聖人欲上民，必以言下之；欲先民，必以身"
+                "後之。"
+            )
+        )
 
         # several 3-4 matching character spans, spaced out relatively evenly
         # with low enough threshold to extend between matches

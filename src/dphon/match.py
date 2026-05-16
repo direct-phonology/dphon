@@ -56,8 +56,8 @@ class Match(NamedTuple):
         pu, pv = console.highlighter.transcribe_match(self)
 
         # add rows for each document
-        table.add_row(self.u, f"{self.utxt.start}-{self.utxt.end-1}", su, pu)
-        table.add_row(self.v, f"{self.vtxt.start}-{self.vtxt.end-1}", sv, pv)
+        table.add_row(self.u, f"{self.utxt.start}-{self.utxt.end - 1}", su, pu)
+        table.add_row(self.v, f"{self.vtxt.start}-{self.vtxt.end - 1}", sv, pv)
 
         return [table]
 

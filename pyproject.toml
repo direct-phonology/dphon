@@ -42,9 +42,11 @@ Repository = "https://github.com/direct-phonology/dphon"
 Issues = "https://github.com/direct-phonology/dphon/issues"
 Documentation = "https://direct-phonology.github.io/dphon/"
 
+[project.entry-points.spacy_factories]
+ngrams = "dphon.ngrams:create_ngrams"
+g2p = "dphon.g2p:create_graphemes_to_phonemes"
+ngram_phonemes_index = "dphon.index:create_ngram_phonemes_lookup_index"
+
 [build-system]
 requires = ["uv_build>=0.11.14,<0.12"]
 build-backend = "uv_build"
-
-[tool.uv.build-backend]
-data = { data = "data" }

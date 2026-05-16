@@ -96,9 +96,10 @@ import time
 from itertools import combinations
 from pathlib import Path
 from typing import Dict, List
+from importlib.metadata import version as pkg_version
+from importlib import resources as pkg_resources
 
 import jsonlines
-import pkg_resources
 import spacy
 from docopt import docopt
 from rich import traceback
@@ -108,7 +109,6 @@ from rich.progress import BarColumn, Progress, SpinnerColumn
 from spacy.language import Language
 from spacy.tokens import Doc
 
-from . import __version__
 from .align import SmithWatermanPhoneticAligner
 from .console import MatchHighlighter, console, err_console
 from .corpus import CorpusLoader, JsonLinesCorpusLoader, PlaintextCorpusLoader
@@ -127,7 +127,7 @@ LOG_LEVELS = {
 
 def run() -> None:
     """CLI entrypoint."""
-    args = docopt(__doc__, version=__version__)
+    args = docopt(__doc__, version=pkg_version("dphon"))
 
     # install global logging and exception handlers
     logging.basicConfig(
@@ -195,8 +195,8 @@ def run() -> None:
 def setup(args: Dict) -> Language:
     """Set up the spaCy processing pipeline."""
     # get sound table
-    v2_path = pkg_resources.resource_filename(__package__, "data/sound_table_v2.json")
-    sound_table = get_sound_table_json(Path(v2_path))
+    v2_path = pkg_resources.files(__package__).joinpath("data/sound_table_v2.json")
+    sound_table = get_sound_table_json(v2_path)
 
     # add Doc metadata
     if not Doc.has_extension("id"):

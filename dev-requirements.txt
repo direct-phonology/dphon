@@ -1,6 +1,0 @@
--r requirements.txt
-coverage
-build
-twine
-setuptools
-pdoc3

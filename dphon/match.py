@@ -3,7 +3,7 @@
 """The Match class for encoding text reuse relationships."""
 
 import math
-from typing import Dict, List, NamedTuple, Tuple
+from typing import Dict, List, NamedTuple
 
 import Levenshtein as Lev
 from rich.console import Console, ConsoleOptions, RenderResult

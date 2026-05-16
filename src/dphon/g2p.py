@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 """Tools for converting graphemes to phonemes."""
 
+from importlib.resources.abc import Traversable
 import json
 import logging
-from pathlib import Path
 from typing import Iterable, Iterator, Mapping, Optional, Tuple, List
 
 from spacy.language import Language
@@ -169,12 +169,12 @@ class GraphemesToPhonemes:
         return (initial, nucleus, coda)
 
 
-def get_sound_table_json(path: Path) -> SoundTable_T:
+def get_sound_table_json(path: Traversable) -> SoundTable_T:
     """Load a sound table as JSON."""
     sound_table: SoundTable_T = {}
 
     # open the file and load all readings
-    with open(path, encoding="utf8") as file:
+    with path.open(encoding="utf8") as file:
         entries = json.loads(file.read())
         for char, readings in entries.items():
 
@@ -184,7 +184,7 @@ def get_sound_table_json(path: Path) -> SoundTable_T:
             sound_table[char] = tuple(reading)  # type: ignore
 
     # log and return finished table
-    logging.info(f"sound table {path.resolve()} loaded")
+    logging.info(f"sound table {path.name} loaded")
     return sound_table
 
 

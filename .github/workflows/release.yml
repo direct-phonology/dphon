@@ -9,11 +9,13 @@ jobs:
     name: publish to pyPI
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
-      - run: pip install -r dev-requirements.txt
-      - run: python -m build
-      - run: twine upload dist/*
-        env:
-          TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+      - name: Set up python
+        run: uv python install
+      - name: Build package
+        run: uv build
+      - name: Publish to PyPI
+        run: uv publish

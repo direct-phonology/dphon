@@ -48,6 +48,7 @@ Filtering Options:
     --within-doc               [default: False]
         Allow matches within the same document. Overlapping spans are
         automatically excluded.
+
     -a, --all
         Allow matches without graphic variation. By default, only matches
         containing at least one token with shared phonemes but differing
@@ -76,6 +77,11 @@ Filtering Options:
     --max-phonetic-similarity <NUM>  [default: 1]
         Limit to matches with a phonetic similarity ratio <= NUM. The default is
         to allow matches that are phonetically identical (1).
+
+    --focus <ID>
+        One-to-many mode: only find matches where at least one span is from
+        the document whose ID starts with ID. Results are ordered by position
+        in the focus text.
 
 Display options:
     --transcribe-context        [default: False]
@@ -172,8 +178,30 @@ def run() -> None:
     else:
         results = list(graph.matches)
 
-    # sort results by highest weighted score
-    results = sorted(results, key=lambda result: result.weighted_score, reverse=True)
+    # sort results
+    if args["--focus"]:
+        # order by position in source text
+        source = args["--focus"]
+        def source_position(match):
+            if match.u.startswith(source):
+                return (match.u, match.utxt.start)
+            else:
+                return (match.v, match.vtxt.start)
+        results= sorted(results, key=source_position)
+    else:
+        # sort results by highest weighted score
+        results = sorted(results, key=lambda result: result.weighted_score, reverse=True)
+
+    # normalize so focus is always the first (u) position
+    if args["--focus"]:
+        normalized = []
+        for match in results:
+            if match.v.startswith(args["--focus"]) and not match.u.startswith(args["--focus"]):
+                normalized.append(Match(match.v, match.u, match.vtxt, match.utxt,
+                                       match.weight, match.av, match.au))
+            else:
+                normalized.append(match)
+        results = normalized
 
     # output depending on provided option
     if output_format == "jsonl":
@@ -259,6 +287,12 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
             )
             progress.update(task, seed=locations[0].text)
             for utxt, vtxt in combinations(locations, 2):
+                # source filter: skip pairs where neither doc is the source
+                if args["--focus"]:
+                    u_is_source = utxt.doc._.id.startswith(args["--focus"])
+                    v_is_source = vtxt.doc._.id.startswith(args["--focus"])
+                    if not u_is_source and not v_is_source:
+                        continue
                 if utxt.doc._.id != vtxt.doc._.id or (args["--within-doc"] and (utxt.end <= vtxt.start or vtxt.end <= utxt.start)):
                     graph.add_match(
                         Match(utxt.doc._.id, vtxt.doc._.id, utxt, vtxt, 1.0)

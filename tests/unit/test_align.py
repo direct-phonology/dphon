@@ -2,10 +2,11 @@
 """Aligner unit tests."""
 
 from unittest import TestCase
-
+from pathlib import Path
 import spacy
+from dphon.g2p import get_sound_table_json
 from dphon.match import Match
-from dphon.align import SmithWatermanAligner
+from dphon.align import SmithWatermanAligner, SmithWatermanPhoneticAligner
 from lingpy.align.pairwise import _get_scorer
 
 
@@ -130,3 +131,43 @@ class TestSmithWatermanAligner(TestCase):
         self.assertEqual(aligned.au, list("CABACABACABA"))
         self.assertEqual(aligned.av, list("CBBBCBBBCBBB"))
         self.assertEqual(aligned.weight, 1.0)
+
+class TestSmithWatermanPhoneticAligner(TestCase):
+    """Test the SmithWatermanPhoneticAligner."""
+
+    maxDiff = None  # don't limit length of diff output for failures
+
+    def setUp(self) -> None:
+        """Create a spaCy pipeline and aligner for use in testing."""
+
+        # chinese pipeline with sound table g2p
+        self.nlp = spacy.blank(
+            "zh", meta={"tokenizer": {"config": {"use_jieba": False}}}
+        )
+        self.project_dir = Path(__file__).parent.parent.parent.parent
+        sound_table = get_sound_table_json(self.project_dir / "dphon" / "src" / "dphon" / "data" / "sound_table_v2.json")
+        self.nlp.add_pipe("g2p", config={"sound_table": sound_table})
+
+        # aligner with default phonetic scoring matrix
+        self.align = SmithWatermanPhoneticAligner()
+
+    def test_spacing(self) -> None:
+        """Matches with gaps should maintain correct transcription alignment.
+
+        Text sources:
+        - CHANT 尚書-0013
+        - CHANT 尚書-0059-0023"""
+
+        # create a mock match and align it
+        u = self.nlp.make_doc("罔有天災山川鬼神亦莫不寧暨鳥獸魚鱉咸若于")
+        v = self.nlp.make_doc("胡敢異心山川鬼神亦莫敢不寧若能共允住天下")
+        match = Match("shangshu13", "shangshu59", u[:], v[:])
+        aligned = self.align(match)
+
+        # first string gets a gap for the insertion of "敢" (kˤamʔ)
+        self.assertEqual(aligned.au, list("山川鬼神亦莫-不寧"))
+        self.assertEqual(aligned.u_transcription, "*s-ŋrar t-◦lun k-ʔujʔ Cə-lin ɢrAk mˤak pə nˤeŋ")
+
+        # second string has the inserted character
+        self.assertEqual(aligned.av, list("山川鬼神亦莫敢不寧"))
+        self.assertEqual(aligned.v_transcription, "*s-ŋrar t-◦lun k-ʔujʔ Cə-lin ɢrAk mˤak kˤamʔ pə nˤeŋ")

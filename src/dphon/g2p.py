@@ -5,7 +5,7 @@
 from importlib.resources.abc import Traversable
 import json
 import logging
-from typing import Iterable, Iterator, Mapping, Optional, Tuple, List
+from typing import Iterable, Iterator, Optional, Tuple, List
 
 from spacy.language import Language
 from spacy.lookups import Table
@@ -18,7 +18,7 @@ OOV_PHONEMES = "\ue000"
 
 # types for sound tables: map a string to a tuple of syllable phonemes
 Phonemes_T = Tuple[Optional[str], ...]
-SoundTable_T = Mapping[str, Phonemes_T]
+SoundTable_T = dict[str, Phonemes_T]
 
 
 class GraphemesToPhonemes:
@@ -45,17 +45,13 @@ class GraphemesToPhonemes:
         syllable_parts = len(next(iter(sound_table.values())))
         self.empty_phonemes = tuple(None for _ in range(syllable_parts))
 
-        # register extensions on spaCy primitives
-        if not Doc.has_extension("phonemes"):
-            Doc.set_extension("phonemes", getter=self.get_all_phonemes)
-        if not Span.has_extension("phonemes"):
-            Span.set_extension("phonemes", getter=self.get_all_phonemes)
-        if not Span.has_extension("syllables"):
-            Span.set_extension("syllables", getter=self._get_syllables)
-        if not Token.has_extension("phonemes"):
-            Token.set_extension("phonemes", getter=self.get_token_phonemes)
-        if not Token.has_extension("is_oov"):
-            Token.set_extension("is_oov", getter=self.is_token_oov)
+        # register extensions on spaCy primitives; use force=true because
+        # registration is global and we want to overwrite any old state
+        Doc.set_extension("phonemes", getter=self.get_all_phonemes, force=True)
+        Span.set_extension("phonemes", getter=self.get_all_phonemes, force=True)
+        Span.set_extension("syllables", getter=self._get_syllables, force=True)
+        Token.set_extension("phonemes", getter=self.get_token_phonemes, force=True)
+        Token.set_extension("is_oov", getter=self.is_token_oov, force=True)
 
         # store the sound table in the vocab's Lookups
         self.table = nlp.vocab.lookups.add_table("phonemes", sound_table)

@@ -132,6 +132,7 @@ class TestSmithWatermanAligner(TestCase):
         self.assertEqual(aligned.av, list("CBBBCBBBCBBB"))
         self.assertEqual(aligned.weight, 1.0)
 
+
 class TestSmithWatermanPhoneticAligner(TestCase):
     """Test the SmithWatermanPhoneticAligner."""
 
@@ -145,7 +146,14 @@ class TestSmithWatermanPhoneticAligner(TestCase):
             "zh", meta={"tokenizer": {"config": {"use_jieba": False}}}
         )
         self.project_dir = Path(__file__).parent.parent.parent.parent
-        sound_table = get_sound_table_json(self.project_dir / "dphon" / "src" / "dphon" / "data" / "sound_table_v2.json")
+        sound_table = get_sound_table_json(
+            self.project_dir
+            / "dphon"
+            / "src"
+            / "dphon"
+            / "data"
+            / "sound_table_v2.json"
+        )
         self.nlp.add_pipe("g2p", config={"sound_table": sound_table})
 
         # aligner with default phonetic scoring matrix
@@ -166,8 +174,13 @@ class TestSmithWatermanPhoneticAligner(TestCase):
 
         # first string gets a gap for the insertion of "敢" (kˤamʔ)
         self.assertEqual(aligned.au, list("山川鬼神亦莫-不寧"))
-        self.assertEqual(aligned.u_transcription, "*s-ŋrar t-◦lun k-ʔujʔ Cə-lin ɢrAk mˤak pə nˤeŋ")
+        self.assertEqual(
+            aligned.u_transcription, "*s-ŋrar t-◦lun k-ʔujʔ Cə-lin ɢrAk mˤak pə nˤeŋ"
+        )
 
         # second string has the inserted character
         self.assertEqual(aligned.av, list("山川鬼神亦莫敢不寧"))
-        self.assertEqual(aligned.v_transcription, "*s-ŋrar t-◦lun k-ʔujʔ Cə-lin ɢrAk mˤak kˤamʔ pə nˤeŋ")
+        self.assertEqual(
+            aligned.v_transcription,
+            "*s-ŋrar t-◦lun k-ʔujʔ Cə-lin ɢrAk mˤak kˤamʔ pə nˤeŋ",
+        )

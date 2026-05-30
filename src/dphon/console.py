@@ -114,7 +114,7 @@ class MatchHighlighter(RegexHighlighter):
                 span_ptr += 1
                 other_ptr += 1
                 continue
-            
+
             # variants (both u and v)
             if self.g2p.are_graphic_variants(span[span_ptr], other[other_ptr]):
                 marked_span.append(f"[variant]{alignment[i]}[/variant]")

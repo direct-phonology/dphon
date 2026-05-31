@@ -28,7 +28,11 @@ class MatchHighlighter(RegexHighlighter):
     g2p: GraphemesToPhonemes
 
     def __init__(
-        self, g2p: GraphemesToPhonemes, context: int = 0, gap_char: str = "-", transcribe_context: bool = False
+        self,
+        g2p: GraphemesToPhonemes,
+        context: int = 0,
+        gap_char: str = "-",
+        transcribe_context: bool = False,
     ) -> None:
         """Create a new highlighter with optional context for each match."""
         # can't have negative context
@@ -48,7 +52,7 @@ class MatchHighlighter(RegexHighlighter):
         # Heuristic: if the writing system has letters, then it uses spaces
         # between words, so we should add spaces when rendering.
         try:
-            return self.g2p.nlp.vocab.writing_system['has_letters']
+            return self.g2p.nlp.vocab.writing_system["has_letters"]
         except KeyError:
             return True
 
@@ -72,7 +76,7 @@ class MatchHighlighter(RegexHighlighter):
             )
         else:
             return (self.transcribe_span(match.utxt), self.transcribe_span(match.vtxt))
-        
+
     def transcribe_span_with_context(self, span: Span) -> str:
         """Render a phonemic transcription for a Span, including context."""
         parts = []
@@ -97,7 +101,7 @@ class MatchHighlighter(RegexHighlighter):
         # ensure the "*" denoting transcription is placed correctly
         transcription = " ".join(parts).strip()
         if transcription.startswith("[context]"):
-            transcription = "[context]*" + transcription[len("[context]"):]
+            transcription = "[context]*" + transcription[len("[context]") :]
         else:
             transcription = "*" + transcription
 
@@ -120,9 +124,13 @@ class MatchHighlighter(RegexHighlighter):
         if self.context > 0:
             context_left, context_right = self._add_span_context(span)
             if self.spaced_words:
-                formatted_span = " ".join([context_left, highlighted_span, context_right]).strip()
+                formatted_span = " ".join(
+                    [context_left, highlighted_span, context_right]
+                ).strip()
             else:
-                formatted_span = "".join([context_left, highlighted_span, context_right]).strip()
+                formatted_span = "".join(
+                    [context_left, highlighted_span, context_right]
+                ).strip()
             return formatted_span
         return highlighted_span
 
@@ -135,7 +143,7 @@ class MatchHighlighter(RegexHighlighter):
         span: Span,
         other: Optional[Span],
         alignment: Optional[list[str]],
-        other_alignment: Optional[list[str]]
+        other_alignment: Optional[list[str]],
     ) -> str:
         """Mark up a Span for colorization with a theme, in relation to another Span.
 
@@ -205,6 +213,10 @@ class MatchHighlighter(RegexHighlighter):
         context_left = span.doc[span.start - self.context : span.start]
         context_right = span.doc[span.end : span.end + self.context]
         return (
-            f"[context]{context_left.text.rjust(self.context, self.gap_char)}[/context]" if context_left else "",
-            f"[context]{context_right.text.ljust(self.context, self.gap_char)}[/context]" if context_right else "",
+            f"[context]{context_left.text.rjust(self.context, self.gap_char)}[/context]"
+            if context_left
+            else "",
+            f"[context]{context_right.text.ljust(self.context, self.gap_char)}[/context]"
+            if context_right
+            else "",
         )

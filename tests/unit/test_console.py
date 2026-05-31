@@ -1,7 +1,5 @@
 """Tests for the console module."""
 
-from re import match
-
 import spacy
 from unittest import TestCase
 
@@ -9,6 +7,7 @@ from dphon.match import Match
 from dphon.console import MatchHighlighter
 from dphon.g2p import GraphemesToPhonemes
 from dphon.align import SmithWatermanPhoneticAligner
+
 
 class TestMatchHighlighter(TestCase):
     """Test the MatchHighlighter."""
@@ -42,13 +41,17 @@ class TestMatchHighlighter(TestCase):
     def test_transcribe(self) -> None:
         """should transcribe a span"""
         highlighter = MatchHighlighter(self.g2p)
-        span = self.nlp("one two three")[1:2] # the "two" token, with 1 token of context
+        span = self.nlp("one two three")[
+            1:2
+        ]  # the "two" token, with 1 token of context
         self.assertEqual(highlighter.transcribe_span(span), "*tuː")
 
     def test_transcribe_with_context(self) -> None:
         """should transcribe including highlighted context if configured"""
         highlighter = MatchHighlighter(self.g2p, context=1, transcribe_context=True)
-        span = self.nlp("one two three")[1:2] # the "two" token, with 1 token of context
+        span = self.nlp("one two three")[
+            1:2
+        ]  # the "two" token, with 1 token of context
         self.assertEqual(
             highlighter.transcribe_span_with_context(span),
             "[context]*wʌn[/context] tuː [context]θriː[/context]",
@@ -62,13 +65,15 @@ class TestMatchHighlighter(TestCase):
         match = Match(
             u="doc1",
             v="doc2",
-            utxt=doc1[1:2], # "two"
+            utxt=doc1[1:2],  # "two"
             vtxt=doc2[:1],  # "too", which should be marked as a variant
         )
         aligned = self.align(match)
         su, sv = highlighter.format_match(aligned)
         pu, pv = highlighter.transcribe_match(aligned)
-        self.assertEqual(su, "[context]one[/context] [variant]two[/variant] [context]three[/context]")
+        self.assertEqual(
+            su, "[context]one[/context] [variant]two[/variant] [context]three[/context]"
+        )
         self.assertEqual(sv, "[variant]too[/variant] [context]four[/context]")
         self.assertEqual(pu, "[context]*wʌn[/context] tuː [context]θriː[/context]")
         self.assertEqual(pv, "*tuː [context]fɔːr[/context]")

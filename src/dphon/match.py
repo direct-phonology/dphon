@@ -3,7 +3,7 @@
 """The Match class for encoding text reuse relationships."""
 
 import math
-from typing import Dict, List, NamedTuple
+from typing import Dict, NamedTuple
 
 import Levenshtein as Lev
 from rich.console import Console, ConsoleOptions, RenderResult
@@ -19,8 +19,8 @@ class Match(NamedTuple):
     utxt: Span
     vtxt: Span
     weight: float = 0
-    au: List[str] = []
-    av: List[str] = []
+    au: list[str] = []
+    av: list[str] = []
 
     def __key(self) -> tuple:
         return (
@@ -87,7 +87,7 @@ class Match(NamedTuple):
         except ZeroDivisionError:
             return math.inf
 
-    def as_dict(self) -> Dict[str, str]:
+    def as_dict(self) -> Dict[str, str | int | float]:
         """Dict form for structured output formats."""
         return {
             "u_id": self.u,

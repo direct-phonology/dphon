@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 from rich.console import Console
 from rich.highlighter import RegexHighlighter
@@ -59,9 +59,9 @@ class MatchHighlighter(RegexHighlighter):
     def format_span(
         self,
         span: Span,
-        other: Span = None,
-        alignment: str = None,
-        other_alignment: str = None,
+        other: Optional[Span] = None,
+        alignment: Optional[list[str]] = None,
+        other_alignment: Optional[list[str]] = None,
     ) -> str:
         """Return a Span as a Rich format string, with optional context.
 
@@ -80,7 +80,11 @@ class MatchHighlighter(RegexHighlighter):
         return "*" + " ".join(span._.syllables)
 
     def _mark_span(
-        self, span: Span, alignment: str, other: Span, other_alignment: str
+        self,
+        span: Span,
+        other: Optional[Span],
+        alignment: Optional[list[str]],
+        other_alignment: Optional[list[str]]
     ) -> str:
         """Mark up a Span for colorization with a theme, in relation to another Span.
 

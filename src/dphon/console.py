@@ -42,6 +42,16 @@ class MatchHighlighter(RegexHighlighter):
         self.g2p = g2p
         super().__init__()
 
+    @property
+    def spaced_words(self) -> bool:
+        """Whether to add spaces between tokens when rendering."""
+        # Heuristic: if the writing system has letters, then it uses spaces
+        # between words, so we should add spaces when rendering.
+        try:
+            return self.g2p.nlp.vocab.writing_system['has_letters']
+        except KeyError:
+            return True
+
     def format_match(self, match: Match) -> Tuple[str, str]:
         """Return match sequences as Rich format strings, with optional context.
 
@@ -106,15 +116,19 @@ class MatchHighlighter(RegexHighlighter):
         reference Span is provided. If context is set, also adds highlighted
         context to either end of the match.
         """
-        highlighted_span = self._mark_span(span, alignment, other, other_alignment)
+        highlighted_span = self._mark_span(span, other, alignment, other_alignment)
         if self.context > 0:
             context_left, context_right = self._add_span_context(span)
-            formatted_span = context_left + highlighted_span + context_right
-        return formatted_span
+            if self.spaced_words:
+                formatted_span = " ".join([context_left, highlighted_span, context_right]).strip()
+            else:
+                formatted_span = "".join([context_left, highlighted_span, context_right]).strip()
+            return formatted_span
+        return highlighted_span
 
     def transcribe_span(self, span: Span) -> str:
         """Render a phonemic transcription for a Span."""
-        return "*" + " ".join(span._.syllables)
+        return "*" + " ".join(span._.syllables).strip()
 
     def _mark_span(
         self,
@@ -176,7 +190,11 @@ class MatchHighlighter(RegexHighlighter):
             span_ptr += 1
             other_ptr += 1
 
-        return "".join(marked_span)
+        # separate with spaces if the writing system uses them
+        if self.spaced_words:
+            return " ".join(marked_span)
+        else:
+            return "".join(marked_span)
 
     def _add_span_context(self, span: Span) -> Tuple[str, str]:
         """Add context to either side of the Span.
@@ -187,6 +205,6 @@ class MatchHighlighter(RegexHighlighter):
         context_left = span.doc[span.start - self.context : span.start]
         context_right = span.doc[span.end : span.end + self.context]
         return (
-            f"[context]{context_left.text.rjust(self.context, '　')}[/context]",
-            f"[context]{context_right.text.ljust(self.context, '　')}[/context]",
+            f"[context]{context_left.text.rjust(self.context, self.gap_char)}[/context]" if context_left else "",
+            f"[context]{context_right.text.ljust(self.context, self.gap_char)}[/context]" if context_right else "",
         )

@@ -171,15 +171,17 @@ def run() -> None:
 
     # output depending on provided option
     if output_format == "jsonl":
-        with jsonlines.Writer(output_path) as writer:
-            for result in results:
-                writer.write(result.as_dict())
+        with open(output_path, "w") as f:
+            with jsonlines.Writer(f) as writer:
+                for result in results:
+                    writer.write(result.as_dict())
     elif output_format == "csv":
         fieldnames = results[0].as_dict().keys()
-        writer = csv.DictWriter(output_path, fieldnames=fieldnames)
-        writer.writeheader()
-        for result in results:
-            writer.writerow(result.as_dict())
+        with open(output_path, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            for result in results:
+                writer.writerow(result.as_dict())
     elif output_format == "html":
         console.record = True
         for result in results:

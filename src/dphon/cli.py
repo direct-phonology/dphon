@@ -43,6 +43,26 @@ Matching Options:
     -c <NUM>, --context <NUM>       [default: 4]
         Add NUM tokens of context to each side of matches. Context displays with
         a dimmed appearance if color is supported in the terminal.
+    
+    --fuzzy-initials            [default: False]
+        Seed matches across initials that share a place of articulation but
+        differ in voicing/aspiration (e.g. *b- *p- *pʰ-). Off by default.
+
+    --initial-class-threshold <NUM>  [default: 7]
+        Minimum substitution score for two obstruents to share a place-class.
+        Lower = coarser. Only affects --fuzzy-initials.
+
+    --fold-homorganic-nasals    [default: False]
+        Additionally fold each nasal (m n ŋ ŋʷ) into its homorganic obstruent
+        class. Liquids, glides, and fricatives are never folded.
+
+    --fuzzy-rimes               [default: False]
+        Seed matches across rimes in the same traditional rhyme category (韻部),
+        e.g. 真 *-in/*-iŋ. Off by default (rime must match exactly).
+
+    --rhyme-categories <PATH>
+        Yunelizer-syntax rhyme file used by --fuzzy-rimes. Parsed, not executed.
+        Defaults to the bundled data/rhyme-categories.txt.
 
 Filtering Options:
     --within-doc               [default: False]
@@ -126,6 +146,12 @@ from .console import MatchHighlighter, console, err_console
 from .corpus import CorpusLoader, JsonLinesCorpusLoader, PlaintextCorpusLoader
 from .extend import LevenshteinPhoneticExtender
 from .g2p import get_sound_table_json
+from .fuzzyphon import (
+    build_initial_classes,
+    load_rhyme_classes,
+    warn_unattested_initials,
+    warn_unattested_rhymes,
+)
 from .match import Match
 from .reuse import MatchGraph, MatchGroup
 
@@ -233,6 +259,33 @@ def setup(args: Dict) -> Language:
     v2_path = pkg_resources.files(__package__).joinpath("data/sound_table_v2.json")
     sound_table = get_sound_table_json(v2_path)
 
+    # build fuzzy seed-classes (empty unless explicitly enabled)
+    initial_classes: Dict[str, str] = {}
+    if args["--fuzzy-initials"]:
+        cons_path = pkg_resources.files(__package__).joinpath("data/oc-consonants.txt")
+        initial_classes = build_initial_classes(
+            cons_path,
+            threshold=int(args["--initial-class-threshold"]),
+            fold_homorganic_nasals=bool(args["--fold-homorganic-nasals"]),
+        )
+        warn_unattested_initials(sound_table, initial_classes, initial_idx=3)
+
+    rhyme_classes: Dict = {}
+    nucleus_norm: Dict[str, str] = {}
+    if args["--fuzzy-rimes"]:
+        if args["--rhyme-categories"]:
+            rc_path = Path(args["--rhyme-categories"])
+            if not rc_path.exists():
+                raise FileNotFoundError(f"rhyme categories file not found: {rc_path}")
+        else:
+            rc_path = pkg_resources.files(__package__).joinpath("data/rhyme-categories.txt")
+        rhyme_classes = load_rhyme_classes(rc_path)
+        nucleus_norm = {"A": "a"}      # seed-key normalization only
+        warn_unattested_rhymes(
+            sound_table, rhyme_classes,
+            nucleus_idx=6, coda_idx=7, nucleus_norm=nucleus_norm,
+        )
+
     # add Doc metadata
     if not Doc.has_extension("id"):
         Doc.set_extension("id", default="")
@@ -240,6 +293,10 @@ def setup(args: Dict) -> Language:
     # setup spaCy model
     nlp = spacy.blank("zh", meta={"tokenizer": {"config": {"use_jieba": False}}})
     nlp.add_pipe("g2p", config={"sound_table": sound_table})
+    g2p = nlp.get_pipe("g2p")
+    g2p.initial_classes = initial_classes
+    g2p.rhyme_classes = rhyme_classes
+    g2p.nucleus_norm = nucleus_norm
     nlp.add_pipe("ngrams", config={"n": int(args["--ngram-order"])})
     nlp.add_pipe("ngram_phonemes_index", name="index")
     logging.info("loaded default spaCy model")

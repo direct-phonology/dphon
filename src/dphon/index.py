@@ -165,10 +165,13 @@ class NgramPhonemesLookupsIndex(LookupsIndex[Span]):
             if ngram.text.isalpha() and OOV_PHONEMES not in ngram._.phonemes:
                 yield ngram
 
-    def _get_key(self, val: Span) -> str:
-        """All phonetic content of an ngram as a string."""
-        return "".join(val._.phonemes)
+    def _get_key(self, val: Span) -> Hashable:
+        """Structured seed key for an ngram.
 
+        Uses fuzzy seed equivalence when configured; exact phonemes are
+        unchanged everywhere else in the pipeline.
+        """
+        return val._.seed_key
 
 @Language.factory("ngram_phonemes_index")
 def create_ngram_phonemes_lookup_index(

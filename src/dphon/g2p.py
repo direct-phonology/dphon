@@ -12,6 +12,7 @@ from spacy.lookups import Table
 from spacy.tokens import Doc, Span, Token
 
 from dphon.match import Match
+from dphon.fuzzyphon import InitialClasses_T, NucleusNorm_T, RhymeClasses_T
 
 # private use unicode char that represents phonemes for OOV tokens
 OOV_PHONEMES = "\ue000"
@@ -40,10 +41,23 @@ class GraphemesToPhonemes:
 
     _table: Table  # uses spaCy's lookup tables (bloom filtered dict)
 
-    def __init__(self, nlp: Language, sound_table: SoundTable_T):
+    def __init__(
+        self,
+        nlp: Language,
+        sound_table: SoundTable_T,
+        initial_classes: Optional[InitialClasses_T] = None,
+        rhyme_classes: Optional[RhymeClasses_T] = None,
+        nucleus_norm: Optional[NucleusNorm_T] = None,
+    ):
         # infer the syllable segmentation and map it to an empty phoneme set
         syllable_parts = len(next(iter(sound_table.values())))
         self.empty_phonemes = tuple(None for _ in range(syllable_parts))
+
+        # fuzzy seed-classes; empty by default => exact seeding behavior.
+        # populated post-construction in cli.setup() (see Step 4c).
+        self.initial_classes: InitialClasses_T = initial_classes or {}
+        self.rhyme_classes: RhymeClasses_T = rhyme_classes or {}
+        self.nucleus_norm: NucleusNorm_T = nucleus_norm or {}
 
         # register extensions on spaCy primitives
         if not Doc.has_extension("phonemes"):
@@ -56,6 +70,10 @@ class GraphemesToPhonemes:
             Token.set_extension("phonemes", getter=self.get_token_phonemes)
         if not Token.has_extension("is_oov"):
             Token.set_extension("is_oov", getter=self.is_token_oov)
+        if not Token.has_extension("seed_key"):
+            Token.set_extension("seed_key", getter=self.get_token_seed_key)
+        if not Span.has_extension("seed_key"):
+            Span.set_extension("seed_key", getter=self.get_span_seed_key)
 
         # store the sound table in the vocab's Lookups
         self.table = nlp.vocab.lookups.add_table("phonemes", sound_table)
@@ -168,6 +186,29 @@ class GraphemesToPhonemes:
         coda = reading[7]
         return (initial, nucleus, coda)
 
+    def get_token_seed_key(self, token: Token) -> Tuple[str, ...]:
+        """Fuzzy *seed* key for `token`; exact phonemes are left untouched.
+
+        `get_token_phonemes` (used for extension/alignment/display) is unchanged.
+        With empty fuzzy config this key is equivalent to the exact phonemes, so
+        default seeding is preserved.
+        """
+        phonemes = self.get_token_phonemes(token)
+        if phonemes == self.empty_phonemes:
+            return ("EMPTY",)
+        if phonemes == (OOV_PHONEMES,):
+            return ("OOV",)
+        initial, nucleus, coda = phonemes              # selected 3-tuple: 0,1,2
+        initial_key = self.initial_classes.get(initial, initial)
+        nucleus_key = self.nucleus_norm.get(nucleus, nucleus)
+        rhyme_key = self.rhyme_classes.get((nucleus_key, coda))
+        if rhyme_key is not None:
+            return ("I", initial_key, "R", rhyme_key)
+        return ("I", initial_key, "N", nucleus_key, "C", coda)
+
+    def get_span_seed_key(self, tokens: Iterable[Token]) -> Tuple[Tuple[str, ...], ...]:
+        """Hashable structured seed key for an n-gram span."""
+        return tuple(self.get_token_seed_key(token) for token in tokens)
 
 def get_sound_table_json(path: Traversable) -> SoundTable_T:
     """Load a sound table as JSON."""

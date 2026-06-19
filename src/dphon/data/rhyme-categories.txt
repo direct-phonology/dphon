@@ -1,0 +1,220 @@
+#note that noted mergers into rhyme groups 脂, 質, and 真 are assumed to have occurred during earliest corpus of poetry
+#comp. Gassmann & Behr, Grammatik, 2013: 445]
+
+#之
+rime_ə = "ə0.."
+#幽A
+rime_u = "u0.."
+#支
+rime_e = "e0.."
+#魚
+rime_a = "a0.."
+#侯
+rime_o = "o0.."
+#*-i n/a (=*-ij)
+#list of open coda rimes
+rimes_opencoda = [rime_ə, rime_u, rime_e, rime_a, rime_o]
+
+
+#幽B
+rime_iw = "iw.."
+#宵A
+rime_ew = "ew.."
+#宵B
+rime_aw = "aw.."
+#*əw, *uw, *ow n/a
+#list of *-w coda rimes
+rimes_wcoda = [rime_iw, rime_ew, rime_aw]
+
+#*-ik coda (under 質)
+rime_ik = "ik.."
+#識
+rime_ək = "ək.."
+#覺A
+rime_uk = "uk.."
+#錫
+rime_ek = "ek.."
+#鐸
+rime_ak = "ak.."
+#屋
+rime_ok = "ok.."
+#list of *-k coda rimes
+rimes_kcoda = [rime_ik, rime_ək, rime_uk, rime_ek, rime_ak, rime_ok]
+
+
+#覺B
+rime_iwk = "iꞣ.."
+#藥A
+rime_ewk = "eꞣ.."
+#藥B
+rime_awk = "aꞣ.."
+###*əwk, *uwk, *owk n/a
+#list of *-wk coda rimes
+rimes_wkcoda = [rime_iwk, rime_ewk, rime_awk]
+
+
+#脂
+rime_ij = "ij.."
+#微A
+rime_əj = "əj.."
+#微B
+rime_uj = "uj.."
+#歌A
+rime_ej = "ej.."
+#歌B
+rime_aj = "aj.."
+#歌C
+rime_oj = "oj.."
+#list of *-j coda rimes
+rimes_jcoda = [rime_ij, rime_əj, rime_uj, rime_ej, rime_aj, rime_oj]
+
+#質 ought to include both *-it AND *-ik
+rime_it = "it.."
+rhgroup_質 = is_rhgroup([rime_it, rime_ik])
+#物A
+rime_ət = "ət.."
+#物B
+rime_ut = "ut.."
+#月|祭A
+rime_et = "et.."
+#月|祭B
+rime_at = "at.."
+#月|祭C
+rime_ot = "ot.."
+#list of *-t coda rimes
+rimes_tcoda = [rhgroup_質, rime_ət, rime_ut, rime_et, rime_at, rime_ot]
+
+
+#真 includes *-iŋ
+rime_in = "in.."
+rime_iŋ = "iŋ.."
+rhgroup_真 = is_rhgroup([rime_in, rime_iŋ])
+#文A
+rime_ən = "ən.."
+#文B
+rime_un = "un.."
+#元A
+rime_en = "en.."
+#元B
+rime_an = "an.."
+#元C
+rime_on = "on.."
+#list of *-n coda rimes
+rimes_ncoda = [rhgroup_真, rime_ən, rime_un, rime_en, rime_an, rime_on]
+
+
+#文C
+rime_ər = "ər.."
+#文D
+rime_ur = "ur.."
+#元E
+rime_er = "er.."
+#元D
+rime_ar = "ar.."
+#元F
+rime_or = "or.."
+#list of *-r coda rimes
+rimes_rcoda = [rime_ər, rime_ur, rime_er, rime_ar, rime_or]
+
+
+#*-iŋ under 真
+#蒸
+rime_əŋ = "əŋ.."
+#冬
+rime_uŋ = "uŋ.."
+#耕
+rime_eŋ = "eŋ.."
+#陽
+rime_aŋ = "aŋ.."
+#東
+rime_oŋ = "oŋ.."
+#list of *-ŋ coda rimes
+rimes_ŋcoda = [rime_əŋ, rime_uŋ, rime_eŋ, rime_aŋ, rime_oŋ]
+
+#侵A
+rime_im = "im.."
+#侵B
+rime_əm = "əm.."
+#侵C
+rime_um = "um.."
+#談A
+rime_em = "em.."
+#談B
+rime_am = "am.."
+#談C
+rime_om = "om.."
+#list of *-m coda rimes
+rimes_mcoda = [rime_im, rime_əm, rime_um, rime_em, rime_am, rime_om]
+
+#緝A
+rime_ip = "ip.."
+#緝B
+rime_əp = "əp.."
+#緝C
+rime_up = "up.."
+#盍A
+rime_ep = "ep.."
+#盍B
+rime_ap = "ap.."
+#盍C
+rime_op = "op.."
+#list of *-p coda rimes
+rimes_pcoda = [rime_ip, rime_əp, rime_up, rime_ep, rime_ap, rime_op]
+
+
+#list of all rimes
+rimes = rimes_opencoda + rimes_wcoda + rimes_kcoda + rimes_wkcoda + rimes_jcoda + rimes_tcoda + rimes_ncoda + rimes_rcoda + rimes_ŋcoda + rimes_mcoda + rimes_pcoda
+
+
+#lists of rhyme groups (rgroup) by trad. assigned character
+rhgroup_幽 = is_rhgroup([rime_u, rime_iw])
+rhgroup_宵 = is_rhgroup([rime_ew, rime_aw])
+rhgroup_覺 = is_rhgroup([rime_uk, rime_iwk])
+rhgroup_藥 = is_rhgroup([rime_ewk, rime_awk])
+rhgroup_微 = is_rhgroup([rime_əj, rime_uj])
+rhgroup_歌 = is_rhgroup([rime_ej, rime_aj, rime_oj])
+rhgroup_物 = is_rhgroup([rime_ət, rime_ut])
+rhgroup_月 = is_rhgroup([rime_et, rime_at, rime_ot])
+rhgroup_文 = is_rhgroup([rime_ən, rime_un, rime_ur, rime_ər])
+rhgroup_元 = is_rhgroup([rime_en, rime_an, rime_on, rime_ar, rime_er, rime_or])
+rhgroup_侵 = is_rhgroup([rime_im, rime_əm, rime_um])
+rhgroup_談 = is_rhgroup([rime_em, rime_am, rime_om])
+rhgroup_緝 = is_rhgroup([rime_ip, rime_əp, rime_up])
+rhgroup_盍 = is_rhgroup([rime_ep, rime_ap, rime_op])
+rhgroups = [rhgroup_幽] + [rhgroup_宵] + [rhgroup_覺] + [rhgroup_藥] + [rhgroup_微] + [rhgroup_歌] + [rhgroup_物] + [rhgroup_月] + [rhgroup_文] + [rhgroup_元] + [rhgroup_侵] + [rhgroup_談] + [rhgroup_緝] + [rhgroup_盍] 
+
+
+#list of common cross-rhymes
+#之/幽
+crgroup_之幽 = is_rhgroup([rime_ə, rhgroup_幽])
+#魚/之
+crgroup_魚之 = is_rhgroup([rime_a, rime_ə])
+#魚/侯
+crgroup_魚侯 = is_rhgroup([rime_a, rime_o])
+#支/之
+crgroup_支之 = is_rhgroup([rime_e, rime_ə])
+
+
+#魚/歌
+crgroup_魚歌 = is_rhgroup([rime_a, rhgroup_歌])
+#歌/之
+crgroup_歌之 = is_rhgroup([rhgroup_歌, rime_ə])
+#歌/脂
+crgroup_歌脂 = is_rhgroup([rhgroup_歌, rime_ij])
+#歌/微
+crgroup_歌微 = is_rhgroup([rhgroup_歌, rhgroup_微])
+#微/脂
+crgroup_微脂 = is_rhgroup([rhgroup_微, rime_ij])
+
+
+#陽/東
+crgroup_陽東 = is_rhgroup([rime_aŋ, rime_oŋ])
+#陽/耕
+crgroup_陽耕 = is_rhgroup([rime_aŋ, rime_eŋ])
+#耕/真
+crgroup_耕真 = is_rhgroup([rime_eŋ, rhgroup_真])
+
+#真/文
+crgroup_真文 = is_rhgroup([rhgroup_真, rhgroup_文])
+#真/元
+crgroup_真元 = is_rhgroup([rhgroup_真, rhgroup_元])

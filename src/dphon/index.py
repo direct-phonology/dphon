@@ -165,13 +165,14 @@ class NgramPhonemesLookupsIndex(LookupsIndex[Span]):
             if ngram.text.isalpha() and OOV_PHONEMES not in ngram._.phonemes:
                 yield ngram
 
-    def _get_key(self, val: Span) -> Hashable:
-        """Structured seed key for an ngram.
+    def _get_key(self, val: Span) -> str:
+        """String seed key for an ngram.
 
-        Uses fuzzy seed equivalence when configured; exact phonemes are
-        unchanged everywhere else in the pipeline.
+        The spaCy `Table` hashes keys to ints via a bloom filter and rejects
+        tuples, so coerce to a string here regardless of seed_key's form.
         """
-        return val._.seed_key
+        key = val._.seed_key
+        return key if isinstance(key, str) else str(key)
 
 @Language.factory("ngram_phonemes_index")
 def create_ngram_phonemes_lookup_index(

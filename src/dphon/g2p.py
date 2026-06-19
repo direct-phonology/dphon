@@ -178,6 +178,32 @@ class GraphemesToPhonemes:
     def _get_syllables(self, tokens: Iterable[Token]) -> List[str]:
         return [self._get_token_syllable(token) for token in tokens]
 
+    def get_token_seed_key(self, token: Token) -> str:
+        """Collision-safe fuzzy *seed* key for `token`, as a string.
+
+        Must be a string (not a tuple): the index stores keys in a spaCy
+        `Table`, whose bloom filter requires keys that hash to an int. \x1f /
+        \x1e are field/record separators that never occur in phonemes or class
+        labels. With empty fuzzy config this reduces to the exact
+        (initial, nucleus, coda), so seeding behavior is preserved.
+        """
+        phonemes = self.get_token_phonemes(token)
+        if phonemes == self.empty_phonemes:
+            return "\x00EMPTY"
+        if phonemes == (OOV_PHONEMES,):
+            return "\x00OOV"
+        initial, nucleus, coda = phonemes              # selected 3-tuple: 0,1,2
+        initial_key = self.initial_classes.get(initial, initial)
+        nucleus_key = self.nucleus_norm.get(nucleus, nucleus)
+        rhyme_key = self.rhyme_classes.get((nucleus_key, coda))
+        if rhyme_key is not None:
+            return f"I{initial_key}\x1fR{rhyme_key}"
+        return f"I{initial_key}\x1fN{nucleus_key}\x1fC{coda}"
+
+    def get_span_seed_key(self, tokens: Iterable[Token]) -> str:
+        """Collision-safe structured seed key for an n-gram span."""
+        return "\x1e".join(self.get_token_seed_key(t) for t in tokens)
+
     def _select(self, reading: Phonemes_T) -> Phonemes_T:
         """Filter the syllable to only the segments we're interested in."""
         # NOTE using only initial, nucleus, coda currently
@@ -185,7 +211,7 @@ class GraphemesToPhonemes:
         nucleus = reading[6]
         coda = reading[7]
         return (initial, nucleus, coda)
-
+    
     def get_token_seed_key(self, token: Token) -> Tuple[str, ...]:
         """Fuzzy *seed* key for `token`; exact phonemes are left untouched.
 

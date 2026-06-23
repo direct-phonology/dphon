@@ -12,7 +12,7 @@ from .match import Match
 
 # Default color scheme for highlighting matches
 DEFAULT_THEME = Theme(
-    {"context": "dim", "variant": "blue", "insertion": "green", "mismatch": "red"}
+    {"context": "dim", "variant": "blue", "fuzzy": "dark_cyan", "insertion": "green", "mismatch": "red"}
 )
 
 # Consoles for rendering output
@@ -142,11 +142,24 @@ class MatchHighlighter(RegexHighlighter):
                 other_ptr += 1
                 continue
 
-            # mismatch
+            # mismatch — but flag positions that match only under fuzzy seeding
             if alignment[i] != other_alignment[i]:
                 if alignment[i].isalnum() and other_alignment[i].isalnum():
+                    fuzzy_active = bool(
+                        self.g2p.initial_classes
+                        or self.g2p.rhyme_classes
+                        or self.g2p.nucleus_norm
+                    )
+                    is_fuzzy = (
+                        fuzzy_active
+                        and not span[span_ptr]._.is_oov
+                        and not other[other_ptr]._.is_oov
+                        and self.g2p.get_token_seed_key(span[span_ptr])
+                            == self.g2p.get_token_seed_key(other[other_ptr])
+                    )
+                    style = "fuzzy" if is_fuzzy else "mismatch"
                     if syl:
-                        marked.append(f"[mismatch]{syl}[/mismatch]")
+                        marked.append(f"[{style}]{syl}[/{style}]")
                     span_ptr += 1
                     other_ptr += 1
                     continue
@@ -225,10 +238,23 @@ class MatchHighlighter(RegexHighlighter):
                 other_ptr += 1
                 continue
 
-            # mismatch (both u and v) - only highlight if alphanumeric
+            # mismatch (both u and v) — flag fuzzy-equivalent positions distinctly
             if alignment[i] != other_alignment[i]:
                 if alignment[i].isalnum() and other_alignment[i].isalnum():
-                    marked_span.append(f"[mismatch]{alignment[i]}[/mismatch]")
+                    fuzzy_active = bool(
+                        self.g2p.initial_classes
+                        or self.g2p.rhyme_classes
+                        or self.g2p.nucleus_norm
+                    )
+                    is_fuzzy = (
+                        fuzzy_active
+                        and not span[span_ptr]._.is_oov
+                        and not other[other_ptr]._.is_oov
+                        and self.g2p.get_token_seed_key(span[span_ptr])
+                            == self.g2p.get_token_seed_key(other[other_ptr])
+                    )
+                    style = "fuzzy" if is_fuzzy else "mismatch"
+                    marked_span.append(f"[{style}]{alignment[i]}[/{style}]")
                     span_ptr += 1
                     other_ptr += 1
                     continue

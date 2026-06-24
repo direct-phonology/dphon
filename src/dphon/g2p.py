@@ -211,30 +211,7 @@ class GraphemesToPhonemes:
         nucleus = reading[6]
         coda = reading[7]
         return (initial, nucleus, coda)
-    
-    def get_token_seed_key(self, token: Token) -> Tuple[str, ...]:
-        """Fuzzy *seed* key for `token`; exact phonemes are left untouched.
 
-        `get_token_phonemes` (used for extension/alignment/display) is unchanged.
-        With empty fuzzy config this key is equivalent to the exact phonemes, so
-        default seeding is preserved.
-        """
-        phonemes = self.get_token_phonemes(token)
-        if phonemes == self.empty_phonemes:
-            return ("EMPTY",)
-        if phonemes == (OOV_PHONEMES,):
-            return ("OOV",)
-        initial, nucleus, coda = phonemes              # selected 3-tuple: 0,1,2
-        initial_key = self.initial_classes.get(initial, initial)
-        nucleus_key = self.nucleus_norm.get(nucleus, nucleus)
-        rhyme_key = self.rhyme_classes.get((nucleus_key, coda))
-        if rhyme_key is not None:
-            return ("I", initial_key, "R", rhyme_key)
-        return ("I", initial_key, "N", nucleus_key, "C", coda)
-
-    def get_span_seed_key(self, tokens: Iterable[Token]) -> Tuple[Tuple[str, ...], ...]:
-        """Hashable structured seed key for an n-gram span."""
-        return tuple(self.get_token_seed_key(token) for token in tokens)
 
 def get_sound_table_json(path: Traversable) -> SoundTable_T:
     """Load a sound table as JSON."""

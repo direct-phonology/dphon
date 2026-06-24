@@ -88,13 +88,13 @@ class SmithWatermanAligner(Aligner):
 
         # trim back the sequence boundaries further to remove any non-alphanum.
         # tokens from the start and end of both alignment and orig. sequence
-        while (not au[-1].isalnum() and au[-1] != self.gap_char) or (not av[-1].isalnum() and av[-1] != self.gap_char):
+        while au and av and ((not au[-1].isalnum() and au[-1] != self.gap_char) or (not av[-1].isalnum() and av[-1] != self.gap_char)):
             utxt, vtxt, au, av = utxt[:-1], vtxt[:-1], au[:-1], av[:-1]
-        while (not au[0].isalnum() and au[0] != self.gap_char) or (not av[0].isalnum() and av[0] != self.gap_char):
+        while au and av and ((not au[0].isalnum() and au[0] != self.gap_char) or (not av[0].isalnum() and av[0] != self.gap_char)):
             utxt, vtxt, au, av = utxt[1:], vtxt[1:], au[1:], av[1:]
 
         # normalize score to length; 1.0 is perfect
-        norm_score = float(score) / max(len(au), len(av))
+        norm_score = float(score) / max(len(au), len(av), 1)
 
         # create a new match with alignment info and adjusted boundaries
         return Match(match.u, match.v, utxt, vtxt, norm_score, au, av)

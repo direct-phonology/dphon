@@ -152,7 +152,7 @@ from .fuzzyphon import (
     warn_unattested_initials,
     warn_unattested_rhymes,
 )
-from .match import Match
+from .match import GAP, Match
 from .reuse import MatchGraph, MatchGroup
 
 # Available log levels: default is WARN, -v is INFO, -vv is DEBUG
@@ -182,7 +182,7 @@ def run() -> None:
 
     # setup match highlighting
     console.highlighter = MatchHighlighter(
-        g2p=nlp.get_pipe("g2p"), context=int(args["--context"]), gap_char="　", transcribe_context=args["--transcribe-context"]
+        g2p=nlp.get_pipe("g2p"), context=int(args["--context"]), gap_char=GAP, transcribe_context=args["--transcribe-context"]
     )
 
     # process all texts
@@ -380,7 +380,7 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
         graph.filter(no_overlap)
 
     # align all matches
-    graph.align(SmithWatermanPhoneticAligner(gap_char="　"))
+    graph.align(SmithWatermanPhoneticAligner(gap_char=GAP))
 
     # filter if requested
     if args["--min-length"]:

@@ -10,6 +10,10 @@ from rich.console import Console, ConsoleOptions, RenderResult
 from rich.table import Table
 from spacy.tokens import Span
 
+# Internal sentinel marking an alignment gap in au/av. Must be a character that
+# cannot occur in corpus text, so a literal gap-like character (e.g. U+3000) is
+# never mistaken for a gap during scoring or colorization. Rendered as 　 in output.
+GAP = "\x00"
 
 class Match(NamedTuple):
     """A match is a pair of similar textual sequences in two documents."""
@@ -94,8 +98,8 @@ class Match(NamedTuple):
             "v_id": self.v,
             "u_text": self.utxt.text,
             "v_text": self.vtxt.text,
-            "u_text_aligned": "".join(self.au),
-            "v_text_aligned": "".join(self.av),
+            "u_text_aligned": "".join(self.au).replace(GAP, "　"),
+            "v_text_aligned": "".join(self.av).replace(GAP, "　"),
             "u_transcription": self.u_transcription,
             "v_transcription": self.v_transcription,
             "u_start": self.utxt.start,

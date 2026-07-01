@@ -112,19 +112,22 @@ class MatchHighlighter(RegexHighlighter):
         span_ptr = 0
         other_ptr = 0
         for i in range(len(alignment)):
-            # gap in u: insertion in v
-            if alignment[i] == self.gap_char and other_alignment[i].isalnum():
-                other_ptr += 1
+            # gap on this side: nothing to show here; advance the other pointer
+            # only when the other side actually has a token in this column
+            if alignment[i] == self.gap_char:
+                if other_alignment[i] != self.gap_char:
+                    other_ptr += 1
                 continue
 
-            # gap in v: insertion in u
-            if other_alignment[i] == self.gap_char and alignment[i].isalnum():
+            # gap on the other side: this token is an insertion
+            if other_alignment[i] == self.gap_char:
                 if span_ptr < len(span):
                     syl = self.g2p._get_token_syllable(span[span_ptr])
                     if syl:
                         marked.append(f"[insertion]{syl}[/insertion]")
                 span_ptr += 1
                 continue
+
 
             # bounds check
             if span_ptr >= len(span) or other_ptr >= len(other):
@@ -213,14 +216,19 @@ class MatchHighlighter(RegexHighlighter):
         span_ptr = 0
         other_ptr = 0
         for i in range(len(alignment)):
-            # gap in u: insertion in v (if not punctuation)
-            if alignment[i] == self.gap_char and other_alignment[i].isalnum():
-                other_ptr += 1
+            # gap on this side: nothing to show here; advance the other pointer
+            # only when the other side actually has a token in this column
+            if alignment[i] == self.gap_char:
+                if other_alignment[i] != self.gap_char:
+                    other_ptr += 1
                 continue
 
-            # gap in v: insertion in u (if not punctuation)
-            if other_alignment[i] == self.gap_char and alignment[i].isalnum():
-                marked_span.append(f"[insertion]{alignment[i]}[/insertion]")
+            # gap on the other side: this token is an insertion
+            if other_alignment[i] == self.gap_char:
+                if alignment[i].isalnum():
+                    marked_span.append(f"[insertion]{alignment[i]}[/insertion]")
+                else:
+                    marked_span.append(alignment[i])
                 span_ptr += 1
                 continue
 

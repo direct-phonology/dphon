@@ -45,6 +45,10 @@ Matching Options:
         a dimmed appearance if color is supported in the terminal.
 
 Filtering Options:
+    --within-doc               [default: False]
+        Allow matches within the same document. Overlapping spans are
+        automatically excluded.
+
     -a, --all
         Allow matches without graphic variation. By default, only matches
         containing at least one token with shared phonemes but differing
@@ -74,7 +78,15 @@ Filtering Options:
         Limit to matches with a phonetic similarity ratio <= NUM. The default is
         to allow matches that are phonetically identical (1).
 
+    --focus <ID>
+        One-to-many mode: only find matches where at least one span is from
+        the document whose ID starts with ID. Results are ordered by position
+        in the focus text.
+
 Display options:
+    --transcribe-context        [default: False]
+        Include phonemic transcription for context tokens as well as matched
+        tokens.
     -g, --group                [default: False]
         Group matches by shared text. By default, matches are displayed as
         individual pairs of similar sequences.
@@ -144,7 +156,7 @@ def run() -> None:
 
     # setup match highlighting
     console.highlighter = MatchHighlighter(
-        g2p=nlp.get_pipe("g2p"), context=int(args["--context"]), gap_char="　"
+        g2p=nlp.get_pipe("g2p"), context=int(args["--context"]), gap_char="　", transcribe_context=args["--transcribe-context"]
     )
 
     # process all texts
@@ -166,8 +178,30 @@ def run() -> None:
     else:
         results = list(graph.matches)
 
-    # sort results by highest weighted score
-    results = sorted(results, key=lambda result: result.weighted_score, reverse=True)
+    # sort results
+    if args["--focus"]:
+        # order by position in source text
+        source = args["--focus"]
+        def source_position(match):
+            if match.u.startswith(source):
+                return (match.u, match.utxt.start)
+            else:
+                return (match.v, match.vtxt.start)
+        results= sorted(results, key=source_position)
+    else:
+        # sort results by highest weighted score
+        results = sorted(results, key=lambda result: result.weighted_score, reverse=True)
+
+    # normalize so focus is always the first (u) position
+    if args["--focus"]:
+        normalized = []
+        for match in results:
+            if match.v.startswith(args["--focus"]) and not match.u.startswith(args["--focus"]):
+                normalized.append(Match(match.v, match.u, match.vtxt, match.utxt,
+                                       match.weight, match.av, match.au))
+            else:
+                normalized.append(match)
+        results = normalized
 
     # output depending on provided option
     if output_format == "jsonl":
@@ -255,7 +289,13 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
             )
             progress.update(task, seed=locations[0].text)
             for utxt, vtxt in combinations(locations, 2):
-                if utxt.doc._.id != vtxt.doc._.id:  # skip same-doc matches
+                # source filter: skip pairs where neither doc is the source
+                if args["--focus"]:
+                    u_is_source = utxt.doc._.id.startswith(args["--focus"])
+                    v_is_source = vtxt.doc._.id.startswith(args["--focus"])
+                    if not u_is_source and not v_is_source:
+                        continue
+                if utxt.doc._.id != vtxt.doc._.id or (args["--within-doc"] and (utxt.end <= vtxt.start or vtxt.end <= utxt.start)):
                     graph.add_match(
                         Match(utxt.doc._.id, vtxt.doc._.id, utxt, vtxt, 1.0)
                     )
@@ -274,6 +314,14 @@ def process(nlp: Language, args: Dict) -> MatchGraph:
             threshold=float(args["--threshold"]), len_limit=int(args["--len-limit"])
         )
     )
+    
+    # remove same-doc matches that overlap after extension
+    if args["--within-doc"]:
+        def no_overlap(match: Match) -> bool:
+            if match.u != match.v:
+                return True
+            return match.utxt.end <= match.vtxt.start or match.vtxt.end <= match.utxt.start
+        graph.filter(no_overlap)
 
     # align all matches
     graph.align(SmithWatermanPhoneticAligner(gap_char="　"))

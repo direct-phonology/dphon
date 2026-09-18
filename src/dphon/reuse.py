@@ -184,6 +184,15 @@ class MatchGraph:
                     extended = extend_matches(matches, extender)
                     G.add_edges_from([(m.u, m.v, m._asdict()) for m in extended])
                     self.progress.update(task, advance=len(edges))
+            # process self-loops (same-doc matches)
+            for node in self._G.nodes:
+                edges = self._G.get_edge_data(node, node)
+                if edges:
+                    self.progress.update(task, u=node, v=node)
+                    matches = [Match(**data) for data in edges.values()]
+                    extended = extend_matches(matches, extender)
+                    G.add_edges_from([(m.u, m.v, m._asdict()) for m in extended])
+                    self.progress.update(task, advance=len(edges))
         self._G = G
         self.progress.remove_task(task)
 
@@ -201,6 +210,15 @@ class MatchGraph:
                 edges = self._G.get_edge_data(u, v)
                 if edges:
                     self.progress.update(task, u=u, v=v)
+                    matches = [Match(**data) for data in edges.values()]
+                    aligned = [align(match) for match in matches]
+                    G.add_edges_from([(m.u, m.v, m._asdict()) for m in aligned])
+                    self.progress.update(task, advance=len(edges))
+            # process self-loops (same-doc matches)
+            for node in self._G.nodes:
+                edges = self._G.get_edge_data(node, node)
+                if edges:
+                    self.progress.update(task, u=node, v=node)
                     matches = [Match(**data) for data in edges.values()]
                     aligned = [align(match) for match in matches]
                     G.add_edges_from([(m.u, m.v, m._asdict()) for m in aligned])

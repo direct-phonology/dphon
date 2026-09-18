@@ -28,7 +28,7 @@ class MatchHighlighter(RegexHighlighter):
     g2p: GraphemesToPhonemes
 
     def __init__(
-        self, g2p: GraphemesToPhonemes, context: int = 0, gap_char: str = "-"
+        self, g2p: GraphemesToPhonemes, context: int = 0, gap_char: str = "-", transcribe_context: bool = False
     ) -> None:
         """Create a new highlighter with optional context for each match."""
         # can't have negative context
@@ -38,6 +38,7 @@ class MatchHighlighter(RegexHighlighter):
         # store parameters
         self.context = context
         self.gap_char = gap_char
+        self.transcribe_context = transcribe_context
         self.g2p = g2p
         super().__init__()
 
@@ -53,8 +54,110 @@ class MatchHighlighter(RegexHighlighter):
         )
 
     def transcribe_match(self, match: Match) -> Tuple[str, str]:
-        """Render a phonemic transcription for a Match."""
-        return (self.transcribe_span(match.utxt), self.transcribe_span(match.vtxt))
+        """Render a phonemic transcription for a Match, with optional context."""
+        u_transcription = self._mark_transcription(
+            match.utxt, match.au, match.vtxt, match.av
+        )
+        v_transcription = self._mark_transcription(
+            match.vtxt, match.av, match.utxt, match.au
+        )
+        if self.transcribe_context and self.context > 0:
+            u_transcription = self._add_transcription_context(match.utxt, u_transcription)
+            v_transcription = self._add_transcription_context(match.vtxt, v_transcription)
+        return (u_transcription, v_transcription)
+       
+    def _add_transcription_context(self, span: Span, transcription: str) -> str:
+        """Wrap a transcription with context phonemes."""
+        parts = []
+        ctx_left = span.doc[max(0, span.start - self.context) : span.start]
+        if len(ctx_left) > 0:
+            left_syls = " ".join(s for s in ctx_left._.syllables if s)
+            if left_syls:
+                parts.append(f"[context]{left_syls}[/context]")
+        parts.append(transcription.lstrip("*"))
+        ctx_right = span.doc[span.end : span.end + self.context]
+        if len(ctx_right) > 0:
+            right_syls = " ".join(s for s in ctx_right._.syllables if s)
+            if right_syls:
+                parts.append(f"[context]{right_syls}[/context]")
+        return "*" + " ".join(parts)
+        
+    def transcribe_span_with_context(self, span: Span) -> str:
+        """Render a phonemic transcription for a Span, including context."""
+        parts = []
+        if self.context > 0:
+            ctx_left = span.doc[max(0, span.start - self.context) : span.start]
+            if len(ctx_left) > 0:
+                left_syls = " ".join(s for s in ctx_left._.syllables if s)
+                if left_syls:
+                    parts.append(f"[context]{left_syls}[/context]")
+        match_syls = " ".join(span._.syllables)
+        parts.append(match_syls)
+        if self.context > 0:
+            ctx_right = span.doc[span.end : span.end + self.context]
+            if len(ctx_right) > 0:
+                right_syls = " ".join(s for s in ctx_right._.syllables if s)
+                if right_syls:
+                    parts.append(f"[context]{right_syls}[/context]")
+        return "*" + " ".join(parts)
+    
+    def _mark_transcription(
+        self, span: Span, alignment: str, other: Span, other_alignment: str
+    ) -> str:
+        """Mark up a phonemic transcription with the same color coding as _mark_span."""
+        if not alignment or not other or not other_alignment:
+            return "*" + " ".join(span._.syllables)
+
+        marked: List[str] = []
+        span_ptr = 0
+        other_ptr = 0
+        for i in range(len(alignment)):
+            # gap in u: insertion in v
+            if alignment[i] == self.gap_char and other_alignment[i].isalnum():
+                other_ptr += 1
+                continue
+
+            # gap in v: insertion in u
+            if other_alignment[i] == self.gap_char and alignment[i].isalnum():
+                if span_ptr < len(span):
+                    syl = self.g2p._get_token_syllable(span[span_ptr])
+                    if syl:
+                        marked.append(f"[insertion]{syl}[/insertion]")
+                span_ptr += 1
+                continue
+
+            # bounds check
+            if span_ptr >= len(span) or other_ptr >= len(other):
+                span_ptr += 1
+                other_ptr += 1
+                continue
+            
+            syl = self.g2p._get_token_syllable(span[span_ptr])
+
+            # variants
+            if self.g2p.are_graphic_variants(span[span_ptr], other[other_ptr]):
+                if syl:
+                    marked.append(f"[variant]{syl}[/variant]")
+                span_ptr += 1
+                other_ptr += 1
+                continue
+
+            # mismatch
+            if alignment[i] != other_alignment[i]:
+                if alignment[i].isalnum() and other_alignment[i].isalnum():
+                    if syl:
+                        marked.append(f"[mismatch]{syl}[/mismatch]")
+                    span_ptr += 1
+                    other_ptr += 1
+                    continue
+
+            # equality
+            if syl:
+                marked.append(syl)
+            span_ptr += 1
+            other_ptr += 1
+
+        return "*" + " ".join(marked)
 
     def format_span(
         self,

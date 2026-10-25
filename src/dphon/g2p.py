@@ -38,7 +38,8 @@ class GraphemesToPhonemes:
         sound_table: grapheme-to-phoneme conversion table.
     """
 
-    _table: Table  # uses spaCy's lookup tables (bloom filtered dict)
+    nlp: Language
+    table: Table  # uses spaCy's lookup tables (bloom filtered dict)
 
     def __init__(self, nlp: Language, sound_table: SoundTable_T):
         # infer the syllable segmentation and map it to an empty phoneme set
@@ -55,6 +56,7 @@ class GraphemesToPhonemes:
 
         # store the sound table in the vocab's Lookups
         self.table = nlp.vocab.lookups.add_table("phonemes", sound_table)
+        self.nlp = nlp
         logging.info(f"using {self.__class__}")
 
     def __call__(self, doc: Doc) -> Doc:
